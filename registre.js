@@ -21,10 +21,10 @@ window.REGISTRE = {
       ]
     },
     {
-      id: "biomateriaux", titre: "Biomatériaux, biomécanique et prothèses", statut: "a-venir",
+      id: "biomateriaux", titre: "Biomatériaux, biomécanique et prothèses", statut: "actif",
       couleur: "#9065B0", clair: "#E8DEEE", texte: "#8D62AC",
       sousModules: [
-        { id: "biomecanique", titre: "Biomécanique et prothèses" },
+        { id: "biomecanique", titre: "Biomécanique et prothèses", statut: "a-venir" },
         { id: "biomateriaux", titre: "Biomatériaux et biocompatibilité" }
       ]
     },
