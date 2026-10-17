@@ -8,12 +8,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="jeu/jeu.css">
+<link rel="stylesheet" href="assets/css/onglets.css">
 </head>
 <body class="carte-jeu">
+<header class="site-barre"><div class="site-barre-int">
+  <a class="site-marque" href="index.html">Robotique médicale</a>
+  <nav class="onglets" aria-label="Sections"><a href="index.html" aria-current="page">Jeu</a><a href="cours.html">Cours</a></nav>
+</div></header>
 <div class="entete">
   <div>
-    <h1>Robotique médicale</h1>
-    <p>Le cours de robotique médicale, en niveaux. On part des angles et du cosinus, on finit par le bras robotisé 2R. Chaque niveau est une suite de petits défis sur une figure.</p>
+    <h1>Le jeu</h1>
+    <p>Le cours en niveaux, des angles et du cosinus jusqu'au bras robotisé 2R. Chaque niveau est une suite de petits défis sur une figure. Pour relire une notion, ouvre l'onglet Cours.</p>
   </div>
   <div class="total"><b id="total">0</b><small id="total-sous">étoiles</small></div>
 </div>
@@ -22,7 +27,6 @@
 <div class="pied">
   <button type="button" id="tout">Tout débloquer</button>
   <button type="button" id="effacer">Effacer ma progression</button>
-  <a href="cours.html">Pages de cours (ancienne version)</a>
 </div>
 <script src="jeu/outils.js"></script>
 <script src="jeu/catalogue.js"></script>

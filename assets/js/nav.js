@@ -5,9 +5,12 @@
 (function () {
   "use strict";
 
+  // Mêmes chapitres que le jeu (jeu/catalogue.js) ; le chapitre 0, les bases, n'existe que dans le jeu.
   var PARTIES = [
-    { titre: "Partie A : le robot et sa description" },
-    { titre: "Partie B : description spatiale et transformations" }
+    { titre: "Chapitre 1 : le robot et sa description" },
+    { titre: "Chapitre 2 : repères et vecteurs dans l'espace" },
+    { titre: "Chapitre 3 : orientations" },
+    { titre: "Chapitre 4 : transformations" }
   ];
 
   // pret : false pour une page pas encore écrite (affichée grisée dans le menu).
@@ -25,14 +28,14 @@
     { partie: 1, slug: "produit-vectoriel", titre: "Produit vectoriel", pret: true },
     { partie: 1, slug: "coordonnees-cylindriques", titre: "Coordonnées polaires et cylindriques", pret: true },
     { partie: 1, slug: "position-chasles", titre: "Position d'un solide et relation de Chasles", pret: true },
-    { partie: 1, slug: "matrice-rotation", titre: "Matrice de rotation", pret: true },
-    { partie: 1, slug: "so3", titre: "Propriétés : le groupe SO(3)", pret: true },
-    { partie: 1, slug: "rotations-elementaires", titre: "Rotations élémentaires", pret: true },
-    { partie: 1, slug: "angles-euler", titre: "Angles d'Euler", pret: true },
-    { partie: 1, slug: "changement-repere", titre: "Changement de repère", pret: true },
-    { partie: 1, slug: "matrice-homogene", titre: "Matrice homogène", pret: true },
-    { partie: 1, slug: "composition", titre: "Composition des transformations", pret: true },
-    { partie: 1, slug: "bras-2r", titre: "Modèle géométrique direct du bras 2R", pret: true }
+    { partie: 2, slug: "matrice-rotation", titre: "Matrice de rotation", pret: true },
+    { partie: 2, slug: "so3", titre: "Propriétés : le groupe SO(3)", pret: true },
+    { partie: 2, slug: "rotations-elementaires", titre: "Rotations élémentaires", pret: true },
+    { partie: 2, slug: "angles-euler", titre: "Angles d'Euler", pret: true },
+    { partie: 3, slug: "changement-repere", titre: "Changement de repère", pret: true },
+    { partie: 3, slug: "matrice-homogene", titre: "Matrice homogène", pret: true },
+    { partie: 3, slug: "composition", titre: "Composition des transformations", pret: true },
+    { partie: 3, slug: "bras-2r", titre: "Modèle géométrique direct du bras 2R", pret: true }
   ];
 
   var surPageConcept = /\/concepts\//.test(location.pathname);
@@ -46,7 +49,7 @@
   function listeHTML(classeNum) {
     var h = "";
     PARTIES.forEach(function (p, ip) {
-      h += "<h2>" + esc(p.titre) + "</h2><ol>";
+      h += '<div class="menu-partie"><h2>' + esc(p.titre) + "</h2><ol>";
       CONCEPTS.forEach(function (c, i) {
         if (c.partie !== ip) return;
         var num = '<span class="' + classeNum + '">' + (i + 1) + "</span>";
@@ -56,17 +59,18 @@
           h += "<li><span>" + num + esc(c.titre) + " (en préparation)</span></li>";
         }
       });
-      h += "</ol>";
+      h += "</ol></div>";
     });
     return h;
   }
 
   // Barre du haut
   var barre = document.createElement("header");
-  barre.className = "barre";
+  barre.className = "site-barre";
   barre.innerHTML =
-    '<div class="barre-int"><a class="carte-lien" href="' + racine + 'index.html">Carte</a><a class="titre" href="' + racine + 'cours.html">' + (indexCourant >= 0 ? esc(CONCEPTS[indexCourant].titre) : "Pages de cours") + "</a>" +
-    '<button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-concepts">Concepts</button></div>' +
+    '<div class="site-barre-int"><a class="site-marque" href="' + racine + 'index.html">Robotique médicale</a>' +
+    '<nav class="onglets" aria-label="Sections"><a href="' + racine + 'index.html">Jeu</a><a href="' + racine + 'cours.html" aria-current="page">Cours</a></nav>' +
+    '<div class="droite"><button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-concepts">Tous les concepts</button></div></div>' +
     '<nav class="menu" id="menu-concepts" aria-label="Liste des concepts">' + listeHTML("num") + "</nav>";
   document.body.insertBefore(barre, document.body.firstChild);
   var bouton = barre.querySelector(".menu-bouton");

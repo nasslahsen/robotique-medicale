@@ -60,17 +60,16 @@ for (const f of fichiers) {
 }
 if (fs.readdirSync(racine).some(f => /\.pdf$/i.test(f))) err("PDF présent dans le dépôt");
 
-// Jeu, niveaux et essais : pages, scripts, équations écrites dans les chaînes JavaScript
+// Jeu et niveaux : pages, scripts, équations écrites dans les chaînes JavaScript
 const aVerifier = [];
-for (const d of ["essais", "jeu", "niveaux"]) {
+for (const d of ["jeu", "niveaux"]) {
   const dos = path.join(racine, d);
   if (fs.existsSync(dos)) for (const f of fs.readdirSync(dos).filter(f => /\.(html|js)$/.test(f))) aVerifier.push([d, f]);
 }
 aVerifier.push([".", "jouer.html"]);
 {
   for (const [d, f] of aVerifier) {
-    const dossierEssais = path.join(racine, d);
-    const brut = fs.readFileSync(path.join(dossierEssais, f), "utf8");
+    const brut = fs.readFileSync(path.join(racine, d, f), "utf8");
     if (brut.includes("—")) err(`${d}/${f} : tiret cadratin`);
     if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(brut)) err(`${d}/${f} : emoji`);
     if (/\.(png|jpe?g|pdf)\b/i.test(brut)) err(`${d}/${f} : référence à une image ou un PDF`);
@@ -85,7 +84,7 @@ aVerifier.push([".", "jouer.html"]);
       catch (e) { err(`${d}/${f} : KaTeX « ${tex.slice(0, 60)} » : ${e.message}`); }
     }
     if (f.endsWith(".html")) for (const l of brut.matchAll(/(?:href|src)="([^"#:]+)(#[^"]*)?"/g)) {
-      if (!fs.existsSync(path.normalize(path.join(dossierEssais, l[1])))) err(`${d}/${f} : lien cassé ${l[1]}`);
+      if (!fs.existsSync(path.normalize(path.join(racine, d, l[1])))) err(`${d}/${f} : lien cassé ${l[1]}`);
     }
   }
 }

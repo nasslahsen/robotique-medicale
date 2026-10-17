@@ -18,7 +18,7 @@
   --z: #3b5bdb;
   --v: #8b3fd9;
   --accent: #ff5a1f;
-  --colonne: 1000px;
+  --colonne: 1100px;
   --rayon: 22px;
 }
 
@@ -31,22 +31,20 @@ body {
   font: 18px/1.7 Inter, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3, .barre .titre { font-family: "Bricolage Grotesque", Inter, sans-serif; }
+h1, h2, h3 { font-family: "Bricolage Grotesque", Inter, sans-serif; }
 a { color: var(--lien); }
 
-/* ---------- Barre du haut (comme l'écran de niveau) ---------- */
-.barre { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--trait); }
-.barre-int { max-width: calc(var(--colonne) + 80px); margin: 0 auto; height: 72px; padding: 0 40px; display: flex; align-items: center; gap: 18px; }
-.barre .carte-lien, .menu-bouton {
+/* ---------- Menu « Tous les concepts » (sous la barre du site, voir onglets.css) ---------- */
+.menu-bouton {
   display: inline-flex; align-items: center; height: 44px; padding: 0 16px;
   border: 2px solid var(--encre); border-radius: 12px; background: #fff; color: var(--encre);
-  font: 600 15px Inter, sans-serif; text-decoration: none; white-space: nowrap; cursor: pointer;
+  font: 600 15px Inter, sans-serif; white-space: nowrap; cursor: pointer;
 }
-.barre .titre { flex: 1; min-width: 0; font-weight: 800; font-size: 20px; letter-spacing: -0.01em; color: var(--encre); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .menu-bouton[aria-expanded="true"] { background: var(--encre); color: #fff; }
-.menu { display: none; max-width: calc(var(--colonne) + 80px); margin: 0 auto; padding: 6px 40px 24px; max-height: calc(100vh - 72px); overflow-y: auto; }
+.menu { display: none; max-width: 1180px; margin: 0 auto; padding: 6px 40px 24px; max-height: calc(100vh - 72px); overflow-y: auto; }
 .menu.ouvert { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
-.menu h2 { font: 700 13px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--jeu); margin: 16px 0 6px; padding: 0; border: 0; grid-column: auto; }
+.menu h2::before { content: none; }
+.menu h2 { counter-increment: none; font: 700 13px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--jeu); margin: 16px 0 6px; padding: 0; border: 0; grid-column: auto; }
 .menu ol { list-style: none; margin: 0; padding: 0; }
 .menu li { margin: 0; }
 .menu li a, .menu li span { display: flex; gap: 10px; align-items: baseline; padding: 9px 12px; border-radius: 12px; text-decoration: none; color: var(--encre); font-size: 16px; line-height: 1.35; }
@@ -168,4 +166,6 @@ th { font-weight: 600; background: var(--fond-doux); }
 .parcours-cartes a:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--encre); }
 .parcours-cartes .num { font: 700 13px "JetBrains Mono", monospace; color: var(--jeu); }
 .parcours-cartes .nom { font: 700 19px/1.25 "Bricolage Grotesque", Inter, sans-serif; }
-.partie-titre { font: 700 13px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--doux); margin: 34px 0 6px; }
+.partie-titre { font: 700 13px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--jeu); margin: 30px 0 6px; }
+.partie-titre:first-child { margin-top: 18px; }
+.note-cours { margin-top: 40px; color: var(--doux); font-size: 15px; }

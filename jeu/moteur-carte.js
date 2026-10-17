@@ -41,13 +41,12 @@
       if (n.chapitre !== ch.id) return;
       if (!n.boss && !n.revision) numero++;
       var st = statut[i], k = noeuds.length, rangee = Math.floor(k / 4), col = rangee % 2 === 0 ? k % 4 : 3 - (k % 4);
-      var el = E.h(st === "ferme" || (st === "bientot" && !n.ancien) ? "div" : "a", "noeud " + st + (n.boss ? " boss" : "") + (n.revision ? " revision" : ""), "", grille);
+      var el = E.h(st === "ferme" || st === "bientot" ? "div" : "a", "noeud " + st + (n.boss ? " boss" : "") + (n.revision ? " revision" : ""), "", grille);
       el.style.gridRow = rangee + 1; el.style.gridColumn = col + 1;
       if (st !== "ferme" && st !== "bientot") el.href = "jouer.html#" + n.id;
-      if (st === "bientot" && n.ancien) el.href = "concepts/" + n.ancien + ".html";
       E.h("div", "rond", n.boss ? "<span>BOSS</span>" : n.revision ? "<span>RÉV</span>" : String(numero), el);
       E.h("div", "nomn", n.titre, el);
-      if (st === "bientot") E.h("div", "ancien", n.ancien ? "bientôt · page de cours" : "bientôt", el);
+      if (st === "bientot") E.h("div", "bientot-txt", "bientôt", el);
       else {
         var nb = prog[n.id] ? prog[n.id].etoiles || 0 : 0, h = "";
         for (var s = 0; s < 3; s++) h += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";

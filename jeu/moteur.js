@@ -20,7 +20,13 @@
     var liste = CATALOGUE.niveaux, rang = liste.findIndex(function (n) { return n.id === def.id; }), info = liste[rang] || { titre: def.id, chapitre: 0 };
     document.title = info.titre + " · Robotique médicale";
     var nom = document.getElementById("nom-niveau");
-    nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : "") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
+    nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : info.revision ? "RÉVISION · " : "") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
+    // lien vers la page de cours du même concept, à côté du lien Carte
+    if (info.cours) {
+      var lc = document.createElement("a");
+      lc.className = "carte-lien"; lc.href = "concepts/" + info.id + ".html"; lc.textContent = "Cours";
+      nom.parentNode.insertBefore(lc, nom);
+    }
 
     // figure
     var figEl = document.getElementById("figure"), svg = document.getElementById("fig");
