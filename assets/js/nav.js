@@ -65,7 +65,7 @@
   var barre = document.createElement("header");
   barre.className = "barre";
   barre.innerHTML =
-    '<div class="barre-int"><a class="titre" href="' + racine + 'index.html">Robotique médicale</a>' +
+    '<div class="barre-int"><a class="carte-lien" href="' + racine + 'index.html">Carte</a><a class="titre" href="' + racine + 'cours.html">' + (indexCourant >= 0 ? esc(CONCEPTS[indexCourant].titre) : "Pages de cours") + "</a>" +
     '<button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-concepts">Concepts</button></div>' +
     '<nav class="menu" id="menu-concepts" aria-label="Liste des concepts">' + listeHTML("num") + "</nav>";
   document.body.insertBefore(barre, document.body.firstChild);
@@ -85,9 +85,42 @@
     etiquette.textContent = "Concept " + (indexCourant + 1) + " sur " + CONCEPTS.length + " · " + PARTIES[CONCEPTS[indexCourant].partie].titre;
   }
 
-  // Parcours sur l'accueil
+  // Parcours sur le sommaire : une carte par concept
   var parcours = document.querySelector("[data-parcours]");
-  if (parcours) parcours.innerHTML = listeHTML("num").replace(/<ol>/g, '<ol class="parcours">');
+  if (parcours) {
+    var hp = "";
+    PARTIES.forEach(function (p, ip) {
+      hp += '<h3 class="partie-titre">' + esc(p.titre) + '</h3><ol class="parcours-cartes">';
+      CONCEPTS.forEach(function (c, i) {
+        if (c.partie === ip && c.pret) hp += '<li><a href="' + url(c) + '"><span class="num">' + (i < 9 ? "0" : "") + (i + 1) + '</span><span class="nom">' + esc(c.titre) + "</span></a></li>";
+      });
+      hp += "</ol>";
+    });
+    parcours.innerHTML = hp;
+  }
+
+  // Lien vers le niveau du jeu qui porte le même nom, avec ses étoiles
+  function etoiles(slug) {
+    try { var p = JSON.parse(localStorage.getItem("rm-progres") || "{}"); return p[slug] ? p[slug].etoiles || 0 : null; } catch (e) { return null; }
+  }
+  var chapeau = document.querySelector(".chapeau");
+  if (chapeau && indexCourant >= 0) {
+    var nb = etoiles(slugCourant), z = document.createElement("div");
+    z.className = "jouer";
+    z.innerHTML = '<a class="btn-jeu" href="' + racine + "jouer.html#" + slugCourant + '">Jouer le niveau</a><span class="etoiles-page">' +
+      (nb === null ? "Pas encore joué" : nb + " étoile" + (nb > 1 ? "s" : "") + " sur 3") + "</span>";
+    chapeau.parentNode.insertBefore(z, chapeau.nextSibling);
+  }
+
+  // Formules clés : regroupées dans une carte
+  [].forEach.call(document.querySelectorAll("main > h2"), function (t) {
+    if (t.textContent.trim() !== "Formules clés") return;
+    var carte = document.createElement("div"), n = t.nextSibling;
+    carte.className = "cles-carte";
+    // nœuds texte compris : les formules ne sont pas encore rendues par KaTeX
+    while (n && !/^(H2|NAV|SCRIPT)$/.test(n.nodeName)) { var suivant = n.nextSibling; carte.appendChild(n); n = suivant; }
+    t.parentNode.insertBefore(carte, t.nextSibling);
+  });
 
   // Précédent / Suivant (seulement entre pages prêtes)
   var main = document.querySelector("main");
@@ -100,6 +133,7 @@
     bas.setAttribute("aria-label", "Concept précédent et suivant");
     bas.innerHTML =
       (prec ? '<a class="precedent" href="' + url(prec) + '"><small>Précédent</small>' + esc(prec.titre) + "</a>" : '<span class="vide"></span>') +
+      '<a class="jeu" href="' + racine + "jouer.html#" + slugCourant + '"><small>S\'entraîner</small>Jouer</a>' +
       (suiv ? '<a class="suivant" href="' + url(suiv) + '"><small>Suivant</small>' + esc(suiv.titre) + "</a>" : '<a class="suivant" href="' + racine + 'index.html"><small>Fin du parcours</small>Retour à l\'accueil</a>');
     main.appendChild(bas);
   }

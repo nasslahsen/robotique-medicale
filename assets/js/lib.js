@@ -138,7 +138,7 @@
   /* ================================================================ */
 
   var NS = "http://www.w3.org/2000/svg";
-  var C = { x: "#c62828", y: "#2e7d32", z: "#1565c0", v: "#6a1b9a", acc: "#e65100", gris: "#9aa0a6", fonce: "#1c2230", doux: "#5c6577", trait: "#dfe3ea" };
+  var C = { x: "#e5484d", y: "#12a26b", z: "#3b5bdb", v: "#8b3fd9", acc: "#ff5a1f", gris: "#9aa0a6", fonce: "#15171f", doux: "#5b6172", trait: "#e3e6ee" };
 
   function el(tag, attrs, parent) {
     var e = document.createElementNS(NS, tag);
