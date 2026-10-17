@@ -37,7 +37,7 @@ NIVEAU({
     };
     D.glisser(fig.svg, {
       debut: function () { return n.libre; },
-      bouge: function (p) { n.t = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.t); },
+      bouge: function (p) { if (!n.libre) return; n.t = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.t); },
       fin: function () { if (n.libre && n.surRelache) n.surRelache(n.t); }
     });
     n.animer = function (vers, ms, fin) {

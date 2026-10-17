@@ -92,8 +92,8 @@ NIVEAU({
         return false;
       },
       bouge: function (p) {
-        if (mode === "rot") { n.alpha = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.alpha); }
-        else if (mode === "pin") { n.pin = pl.U(p); n.dessin(); n.surTape(); }
+        if (mode === "rot") { if (!n.libre) return; n.alpha = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.alpha); }
+        else if (mode === "pin") { if (!n.surTape) return; n.pin = pl.U(p); n.dessin(); n.surTape(); }
       },
       fin: function () { if (mode === "rot" && n.surRelache) n.surRelache(n.alpha); mode = null; }
     });

@@ -28,7 +28,7 @@ NIVEAU({
     };
     D.glisser(fig.svg, {
       debut: function (p) { if (!n.poignee) return false; var q = pl.P(n.poignee); return Math.hypot(p[0] - q[0], p[1] - q[1]) < 70; },
-      bouge: function (p) { var u = pl.U(p); n.poignee = n.bout = [Math.max(-3, Math.min(6, Math.round(u[0]))), Math.max(-2, Math.min(6, Math.round(u[1]))), 0]; if (n.surBouge) n.surBouge(); n.dessin(); },
+      bouge: function (p) { if (!n.poignee) return; var u = pl.U(p); n.poignee = n.bout = [Math.max(-3, Math.min(6, Math.round(u[0]))), Math.max(-2, Math.min(6, Math.round(u[1]))), 0]; if (n.surBouge) n.surBouge(); n.dessin(); },
       fin: function () { if (n.surRelache) n.surRelache(); }
     });
     n.pl = pl;

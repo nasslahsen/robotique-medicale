@@ -60,7 +60,7 @@ NIVEAU({
         }
         return n.libre;
       },
-      bouge: function (p) { var a = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.a = a; n.dessin(); }
+      bouge: function (p) { if (!n.libre) return; var a = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.a = a; n.dessin(); }
     });
     n.pl = pl;
     n.dessin();

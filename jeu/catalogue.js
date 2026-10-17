@@ -30,12 +30,12 @@ window.CATALOGUE = {
     { id: "robotique-medicale", chapitre: 1, titre: "Spécificités du médical", ancien: "robotique-medicale" },
     { id: "boss-robot", chapitre: 1, titre: "Fiche d'identité d'un robot", boss: true },
 
-    { id: "repere", chapitre: 2, titre: "Repère et coordonnées", ancien: "repere" },
-    { id: "produit-scalaire", chapitre: 2, titre: "Produit scalaire", ancien: "produit-scalaire" },
-    { id: "produit-vectoriel", chapitre: 2, titre: "Produit vectoriel", ancien: "produit-vectoriel" },
-    { id: "coordonnees-cylindriques", chapitre: 2, titre: "Coordonnées cylindriques", ancien: "coordonnees-cylindriques" },
-    { id: "position-chasles", chapitre: 2, titre: "Position et relation de Chasles", ancien: "position-chasles" },
-    { id: "boss-espace", chapitre: 2, titre: "Où est l'instrument ?", boss: true },
+    { id: "repere", chapitre: 2, titre: "Repère et coordonnées", ancien: "repere", pret: true },
+    { id: "produit-scalaire", chapitre: 2, titre: "Produit scalaire", ancien: "produit-scalaire", pret: true },
+    { id: "produit-vectoriel", chapitre: 2, titre: "Produit vectoriel", ancien: "produit-vectoriel", pret: true },
+    { id: "coordonnees-cylindriques", chapitre: 2, titre: "Coordonnées cylindriques", ancien: "coordonnees-cylindriques", pret: true },
+    { id: "position-chasles", chapitre: 2, titre: "Position et relation de Chasles", ancien: "position-chasles", pret: true },
+    { id: "boss-espace", chapitre: 2, titre: "Où est l'instrument ?", boss: true, pret: true },
 
     { id: "matrice-rotation", chapitre: 3, titre: "Matrice de rotation", pret: true },
     { id: "so3", chapitre: 3, titre: "Le groupe SO(3)", ancien: "so3" },

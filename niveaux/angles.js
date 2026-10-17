@@ -43,7 +43,8 @@ NIVEAU({
     };
     D.glisser(fig.svg, {
       debut: function () { return n.libre; },
-      bouge: function (p) {
+      bouge: function (p) { // le doigt peut encore bouger après la réussite : on ignore
+        if (!n.libre) return;
         var a = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG);
         n.a = a; n.dessin(); if (n.surAngle) n.surAngle(a);
       },

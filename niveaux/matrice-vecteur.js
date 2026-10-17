@@ -52,7 +52,7 @@ NIVEAU({
     };
     D.glisser(svg, {
       debut: function () { return !!n.surTape; },
-      bouge: function (p) { var u = pl.U(p); n.pin = [Math.round(u[0]), Math.round(u[1]), 0]; n.dessin(); if (n.surTape) n.surTape(); }
+      bouge: function (p) { if (!n.surTape) return; var u = pl.U(p); n.pin = [Math.round(u[0]), Math.round(u[1]), 0]; n.dessin(); if (n.surTape) n.surTape(); }
     });
     n.pl = pl;
     n.dessin();

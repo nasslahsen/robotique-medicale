@@ -38,7 +38,8 @@ NIVEAU({
     };
     D.glisser(fig.svg, {
       debut: function (p) { if (!n.libre) return false; var M = pl.P([n.x, n.y]); return Math.hypot(p[0] - M[0], p[1] - M[1]) < 70; },
-      bouge: function (p) {
+      bouge: function (p) { // le doigt peut encore bouger après la réussite : on ignore
+        if (!n.libre) return;
         var u = pl.U(p);
         n.x = Math.max(0.02, Math.min(0.85, Math.round(u[0] * 100) / 100));
         n.y = Math.max(0.02, Math.min(0.75, Math.round(u[1] * 100) / 100));

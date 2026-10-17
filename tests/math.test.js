@@ -199,4 +199,27 @@ test("chapitre 0 du jeu : réponses attendues dans les niveaux", () => {
   proche(0.3 * Math.cos(30 * D) + 0.2 * Math.cos(90 * D), 0.260, 1e-3); proche(0.3 * Math.sin(30 * D) + 0.2, 0.350, 1e-12);
 });
 
+test("chapitre 2 du jeu : réponses attendues dans les niveaux", () => {
+  // repère : distance du cours (exemple ajouté) et glissières
+  proche(Math.hypot(13 - 10, 24 - 20, 5 - 5), 5, 1e-12);
+  // produit scalaire : instrument et os, deux repères à 30°
+  proche(m.dot([1, 0, 1], [0, 0, 1]), 1); proche(Math.acos(1 / Math.SQRT2) / D, 45, 1e-9);
+  const R = m.Rz(30 * D), x2 = m.colonne(R, 0), y2 = m.colonne(R, 1);
+  proche(m.dot([1, 0, 0], x2), 0.866, 1e-3); proche(m.dot([0, 1, 0], x2), 0.5, 1e-12); proche(m.dot([1, 0, 0], y2), -0.5, 1e-12);
+  // produit vectoriel : exemple et deux repères
+  procheVec(m.cross([1, 2, 0], [0, 1, 3]), [6, -3, 1]); procheVec(m.cross([1, 0, 0], [0, 1, 0]), [0, 0, 1]);
+  procheVec(m.cross([1, 0, 0], x2), [0, 0, Math.sin(30 * D)]);
+  // cylindriques
+  proche(5 * Math.cos(45 * D), 3.54, 0.005); proche(Math.hypot(-1, 1), 1.414, 1e-3);
+  proche(Math.atan2(1, -1) / D, 135, 1e-9); proche(Math.atan2(-1, -1) / D, -135, 1e-9); proche(Math.atan(1) / D, 45, 1e-9);
+  // Chasles
+  procheVec(m.add([2, 1, 0], m.matVec(m.Rz(0), [1.5, 0, 0])), [3.5, 1, 0]);
+  procheVec(m.add([2, 1, 0], m.matVec(m.Rz(90 * D), [1.5, 0, 0])), [2, 2.5, 0]);
+  procheVec(m.add([1, 1.5, 0], m.matVec(m.Rz(90 * D), [1.5, 0, 0])), [1, 3, 0]);
+  // boss
+  proche(Math.hypot(3, 4, 0), 5); procheVec(m.cross([2, 0, 0], [0, 3, 0]), [0, 0, 6]);
+  procheVec([2 * Math.cos(-90 * D), 2 * Math.sin(-90 * D), 1], [0, -2, 1]);
+  procheVec(m.add([1, 1, 0], m.matVec(m.Rz(90 * D), [2, 0, 0])), [1, 3, 0]);
+});
+
 console.log(`${n} tests réussis`);

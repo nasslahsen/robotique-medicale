@@ -33,7 +33,7 @@ NIVEAU({
     };
     D.glisser(fig.svg, {
       debut: function () { return n.libre; },
-      bouge: function (p) { n.segs[0][1] = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.segs[0][1]); },
+      bouge: function (p) { if (!n.libre) return; n.segs[0][1] = Math.round(Math.atan2(pl.O[1] - p[1], p[0] - pl.O[0]) / D.DEG); n.dessin(); if (n.surAngle) n.surAngle(n.segs[0][1]); },
       fin: function () { if (n.libre && n.surRelache) n.surRelache(n.segs[0][1]); }
     });
     n.animer = function (vers, ms, fin) {
