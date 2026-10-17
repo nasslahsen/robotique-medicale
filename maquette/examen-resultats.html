@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Résultats d'examen · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.res-tete { display: grid; grid-template-columns: auto 1fr; gap: 34px; align-items: center; padding: 28px 32px; border: 2.5px solid var(--encre); border-radius: 28px; box-shadow: 6px 6px 0 var(--encre); }
+.score { font: 800 76px/1 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.03em; }
+.score small { font-size: 34px; color: var(--doux); }
+.res-tete .stats { display: flex; gap: 26px; margin-top: 12px; color: var(--doux); font-size: 15px; }
+.res-tete .stats b { display: block; font: 700 22px "JetBrains Mono", monospace; color: var(--encre); }
+.par-ch { display: grid; gap: 12px; }
+.par-ch > div { display: grid; grid-template-columns: 300px 1fr 90px; gap: 18px; align-items: center; font-size: 16px; }
+.par-ch .piste { height: 14px; }
+.par-ch .piste i { background: var(--ok); }
+.par-ch .piste i.moyen { background: #e0a43a; } .par-ch .piste i.bas { background: var(--ko); }
+.par-ch b { font: 700 16px "JetBrains Mono", monospace; text-align: right; }
+.manquee { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 18px 22px; border: 1.5px solid var(--trait); border-radius: 18px; margin-bottom: 12px; background: #fff; }
+.manquee p { margin: 0 0 8px; font-size: 17px; font-weight: 600; }
+.manquee .rep { font-size: 15px; color: var(--doux); }
+.manquee .rep span.f { color: #b8282c; text-decoration: line-through; margin-right: 10px; }
+.manquee .rep span.b { color: #0d7a50; font-weight: 600; }
+.manquee .source { margin-top: 8px; }
+.katex { font-size: 1.04em; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-a.html">Robotique médicale</a><span class="sep">›</span><a href="examen.html">Mode examen</a><span class="sep">›</span><b>Résultats</b></nav>
+  <div class="droite"><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
+</div></header>
+<main class="mq" style="max-width:1000px"><section class="res-tete"><div class="anneau grand"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="99.0 131.9"/></svg><b>75<small>% juste</small></b></div>
+<div><span class="kick">EXAMEN BLANC · 20 QUESTIONS · CHRONOMÉTRÉ</span><div class="score">15 <small>/ 20</small></div>
+<div class="stats"><span><b>17:42</b>temps utilisé sur 20:00</span><span><b>5</b>erreurs à revoir</span><span><b>5</b>cartes ajoutées à tes révisions</span></div></div></section>
+<h2 class="section-titre">Par chapitre</h2><div class="par-ch">
+<div><span>0 · Les bases</span><div class="piste"><i style="width:100%"></i></div><b>4 / 4</b></div>
+<div><span>1 · Le robot et sa description</span><div class="piste"><i class="moyen" style="width:60%"></i></div><b>3 / 5</b></div>
+<div><span>2 · Repères et vecteurs</span><div class="piste"><i style="width:83%"></i></div><b>5 / 6</b></div>
+<div><span>3 · Orientations</span><div class="piste"><i class="moyen" style="width:60%"></i></div><b>3 / 5</b></div></div>
+<h2 class="section-titre">Les questions manquées<small>chacune renvoie à la page qui l'explique</small></h2>
+<div class="manquee"><div><p>Quelle est l'inverse de la matrice de rotation \(R^{0,1}\) ?</p><div class="rep"><span class="f">\(-R^{0,1}\)</span><span class="b">\((R^{0,1})^T\)</span></div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 21–22</b></span></div></div><a class="outil" href="chapitre-a.html">Revoir « Le groupe SO(3) »</a></div><div class="manquee"><div><p>Un robot SCARA a combien de degrés de liberté ?</p><div class="rep"><span class="f">3</span><span class="b">4</span></div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Partie 2 ch. 1, diapo 38</b></span></div></div><a class="outil" href="chapitre-a.html">Revoir « Schémas et topologies »</a></div><div class="manquee"><div><p>Doubler la vitesse d'un robot double-t-il sa cadence ?</p><div class="rep"><span class="f">Oui</span><span class="b">Non : seuls les temps de mouvement diminuent</span></div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Semaine 1, diapos 40–41</b></span></div></div><a class="outil" href="chapitre-a.html">Revoir « Précision et temps de cycle »</a></div>
+<div style="display:flex;gap:12px;margin-top:22px"><a class="btn" href="examen.html">Refaire un examen</a><a class="btn clair" href="cartes.html">Revoir les cartes liées</a></div>
+</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="../commun/vendor/katex/katex.min.js"></script>
+<script src="../commun/vendor/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>
+<script src="maquette.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz du chapitre · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.qz { max-width: 880px; margin: 0 auto; }
+.pastilles { display: flex; gap: 8px; margin: 8px 0 26px; }
+.pastilles span { flex: 1; height: 10px; border-radius: 10px; background: var(--pale); }
+.pastilles .b { background: var(--ok); } .pastilles .f { background: var(--ko); } .pastilles .c { background: var(--encre); }
+.qz h1 { font-size: 34px; line-height: 1.18; margin: 10px 0 24px; }
+.retour { margin-top: 22px; padding: 24px 26px; border-radius: 22px; border: 2.5px solid var(--ok); background: var(--ok-pale); }
+.retour.faux { border-color: var(--ko); background: var(--ko-pale); }
+.retour h2 { margin: 0 0 10px; display: flex; align-items: center; gap: 10px; font-size: 24px; }
+.retour h2 svg { width: 26px; height: 26px; }
+.retour p { margin: 0 0 10px; font-size: 18px; line-height: 1.55; }
+.retour .formule { margin: 12px 0; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.7); text-align: center; font-size: 20px; }
+.retour .suite-q { display: flex; justify-content: flex-end; margin-top: 10px; }
+.consigne-q { color: var(--doux); font-size: 15px; margin-top: 16px; }
+.katex { font-size: 1.05em; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-a.html">Robotique médicale</a><span class="sep">›</span><a href="chapitre-a.html">Chapitre 3 · Orientations</a><span class="sep">›</span><b>Quiz</b></nav>
+  <div class="droite"><span class="compteur" style="font:700 16px JetBrains Mono,monospace">3 / 8</span><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
+</div></header>
+<main class="mq"><div class="qz">
+<div class="pastilles"><span class="b"></span><span class="f"></span><span class="c"></span><span></span><span></span><span></span><span></span><span></span></div>
+<span class="kick">QUIZ · CHAPITRE 3 · QUESTION 3 SUR 8</span>
+<h1>En convention ZYX, pour quelle valeur de l'angle du milieu \(\beta\) perd-on un degré de liberté dans la description ?</h1>
+<div class="choix-q" data-quiz>
+<button type="button"><span class="lettre">A</span>\(\beta = 0°\)</button>
+<button type="button"><span class="lettre">B</span>\(\beta = \pm 45°\)</button>
+<button type="button" data-juste><span class="lettre">C</span>\(\beta = \pm 90°\)</button>
+<button type="button"><span class="lettre">D</span>\(\beta = 180°\)</button>
+</div>
+<p class="consigne-q" id="consigne-q">Touche une réponse. Le retour s'affiche tout de suite.</p>
+<section class="retour" id="retour-bon" hidden><h2 style="color:#0d7a50"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Juste</h2><p>Avec \(\beta = \pm 90°\), le premier axe de rotation (lacet) et le dernier (roulis) deviennent alignés. Les deux angles font alors le même mouvement : on ne peut plus les retrouver séparément à partir de la matrice.</p>
+<div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma), \quad \beta = \pm 90° \Rightarrow \text{singularité}\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 41–43</b></span></div><div class="suite-q"><a class="btn" href="quiz.html">Question suivante</a></div></section>
+<section class="retour faux" id="retour-faux" hidden><h2 style="color:#b8282c">Pas tout à fait : c'était C</h2><p>Avec \(\beta = \pm 90°\), le premier axe de rotation (lacet) et le dernier (roulis) deviennent alignés. Les deux angles font alors le même mouvement : on ne peut plus les retrouver séparément à partir de la matrice.</p>
+<div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma), \quad \beta = \pm 90° \Rightarrow \text{singularité}\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 41–43</b></span></div><div class="suite-q"><a class="outil" href="chapitre-a.html" style="margin-right:12px">Revoir la page « Angles d'Euler »</a><a class="btn" href="quiz.html">Question suivante</a></div></section>
+</div></main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="../commun/vendor/katex/katex.min.js"></script>
+<script src="../commun/vendor/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>
+<script src="maquette.js"></script>
+</body>
+</html>

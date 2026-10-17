@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Session terminée · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.fin { max-width: 900px; margin: 0 auto; }
+.fin h1 { font-size: 48px; }
+.chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+.chiffre { padding: 22px 24px; border: 2.5px solid var(--encre); border-radius: 22px; box-shadow: 4px 4px 0 var(--encre); }
+.chiffre b { display: block; font: 800 44px/1 "Bricolage Grotesque", Inter, sans-serif; }
+.chiffre span { color: var(--doux); font-size: 15px; }
+.repart { display: flex; gap: 8px; margin-top: 12px; }
+.ligne-s { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1.5px solid var(--trait); font-size: 17px; }
+.ligne-s:last-child { border-bottom: 0; }
+.ligne-s .d { margin-left: auto; color: var(--doux); font-size: 15px; }
+.chiffre .etoiles-s { color: #f0b429; font-size: 20px; letter-spacing: 2px; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <a class="site-marque" href="tableau-a.html">Semestre 5</a>
+  <div class="droite"></div>
+</div></header>
+<main class="mq fin"><span class="kick">SESSION DE 10 MIN · TERMINÉE</span>
+<h1>C'est bon pour aujourd'hui.</h1>
+<p class="sous">10 minutes, rien de plus. Les cartes que tu as ratées reviendront plus tôt.</p>
+<div class="chiffres">
+<div class="chiffre"><b>12</b><span>cartes revues</span><div class="repart"><span class="puce ok">8 faciles</span><span class="puce gris">3 difficiles</span><span class="puce">1 à revoir</span></div></div>
+<div class="chiffre"><b>1</b><span>page terminée : Rotations élémentaires</span><div class="repart"><span class="etoiles-s">★★☆</span></div></div>
+<div class="chiffre"><b>9:48</b><span>temps passé</span><div class="repart"><span class="puce gris">4 jours de suite</span></div></div>
+</div>
+<h2 class="section-titre">Ce qui t'attend <small>prévu, rien à faire maintenant</small></h2>
+<div class="ligne-s"><b>Demain</b><span>6 cartes dues</span><span class="d">Robotique médicale</span></div>
+<div class="ligne-s"><b>Dans 3 jours</b><span>11 cartes dues</span><span class="d">Robotique médicale</span></div>
+<div class="ligne-s"><b>Page suivante</b><span>Angles d'Euler</span><span class="d">Chapitre 3 · idée 4</span></div>
+<div style="display:flex;gap:14px;margin-top:30px"><a class="btn-continuer grand" href="tableau-a.html">Retour au tableau de bord</a><a class="btn petit clair" href="session.html" style="height:62px">Encore 10 min</a></div>
+</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="maquette.js"></script>
+</body>
+</html>

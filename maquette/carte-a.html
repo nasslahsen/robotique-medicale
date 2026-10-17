@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carte du module A · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.mod-tete { display: flex; align-items: flex-end; gap: 30px; }
+.mod-tete > div:first-child { flex: 1; }
+.mod-outils { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 6px; }
+.mod-outils .btn svg { width: 16px; height: 16px; }
+.a-venir-bande { margin-top: 26px; display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 2.5px dashed #c9cdd8; border-radius: 22px; color: var(--doux); }
+.a-venir-bande b { color: #6b7180; font: 800 20px "Bricolage Grotesque", Inter, sans-serif; }
+.legende { color: var(--doux); font-size: 15px; line-height: 1.5; }
+.legende b { color: var(--encre); }
+
+.reseau { position: relative; height: 560px; margin-top: 26px; }
+.reseau svg.liens { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bloc { position: absolute; width: 258px; height: 236px; display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 16px; border: 2.5px solid var(--encre); border-radius: 22px; background: #fff; box-shadow: 5px 5px 0 var(--encre); text-decoration: none; color: var(--encre); }
+.bloc .num { font: 700 13px "JetBrains Mono", monospace; color: var(--jeu-texte); letter-spacing: .05em; }
+.bloc h3 { margin: 0; font-size: 21px; line-height: 1.12; letter-spacing: -0.01em; }
+.bloc p { margin: 0; font-size: 14px; line-height: 1.4; color: var(--doux); }
+.bloc p.pq { color: var(--encre); font-weight: 500; }
+.bloc .bas { margin-top: auto; display: flex; align-items: center; gap: 10px; }
+.bloc .bas .anneau { width: 42px; height: 42px; }
+.bloc .bas .anneau b { font-size: 10px; letter-spacing: -0.03em; }
+.bloc .src { margin-left: auto; font-size: 11px; color: #8a90a0; text-align: right; line-height: 1.3; }
+.bloc.ici { border-color: var(--jeu); box-shadow: 5px 5px 0 var(--jeu); }
+.bloc.ici::before { content: "TU ES ICI"; position: absolute; top: -15px; left: 16px; padding: 3px 10px; border-radius: 8px; background: var(--jeu); color: #fff; font: 700 11px "JetBrains Mono", monospace; letter-spacing: .06em; }
+.bloc.fait { background: #fafbfd; }
+.bande-sm { position: absolute; left: -14px; right: -14px; top: 270px; bottom: -14px; border-radius: 28px; background: #FFE2DD55; border: 1.5px solid #FFE2DD; }
+.lire { position: absolute; left: 0; top: 0; width: 520px; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><b>Robotique médicale</b></nav>
+  <div class="droite"><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
+</div></header>
+<main class="mq"><div class="mod-tete">
+  <div><span class="kick">MODULE 1 · RAISONNEMENT · ROBOTIQUE BIOMÉDICALE</span>
+  <h1>Robotique médicale</h1>
+  <p class="sous">Décrire un robot, puis calculer où se trouve son outil et comment il est tourné.</p></div>
+  <div class="anneau grand"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="80.5 131.9"/></svg><b>25<small>sur 41 pages</small></b></div>
+</div>
+<div class="mod-outils">
+  <a class="btn petit plein" href="chapitre-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>Continuer : Rotations élémentaires</a>
+  <a class="outil" href="cartes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="7" width="14" height="13" rx="2.5"/><path d="M7 4h11.5A2.5 2.5 0 0 1 21 6.5V17"/></svg>Cartes mémoire <span class="puce">9 à revoir</span></a>
+  <a class="outil" href="fiche.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg>Fiche de révision</a>
+  <a class="outil" href="examen.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>Mode examen</a>
+</div>
+<div class="reseau"><div class="bande-sm"></div><svg class="liens" viewBox="0 0 1100 560" preserveAspectRatio="none"><defs><marker id="pointe" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#15171f"/></marker></defs><path d="M258 418 L280 418" fill="none" stroke="#15171f" stroke-width="3" marker-end="url(#pointe)"/><path d="M540 418 L562 418" fill="none" stroke="#15171f" stroke-width="3" marker-end="url(#pointe)"/><path d="M822 418 L844 418" fill="none" stroke="#15171f" stroke-width="3" marker-end="url(#pointe)"/><path d="M940 120 C1080 120 975 176 975 296" fill="none" stroke="#15171f" stroke-width="3" marker-end="url(#pointe)"/></svg><div class="lire"><span class="kick">ROBOTIQUE BIOMÉDICALE</span><p class="legende" style="margin-top:8px">Chaque bloc est un chapitre. Une flèche va d'un chapitre vers celui qui s'appuie dessus. <b>Touche un bloc</b> pour ouvrir le chapitre.</p></div><a class="bloc fait" style="left:0px;top:300px" href="chapitre-a.html"><span class="num">CHAPITRE 0</span><h3>Les bases</h3><p>Angles, trigonométrie, vecteurs et matrices, repris de zéro.</p><p class="pq">Tout le reste du module en dépend.</p><div class="bas"><div class="anneau"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="131.9 131.9"/></svg><b>10/10</b></div><span class="puce ok">Terminé</span><span class="src">Prérequis <span class="ajoute">Ajouté</span></span></div></a><a class="bloc" style="left:540px;top:20px;width:400px;height:200px" href="chapitre-a.html"><span class="num">CHAPITRE 1</span><h3>Le robot et sa description</h3><p>Ce qu'est un robot : articulations, liaisons, architectures, performances, contraintes médicales.</p><p class="pq">Le vocabulaire pour décrire n'importe quel robot.</p><div class="bas"><div class="anneau"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="79.2 131.9"/></svg><b>6/10</b></div><span class="puce">En cours</span><span class="src">Semaine 1 · Partie 2 ch. 1</span></div></a><a class="bloc fait" style="left:282px;top:300px" href="chapitre-a.html"><span class="num">CHAPITRE 2</span><h3>Repères et vecteurs</h3><p>Repères, produits scalaire et vectoriel, coordonnées, relation de Chasles.</p><p class="pq">Pour dire où se trouve un instrument.</p><div class="bas"><div class="anneau"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="131.9 131.9"/></svg><b>7/7</b></div><span class="puce ok">Terminé</span><span class="src">Module de rappel</span></div></a><a class="bloc ici" style="left:564px;top:300px" href="chapitre-a.html"><span class="num">CHAPITRE 3</span><h3>Orientations</h3><p>Matrices de rotation, SO(3), rotations élémentaires, angles d'Euler.</p><p class="pq">Pour dire comment un instrument est tourné.</p><div class="bas"><div class="anneau"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="37.7 131.9"/></svg><b>2/7</b></div><span class="puce">En cours</span><span class="src">Chapitre 2</span></div></a><a class="bloc" style="left:846px;top:300px" href="chapitre-a.html"><span class="num">CHAPITRE 4</span><h3>Transformations</h3><p>Changement de repère, matrices homogènes, composition, bras 2R.</p><p class="pq">Position et orientation de l'outil en une seule matrice.</p><div class="bas"><div class="anneau"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.0 131.9"/></svg><b>0/7</b></div><span class="puce gris">À faire</span><span class="src">Chapitre 2</span></div></a></div><div class="a-venir-bande"><span class="badge-avenir">À venir</span><b>Éléments mécaniques en robotique</b><span>Ce sous-module apparaîtra sur la carte avec ses cours.</span></div></main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="maquette.js"></script>
+</body>
+</html>

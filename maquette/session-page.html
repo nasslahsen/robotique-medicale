@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Session : page suivante · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.compteur { font: 700 16px "JetBrains Mono", monospace; }
+.paquet { height: 8px; border-radius: 8px; background: var(--pale); overflow: hidden; margin: 6px 0 26px; }
+.paquet i { display: block; height: 100%; width: 33%; background: var(--jeu); }
+.flip { width: 820px; height: 420px; margin: 0 auto; }
+.flip-int { width: 100%; height: 100%; }
+.face { border: 2.5px solid var(--encre); border-radius: 28px; background: #fff; box-shadow: 6px 6px 0 var(--encre); }
+.face.dos { background: #fff; border-color: var(--jeu); box-shadow: 6px 6px 0 var(--jeu); }
+.face .q { margin: auto 0; font: 800 34px/1.2 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.015em; }
+.face .rep { margin: 18px 0 0; font-size: 22px; line-height: 1.45; font-weight: 500; }
+.face .formule { margin: 18px 0 0; padding: 14px; border-radius: 16px; background: #f6f7fa; text-align: center; font-size: 22px; }
+.face .indice { font-size: 15px; color: var(--doux); display: flex; align-items: center; gap: 8px; }
+.face .indice svg { width: 18px; height: 18px; }
+.face .haut { display: flex; justify-content: space-between; align-items: center; }
+.reponses { width: 820px; margin: 30px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.reponses a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 10px; border: 2.5px solid var(--encre); border-radius: 18px; background: #fff; text-decoration: none; color: var(--encre); box-shadow: 4px 4px 0 var(--encre); }
+.reponses a b { font-size: 19px; }
+.reponses a span { font-size: 14px; color: var(--doux); }
+.reponses a.r1 { border-color: var(--ko); box-shadow: 4px 4px 0 var(--ko); }
+.reponses a.r3 { border-color: var(--ok); box-shadow: 4px 4px 0 var(--ok); }
+.aide-flip { text-align: center; margin-top: 18px; color: var(--doux); font-size: 15px; }
+.katex { font-size: 1.05em; }
+</style>
+<style>
+.etapes-s { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--doux); }
+.etapes-s span { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 10px; background: var(--pale); font-weight: 600; }
+.etapes-s span.on { background: var(--encre); color: #fff; }
+.etapes-s span.fait { background: var(--ok-pale); color: #0d7a50; }
+.etapes-s span svg { width: 14px; height: 14px; }
+.etapes-s .sep { width: 18px; height: 2px; background: var(--trait); padding: 0; }
+.temps-txt { font: 700 16px "JetBrains Mono", monospace; }
+.session-haut { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.flip { height: 380px; }
+</style>
+<style>
+.prochaine { display: grid; grid-template-columns: 1fr 340px; gap: 30px; align-items: center; padding: 34px 38px; border: 2.5px solid var(--encre); border-radius: 28px; box-shadow: 6px 6px 0 var(--jeu); background: #fff; }
+.prochaine h2 { margin: 8px 0 10px; font: 800 38px/1.08 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.02em; }
+.prochaine p { margin: 0; font-size: 18px; line-height: 1.55; color: var(--doux); }
+.prochaine .apercu { height: 230px; border-radius: 20px; background: #f6f7fa; display: flex; align-items: center; justify-content: center; }
+.prochaine .actions { display: flex; gap: 12px; margin-top: 24px; }
+.bilan-cartes { margin-top: 22px; display: flex; gap: 12px; color: var(--doux); font-size: 15px; align-items: center; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><b>Session de 10 min</b></nav>
+  <div class="droite"><span class="temps-txt">3:05 restantes</span><a class="barre-carte" href="session-fin.html">Arrêter</a></div>
+</div></header>
+<div class="temps"><i style="width:69%"></i></div><main class="mq"><div class="session-haut"><div class="etapes-s"><span class="fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Cartes 5 / 12</span><i class="sep"></i><span class="on">Page suivante</span><i class="sep"></i><span class="">Fin</span></div></div>
+<section class="prochaine"><div><span class="kick">PAGE SUIVANTE · CHAPITRE 3 · IDÉE 3</span>
+<h2>Rotations élémentaires</h2>
+<p>Tourner autour d'un seul axe : x, y ou z. Tu fais tourner la pince et tu retrouves toi-même la matrice \(R_z(\alpha)\).</p>
+<div class="actions"><a class="btn petit plein" href="session-fin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>Jouer le niveau, environ 3 min</a><a class="btn petit clair" href="session-fin.html">Finir ici</a></div>
+<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 25–33</b></span></div></div>
+<div class="apercu"><svg viewBox="0 0 300 210" width="300" height="210"><g stroke-linecap="round" fill="none">
+<line x1="150" y1="170" x2="250" y2="170" stroke="#e5484d" stroke-width="5"/><line x1="150" y1="170" x2="150" y2="50" stroke="#12a26b" stroke-width="5"/>
+<line x1="150" y1="170" x2="236" y2="120" stroke="#e5484d" stroke-width="5" opacity=".45" stroke-dasharray="8 7"/><line x1="150" y1="170" x2="100" y2="84" stroke="#12a26b" stroke-width="5" opacity=".45" stroke-dasharray="8 7"/>
+<path d="M210 170 A60 60 0 0 0 202 140" stroke="#15171f" stroke-width="3"/></g>
+<text x="214" y="152" font-family="Inter" font-size="20" font-style="italic" fill="#15171f">α</text>
+<circle cx="150" cy="170" r="7" fill="#3b82f6"/></svg></div></section>
+<div class="bilan-cartes"><span class="puce ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>12 cartes revues</span>Il reste 3 minutes : juste assez pour cette page. Si le temps finit en plein niveau, tu le termines tranquillement.</div>
+</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="../commun/vendor/katex/katex.min.js"></script>
+<script src="../commun/vendor/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>
+<script src="maquette.js"></script>
+</body>
+</html>
