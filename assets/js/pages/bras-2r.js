@@ -29,8 +29,8 @@
     R.vider(g);
     var t1 = c1.v * R.DEG, t2 = c2.v * R.DEG, L1 = l1.v, L2 = l2.v;
     // échelle adaptée à la portée l1 + l2, pour que le bras remplisse la figure
-    var portee = L1 + L2, ech = 245 / portee;
-    P = R.plan(480, 278, ech);
+    var portee = L1 + L2, ech = 320 / portee;
+    P = R.plan(480, 370, ech);
     var r = m.bras2R(t1, t2, L1, L2), o = P.p([0, 0]);
     R.grille(g, P, f.svg, { pas: 0.1, fort: 5, axes: false });
     if (ws.checked) {

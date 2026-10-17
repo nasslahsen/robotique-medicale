@@ -51,38 +51,38 @@
       return [t1, t2];
     }
     function badge(x, y, w, txt, on, coul) {
-      R.el("rect", { x: x, y: y, width: w, height: 30, rx: 6, fill: on ? coul : "#f1f3f6", stroke: on ? coul : "#d5d9e0" }, g);
-      R.texte(g, txt, [x + w / 2, y + 16], { couleur: on ? "#fff" : C.doux, italique: false, taille: 15, gras: on });
+      R.el("rect", { x: x, y: y, width: w, height: 32, rx: 10, fill: on ? coul : "#f6f7fa", stroke: on ? coul : "#e3e6ee", "stroke-width": 1.5 }, g);
+      R.texte(g, txt, [x + w / 2, y + 17], { couleur: on ? "#fff" : C.doux, italique: false, taille: 15, gras: on, halo: false });
     }
     function dessiner() {
       if (!et) return;
       R.vider(g);
       var e = ETAPES[k], arret = intrusion.checked;
       // clôture et barrière immatérielle
-      R.el("rect", { x: 20, y: 40, width: 560, height: 315, fill: "none", stroke: "#c3c8d0", "stroke-dasharray": "8 6", rx: 6 }, g);
-      R.ligne(g, [20, 120], [20, 290], { couleur: arret ? C.x : "#f2b134", epaisseur: 5 });
+      R.el("rect", { x: 20, y: 40, width: 560, height: 315, fill: "none", stroke: "#c6cbd8", "stroke-width": 1.5, "stroke-dasharray": "8 6", rx: 10 }, g);
+      R.ligne(g, [20, 120], [20, 290], { couleur: arret ? C.x : C.acc, epaisseur: 6 });
       R.texte(g, arret ? "barrière franchie" : "barrière immatérielle", [92, 362], { couleur: arret ? C.x : C.doux, italique: false, taille: 13 });
       // convoyeurs
-      R.el("rect", { x: 30, y: 310, width: 200, height: 16, rx: 8, fill: "#cfd5dd" }, g);
-      R.el("rect", { x: 370, y: 310, width: 200, height: 16, rx: 8, fill: "#cfd5dd" }, g);
+      R.el("rect", { x: 30, y: 310, width: 200, height: 18, rx: 9, fill: "#c6cbd8" }, g);
+      R.el("rect", { x: 370, y: 310, width: 200, height: 18, rx: 9, fill: "#c6cbd8" }, g);
       R.texte(g, "convoyeur d'entrée", [130, 342], { couleur: C.doux, italique: false, taille: 13 });
       R.texte(g, "convoyeur de sortie", [470, 342], { couleur: C.doux, italique: false, taille: 13 });
       // caméra et automate
       var camOn = e.act.indexOf(0) >= 0 && !arret;
-      R.el("rect", { x: 132, y: 58, width: 36, height: 22, rx: 3, fill: camOn ? C.z : "#8a93a0" }, g);
-      if (camOn) R.polygone(g, [[150, 80], [118, 296], [182, 296]], { remplissage: "rgba(21,101,192,0.12)" });
+      R.el("rect", { x: 130, y: 56, width: 40, height: 26, rx: 5, fill: camOn ? C.z : "#9aa0ad" }, g);
+      if (camOn) R.polygone(g, [[150, 82], [118, 296], [182, 296]], { remplissage: "rgba(59,91,219,0.12)" });
       R.texte(g, "caméra", [150, 50], { couleur: C.doux, italique: false, taille: 13 });
       var apiOn = (e.act.indexOf(1) >= 0) && !arret;
-      R.el("rect", { x: 500, y: 60, width: 60, height: 80, rx: 4, fill: apiOn ? C.z : "#8a93a0" }, g);
-      R.texte(g, "API", [530, 100], { couleur: "#fff", italique: false, gras: true, taille: 15 });
+      R.el("rect", { x: 496, y: 60, width: 68, height: 84, rx: 8, fill: apiOn ? C.z : "#9aa0ad" }, g);
+      R.texte(g, "API", [530, 102], { couleur: "#fff", italique: false, gras: true, taille: 17, halo: false });
       // robot
       var q = etat.q, p1 = [base[0] + L1 * Math.cos(q[0]), base[1] - L1 * Math.sin(q[0])];
       var p2 = [p1[0] + L2 * Math.cos(q[0] + q[1]), p1[1] - L2 * Math.sin(q[0] + q[1])];
-      R.el("rect", { x: base[0] - 30, y: base[1], width: 60, height: 25, rx: 4, fill: "#7a8492" }, g);
-      var coulBras = arret ? "#b0b6bf" : "#f0a030";
-      R.el("line", { x1: base[0], y1: base[1], x2: p1[0], y2: p1[1], stroke: coulBras, "stroke-width": 16, "stroke-linecap": "round" }, g);
-      R.el("line", { x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: coulBras, "stroke-width": 12, "stroke-linecap": "round" }, g);
-      [base, p1].forEach(function (c) { R.el("circle", { cx: c[0], cy: c[1], r: 8, fill: "#fff", stroke: C.fonce, "stroke-width": 2 }, g); });
+      R.el("rect", { x: base[0] - 34, y: base[1], width: 68, height: 26, rx: 6, fill: "#5b6172" }, g);
+      var coulBras = arret ? "#c6cbd8" : "#ff8a5c", coulAvant = arret ? "#c6cbd8" : "#8b3fd9";
+      R.el("line", { x1: base[0], y1: base[1], x2: p1[0], y2: p1[1], stroke: coulBras, "stroke-width": 20, "stroke-linecap": "round" }, g);
+      R.el("line", { x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: coulAvant, "stroke-width": 15, "stroke-linecap": "round" }, g);
+      [base, p1].forEach(function (c) { R.el("circle", { cx: c[0], cy: c[1], r: 10, fill: "#fff", stroke: C.fonce, "stroke-width": 3 }, g); });
       // pince
       var ouv = etat.tenue ? 7 : 13;
       R.ligne(g, [p2[0] - ouv, p2[1] - 2], [p2[0] - ouv, p2[1] + 14], { couleur: C.fonce, epaisseur: 4 });
@@ -90,7 +90,7 @@
       R.ligne(g, [p2[0] - ouv, p2[1] - 2], [p2[0] + ouv, p2[1] - 2], { couleur: C.fonce, epaisseur: 4 });
       // pièce
       var pc = etat.tenue ? [p2[0], p2[1] + 12] : etat.piece;
-      R.el("rect", { x: pc[0] - 11, y: pc[1] - 11, width: 22, height: 22, rx: 3, fill: C.v }, g);
+      R.el("rect", { x: pc[0] - 12, y: pc[1] - 12, width: 24, height: 24, rx: 4, fill: C.z, stroke: "#fff", "stroke-width": 2 }, g);
       // badges
       R.texte(g, "Actions", [48, 392], { italique: false, couleur: C.doux, taille: 13, ancre: "start" });
       ACTIONS.forEach(function (a, i) { badge(110 + i * 120, 377, 110, a, !arret && e.act.indexOf(i) >= 0, C.z); });
@@ -104,7 +104,7 @@
   /* ---------- Figure 2 : classer un robot selon les cinq critères ---------- */
   (function () {
     var f = R.figure("fig-classes", {
-      hauteur: 330,
+      hauteur: 380,
       titre: "Classement d'un robot selon les cinq critères",
       essai: "<strong>Essaie</strong> : choisis un robot avec les boutons. <strong>Observe</strong> : il se range dans une case par critère, et deux robots très différents peuvent partager plusieurs cases. Le classement des exemples est une proposition pour s'entraîner ; « sans objet » signifie que le critère ne s'applique pas vraiment (pas de bras).",
       direct: false
@@ -136,16 +136,20 @@
       R.vider(g);
       var sel = ROBOTS[choisi][1];
       R.texte(g, ROBOTS[choisi][0], [300, 24], { italique: false, gras: true, taille: 18 });
+      // au plus quatre cases par ligne : les six domaines tiennent sur deux lignes
+      var y = 52;
       CRIT.forEach(function (c, i) {
-        var y = 52 + i * 56;
-        R.texte(g, c[0], [10, y + 18], { italique: false, ancre: "start", taille: 15, couleur: C.doux });
-        var n = c[1].length, w = (480 - (n - 1) * 6) / n;
+        var parLigne = Math.min(4, Math.ceil(c[1].length / Math.ceil(c[1].length / 4)));
+        var lignes = Math.ceil(c[1].length / parLigne);
+        R.texte(g, c[0], [10, y + 19], { italique: false, ancre: "start", taille: 15, couleur: C.doux });
+        if (sel[i] === -1) R.texte(g, "sans objet", [10, y + 40], { italique: false, ancre: "start", couleur: C.acc, taille: 13 });
+        var w = (476 - (parLigne - 1) * 6) / parLigne;
         c[1].forEach(function (cat, j) {
-          var on = sel[i] === j, x = 112 + j * (w + 6);
-          R.el("rect", { x: x, y: y, width: w, height: 36, rx: 6, fill: on ? C.z : "#f1f3f6", stroke: on ? C.z : "#d5d9e0" }, g);
-          R.texte(g, cat, [x + w / 2, y + 19], { italique: false, taille: n > 4 ? 11.5 : 14, couleur: on ? "#fff" : C.doux, gras: on });
+          var on = sel[i] === j, x = 116 + (j % parLigne) * (w + 6), yy = y + Math.floor(j / parLigne) * 42;
+          R.el("rect", { x: x, y: yy, width: w, height: 36, rx: 10, fill: on ? C.z : "#f6f7fa", stroke: on ? C.z : "#e3e6ee", "stroke-width": 1.5 }, g);
+          R.texte(g, cat, [x + w / 2, yy + 19], { italique: false, taille: 14, couleur: on ? "#fff" : C.doux, gras: on, halo: false });
         });
-        if (sel[i] === -1) R.texte(g, "sans objet", [352, y + 50], { italique: false, couleur: C.acc, taille: 12 });
+        y += lignes * 42 + 12;
       });
     }
     dessiner();

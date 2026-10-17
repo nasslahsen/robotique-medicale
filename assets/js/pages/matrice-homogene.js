@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : déplace \\(O_s\\) et fais tourner le solide. Puis coche « Vu depuis le solide ». " +
       "<strong>Observe</strong> : la quatrième colonne (orange) suit la position de \\(O_s\\), les trois premières (rouge, vert, bleu) suivent l'orientation. Vu depuis le solide, c'est \\(R_0\\) qui semble bouger, et la scène est décrite par l'inverse \\(T^{s,0}\\)."
   });
-  var P = R.plan(480, 275, 95);
+  var P = R.plan(400, 350, 125);
   var g = R.el("g", null, f.svg), gp = R.el("g", null, f.svg);
   var b0 = R.boutons(f.reglages);
   R.bouton(b0, "Exemple de la page", function () { Os = [1, 2]; ca.set(90); cmx.set(0.5); cmy.set(0); dessiner(); });

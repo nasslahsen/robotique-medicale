@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : choisis « Solide libre », bouge les six curseurs, puis choisis une liaison. " +
       "<strong>Observe</strong> : seuls les mouvements permis gardent un curseur actif (cases vertes) ; les autres sont bloqués (cases rouges). Le nombre de cases vertes est le nombre de DDL restants, 6 moins les contraintes. Avec l'hélicoïdale, un seul curseur fait avancer et tourner B."
   });
-  var V = R.vue3D(300, 300, 115, -40 * R.DEG, 22 * R.DEG);
+  var V = R.vue3D(300, 270, 150, -40 * R.DEG, 22 * R.DEG);
   var g = R.el("g", null, f.svg);
   var MOUV = ["Tx", "Ty", "Tz", "Rx", "Ry", "Rz"];
   var LIAISONS = [
@@ -56,23 +56,23 @@
     var t = [v[0], v[1], 0.42 + v[2]];
     // solide A fixe
     R.pave(g, V, [0, 0, -0.12], [1.15, 0.85, 0.1], m.identite(3), { faces: ["#d9dde3", "#d9dde3", "#cfd4db", "#cfd4db", "#c4cad2", "#e6e9ed"], opacite: 1 });
-    R.texte(g, "A (fixe)", m.add(V.p([0, -0.85, -0.22]), [0, 22]), { italique: false, couleur: C.doux, taille: 15 });
+    R.texte(g, "A (fixe)", m.add(V.p([0, -0.85, -0.22]), [0, 24]), { italique: false, couleur: C.doux, taille: 16 });
     // axe de la liaison (x)
-    R.ligne(g, V.p([-1.6, 0, 0.42]), V.p([1.6, 0, 0.42]), { couleur: C.acc, tirets: "8 6", epaisseur: 2 });
-    R.texte(g, "axe x de la liaison", V.p([1.75, 0, 0.6]), { italique: false, couleur: C.acc, taille: 13 });
+    R.ligne(g, V.p([-1.5, 0, 0.42]), V.p([1.5, 0, 0.42]), { couleur: C.acc, tirets: "8 6", epaisseur: 2.5 });
+    R.texte(g, "axe x de la liaison", m.add(V.p([1.5, 0, 0.42]), [0, -18]), { italique: false, couleur: C.acc, taille: 15 });
     // solide B
     R.pave(g, V, t, [0.45, 0.3, 0.22], Rb, { faces: ["#b39ddb", "#b39ddb", "#9575cd", "#9575cd", "#d1c4e9", "#ede7f6"] });
-    R.repere3D(g, V, t, Rb, { longueur: 0.7, epaisseur: 2.4, indice: "B", taille: 15 });
+    R.repere3D(g, V, t, Rb, { longueur: 0.75, epaisseur: 3.2, indice: "B", taille: 18 });
     // grille des mobilités
     var p = permis(), nb = 0;
     MOUV.forEach(function (nm, i) {
-      var x = 70 + i * 80, y = 448, on = p[i] === 1;
+      var x = 75 + i * 90, y = 440, on = p[i] === 1;
       if (on) nb++;
-      R.el("rect", { x: x - 34, y: y, width: 68, height: 34, rx: 6, fill: on ? "#e3f1e4" : "#fbe3e3", stroke: on ? C.y : C.x, "stroke-width": 2 }, g);
-      R.texte(g, nm.charAt(0), [x - 6, y + 17], { couleur: on ? C.y : C.x, gras: true, taille: 18, ind: nm.charAt(1) });
+      R.el("rect", { x: x - 38, y: y, width: 76, height: 42, rx: 12, fill: on ? "#e3f7ee" : "#fdecec", stroke: on ? C.y : C.x, "stroke-width": 2.5 }, g);
+      R.texte(g, nm.charAt(0), [x - 6, y + 21], { couleur: on ? C.y : C.x, gras: true, taille: 20, ind: nm.charAt(1), halo: false });
     });
     var mob = h ? 1 : nb;
-    R.texte(g, LIAISONS[+sel.value][0], [300, 30], { italique: false, gras: true, taille: 20 });
+    R.texte(g, LIAISONS[+sel.value][0], [300, 32], { italique: false, gras: true, taille: 22 });
     R.rendre(zone, "\\text{DDL restants} = 6 - " + (6 - mob) + " \\text{ contraintes} = " + mob +
       (h ? "\\qquad T_x = \\text{pas} \\times \\tfrac{q}{360°} \\text{ : translation et rotation couplées}" : ""));
   }

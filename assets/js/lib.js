@@ -390,6 +390,8 @@
     var svgs = [];
     (o.dessins || [{ l: o.largeur || 600, h: o.hauteur || 420, titre: o.titre }]).forEach(function (d) {
       var s = el("svg", { "class": "dessin", viewBox: "0 0 " + d.l + " " + d.h, role: "img", "aria-label": d.titre || o.titre || "Figure interactive" });
+      // hauteur plafonnée (site.css) : la largeur suit la même proportion, pour ne pas laisser de bandes vides
+      s.style.maxWidth = "calc(72vh * " + (d.l / d.h).toFixed(4) + ")";
       racine.appendChild(s);
       svgs.push(s);
     });

@@ -52,7 +52,7 @@
         "<strong>Observe</strong> : à l'étape k, le repère atteint (en couleur) est celui que décrit \\(T^{0,k}\\). Sa quatrième colonne donne la position de son origine dans \\(R_0\\). La dernière étape place l'organe terminal \\(M\\)."
     });
     var L = [1.4, 1.1, 0.8];
-    var P = R.plan(480, 278, 80);
+    var P = R.plan(400, 380, 115);
     var g = R.el("g", null, f.svg);
     var c1 = R.curseur(f.reglages, { nom: "θ₁", min: -180, max: 180, pas: 1, val: 30, unite: "°", surChange: dessiner });
     var c2 = R.curseur(f.reglages, { nom: "θ₂", min: -180, max: 180, pas: 1, val: 40, unite: "°", surChange: dessiner });
