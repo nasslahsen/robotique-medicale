@@ -16,6 +16,7 @@ assets/js/nav.js              ordered list of concepts, top menu, Précédent / 
 assets/js/lib.js              shared maths (RM.m), number formatting, SVG drawing, 2D/3D views, sliders, step buttons
 assets/js/pages/<slug>.js     the interactive figures of one page
 assets/vendor/katex/          KaTeX 0.16.11
+essais/                       three design prototypes of the rotation matrix page (a, b, c), for iPad landscape
 tests/math.test.js            checks the maths and every worked example
 tests/static-check.js         checks every equation compiles, links, page list, writing rules
 .github/workflows/deploy.yml  runs both tests, then deploys to GitHub Pages on push to main
