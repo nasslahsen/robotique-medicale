@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>UART : transmission asynchrone · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>UART : transmission asynchrone</h1>
+<p class="chapeau">Un holter ECG doit vider sa mémoire vers un PC par un câble. Pas de fil d'horloge entre les deux : comment le PC sait-il où commence chaque octet, et à quel rythme lire les bits ?</p>
+
+<h2>Intuition</h2>
+<p>Les deux appareils se mettent d'accord à l'avance sur un débit, par exemple 9600 bits par seconde. Chacun a sa propre horloge réglée sur ce débit. Au repos, la ligne reste à 1. Pour annoncer un octet, l'émetteur la fait tomber à 0 pendant la durée d'un bit : c'est le start bit. Le récepteur, réveillé par ce front, lit ensuite les 8 bits au rythme convenu, puis attend le stop bit, à 1, qui rend la ligne au repos.</p>
+<p>Chaque octet voyage donc dans un petit paquet de 10 bits : la trame. Comme l'horloge n'est pas transmise, on parle de transmission asynchrone.</p>
+
+<div id="fig-trame"></div>
+
+<h2>Formalisation</h2>
+<p><strong>UART</strong> (<i>Universal Asynchronous Receiver Transmitter</i>) : fonction, <strong>transmission asynchrone de données</strong> ; mode half duplex ou full duplex ; couche physique RS232 ou RS485. Le plan du cours parle de communication série UART/USART (le S de l'USART ajoute un mode synchrone) ; l'exemple détaillé est l'UART du PIC18F4520.</p>
+<p>Le chronogramme d'émission du cours (PIC18F4520) envoie, sur la broche TX : le <strong>start bit</strong>, puis bit 0, bit 1, …, bit 7 (ou bit 8 en mode 9 bits), puis le <strong>stop bit</strong>. Le bit de poids faible part en premier. Chaque bit dure une période de l'horloge du générateur de baud (<i>BRG output, shift clock</i>).</p>
+<div class="tableau"><table>
+<tr><th>Mode</th><th>Ce que cela veut dire</th></tr>
+<tr><td>Half duplex</td><td>les deux appareils peuvent émettre, mais un seul sens à la fois</td></tr>
+<tr><td>Full duplex</td><td>les deux sens en même temps : TX de l'un vers RX de l'autre, dans chaque sens</td></tr>
+</table></div>
+
+<div id="fig-duplex"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un oxymètre envoie le pouls 75 = 01001011. Sur TX : start 0, puis 1, 1, 0, 1, 0, 0, 1, 0 (bit 0 d'abord), puis stop 1. À 9600 bps, la trame de 10 bits dure \(10 / 9600 \approx 1{,}04\) ms, et on envoie au plus \(9600 / 10 = 960\) octets par seconde. À 115200 bps, la même trame dure \(10 / 115200 \approx 86{,}8\ \mu\text{s}\).</p>
+
+<h2>Formules clés</h2>
+\[ \text{trame} = \text{start (0)} + 8 \text{ bits (bit 0 d'abord)} + \text{stop (1)} \qquad t_{trame} = \frac{10}{\text{débit}} \qquad N_{octets/s} = \frac{\text{débit}}{10} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/uart.js"></script>
+</body>
+</html>

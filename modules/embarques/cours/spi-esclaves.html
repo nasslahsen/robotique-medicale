@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>SPI : architecture multi esclaves · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>SPI : architecture multi esclaves</h1>
+<p class="chapeau">Un enregistreur médical a une mémoire, un afficheur, un capteur de température et un petit moteur, tous en SPI. Ils partagent les mêmes fils d'horloge et de données : comment le maître choisit-il à qui il parle ?</p>
+
+<h2>Intuition</h2>
+<p>Dans une salle de classe, tout le monde entend la même voix, mais seul l'élève qu'on appelle par son nom répond. Le SPI fait pareil avec un fil de plus par esclave : la ligne de sélection \(\overline{SS}\). Le maître la met à 0 pour un seul esclave ; celui-ci écoute MOSI et parle sur MISO, les autres restent muets.</p>
+<p>Si deux esclaves étaient sélectionnés à la fois, ils parleraient ensemble sur le même fil MISO et le maître recevrait un mélange.</p>
+
+<div id="fig-multi"></div>
+
+<h2>Formalisation</h2>
+<p>Architecture multi esclaves du ST7Lite20 (schéma du cours) :</p>
+<ul>
+<li>SCK, MOSI et MISO sont partagés : chaque esclave (<i>Slave Device</i>) est branché sur les mêmes trois fils que le maître (<i>Master Device</i>) ;</li>
+<li>chaque esclave a sa propre entrée \(\overline{SS}\) (<i>slave select</i>), reliée à une broche de port (<i>Ports</i>) du maître ;</li>
+<li>la barre indique une entrée active à l'état bas : l'esclave dont \(\overline{SS} = 0\) est sélectionné ;</li>
+<li>l'entrée \(\overline{SS}\) du maître est reliée à 5 V : elle reste à 1, le maître n'est jamais sélectionné comme esclave.</li>
+</ul>
+<p>Le maître sélectionne un seul esclave à la fois. Le nombre de fils (sans la masse) vaut \(3 + N_{esclaves}\).</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec quatre esclaves (mémoire, afficheur, capteur de température, moteur pas-à-pas), il faut \(3 + 4 = 7\) fils. Pour lire le capteur (esclave 3) : \(\overline{SS_1} = 1\), \(\overline{SS_2} = 1\), \(\overline{SS_3} = 0\), \(\overline{SS_4} = 1\). Pour écrire ensuite en mémoire, on remet d'abord \(\overline{SS_3}\) à 1, puis on met \(\overline{SS_1}\) à 0. Avec 10 esclaves, il faudrait 13 fils.</p>
+
+<h2>Formules clés</h2>
+\[ N_{fils} = 3 + N_{esclaves} \qquad \overline{SS} = 0 : \text{esclave sélectionné} \qquad \overline{SS} = 1 : \text{esclave ignoré} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/spi-esclaves.js"></script>
+</body>
+</html>

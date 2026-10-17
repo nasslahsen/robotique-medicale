@@ -29,11 +29,11 @@ window.REGISTRE = {
       ]
     },
     {
-      id: "embarques", titre: "Systèmes embarqués et instrumentation biomédicale intelligente", statut: "a-venir",
+      id: "embarques", titre: "Systèmes embarqués et instrumentation biomédicale intelligente", statut: "actif",
       couleur: "#337EA9", clair: "#D3E5EF", texte: "#317BA5",
       sousModules: [
         { id: "embarques", titre: "Systèmes embarqués" },
-        { id: "instrumentation", titre: "Instrumentation connectée et intelligence des objets connectés" }
+        { id: "instrumentation", titre: "Instrumentation connectée et intelligence des objets connectés", statut: "a-venir" }
       ]
     },
     {

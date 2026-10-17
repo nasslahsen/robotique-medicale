@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Power Supply : domaines d'alimentation · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Power Supply : domaines d'alimentation</h1>
+<p class="chapeau">La carte donne 3,3 V, mais le cœur de l'ESP32 travaille à 1,1 V, et une mémoire externe peut demander 1,8 V ou 3,3 V. Comment une seule puce distribue-t-elle plusieurs tensions à ses différentes parties ?</p>
+
+<h2>Intuition</h2>
+<p>Pense à un immeuble alimenté par une seule arrivée électrique, mais où chaque étage a son propre disjoncteur et sa propre tension. La puce est découpée en domaines : le domaine CPU, le domaine RTC (celui qui reste éveillé en veille) et le domaine SDIO (l'interface vers la mémoire externe). Chaque domaine a son petit régulateur qui abaisse la tension d'entrée à ce dont il a besoin.</p>
+<p>Le domaine SDIO a un choix à faire : soit il prend la tension d'entrée presque telle quelle (3,3 V, à travers une petite résistance), soit il passe par un régulateur 1,8 V. Un multiplexeur choisit, selon la mémoire branchée.</p>
+
+<div id="fig-alim"></div>
+
+<h2>Formalisation</h2>
+<h3>Broches d'alimentation (Power Pins)</h3>
+<p>Les broches numériques de l'ESP32 sont réparties en trois <strong>domaines d'alimentation</strong> :</p>
+<ul>
+<li>VDD3P3_RTC ;</li>
+<li>VDD3P3_CPU ;</li>
+<li>VDD_SDIO.</li>
+</ul>
+<p>VDD3P3_RTC est aussi l'alimentation d'entrée du RTC et du CPU.</p>
+<h3>Schéma d'alimentation (Power Scheme)</h3>
+<div class="tableau"><table>
+<tr><th>Domaine</th><th>Régulateur</th><th>Tension</th></tr>
+<tr><td>SDIO Domain</td><td>LDO 1,8 V, ou résistance R = 6 Ω depuis VDD3P3_RTC, choisis par un multiplexeur</td><td>VDD_SDIO = 3,3 V ou 1,8 V</td></tr>
+<tr><td>RTC Domain</td><td>LDO</td><td>1,1 V</td></tr>
+<tr><td>CPU Domain</td><td>LDO</td><td>1,1 V</td></tr>
+</table></div>
+<p><strong>LDO</strong> : <i>Low Dropout Regulator</i>.</p>
+<p class="complement">Un LDO est un régulateur linéaire : il fournit une tension de sortie fixe et dissipe la différence avec l'entrée. « Low dropout » veut dire qu'il continue de réguler même quand l'entrée n'est que légèrement au-dessus de la sortie.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Le LDO du domaine CPU reçoit 3,3 V et sort 1,1 V : il retranche \(3{,}3 - 1{,}1 = 2{,}2\) V. Si une mémoire externe à 3,3 V tire 50 mA par le chemin de la résistance R = 6 Ω, la chute de tension vaut \(U = R\,I = 6 \times 0{,}05 = 0{,}3\) V : VDD_SDIO vaut environ \(3{,}3 - 0{,}3 = 3{,}0\) V. Pour une mémoire à 1,8 V, le multiplexeur prend la sortie du LDO 1,8 V.</p>
+
+<h2>Formules clés</h2>
+\[ V_{chute} = V_{entrée} - V_{sortie} \qquad U = R\,I \]
+<p>Trois domaines : VDD3P3_RTC, VDD3P3_CPU, VDD_SDIO. VDD3P3_RTC alimente aussi RTC et CPU. RTC et CPU : LDO 1,1 V. VDD_SDIO : 3,3 V (par R = 6 Ω) ou 1,8 V (par le LDO).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/alimentation.js"></script>
+</body>
+</html>
