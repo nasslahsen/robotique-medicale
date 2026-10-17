@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Fonctions d'une liaison et exemples complets · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Fonctions d'une liaison et exemples complets</h1>
+<p class="chapeau">Une roue dentée doit tenir sur l'arbre d'une articulation : ne pas tourner sur l'arbre, ne pas glisser le long de l'arbre, revenir au même endroit après un démontage, et ne pas se desserrer avec les vibrations. Une seule pièce ne peut pas tout faire.</p>
+
+<h2>Le chapitre en bref</h2>
+<p>Ce chapitre parle de tout ce qui tient les pièces d'un axe robotique ensemble : vis, clavettes, anneaux élastiques, goupilles, ressorts. Dans un robot médical, une roue qui patine, un capot qui se desserre ou une pièce mal repositionnée après nettoyage, c'est une erreur de position en bout d'instrument. Le fil conducteur : une fonction, un élément.</p>
+<ul>
+<li>Fonctions d'une liaison : serrer, positionner, transmettre, maintenir axialement, prévenir le desserrage.</li>
+<li>Assemblage vissé : la vis serre grâce à la précharge, réglée par le couple de serrage.</li>
+<li>Clavettes : elles transmettent le couple ; on vérifie leur cisaillement.</li>
+<li>Anneaux élastiques et goupilles : maintenir axialement, immobiliser, positionner.</li>
+<li>Ressorts : rappeler, maintenir un contact, appliquer un effort, avec \(F = kx\).</li>
+</ul>
+
+<h2>Intuition</h2>
+<p>Quand tu fixes une pièce, tu demandes en fait plusieurs choses différentes : qu'elle soit plaquée, qu'elle soit au bon endroit, qu'elle transmette l'effort, qu'elle ne parte pas le long de l'axe, et que tout cela tienne dans le temps. Si tu confies tout à une vis, elle serre bien, mais elle passe avec du jeu dans son trou : la pièce se décale un peu à chaque remontage, et le couple passe seulement par frottement.</p>
+<p>Une bonne liaison sépare ces fonctions : un élément par fonction. C'est ce que montrent les montages ci-dessous, tirés du cours.</p>
+
+<div id="fig-liaisons"></div>
+
+<h2>Formalisation</h2>
+<p>Une liaison mécanique doit séparer clairement les fonctions suivantes :</p>
+<ul>
+<li><strong>SERRER</strong> : créer une précharge et maintenir les surfaces en contact ;</li>
+<li><strong>POSITIONNER</strong> : définir de façon répétable la géométrie relative ;</li>
+<li><strong>TRANSMETTRE</strong> : faire passer un effort ou un couple ;</li>
+<li><strong>MAINTENIR AXIALEMENT</strong> : empêcher le déplacement selon l'axe ;</li>
+<li><strong>PRÉVENIR LE DESSERRAGE</strong> : conserver la fonction sous vibration et cycles.</li>
+</ul>
+<div class="tableau"><table>
+<tr><th>Fonction</th><th>Éléments à utiliser</th></tr>
+<tr><td>Serrer</td><td>les vis</td></tr>
+<tr><td>Positionner de façon répétable</td><td>des goupilles, des épaulements ou des centrages</td></tr>
+<tr><td>Transmettre un couple</td><td>une clavette, des cannelures ou un moyeu de serrage adapté</td></tr>
+<tr><td>Maintenir axialement</td><td>par exemple un écrou, un anneau élastique (page « Anneaux élastiques et goupilles »)</td></tr>
+<tr><td>Prévenir le desserrage</td><td>par exemple une rondelle frein</td></tr>
+</table></div>
+
+<h2>Exemple du cours : trois liaisons complètes</h2>
+<h3>Écrou à encoches et rondelle frein</h3>
+<p>Un écrou à encoches est un dispositif de serrage utilisé pour fixer des roulements ou d'autres composants de machine sur un arbre. Le montage est démontable. Une rainure de clavette est usinée sur la tête de l'arbre filetée. Pour sécuriser le montage et éviter tout desserrage accidentel, une rondelle frein à languette est interposée entre l'écrou et l'organe à serrer. Le serrage et le desserrage de l'écrou se font avec une clé à ergots. À l'aide d'outils de frappe et d'un marteau, une languette extérieure de la rondelle est déformée pour s'engager dans l'encoche de l'écrou.</p>
+<h3>Vis sur méplat</h3>
+<p>L'arbre comporte un méplat sur lequel vient s'appuyer une vis, vissée dans le moyeu de la roue. Lors du serrage, la vis exerce un effort sur le méplat et plaque l'arbre contre la paroi opposée de l'alésage. Ce serrage immobilise la roue sur l'arbre et permet de transmettre un couple. Le méplat offre une surface d'appui à la vis et limite le risque de glissement en rotation.</p>
+<p>Remarque : la vis contribue aussi au maintien axial de la roue par frottement, mais ce montage ne garantit pas un positionnement axial précis.</p>
+<h3>Goupille transversale</h3>
+<p>Liaison arbre–roue dentée par goupille transversale : l'arbre est introduit dans l'alésage du moyeu, puis une goupille cylindrique est insérée dans les trous alignés des deux pièces. La goupille immobilise la roue en rotation par rapport à l'arbre et transmet le couple par cisaillement. Elle contribue aussi au maintien axial de la roue, tandis que les surfaces cylindriques de l'arbre et de l'alésage assurent son centrage.</p>
+
+<h2>Pour aller plus loin</h2>
+<p>Vidéos citées dans le cours : <a href="https://www.youtube.com/watch?v=7N5EY81DMsw">écrou à encoches et rondelle frein</a>, <a href="https://www.youtube.com/watch?v=q8_9XqbtrvE">vis sur méplat</a>, <a href="https://www.youtube.com/watch?v=zeG5XA8JdTM">goupille transversale</a>.</p>
+
+<h2>Formules clés</h2>
+<p>Pas de formule ici : une règle. Une fonction, un élément.</p>
+<p>Serrer : vis. Positionner : goupilles, épaulements, centrages. Transmettre un couple : clavette, cannelures, moyeu de serrage. Maintenir axialement, prévenir le desserrage : des éléments dédiés.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/fonctions-liaison.js"></script>
+</body>
+</html>

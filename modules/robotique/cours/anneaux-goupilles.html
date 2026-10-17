@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Anneaux élastiques et goupilles · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Anneaux élastiques et goupilles</h1>
+<p class="chapeau">Un roulement est poussé le long de son arbre par un effort axial ; une roue doit rester exactement à sa place sur son arbre. Deux petites pièces, faciles à monter et à démonter, règlent ces problèmes : l'anneau élastique et la goupille.</p>
+
+<h2>Intuition</h2>
+<p>Pour empêcher une pièce de glisser le long d'un arbre, il suffit de lui mettre un obstacle. On creuse une gorge dans l'arbre et on y loge un anneau en acier élastique : il dépasse de l'arbre, la pièce vient buter contre lui. On l'ouvre avec une pince pour le retirer. Si la pièce est dans un trou (un alésage), on fait la même chose de l'autre côté : gorge dans l'alésage, anneau qui s'écarte dedans.</p>
+<p>Une goupille, c'est une petite tige qui traverse deux pièces dans des trous alignés. Elle les empêche de bouger l'une par rapport à l'autre. Ajustée avec précision, elle sert aussi de repère : on retrouve la même position à chaque remontage.</p>
+
+<div id="fig-anneaux"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>anneau élastique</strong> (circlip) est un élément de retenue monté dans une gorge sur un arbre ou dans un alésage. Il sert principalement à empêcher le déplacement axial d'une pièce, tout en restant facilement démontable.</p>
+<div class="tableau"><table>
+<tr><th>Anneau</th><th>Gorge</th><th>Norme citée dans le cours</th></tr>
+<tr><td>Extérieur</td><td>sur l'arbre</td><td>NF E 22-163</td></tr>
+<tr><td>Intérieur</td><td>dans l'alésage</td><td>NF E 22-165</td></tr>
+<tr><td>En E (montage radial)</td><td>sur l'arbre</td><td>NF L 23-203</td></tr>
+</table></div>
+<p>Une <strong>goupille</strong> est une pièce métallique, généralement cylindrique ou conique, utilisée pour immobiliser deux pièces ou assurer leur positionnement relatif avec précision.</p>
+
+<div id="fig-goupilles"></div>
+
+<p>Deux usages montrés dans le cours : la goupille d'arrêt, qui traverse l'arbre et le moyeu pour immobiliser les pièces, avec \(d \approx D/3\) et un ajustement H7/m6 ; les goupilles de positionnement, associées à une vis de fixation : la vis serre, les goupilles positionnent.</p>
+
+<h2>Exemple</h2>
+<p><span class="complement">Exemple ajouté</span> Un arbre de \(D = 24\) mm porte une roue immobilisée par une goupille d'arrêt : \(d \approx 24/3 = 8\) mm. Le roulement voisin, poussé par un effort axial, est retenu par un anneau élastique extérieur logé dans une gorge de l'arbre. Si le même roulement était monté dans un logement, la gorge serait dans l'alésage et on prendrait un anneau intérieur.</p>
+
+<h2>Formules clés</h2>
+\[ d \approx \frac{D}{3} \quad \text{(goupille d'arrêt, ajustement H7/m6)} \]
+<p>Anneau élastique : maintenir axialement, démontable. Goupille : immobiliser ou positionner avec précision.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/anneaux-goupilles.js"></script>
+</body>
+</html>
