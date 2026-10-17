@@ -54,7 +54,7 @@
       // robot et aiguille (entrée oblique)
       var dir = m.scale([-0.55, 0.835], 1), entree = m.add(vise, m.scale(dir, -150)), queue = m.add(vise, m.scale(dir, -290));
       R.el("line", { x1: queue[0], y1: queue[1], x2: entree[0] - dir[0] * 10, y2: entree[1] - dir[1] * 10, stroke: "#b8c0cb", "stroke-width": 26, "stroke-linecap": "round" }, g);
-      R.ligne(g, entree, vise, { couleur: "#5c6577", epaisseur: 3 });
+      R.ligne(g, entree, vise, { couleur: "#5b6172", epaisseur: 3 });
       R.point(g, vise, { couleur: C.fonce, r: 3 });
       R.texte(g, "robot", m.add(m.add(vise, m.scale(dir, -230)), [44, 8]), { italique: false, couleur: C.doux, taille: 14 });
       var err = Math.abs(dep * 0.6) * (suivi.checked ? 0 : 1);
