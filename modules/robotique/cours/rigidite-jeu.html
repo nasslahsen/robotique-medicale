@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Rigidité torsionnelle et jeu angulaire · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Rigidité torsionnelle et jeu angulaire</h1>
+<p class="chapeau">Un réducteur a 0,20° de jeu : presque rien. Mais au bout d'un bras de 40 cm, l'outil peut bouger de 1,4 mm, de quoi rater une suture. Deux défauts de l'axe se traduisent ainsi en écart au bout de l'outil : sa souplesse en torsion et son jeu.</p>
+
+<h2>Intuition</h2>
+<p>Un arbre n'est jamais parfaitement rigide : sous un couple, il se tord un peu, comme une serviette qu'on essore. Plus il est rigide, moins il tourne pour le même couple. C'est la rigidité torsionnelle.</p>
+
+<div id="fig-torsion"></div>
+
+<p>Le jeu, lui, est un petit angle libre dans la transmission : l'arbre de sortie peut tourner un peu sans que le moteur bouge. Qu'il vienne du jeu ou de la torsion, ce petit angle se transforme au bout du bras en déplacement, d'autant plus grand que le bras est long : c'est un arc de cercle.</p>
+
+<div id="fig-jeu"></div>
+
+<h2>Formalisation</h2>
+<p>Dans un axe asservi, la <strong>rigidité torsionnelle</strong> est aussi importante :</p>
+\[ k_\theta = \frac{C}{\theta} \qquad (1.4) \]
+<p>avec \(k_\theta\) la rigidité torsionnelle (N·m/rad), \(C\) le couple appliqué (N·m), \(\theta\) l'angle de torsion (rad).</p>
+<p>La <strong>déformation de bout de bras</strong> associée à un petit jeu angulaire \(\Delta\theta\) vaut :</p>
+\[ \Delta x \simeq L\,\Delta\theta, \qquad \Delta\theta \text{ en radians} \qquad (1.5) \]
+<p>avec \(\Delta x\) le déplacement linéaire en bout de bras, \(L\) la longueur du bras, \(\Delta\theta\) le petit angle de jeu ou de torsion (rad). C'est la longueur d'un arc de rayon \(L\) ; pour un petit angle, l'arc et la corde se confondent, d'où le signe \(\simeq\).</p>
+<p>Sur un bras à plusieurs articulations (figure 3 du cours), chaque articulation a son jeu \(\Delta\theta_1\), \(\Delta\theta_2\), et chacun agit avec la distance entre son axe et le point fonctionnel.</p>
+
+<div id="fig-deux-jeux"></div>
+
+<p class="complement">Additionner \(\Delta x_1\) et \(\Delta x_2\) donne le cas le plus défavorable, quand les deux écarts vont dans le même sens.</p>
+
+<h2>Rappel : degrés et radians</h2>
+<p>La formule \(\Delta x \simeq L\,\Delta\theta\) ne marche qu'en radians. Un tour vaut 360° ou \(2\pi\) rad, donc \(\theta_{rad} = \theta_{°} \times \pi / 180\). Oublier la conversion multiplie le résultat par environ 57.</p>
+
+<h2>Exemple du cours</h2>
+<p>Ordre de grandeur, effet d'un jeu angulaire : pour un bras de longueur \(L = 0{,}40\) m et un jeu total \(\Delta\theta = 0{,}20°\),</p>
+\[ \Delta\theta = 0{,}20\,\frac{\pi}{180} = 3{,}49 \times 10^{-3}\ \text{rad}, \qquad \Delta x \simeq 0{,}40 \times 3{,}49 \times 10^{-3} = 1{,}40\ \text{mm} \]
+<p>Même un faible jeu angulaire crée un déplacement mesurable en bout de bras.</p>
+<p>Exemple ajouté, pour la torsion : un axe de rigidité \(k_\theta = 2000\) N·m/rad porte le même bras de 0,40 m et subit un couple de 10 N·m. Il se tord de \(\theta = 10 / 2000 = 5 \times 10^{-3}\) rad, et le bout du bras se déplace de \(\Delta x \simeq 0{,}40 \times 5 \times 10^{-3} = 2\) mm.</p>
+
+<h2>Formules clés</h2>
+\[ k_\theta = \frac{C}{\theta} \qquad \Delta x \simeq L\,\Delta\theta \ (\Delta\theta \text{ en rad}) \qquad \theta_{rad} = \theta_{°}\,\frac{\pi}{180} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/rigidite-jeu.js"></script>
+</body>
+</html>

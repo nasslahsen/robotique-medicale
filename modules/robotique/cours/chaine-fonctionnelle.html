@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Chaîne fonctionnelle d'un axe et contraintes biomédicales · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Chaîne fonctionnelle d'un axe et contraintes biomédicales</h1>
+<p class="chapeau">Le moteur de l'épaule est positionné au millième de tour, et pourtant la pince arrive à un millimètre de la cible. Pour comprendre d'où vient l'écart, il faut suivre le mouvement du moteur jusqu'à l'outil.</p>
+
+<h2>Ce que couvre ce sous-module</h2>
+<p>Un robot est une suite d'axes. Chaque axe produit un mouvement, le transmet et le guide jusqu'au segment suivant. Ce sous-module étudie les éléments mécaniques de cet axe, dans l'ordre du support :</p>
+<ul>
+<li>chapitre 5, l'axe dans son ensemble : sa chaîne fonctionnelle et ses grandeurs (vitesse, couple, puissance, rigidité, jeu) ;</li>
+<li>chapitre 6, ce qui tient les pièces ensemble : vis, clavettes, goupilles, anneaux élastiques, ressorts ;</li>
+<li>chapitre 7, ce qui guide la rotation : roulements, durée de vie, montages, précharge ;</li>
+<li>chapitre 8, ce qui transmet la puissance : arbres et engrenages.</li>
+</ul>
+<p>Le fil rouge : la précision de l'outil dépend de chaque maillon de la chaîne.</p>
+<p>Le chapitre 5 pose le décor, en quatre pages :</p>
+<ul>
+<li>la chaîne fonctionnelle (cette page) : de quoi un axe est fait, et ce qu'on exige de lui en milieu de soin ;</li>
+<li>la nomenclature : lire les symboles et leurs unités sans se tromper de sens ;</li>
+<li>vitesse, couple, puissance : ce que le moteur fournit et ce que la réduction en fait ;</li>
+<li>rigidité et jeu : comment un tout petit angle à l'axe devient un écart au bout de l'outil.</li>
+</ul>
+
+<h2>Intuition</h2>
+<p>Regarde un bras de laboratoire à cinq axes : il est fait de modules d'articulation empilés, reliés par des pièces rigides. Chaque module est un axe complet, avec son moteur. Quand l'épaule tourne, tout ce qui est au-dessus tourne avec elle.</p>
+
+<div id="fig-robot-axes"></div>
+
+<p>Dans un axe, le mouvement suit toujours le même chemin : le moteur le crée, la réduction l'adapte (moins vite, plus de couple), la transmission l'amène, le guidage le tient, le bras le porte jusqu'à l'outil. Chaque maillon peut ajouter un petit défaut, et l'outil les subit tous.</p>
+
+<div id="fig-chaine"></div>
+
+<h2>Formalisation</h2>
+<p>L'<strong>architecture mécanique d'un axe robotique</strong> décrit l'organisation des composants qui produisent, transmettent et guident le mouvement jusqu'à l'organe mobile. La <strong>chaîne fonctionnelle</strong> est un ensemble d'axes offrant l'enchaînement de fonctions entre actionneurs et mouvements utiles à la tâche.</p>
+<p>Un axe robotique associe une source d'énergie, un actionneur, une transmission, un guidage et une structure. Sa chaîne fonctionnelle simplifiée s'écrit :</p>
+\[ \boxed{\text{Moteur}} \rightarrow \boxed{\text{Réduction}} \rightarrow \boxed{\text{Transmission}} \rightarrow \boxed{\text{Guidage}} \rightarrow \boxed{\text{Bras / effecteur}} \]
+<p>Les performances d'un robot dépendent de toute la chaîne mécanique : jeu, rigidité, frottement, rendement, déformations, défauts d'alignement et tolérances de montage.</p>
+<div class="tableau"><table>
+<tr><th>Constituant</th><th>Rôle</th><th>Ce qu'il peut dégrader</th></tr>
+<tr><td>Source d'énergie et actionneur (moteur)</td><td>Créer le mouvement</td><td>Vitesse et couple disponibles</td></tr>
+<tr><td>Réduction</td><td>Adapter vitesse et couple</td><td>Jeu, rendement, frottement</td></tr>
+<tr><td>Transmission</td><td>Amener le mouvement jusqu'à l'organe</td><td>Rigidité, jeu</td></tr>
+<tr><td>Guidage</td><td>Autoriser le mouvement utile, bloquer le reste</td><td>Jeu, frottement, alignement</td></tr>
+<tr><td>Structure (bras, effecteur)</td><td>Porter la charge et l'outil</td><td>Déformations, rigidité</td></tr>
+</table></div>
+<p class="complement">La dernière colonne est une lecture de la liste du cours, maillon par maillon ; les tolérances de montage concernent tous les maillons.</p>
+
+<h2>Contraintes spécifiques au contexte biomédical</h2>
+<p>Un système biomédical doit respecter les critères classiques de charge, rigidité, durée de vie et coût. Il doit aussi limiter la masse mobile, le bruit, les vibrations et les points de pincement. Il doit être facile à nettoyer et à maintenir, et les lubrifiants doivent rester confinés. Le choix final dépend de l'importance de chaque critère.</p>
+
+<div id="fig-biomedical"></div>
+
+<div class="tableau"><table>
+<tr><th>Critères classiques</th><th>Critères liés au contexte biomédical</th></tr>
+<tr><td>Charge<br>Rigidité<br>Durée de vie<br>Coût</td><td>Masse mobile limitée<br>Bruit et vibrations limités<br>Pas de points de pincement<br>Facile à nettoyer et à maintenir<br>Lubrifiants confinés</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p>Exemple ajouté : on motorise le coude d'un bras de rééducation. Solution A, le moteur est au coude : la chaîne est courte, mais le moteur fait partie de la masse mobile. Solution B, le moteur reste sur la base et le mouvement monte par une transmission : moins de masse mobile, mais un maillon de plus, avec son jeu et sa souplesse. Aucune n'est meilleure en soi : le choix final dépend de l'importance donnée à chaque critère pour cette application.</p>
+
+<h2>Formules clés</h2>
+\[ \text{Moteur} \rightarrow \text{Réduction} \rightarrow \text{Transmission} \rightarrow \text{Guidage} \rightarrow \text{Bras / effecteur} \]
+<p>Un axe : source d'énergie, actionneur, transmission, guidage, structure. Précision de l'outil : jeu, rigidité, frottement, rendement, déformations, alignement, tolérances de montage de toute la chaîne.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/chaine-fonctionnelle.js"></script>
+</body>
+</html>
