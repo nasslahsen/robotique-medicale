@@ -6,77 +6,48 @@
 <title>Fiche de révision · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../commun/css/jeu.css">
-<link rel="stylesheet" href="../commun/css/barre.css">
-<link rel="stylesheet" href="../commun/css/tableau.css">
-<link rel="stylesheet" href="maquette.css">
+<link rel="stylesheet" href="calme.css">
 </head>
-<body class="">
+<body>
 <style>
-.fiche-tete { display: flex; align-items: flex-end; gap: 24px; }
-.fiche-tete > div:first-child { flex: 1; }
-.formules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.formule-c { padding: 18px 20px 14px; border: 1.5px solid var(--trait); border-radius: 18px; background: #fff; }
-.formule-c .nom { font-weight: 600; font-size: 16px; }
-.formule-c .f { margin: 12px 0 0; padding: 12px; border-radius: 12px; background: #f6f7fa; text-align: center; font-size: 19px; overflow-x: auto; }
-.formule-c .source { margin-top: 10px; }
-.ch-titre { display: flex; align-items: center; gap: 12px; margin: 26px 0 12px; font: 700 13px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--jeu-texte); }
-.ch-titre::after { content: ""; flex: 1; height: 1.5px; background: var(--trait); }
-.tab td:first-child { width: 230px; font-weight: 600; }
-.tab td:last-child { width: 220px; font-size: 13px; color: #8a90a0; }
-.pieges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.piege { display: flex; gap: 14px; padding: 16px 18px; border-radius: 16px; background: #fafbfd; border: 1.5px solid var(--trait); font-size: 16px; line-height: 1.5; }
-.piege .n { flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--encre); color: #fff; display: flex; align-items: center; justify-content: center; font: 700 14px "JetBrains Mono", monospace; }
-.piege .source { margin-top: 6px; }
-@media print { .site-barre, .vers-sommaire, .imprimer { display: none !important; } .mq { padding: 0; } }
+.form-l { display: grid; grid-template-columns: 220px 1fr 44px; align-items: center; gap: 20px; min-height: 96px; padding: 16px 0; border-bottom: 1px solid var(--trait); }
+.form-l:first-of-type { border-top: 1px solid var(--trait); }
+.form-l > span:first-child { font-size: 18px; color: var(--doux); }
+.form-l .formule { margin: 0; font-size: 20px; }
+.voc dt { font-weight: 600; font-size: 19px; margin-top: 22px; }
+.voc dd { margin: 6px 0 0; font-size: 19px; line-height: 1.55; color: var(--doux); }
+.pieges { margin: 0; padding-left: 24px; font-size: 19px; line-height: 1.65; }
+.pieges li { margin-bottom: 14px; }
 </style>
-<header class="site-barre"><div class="site-barre-int">
-  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-a.html">Robotique médicale</a><span class="sep">›</span><b>Fiche · Robotique biomédicale</b></nav>
-  <div class="droite"><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
-</div></header>
-<main class="mq"><div class="fiche-tete"><div><span class="kick">FICHE DE RÉVISION · SOUS-MODULE</span>
-<h1>Robotique biomédicale</h1><p class="sous">Tout le sous-module sur une page : les formules, les définitions, les pièges. À relire la veille, ou à imprimer.</p></div>
-<button class="btn petit imprimer" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg>Imprimer</button></div>
-
-<h2 class="section-titre">Formules <small>chapitres 0 à 4</small></h2>
-<div class="ch-titre">CHAPITRE 0 · LES BASES</div>
-<div class="formules">
-<div class="formule-c"><span class="nom">Identité de base</span><div class="f">\[\cos^2\theta + \sin^2\theta = 1\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Prérequis</b></span> <span class="ajoute">Ajouté</span></div></div>
-<div class="formule-c"><span class="nom">Produit scalaire</span><div class="f">\[\vec{u}\cdot\vec{v} = \|\vec{u}\|\,\|\vec{v}\|\cos\theta\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Module de rappel, diapo 9</b></span></div></div>
-</div>
-<div class="ch-titre">CHAPITRE 3 · ORIENTATIONS</div>
-<div class="formules">
-<div class="formule-c"><span class="nom">Matrice de rotation</span><div class="f">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 12–18</b></span></div></div>
-<div class="formule-c"><span class="nom">Inverse et déterminant</span><div class="f">\[R^{-1} = R^{T}, \qquad \det R = 1\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 19–24</b></span></div></div>
-<div class="formule-c"><span class="nom">Rotation autour de z</span><div class="f">\[R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 25–28</b></span></div></div>
-<div class="formule-c"><span class="nom">Angles d'Euler ZYX</span><div class="f">\[R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 34–45</b></span></div></div>
-</div>
-<div class="ch-titre">CHAPITRE 4 · TRANSFORMATIONS</div>
-<div class="formules">
-<div class="formule-c"><span class="nom">Matrice homogène</span><div class="f">\[T^{0,1} = \begin{bmatrix} R^{0,1} & \vec{p}^{\,0} \\ 0\;0\;0 & 1 \end{bmatrix}\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 46–50</b></span></div></div>
-<div class="formule-c"><span class="nom">Composition</span><div class="f">\[T^{0,2} = T^{0,1}\,T^{1,2}\]</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 51–53</b></span></div></div>
-</div>
-
-<h2 class="section-titre">Définitions <small>le vocabulaire du chapitre 1</small></h2>
-<div class="tab-cadre"><table class="tab"><tbody>
-<tr><td>Degré de liberté</td><td>Un mouvement indépendant que le robot peut faire : une translation ou une rotation.</td><td>Partie 2 ch. 1, diapos 8–10</td></tr>
-<tr><td>Liaison rotoïde</td><td>Articulation qui tourne autour d'un axe (notée R).</td><td>Partie 2 ch. 1, diapo 14</td></tr>
-<tr><td>Liaison prismatique</td><td>Articulation qui glisse le long d'un axe (notée P).</td><td>Partie 2 ch. 1, diapo 15</td></tr>
-<tr><td>Espace de travail</td><td>L'ensemble des positions que l'outil peut atteindre.</td><td>Semaine 1, diapos 31–33</td></tr>
-<tr><td>Répétabilité</td><td>L'écart quand on demande plusieurs fois la même position.</td><td>Semaine 1, diapos 38–39 <span class="ajoute">Ajouté</span></td></tr>
-</tbody></table></div>
-
-<h2 class="section-titre">Points à savoir <small>les erreurs qu'on fait souvent</small></h2>
-<div class="pieges">
-<div class="piege"><span class="n">1</span><div>L'ordre des rotations compte : \(R_z R_y \neq R_y R_z\). Lis la convention avant de multiplier.<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 30–31</b></span></div></div></div>
-<div class="piege"><span class="n">2</span><div>Les colonnes de \(R^{0,1}\) sont les axes de \(R_1\) vus depuis \(R_0\), pas l'inverse.<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapo 15</b></span></div></div></div>
-<div class="piege"><span class="n">3</span><div>En ZYX, \(\beta = \pm 90^\circ\) donne une singularité : \(\alpha\) et \(\gamma\) se confondent.<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 41–43</b></span></div></div></div>
-<div class="piege"><span class="n">4</span><div>Pour inverser une matrice homogène, on n'inverse pas la position : \(\vec{p}\) devient \(-R^T\vec{p}\).<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapo 52</b></span> <span class="ajoute">Ajouté</span></div></div></div>
-</div>
-<p style="margin-top:22px;color:var(--doux);font-size:15px">Chaque ligne renvoie aux diapos. L'étiquette <span class="ajoute">Ajouté</span> marque ce qui ne vient pas des diapos : touche-la pour le détail.</p>
-</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<header class="barre"><a class="retour" href="carte-a.html">Robotique médicale</a><div class="droite"><button class="lien-barre" type="button" onclick="window.print()">Imprimer</button></div></header>
+<main class="page">
+<p class="surtitre">Fiche de révision</p>
+<h1>Robotique biomédicale</h1>
+<p class="calme">Les formules, le vocabulaire et les pièges du sous-module, sur une page.</p>
+<h2>Formules</h2>
+<div class="form-l"><span>Identité de base</span><div class="formule">\(\cos^2\theta + \sin^2\theta = 1\)</div><button class="info ajout droite" type="button" aria-label="Ajouté" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3"/><path d="M12 8.5v7M8.5 12h7"/></svg><span class="bulle">Ajouté : pas dans les diapos, à vérifier</span></button></div>
+<div class="form-l"><span>Matrice de rotation</span><div class="formule">\(R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\)</div><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 12–18</span></button></div>
+<div class="form-l"><span>Inverse</span><div class="formule">\(R^{-1} = R^{T}, \qquad \det R = 1\)</div><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 19–24</span></button></div>
+<div class="form-l"><span>Rotation autour de z</span><div class="formule">\(R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\)</div><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 25–28</span></button></div>
+<div class="form-l"><span>Angles d'Euler ZYX</span><div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 34–45</span></button></div>
+<div class="form-l"><span>Matrice homogène</span><div class="formule">\(T^{0,1} = \begin{bmatrix} R^{0,1} & \vec{p}^{\,0} \\ 0\;0\;0 & 1 \end{bmatrix}\)</div><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 46–50</span></button></div>
+<h2>Vocabulaire</h2>
+<dl class="voc">
+<dt>Degré de liberté <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Partie 2 ch. 1, diapos 8–10</span></button></dt><dd>Un mouvement indépendant du robot : une translation ou une rotation.</dd>
+<dt>Liaison rotoïde <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Partie 2 ch. 1, diapo 14</span></button></dt><dd>Articulation qui tourne autour d'un axe, notée R.</dd>
+<dt>Liaison prismatique <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Partie 2 ch. 1, diapo 15</span></button></dt><dd>Articulation qui glisse le long d'un axe, notée P.</dd>
+<dt>Espace de travail <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Semaine 1, diapos 31–33</span></button></dt><dd>L'ensemble des positions que l'outil peut atteindre.</dd>
+</dl>
+<h2>À ne pas confondre</h2>
+<ul class="pieges">
+<li>L'ordre des rotations compte : \(R_z R_y \neq R_y R_z\). <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 30–31</span></button></li>
+<li>Les colonnes de \(R^{0,1}\) sont les axes de \(R_1\) vus depuis \(R_0\), pas l'inverse. <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapo 15</span></button></li>
+<li>En ZYX, \(\beta = \pm 90^\circ\) donne une singularité. <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 41–43</span></button></li>
+<li>Pour inverser une matrice homogène, la position devient \(-R^T\vec{p}\). <button class="info ajout " type="button" aria-label="Ajouté" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3"/><path d="M12 8.5v7M8.5 12h7"/></svg><span class="bulle">Ajouté : pas dans les diapos, à vérifier</span></button></li>
+</ul>
+</main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>
 <script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>

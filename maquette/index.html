@@ -3,52 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sommaire des maquettes · Maquette</title>
+<title>Maquettes · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../commun/css/jeu.css">
-<link rel="stylesheet" href="../commun/css/barre.css">
-<link rel="stylesheet" href="../commun/css/tableau.css">
-<link rel="stylesheet" href="maquette.css">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="calme.css">
 </head>
-<body class="">
+<body>
 <style>
-.ecrans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.ecran { display: flex; align-items: center; gap: 18px; padding: 18px 22px; border: 2px solid var(--trait); border-radius: 20px; text-decoration: none; color: var(--encre); background: #fff; }
-.ecran .n { flex: none; width: 40px; height: 40px; border-radius: 12px; background: var(--encre); color: #fff; display: flex; align-items: center; justify-content: center; font: 700 16px "JetBrains Mono", monospace; }
-.ecran b { display: block; font-size: 19px; }
-.ecran span { color: var(--doux); font-size: 14px; }
-.ecran .liens { margin-left: auto; display: flex; gap: 8px; flex: none; }
-.ecran .liens a { display: inline-flex; align-items: center; justify-content: center; min-width: 48px; height: 44px; padding: 0 12px; border: 2px solid var(--encre); border-radius: 12px; font: 700 15px Inter, sans-serif; text-decoration: none; color: var(--encre); }
-.ecran.duo { cursor: default; }
-.note-idx { margin-top: 18px; padding: 14px 18px; border-radius: 14px; background: #f6f7fa; color: var(--doux); font-size: 15px; line-height: 1.55; }
+.ecran { display: flex; align-items: center; gap: 20px; min-height: 84px; border-bottom: 1px solid var(--trait); font-size: 21px; }
+.ecran:first-of-type { border-top: 1px solid var(--trait); }
+.ecran .n { width: 30px; font: 500 16px "JetBrains Mono", monospace; color: #8a90a0; }
+.ecran .liens { margin-left: auto; display: flex; gap: 10px; }
+.ecran .liens a { min-height: 52px; min-width: 56px; padding: 0 18px; font-size: 17px; }
 </style>
-<header class="site-barre"><div class="site-barre-int">
-  <a class="site-marque" href="tableau-a.html">Semestre 5</a>
-  <div class="droite"><span style="color:var(--doux);font-size:15px">Maquettes · données fictives</span></div>
-</div></header>
-<main class="mq"><span class="kick">MAQUETTES CLIQUABLES · SEMESTRE 5</span>
-<h1>L'interface, avant de la construire</h1>
-<p class="sous">Tout est cliquable, rien n'est enregistré, les chiffres sont inventés. Les écrans 1 à 3 existent en deux versions, A et B, pour comparer.</p>
-<h2 class="section-titre">Voir d'abord le tout <small>3 écrans, 2 versions chacun</small></h2>
-<div class="ecrans">
-<div class="ecran duo"><span class="n">1</span><div><b>Tableau de bord</b><span>cartes de module, Reprendre, session, sauvegarde</span></div><div class="liens"><a href="tableau-a.html">A</a><a href="tableau-b.html">B</a></div></div>
-<div class="ecran duo"><span class="n">2</span><div><b>Carte du module</b><span>les chapitres et leurs dépendances</span></div><div class="liens"><a href="carte-a.html">A</a><a href="carte-b.html">B</a></div></div>
-<div class="ecran duo"><span class="n">3</span><div><b>Vue d'ensemble d'un chapitre</b><span>une seule colonne, sans panneau latéral</span></div><div class="liens"><a href="chapitre-a.html">A</a><a href="chapitre-b.html">B</a></div></div>
+<header class="barre"><a class="marque" href="tableau-a.html">Semestre 5</a><div class="droite"></div></header>
+<main class="page">
+<h1>Maquettes</h1>
+<p class="calme">Version calme. Tout est cliquable, rien n'est enregistré, les chiffres sont inventés. Les écrans 1 à 3 existent en deux versions.</p>
+<div style="margin-top:44px">
+<div class="ecran"><span class="n">1</span>Tableau de bord<div class="liens"><a class="second" href="tableau-a.html">A</a><a class="second" href="tableau-b.html">B</a></div></div>
+<div class="ecran"><span class="n">2</span>Carte du module<div class="liens"><a class="second" href="carte-a.html">A</a><a class="second" href="carte-b.html">B</a></div></div>
+<div class="ecran"><span class="n">3</span>Vue d'un chapitre<div class="liens"><a class="second" href="chapitre-a.html">A</a><a class="second" href="chapitre-b.html">B</a></div></div>
+<div class="ecran"><span class="n">4</span>Cartes mémoire<div class="liens"><a class="second" href="cartes.html">Ouvrir</a></div></div>
+<div class="ecran"><span class="n">5</span>Quiz du chapitre<div class="liens"><a class="second" href="quiz.html#juste">Juste</a><a class="second" href="quiz.html#faux">Faux</a></div></div>
+<div class="ecran"><span class="n">6</span>Examen blanc<div class="liens"><a class="second" href="examen.html">Réglages</a><a class="second" href="examen-resultats.html">Résultats</a></div></div>
+<div class="ecran"><span class="n">7</span>Fiche de révision<div class="liens"><a class="second" href="fiche.html">Ouvrir</a></div></div>
+<div class="ecran"><span class="n">8</span>Session de 10 min<div class="liens"><a class="second" href="session.html">Pendant</a><a class="second" href="session-fin.html">Fin</a></div></div>
+<div class="ecran"><span class="n">9</span>Module Connaissances<div class="liens"><a class="second" href="connaissances.html">Ouvrir</a></div></div>
+<div class="ecran"><span class="n">10</span>Sources et ajouts<div class="liens"><a class="second" href="sources.html">Ouvrir</a></div></div>
 </div>
-<h2 class="section-titre">Puis les détails et les tests</h2>
-<div class="ecrans">
-<div class="ecran duo"><span class="n">4</span><div><b>Cartes mémoire</b><span>recto, verso, trois réponses</span></div><div class="liens"><a href="cartes.html">Ouvrir</a></div></div>
-<div class="ecran duo"><span class="n">5</span><div><b>Quiz du chapitre</b><span>une question, retour expliqué et sourcé</span></div><div class="liens"><a href="quiz.html">Ouvrir</a></div></div>
-<div class="ecran duo"><span class="n">6</span><div><b>Mode examen</b><span>réglages puis résultats</span></div><div class="liens"><a href="examen.html">Réglages</a><a href="examen-resultats.html">Résultats</a></div></div>
-<div class="ecran duo"><span class="n">7</span><div><b>Fiche de révision</b><span>le sous-module Robotique biomédicale</span></div><div class="liens"><a href="fiche.html">Ouvrir</a></div></div>
-<div class="ecran duo"><span class="n">8</span><div><b>Session de 10 min</b><span>cartes, page suivante, bilan</span></div><div class="liens"><a href="session.html">1</a><a href="session-page.html">2</a><a href="session-fin.html">Fin</a></div></div>
-<div class="ecran duo"><span class="n">9</span><div><b>Module Connaissances</b><span>Architecture hospitalière, contenu d'exemple</span></div><div class="liens"><a href="connaissances.html">Ouvrir</a></div></div>
-<div class="ecran duo"><span class="n">10</span><div><b>Sources et « Ajouté »</b><span>sur une page, une carte, un quiz</span></div><div class="liens"><a href="sources.html">Ouvrir</a></div></div>
-</div>
-<p class="note-idx">Le bouton « Sommaire des maquettes », en bas à gauche de chaque écran, ramène ici. Le site réel n'est pas touché : ces pages vivent seulement dans /maquette/.</p>
-</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+</main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>
 </body>
 </html>
