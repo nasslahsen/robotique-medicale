@@ -1,0 +1,50 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Tests des calculs
+        run: node tests/math.test.js
+      - name: Vérification statique (équations, liens, pages)
+        run: node tests/static-check.js
+      - name: Assemblage du site
+        run: |
+          mkdir _site
+          cp -r index.html registre.js jouer.html cours.html concepts commun modules _site/
+          # ni les PDF de cours ni le modèle de module ne sont publiés
+          rm -rf _site/modules/*/sources _site/modules/_modele
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    # Seuls les déploiements partagent ce groupe : un build de pull request ne peut pas annuler un déploiement de main.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

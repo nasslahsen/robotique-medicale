@@ -1,0 +1,208 @@
+/* Jeu : carte des niveaux et écran de niveau. iPad paysage. Voir STYLE.md. */
+:root {
+  --encre: #15171f; --doux: #5b6172; --pale: #eef0f5; --trait: #e3e6ee;
+  --acc: #3b5bdb; --acc-pale: #e8edff; --jeu: #D44C47; --jeu-pale: #FFE2DD; --jeu-texte: #CB4844;
+  --ok: #12a26b; --ok-pale: #e3f7ee; --ko: #e5484d; --ko-pale: #fdecec;
+  --x: #e5484d; --y: #12a26b; --z: #3b5bdb; --v: #8b3fd9;
+  --rayon: 22px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--encre); }
+body { font: 17px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .titre { font-family: "Bricolage Grotesque", Inter, sans-serif; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+button { font-family: inherit; color: inherit; }
+a { color: var(--acc); }
+
+/* ---------- Boutons de jeu ---------- */
+.btn { height: 58px; padding: 0 28px; border: 2.5px solid var(--encre); border-radius: 16px; background: var(--encre); color: #fff; font: 600 18px Inter, sans-serif; cursor: pointer; box-shadow: 4px 4px 0 var(--jeu); transition: transform .1s, box-shadow .1s; }
+.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--jeu); }
+.btn.clair { background: #fff; color: var(--encre); box-shadow: 4px 4px 0 var(--encre); }
+.btn.clair:active { box-shadow: 0 0 0 var(--encre); }
+.btn.bleu { background: var(--acc); border-color: var(--acc); box-shadow: 4px 4px 0 var(--encre); }
+.btn:disabled { opacity: .35; }
+
+/* ---------- Écran de niveau ---------- */
+body.niveau { overflow: hidden; height: 100dvh; }
+.barre { height: 72px; display: flex; align-items: center; gap: 22px; padding: 0 30px; }
+.barre .carte-lien { display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 2px solid var(--encre); border-radius: 12px; color: var(--encre); text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; }
+.barre .nom { min-width: 0; }
+.barre .nom small { display: block; font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--jeu-texte); }
+.barre h1 { font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.segments { flex: 1; display: flex; gap: 8px; max-width: 480px; margin-left: auto; }
+.segments span { flex: 1; height: 10px; border-radius: 10px; background: var(--pale); overflow: hidden; }
+.segments span i { display: block; height: 100%; width: 0; background: var(--acc); border-radius: 10px; transition: width .6s cubic-bezier(.3, 1.4, .5, 1); }
+.segments span.fait i { width: 100%; background: var(--ok); }
+.segments span.courant i { width: 35%; }
+
+.scene { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; padding: 4px 30px 26px; height: calc(100dvh - 72px); }
+.figure { position: relative; border: 1px solid var(--trait); border-radius: var(--rayon); overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+.figure > svg { flex: 1; min-height: 0; width: 100%; display: block; overflow: visible; touch-action: none; user-select: none; -webkit-user-select: none; }
+.bande { flex: none; display: none; justify-content: center; align-items: center; gap: 14px; border-top: 1px solid var(--trait); background: #fafbfd; padding: 10px 14px; min-height: 84px; font-size: 18px; }
+.bande.on { display: flex; }
+.bande .katex { font-size: 1.15em; }
+.chip { position: absolute; left: 16px; top: 16px; font: 700 22px "JetBrains Mono", monospace; background: var(--pale); border-radius: 14px; padding: 8px 14px; display: none; }
+.chip.on { display: block; }
+.astuce { position: absolute; left: 16px; top: 72px; max-width: 46%; color: var(--doux); font-size: 15px; pointer-events: none; }
+.coin { position: absolute; right: 14px; top: 14px; }
+.halo { transform-box: fill-box; transform-origin: center; animation: halo 1.8s ease-in-out infinite; }
+@keyframes halo { 50% { transform: scale(1.25); opacity: .55; } }
+
+.panneau { position: relative; overflow: hidden; }
+.etape { position: absolute; inset: 0; overflow-y: auto; padding: 6px 8px 28px 4px; transition: opacity .45s ease, transform .45s cubic-bezier(.2, .8, .2, 1); }
+.etape.sortie { opacity: 0; transform: translateX(-40px); }
+.etape.entree { opacity: 0; transform: translateX(40px); }
+.kicker { display: inline-block; font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; color: #fff; background: var(--jeu); border-radius: 7px; padding: 3px 9px; margin: 6px 0 12px; }
+.kicker.boss { background: var(--encre); }
+.etape h2 { font-size: 29px; line-height: 1.18; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.015em; }
+.consigne { color: var(--doux); margin: 0 0 16px; }
+.etape p { margin: 0 0 10px; }
+
+.choix { display: grid; grid-template-columns: repeat(var(--col, 3), minmax(0, 1fr)); gap: 12px; margin: 6px 0 12px; }
+.choix button { min-height: 76px; padding: 8px 10px; border: 2px solid var(--trait); background: #fff; border-radius: 18px; font-size: 19px; cursor: pointer; transition: transform .15s, border-color .2s, background .2s; }
+.choix button:active { transform: scale(.97); }
+.choix button.bon { border-color: var(--ok); background: var(--ok-pale); }
+.choix button.faux { border-color: var(--ko); background: var(--ko-pale); }
+.choix button:disabled { cursor: default; }
+.secoue { animation: secoue .4s; }
+@keyframes secoue { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+
+/* « Voir la réponse » et « Passer » : discrets, sous la question */
+.aide-q { display: flex; gap: 4px; margin: 14px 0 0 -12px; }
+.aide-q button { min-height: 44px; padding: 0 12px; border: 0; border-radius: 12px; background: none; font: 500 15px Inter, sans-serif; color: var(--doux); text-decoration: underline; text-decoration-color: #c9cdd8; text-underline-offset: 4px; cursor: pointer; }
+.aide-q button:active { background: var(--pale); }
+.retour-msg { min-height: 28px; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin: 6px 0; }
+.retour-msg:empty { display: none; }
+.retour-msg.ko { color: var(--ko); }
+.retour-msg.ok { color: var(--ok); }
+.retour-msg.info { color: var(--acc); }
+.coche { flex: none; width: 30px; height: 30px; }
+.coche circle { fill: var(--ok); transform-box: fill-box; transform-origin: center; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.coche path { fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; animation: trace .35s .2s forwards; }
+@keyframes pop { from { transform: scale(0); } }
+@keyframes trace { to { stroke-dashoffset: 0; } }
+.onde { position: fixed; z-index: 20; pointer-events: none; border: 4px solid var(--ok); border-radius: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; animation: onde .9s ease-out forwards; }
+@keyframes onde { to { transform: scale(8); opacity: 0; border-width: 1px; } }
+
+.explique { border-top: 1px solid var(--trait); margin-top: 12px; padding-top: 12px; animation: monte .5s .1s both; }
+@keyframes monte { from { opacity: 0; transform: translateY(12px); } }
+.explique .katex-display { margin: .6em 0; }
+.suite { margin-top: 14px; }
+
+/* saisie de nombres */
+.nombres { display: flex; align-items: center; gap: 12px; margin: 6px 0 10px; font-size: 22px; flex-wrap: wrap; }
+.cases { display: flex; flex-direction: column; gap: 8px; padding: 6px 10px; border-left: 3px solid var(--encre); border-right: 3px solid var(--encre); border-radius: 12px; }
+.cases.ligne { flex-direction: row; border: 0; padding: 0; }
+.saisie { min-width: 124px; height: 54px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; font: 700 24px "JetBrains Mono", monospace; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0 10px; }
+.saisie.active { border-color: var(--acc); box-shadow: 0 0 0 4px rgba(59, 91, 219, .15); }
+.saisie.bon { border-color: var(--ok); color: var(--ok); }
+.saisie.faux { border-color: var(--ko); color: var(--ko); }
+.clavier { display: grid; grid-template-columns: repeat(4, 66px); gap: 8px; margin: 4px 0 6px; }
+.touche { height: 56px; border: 2px solid var(--trait); border-radius: 14px; background: #fff; font: 700 22px Inter, sans-serif; cursor: pointer; }
+.touche:active { transform: scale(.95); }
+.touche.large { grid-column: span 2; font-size: 16px; }
+.touche.ok { background: var(--acc); color: #fff; border-color: var(--acc); }
+
+/* glisser des étiquettes dans des cases */
+.jetons { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0; min-height: 64px; }
+.jeton { min-width: 64px; min-height: 56px; padding: 6px 14px; border: 2px solid var(--encre); border-radius: 14px; background: #fff; font-size: 19px; display: inline-flex; align-items: center; justify-content: center; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; box-shadow: 3px 3px 0 var(--encre); }
+.jeton.vol { position: fixed; z-index: 30; pointer-events: none; transform: rotate(-2deg) scale(1.05); }
+.jeton.fantome { opacity: .25; }
+.trou { min-width: 88px; min-height: 60px; border: 2px dashed #c6cbd8; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: background .2s, border-color .2s; }
+.trou.survol { background: var(--acc-pale); border-color: var(--acc); }
+.trou.bon { border-style: solid; border-color: var(--ok); background: var(--ok-pale); }
+.trou.faux { border-color: var(--ko); background: var(--ko-pale); }
+.trou .jeton { box-shadow: none; border: 0; background: transparent; }
+
+/* cadran */
+.cadran { display: flex; flex-direction: column; align-items: center; gap: 10px; transition: opacity .3s; }
+.cadran.verrou { opacity: .35; pointer-events: none; }
+.cadran svg { width: 200px; height: 200px; touch-action: none; display: block; }
+.cadran .fins { display: flex; gap: 10px; }
+.cadran .fins button { width: 62px; height: 48px; border: 2.5px solid var(--encre); border-radius: 14px; background: #fff; font: 700 18px "JetBrains Mono", monospace; cursor: pointer; box-shadow: 3px 3px 0 var(--encre); }
+.cadran .fins button:active { transform: translate(3px, 3px); box-shadow: none; }
+
+/* curseur maison, gros pour le doigt */
+.curseur { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; margin: 8px 0; }
+.curseur label { font-weight: 600; min-width: 40px; }
+.curseur output { font: 700 18px "JetBrains Mono", monospace; min-width: 70px; text-align: right; }
+.curseur input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; touch-action: none; }
+.curseur input[type=range]::-webkit-slider-runnable-track { height: 10px; border-radius: 10px; background: var(--pale); }
+.curseur input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 34px; margin-top: -12px; border-radius: 50%; background: #fff; border: 4px solid var(--acc); box-shadow: 0 2px 6px rgba(0, 0, 0, .15); }
+.curseur input[type=range]::-moz-range-track { height: 10px; border-radius: 10px; background: var(--pale); }
+.curseur input[type=range]::-moz-range-thumb { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 4px solid var(--acc); }
+
+/* fin de niveau */
+.resultat { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .7); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity .35s; }
+.resultat.on { opacity: 1; pointer-events: auto; }
+.resultat .carte { width: min(560px, 90vw); background: #fff; border: 2.5px solid var(--encre); border-radius: 28px; box-shadow: 8px 8px 0 var(--encre); padding: 34px 36px 30px; text-align: center; transform: translateY(20px) scale(.97); transition: transform .5s cubic-bezier(.2, .9, .3, 1.3); }
+.resultat.on .carte { transform: none; }
+.resultat h2 { margin: 6px 0 6px; font-size: 34px; letter-spacing: -0.02em; }
+.resultat p { color: var(--doux); margin: 0 0 22px; }
+.etoiles { display: flex; justify-content: center; gap: 14px; margin: 8px 0 14px; }
+.etoiles svg { width: 76px; height: 76px; }
+.etoiles .pleine path { fill: var(--jeu); stroke: var(--encre); animation: etoile .55s cubic-bezier(.3, 1.8, .5, 1) both; transform-box: fill-box; transform-origin: center; }
+.etoiles .vide path { fill: var(--pale); stroke: #c9cdd8; }
+.etoiles .pleine:nth-child(2) path { animation-delay: .25s; }
+.etoiles .pleine:nth-child(3) path { animation-delay: .5s; }
+@keyframes etoile { from { transform: scale(0) rotate(-40deg); } }
+.resultat .carte { max-height: 92dvh; overflow-y: auto; }
+.a-revoir { margin: -6px 0 22px; text-align: left; border-top: 1px solid var(--trait); }
+.a-revoir:empty { display: none; }
+.a-revoir > div { display: flex; align-items: center; gap: 14px; min-height: 64px; border-bottom: 1px solid var(--trait); }
+.a-revoir span { flex: 1; min-width: 0; font-size: 16px; line-height: 1.35; }
+.a-revoir small { display: block; color: var(--doux); font-size: 14px; }
+.a-revoir .btn { flex: none; height: 46px; padding: 0 18px; font-size: 16px; border-width: 2px; box-shadow: 3px 3px 0 var(--encre); }
+.resultat .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- Carte des niveaux ---------- */
+body.carte-jeu { min-height: 100dvh; }
+.entete { max-width: 1180px; margin: 0 auto; padding: 44px 40px 10px; display: flex; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
+.entete h1 { font-size: 46px; line-height: 1.05; margin: 0; letter-spacing: -0.025em; font-weight: 800; }
+.entete p { margin: 8px 0 0; color: var(--doux); max-width: 640px; }
+.entete .total { margin-left: auto; text-align: right; }
+.entete .total b { display: block; font: 700 34px "JetBrains Mono", monospace; }
+.entete .total small { color: var(--doux); }
+.reprendre { max-width: 1180px; margin: 18px auto 0; padding: 0 40px; }
+.chapitre { max-width: 1180px; margin: 0 auto; padding: 30px 40px 10px; }
+.chapitre header { display: flex; align-items: baseline; gap: 16px; border-bottom: 2px solid var(--encre); padding-bottom: 10px; }
+.chapitre header .num { font: 700 14px "JetBrains Mono", monospace; color: var(--jeu-texte); letter-spacing: .06em; }
+.chapitre header h2 { margin: 0; font-size: 30px; letter-spacing: -0.015em; }
+.chapitre header p { margin: 0 0 0 auto; color: var(--doux); font-size: 15px; }
+.chemin { position: relative; }
+.chemin svg.trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.noeuds { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 26px; padding: 28px 0 14px; }
+.noeud { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; text-decoration: none; color: var(--encre); padding: 0 8px; }
+.noeud .rond { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 800 28px "Bricolage Grotesque", sans-serif; border: 3px solid var(--encre); background: #fff; box-shadow: 4px 4px 0 var(--encre); transition: transform .15s; }
+.noeud:active .rond { transform: scale(.95); }
+.noeud .nomn { font-weight: 600; font-size: 15px; line-height: 1.25; max-width: 200px; }
+.noeud .mini { display: flex; gap: 3px; height: 18px; }
+.noeud .mini svg { width: 18px; height: 18px; }
+.noeud .mini .pleine path { fill: var(--jeu); stroke: var(--encre); }
+.noeud .mini .vide path { fill: var(--pale); stroke: #c9cdd8; }
+.noeud.fait .rond { background: var(--ok); color: #fff; }
+.noeud.suivant .rond { background: var(--acc); color: #fff; animation: appel 1.6s ease-in-out infinite; }
+@keyframes appel { 50% { transform: scale(1.08); box-shadow: 4px 4px 0 var(--encre), 0 0 0 12px rgba(59, 91, 219, .15); } }
+.noeud.ferme { pointer-events: none; }
+.noeud.ferme .rond { background: var(--pale); color: #b3b8c4; border-color: #c9cdd8; box-shadow: none; }
+.noeud.ferme .nomn { color: #9aa0ad; }
+.noeud.boss .rond { width: 100px; height: 100px; border-radius: 26px; transform: rotate(45deg); }
+.noeud.boss .rond span { transform: rotate(-45deg); font-size: 18px; letter-spacing: .04em; }
+.noeud.boss:not(.ferme):not(.fait):not(.bientot) .rond { background: var(--jeu); color: #fff; }
+.noeud.boss { padding-top: 6px; }
+.noeud.bientot .rond { border-style: dashed; box-shadow: none; background: #fff; color: #b3b8c4; border-color: #c9cdd8; }
+.noeud.bientot { pointer-events: auto; }
+.noeud.revision .rond { border-style: double; border-width: 6px; }
+.noeud.revision .rond span { font-size: 17px; letter-spacing: .04em; }
+.sous-module-titre { max-width: 1180px; margin: 46px auto 0; padding: 0 40px; display: flex; align-items: center; gap: 16px; }
+.sous-module-titre h2 { margin: 0; font-size: 34px; letter-spacing: -0.02em; font-weight: 800; }
+.sous-module-titre .etiquette-sm { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 8px; background: var(--jeu-pale); color: var(--jeu-texte); font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; }
+.sous-module-titre.vide h2 { color: var(--doux); }
+.a-venir-carte.petit { padding: 16px 24px; font-size: 15px; margin-top: 10px; }
+.a-venir-carte { margin: 22px 0 40px; padding: 26px 28px; border: 2.5px dashed #c9cdd8; border-radius: 22px; color: var(--doux); font-size: 17px; text-align: center; }
+.a-venir-carte b { color: var(--encre); }
+#chapitres > .a-venir-carte { max-width: 1100px; margin: 22px auto 40px; }
+#chapitres > .a-venir-carte.petit { margin: 6px auto 10px; }
+.noeud .bientot-txt { font-size: 13px; color: var(--doux); }
+.pied { max-width: 1180px; margin: 30px auto 40px; padding: 0 40px; display: flex; gap: 16px; align-items: center; color: var(--doux); font-size: 15px; flex-wrap: wrap; }
+.pied button { height: 46px; padding: 0 18px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; font-weight: 600; cursor: pointer; }

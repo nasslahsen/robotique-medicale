@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Spécificités de la robotique médicale · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Spécificités de la robotique médicale</h1>
+<p class="chapeau">Les mêmes technologies que dans l'industrie, mais de nouvelles exigences : la pièce est un patient qui respire, l'opérateur est au contact, et une erreur peut être irréversible.</p>
+
+<h2>Intuition</h2>
+<p>Un robot industriel vise une pièce posée, immobile, toujours au même endroit. Un robot médical vise une cible dans un corps qui bouge : respiration, battements cardiaques, mouvements involontaires. S'il vise le point planifié sans suivre ce mouvement, il le manque. D'où le besoin d'une perception adaptative : imagerie en temps réel, recalage anatomique, suivi des mouvements physiologiques.</p>
+
+<div id="fig-respiration"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Robotique médicale</strong> : application particulière de la robotique dans laquelle les robots sont utilisés pour assister les professionnels de santé, améliorer la précision des interventions et faciliter la prise en charge des patients. Robotique médicale = robot + professionnel de santé + patient + environnement clinique.</p>
+<div class="tableau"><table>
+<tr><th>Critère</th><th>Robotique industrielle</th><th>Robotique médicale</th></tr>
+<tr><td>Environnement</td><td>structuré, statique et contrôlé</td><td>vivant, variable et non structuré</td></tr>
+<tr><td>Objet d'intervention</td><td>produit ou pièce standardisée</td><td>patient variable, tissus déformables</td></tr>
+<tr><td>Relation avec l'humain</td><td>séparation physique, zone d'exclusion</td><td>contact direct ou interaction avec le patient</td></tr>
+<tr><td>Objectif principal</td><td>performance, vitesse, cadence</td><td>assistance, précision, sécurité</td></tr>
+<tr><td>Commande</td><td>programmée et déterministe</td><td>téléopérée, adaptative et supervisée</td></tr>
+<tr><td>Sécurité</td><td>barrières, clôtures, arrêt d'urgence</td><td>limitation des forces, détection de collision, sécurité intrinsèque</td></tr>
+</table></div>
+<p>Les six ruptures du cours et leur conséquence :</p>
+<ul>
+<li><strong>Du produit standardisé au patient variable</strong> : perception adaptative (imagerie en temps réel, recalage anatomique, suivi des mouvements physiologiques). C'est la figure ci-dessus.</li>
+<li><strong>De la zone d'exclusion au contact direct</strong> : sécurité intrinsèque (limitation des forces et des couples, détection de collision, arrêt instantané, redondance des capteurs).</li>
+<li><strong>De la précision géométrique à la précision biomécanique</strong> : passer du repère cartésien au repère anatomique (repérage par imagerie, suivi du mouvement physiologique, asservissement visuel). C'est l'outil des pages sur les repères et les matrices.</li>
+<li><strong>De la reprogrammation à la décision assistée</strong> : l'humain ne programme plus en amont, il supervise et pilote pendant l'acte, avec une responsabilité clinique directe.</li>
+<li><strong>De la fiabilité économique à la fiabilité vitale</strong> : dispositif médical souvent de classe III, normes ISO 13485, IEC 60601, ISO 14971 (au lieu de l'ISO 10218), traçabilité obligatoire, essais cliniques, certification ; une erreur est souvent irréversible.</li>
+<li><strong>De l'environnement contrôlé à l'environnement contraint</strong> : stérilisation ou usage unique, biocompatibilité, compatibilité IRM (actionneurs piézoélectriques, pas de matériau ferromagnétique), surfaces lisses sans zone de rétention bactérienne.</li>
+</ul>
+<p>Cinq axes à repenser : perception, sécurité, commande, précision, validation. Objectifs : assister, diagnostiquer, traiter, rééduquer. Exigences : précision, sécurité, fiabilité, interaction avec l'humain.</p>
+
+<h2>Interfaces homme-machine</h2>
+<p>Une IHM est l'ensemble des moyens qui permettent à un professionnel de santé ou à un patient d'interagir avec un système robotisé médical : commander, observer, superviser. Le praticien reste dans la boucle. En <strong>téléopération</strong> (maître-esclave, comme le da Vinci), le chirurgien commande les instruments depuis une console ; le système peut réduire l'amplitude des mouvements (mise à l'échelle, par exemple 1 cm de la main donne 3 mm à l'instrument) et filtrer les tremblements.</p>
+
+<div id="fig-teleop"></div>
+
+<div class="tableau"><table>
+<tr><th>Forme d'IHM</th><th>Principe</th><th>Exemple</th><th>Limite principale</th></tr>
+<tr><td>Téléopération</td><td>commande à distance depuis une console</td><td>da Vinci</td><td>retour haptique limité, encombrement, coût</td></tr>
+<tr><td>Co-manipulation</td><td>chirurgien et robot tiennent ensemble l'instrument ; barrière virtuelle</td><td>Mako</td><td>recalage image-patient indispensable</td></tr>
+<tr><td>Haptique</td><td>restitue les sensations de contact (tactile, kinesthésique)</td><td>simulateur à retour d'effort</td><td>capteurs à miniaturiser, retard, coût</td></tr>
+<tr><td>Multimodale</td><td>commande vocale ou gestuelle sans toucher</td><td>zoom vocal, défilement d'images</td><td>bruit du bloc, gestes mal reconnus</td></tr>
+<tr><td>Immersive</td><td>RV pour planifier et former, RA pour guider pendant l'opération</td><td>modèle 3D superposé à la vue</td><td>recalage en temps réel, déformation des tissus</td></tr>
+<tr><td>Cerveau-machine (BCI)</td><td>traduit l'activité cérébrale en commandes</td><td>BrainGate</td><td>chirurgie des implants, fiabilité, données neuronales</td></tr>
+</table></div>
+<p>Enjeux des IHM médicales : clarté, ergonomie et adaptation, précision et fidélité, réactivité (latence), sécurité (alertes, état sûr en cas de panne), cybersécurité.</p>
+
+<h2>Classification et historique</h2>
+<p>Quatre critères complémentaires et indépendants : <strong>domaine</strong> (chirurgicaux, rééducation, exosquelettes et orthèses, assistance et mobilité, diagnostic et navigation, téléprésence, logistique hospitalière), <strong>autonomie</strong> (téléopérés, programmés, adaptatifs, autonomes supervisés), <strong>mode d'interaction</strong> (sans contact, contact externe, invasif, co-manipulation), <strong>fonction médicale</strong> (assister, diagnostiquer, traiter, rééduquer).</p>
+<p>Historique : 1985, PUMA 200 pour une biopsie cérébrale guidée par scanner ; 1992, ROBODOC (prothèse de hanche) ; 1994–1996, AESOP (porte-endoscope, commande vocale) ; 1997–2000, da Vinci ; 1998–2001, ZEUS ; 2001, opération Lindbergh (téléchirurgie New York – Strasbourg) ; depuis 2010, Mako, ROSA, Lokomat, exosquelettes, micro-robots, IA. Écosystème : marché de plus de 16 milliards de dollars ; acteurs : patients et soignants, ingénieurs, fabricants, hôpitaux, autorités (au Maroc, l'AMMPS pour les dispositifs médicaux).</p>
+
+<h2>Exemple</h2>
+<p>Mise à l'échelle du cours : avec un rapport 1 cm → 3 mm, un mouvement de la main de 2 cm donne un mouvement de l'instrument de \(2 \times 3 = 6\) mm, et un tremblement de la main de 1 mm n'en fait plus que \(0{,}3\) mm à l'instrument, avant même tout filtrage. Sur la figure, réglez le rapport sur 0,3 et activez le tremblement pour le constater.</p>
+
+<h2>Formules clés</h2>
+<p>Robotique médicale = robot + professionnel de santé + patient + environnement clinique. Cinq axes de rupture : perception, sécurité, commande, précision, validation. Mise à l'échelle : déplacement instrument = rapport × déplacement de la main.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/robotique-medicale.js"></script>
+</body>
+</html>
