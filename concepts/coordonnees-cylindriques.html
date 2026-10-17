@@ -41,17 +41,6 @@
 \[ x = r\cos\theta \qquad y = r\sin\theta \qquad z = z \]
 \[ r = \sqrt{x^2 + y^2} \qquad \theta = \operatorname{atan2}(y, x) \]
 
-<h2>Questions</h2>
-<ol class="questions">
-<li>Convertissez \(P = (0;\ -2;\ 1)\) en coordonnées cylindriques.
-<details><summary>Voir la réponse</summary>\(r = 2\), \(\theta = \operatorname{atan2}(-2, 0) = -90°\), \(z = 1\).</details></li>
-<li>Un point est en \((r, \theta) = (4;\ 30°)\). Quelles sont ses coordonnées cartésiennes ?
-<details><summary>Voir la réponse</summary>\(x = 4\cos 30° \approx 3{,}46\) et \(y = 4\sin 30° = 2\).</details></li>
-<li>Pourquoi utilise-t-on atan2 plutôt que arctan(y/x) ?
-<details><summary>Voir la réponse</summary>atan2 tient compte des signes de \(x\) et \(y\) et donne le bon quadrant ; arctan(y/x) confond deux directions opposées et n'est pas défini pour \(x = 0\).</details></li>
-<li>Quel type de robot a un espace de travail naturellement décrit en coordonnées cylindriques ?
-<details><summary>Voir la réponse</summary>Le robot cylindrique : une rotation autour de \(Z\) (\(\theta\)), une translation radiale (\(r\)) et une translation verticale (\(z\)).</details></li>
-</ol>
 </main>
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/vendor/katex/auto-render.min.js"></script>

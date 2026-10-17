@@ -49,17 +49,6 @@
 \[ \text{ZYX : } R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma) \qquad \text{XYZ : } {}^0R_3 = R_x(\varphi)\,R_y(\theta)\,R_z(\psi) \]
 <p>Axes mobiles : chaque rotation autour d'un axe du repère obtenu juste avant ; matrices multipliées à droite. Singularité quand l'angle du milieu vaut \(\pm 90°\).</p>
 
-<h2>Questions</h2>
-<ol class="questions">
-<li>Dans la convention ZYX, autour de quels axes se font les trois rotations ?
-<details><summary>Voir la réponse</summary>Autour de \(\vec{z}_0\) (lacet \(\alpha\)), puis du nouvel axe \(\vec{y}_1\) (tangage \(\beta\)), puis du nouvel axe \(\vec{x}_2\) (roulis \(\gamma\)).</details></li>
-<li>Calculez \(R^{(0,s)}\) pour \(\alpha = 90°\), \(\beta = 0\), \(\gamma = 90°\).
-<details><summary>Voir la réponse</summary>\(R_z(90°)\,R_x(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix}\) : \(\vec{x}_s = \vec{y}_0\), \(\vec{y}_s = \vec{z}_0\), \(\vec{z}_s = \vec{x}_0\).</details></li>
-<li>Que se passe-t-il en ZYX quand \(\beta = 90°\) ?
-<details><summary>Voir la réponse</summary>\(\vec{x}_2 = -\vec{z}_0\) : l'axe du roulis est aligné avec l'axe du lacet. Les angles \(\alpha\) et \(\gamma\) ne sont plus indépendants : c'est une singularité de la représentation.</details></li>
-<li>Pourquoi faut-il toujours préciser l'ordre des rotations ?
-<details><summary>Voir la réponse</summary>Le produit de matrices n'est pas commutatif : les mêmes trois angles appliqués dans un autre ordre donnent une autre orientation (comparez ZYX et XYZ sur la figure avec les mêmes valeurs).</details></li>
-</ol>
 </main>
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/vendor/katex/auto-render.min.js"></script>
