@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Architecture AVR et gamme de produits · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Architecture AVR et gamme de produits</h1>
+<p class="chapeau">Tu dois choisir le microcontrôleur d'un holter, d'un tensiomètre ou d'une semelle. Chez Atmel (aujourd'hui Microchip), la famille AVR va de la petite puce à 8 broches jusqu'au processeur 32 bits à 256 broches. Comment lire ce qu'il y a dedans et choisir la bonne ?</p>
+
+<h2>Intuition</h2>
+<p>Un microcontrôleur AVR, c'est le contrôleur embarqué de la page précédente gravé sur une seule puce : un cœur RISC (l'AVR CPU), ses mémoires (FLASH pour le programme, SRAM pour les variables, EEPROM pour ce qui doit survivre à une coupure), et autour, des périphériques reliés par un bus de données : convertisseur analogique-numérique, liaisons série, timers, ports d'entrées-sorties.</p>
+<p>Choisir une puce, c'est compter ce dont l'appareil a besoin (combien de voies analogiques, de liaisons série, de mémoire, de broches) puis lire un tableau comme celui de Microchip, colonne par colonne.</p>
+
+<div id="fig-avr"></div>
+
+<h2>Formalisation</h2>
+<h3>Le sigle et le schéma bloc (diapositive 12)</h3>
+<p><strong>AVR</strong> : <i>Advanced Virtual RISC Architecture</i> (Atmel, puis Microchip). Autour de l'<strong>AVR CPU</strong> et du DATABUS :</p>
+<ul>
+<li>mémoires : SRAM, FLASH, EEPROM (par EEPROMIF), NVM programming (programmation série), PARPROG ;</li>
+<li>horloges (<i>Clock generation</i>) : 8 MHz Crystal Osc, 1/2/4/8 MHz Calib RC, 12 MHz External RC Osc, 32,768 kHz XOSC, External clock, 1 MHz int osc ; <i>Power management and clock control</i> ;</li>
+<li>sûreté : Watchdog Timer, <i>Power Supervision POR/BOD &amp; RESET</i>, Internal Reference ;</li>
+<li>analogique : ADC (ADC[7:0], AREF), AC (AIN0, AIN1, ADCMUX) ;</li>
+<li>communication : USART (RxD, TxD, XCK), TWI (SDA, SCL), SPI (MISO, MOSI, SCK, SS) ;</li>
+<li>E/S et temps : I/O PORTS (PB[7:0], PC[6:0], PD[7:0]), EXTINT (INT[1:0]), TC 0 (8 bits), TC 1 (16 bits), TC 2 (8 bits asynchrone).</li>
+</ul>
+<p class="complement">Pour lire le schéma : POR veut dire <i>Power-On Reset</i> et BOD <i>Brown-Out Detection</i> (remise à zéro à la mise sous tension et quand la tension baisse) ; AC est un comparateur analogique ; TWI (<i>Two-Wire Interface</i>) est le nom de l'I2C chez Atmel ; TC désigne un Timer/Counter.</p>
+
+<h3>Deux gammes (diapositive 13)</h3>
+<div class="tableau"><table>
+<tr><th>AVR (8 bits)</th><th>AVR32 (32 bits)</th></tr>
+<tr><td>idéal pour les applications à faible consommation et faible coût</td><td>pour les applications plus exigeantes en calcul</td></tr>
+<tr><td>RISC simple avec <strong>32 registres généraux</strong></td><td>cœur RISC 32 bits avec exécution dans le désordre (<i>out-of-order execution</i>)</td></tr>
+<tr><td>flash, EEPROM et SRAM intégrées</td><td>flash et SRAM plus grandes, mémoire externe, cache</td></tr>
+<tr><td>USART, SPI, I2C ; ADC et PWM</td><td>périphériques avancés : Ethernet, USB, PWM</td></tr>
+<tr><td>très utilisé dans Arduino</td><td>industriel, réseau, multimédia ; sécurité, timers avancés, temps réel</td></tr>
+</table></div>
+
+<h3>Les familles (diapositive 14)</h3>
+<p class="complement">Sur les diapositives, cette page et la suivante portent le titre « Architecture ARM », mais leur contenu concerne les AVR d'Atmel.</p>
+<div class="tableau"><table>
+<tr><th>Famille</th><th>Mémoire</th><th>Boîtiers</th></tr>
+<tr><td>tinyAVR</td><td>1–16 KB de flash</td><td>8–32 broches</td></tr>
+<tr><td>megaAVR</td><td>4–256 KB de flash</td><td>28–100 broches</td></tr>
+<tr><td>AVR XMEGA</td><td>16–384 KB de flash</td><td>44–100 broches</td></tr>
+<tr><td>AVR32 UC3</td><td>16–512 KB de flash</td><td>48–144 broches</td></tr>
+<tr><td>AVR32 AP7</td><td>jusqu'à 32 KB de SRAM sur puce</td><td>196–256 broches</td></tr>
+</table></div>
+<p><i>Atmel offers both 8-bit and 32-bit AVR's : highest performance with no power penalty.</i> Sur le graphe du cours, tinyAVR et megaAVR sont en 8 bits, AVR XMEGA en 8/16 bits, UC3 et AP7 en 32 bits ; on monte en performance vers la droite, on consomme moins vers le haut.</p>
+
+<div id="fig-familles"></div>
+
+<h3>Le tableau Microchip (diapositive 15)</h3>
+<div class="tableau"><table>
+<tr><th>Product</th><th>Status</th><th>Flash (KB)</th><th>EEPROM (Bytes)</th><th>RAM (Bytes)</th><th>picoPower</th><th>I/O pins</th><th>UART/USART</th><th>SPI</th><th>TWI</th><th>8-bit Timers</th><th>16-bit Timers</th><th>PWM</th><th>10-bit A/D</th><th>Vcc</th></tr>
+<tr><td>ATmega6450</td><td>I</td><td>64</td><td>2K</td><td>4K</td><td></td><td>69</td><td>1</td><td>1+USI</td><td>USI</td><td>2</td><td>1</td><td>4</td><td>8</td><td>1.8-5.5V / 2.7-5.5V</td></tr>
+<tr><td>ATmega1284P</td><td>I</td><td>128</td><td>4K</td><td>16K</td><td>Y</td><td>32</td><td>2</td><td>1+USART</td><td>Y</td><td>1</td><td>2</td><td>6</td><td>8</td><td>1.8-5.5V</td></tr>
+<tr><td>ATmega128</td><td>P</td><td>128</td><td>4K</td><td>4K</td><td></td><td>53</td><td>2</td><td>1</td><td>Y</td><td>2</td><td>2</td><td>6+2</td><td>8</td><td>2.7-5.5V / 4.5-5.5V</td></tr>
+<tr><td>ATmega1280</td><td>P</td><td>128</td><td>4K</td><td>8K</td><td></td><td>86</td><td>4</td><td>1+USART</td><td>Y</td><td>2</td><td>4</td><td>12+4</td><td>16</td><td>1.8-5.5V / 2.7-5.5V</td></tr>
+<tr><td>ATmega1281</td><td>P</td><td>128</td><td>4K</td><td>8K</td><td></td><td>54</td><td>2</td><td>1+USART</td><td>Y</td><td>2</td><td>4</td><td>6+4</td><td>8</td><td>1.8-5.5V / 2.7-5.5V</td></tr>
+<tr><td>ATmega2560</td><td>P</td><td>256</td><td>4K</td><td>8K</td><td></td><td>86</td><td>4</td><td>1+USART</td><td>Y</td><td>2</td><td>4</td><td>12+4</td><td>16</td><td>1.8-5.5V / 4.5-5.5V</td></tr>
+<tr><td>ATmega2561</td><td>P</td><td>256</td><td>4K</td><td>8K</td><td></td><td>54</td><td>2</td><td>1+USART</td><td>Y</td><td>2</td><td>4</td><td>6+4</td><td>8</td><td>1.8-5.5V / 4.5-5.5V</td></tr>
+</table></div>
+<p>Le tableau de la diapositive a aussi les colonnes SPI/TWI by USI, Analog Gain Stage, DebugWIRE/OCD et JTAG/OCD, et deux lignes par puce (deux plages de tension Vcc).</p>
+
+<div id="fig-choix"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un holter à 12 électrodes demande au moins 12 canaux A/D 10 bits. Colonne « 10-bit A/D » : seuls l'ATmega1280 et l'ATmega2560 en ont 16. S'il faut le plus de flash, on prend l'ATmega2560 (256 KB) ; si 128 KB suffisent, l'ATmega1280. Une semelle sur accumulateur qui veut la technologie basse consommation picoPower n'a qu'un choix dans ce tableau : l'ATmega1284P, qui a aussi la plus grande RAM (16K).</p>
+
+<h2>Formules clés</h2>
+<p>AVR = <i>Advanced Virtual RISC Architecture</i> (Atmel, Microchip). AVR 8 bits : faible consommation, faible coût, 32 registres généraux, Arduino. AVR32 : 32 bits, exécution dans le désordre, Ethernet, USB. Choisir une puce : filtrer par colonne (A/D, UART, flash, picoPower), puis comparer.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/avr.js"></script>
+</body>
+</html>

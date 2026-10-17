@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>DAC (Digital to Analog Converter) · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>DAC (Digital to Analog Converter)</h1>
+<p class="chapeau">Un stimulateur doit recevoir une consigne de 1 V, un banc de test doit simuler un signal physiologique. Cette fois, c'est le programme qui a un nombre et le monde qui attend une tension : c'est le rôle du DAC, l'inverse de l'ADC.</p>
+
+<h2>Intuition</h2>
+<p>Le DAC est un escalier de 256 marches entre 0 V et la tension de référence. Le programme choisit une marche avec un nombre de 0 à 255, et la broche prend la tension de cette marche. Doubler le nombre double la tension ; changer la référence change la hauteur de tout l'escalier.</p>
+
+<div id="fig-dac"></div>
+
+<h2>Formalisation</h2>
+<ul>
+<li>L'ESP32 a <strong>2 canaux DAC 8 bits</strong> qui convertissent un signal numérique en tension analogique.</li>
+<li>Les canaux DAC : <strong>DAC1 (GPIO25)</strong> et <strong>DAC2 (GPIO26)</strong>.</li>
+<li>Fonctionnalités : conversion indépendante ou simultanée des canaux ; tension de référence prise sur la broche VDD3P3_RTC ; générateur de forme d'onde cosinus (<i>Cosine waveform</i>, CW) ; accès DMA.</li>
+</ul>
+<p>Pour chaque canal, la tension de sortie se calcule ainsi :</p>
+\[ DACn\_OUT = \frac{VDD3P3\_RTC \times PDACn\_DAC}{255} \]
+<p>Une marche de l'escalier vaut \(VDD3P3\_RTC / 255\), soit environ 12,9 mV pour 3,3 V.</p>
+
+<h3>Le schéma d'un canal</h3>
+<div id="fig-dac-schema"></div>
+<p>Sur le schéma du cours, le mot de 8 bits pdacn_dac[7:0] qui arrive au bloc DACn vient d'un premier multiplexeur commandé par SENS_DAC_DIG_FORCE : à 1, il vient du DMA ; à 0, il vient d'un second multiplexeur commandé par SENS_DACn_CW_EN, qui choisit entre le générateur CW (1) et le registre RTCIO_PAD_PDACn_DAC[7:0] (0). La mise en marche du DAC (pdacn_xpd_dac) vient soit de RTCIO_PAD_PDACn_XPD_DAC, soit de la machine d'états du SAR ADC (SAR ADC FSM), selon RTCIO_PAD_PDACn_DAC_XPD_FORCE. Le DAC reçoit aussi son horloge pdac_clk et sort dacn_out.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec VDD3P3_RTC = 3,3 V et PDACn_DAC = 200 :</p>
+\[ DACn\_OUT = \frac{3{,}3 \times 200}{255} \approx 2{,}588\ \text{V} \]
+<p>Pour viser 1 V : \(PDACn\_DAC = 255 \times 1 / 3{,}3 \approx 77{,}3\), on écrit 77, ce qui donne \(3{,}3 \times 77 / 255 \approx 0{,}996\) V. Si la référence tombe à 3,0 V, le même nombre 200 ne donne plus que \(3{,}0 \times 200 / 255 \approx 2{,}35\) V.</p>
+
+<h2>Formules clés</h2>
+\[ DACn\_OUT = \frac{VDD3P3\_RTC \times PDACn\_DAC}{255} \qquad 0 \le PDACn\_DAC \le 255 \qquad \text{DAC1 : GPIO25, DAC2 : GPIO26} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/dac.js"></script>
+</body>
+</html>

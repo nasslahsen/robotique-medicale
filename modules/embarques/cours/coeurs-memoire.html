@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>PRO_CPU et APP_CPU, DMA, plan d'adressage · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>PRO_CPU et APP_CPU, DMA, plan d'adressage</h1>
+<p class="chapeau">Un holter enregistre l'ECG pendant 24 heures : des centaines d'échantillons par seconde arrivent de l'ADC et doivent finir en mémoire, pendant que le programme calcule le rythme cardiaque et gère le Bluetooth. Qui fait quoi dans la puce, et comment chaque donnée trouve-t-elle sa place ?</p>
+
+<h2>Intuition</h2>
+<p>L'ESP32 a deux processeurs : on peut confier la radio à l'un et l'application à l'autre. Copier des données ne demande aucune intelligence : un circuit dédié, le DMA, s'en charge seul, et laisse les processeurs calculer.</p>
+<p>Pour que tout ce monde se retrouve, chaque mémoire et chaque périphérique reçoit une plage d'adresses, comme les rues d'une ville reçoivent des numéros. Lire à une adresse, c'est aller frapper à une porte précise : la SRAM, la ROM, un périphérique, la mémoire du RTC ou, à travers le cache et la MMU, la mémoire externe.</p>
+
+<div id="fig-coeurs"></div>
+
+<h2>Formalisation</h2>
+<h3>Deux cœurs Harvard (diapositive 10)</h3>
+<p>L'<strong>ESP32</strong> est un système <i>dual-core</i> à deux CPU Xtensa LX6 d'architecture Harvard. Toute la mémoire embarquée, la mémoire externe et les périphériques sont placés sur le bus de données et/ou le bus d'instructions de ces CPU. Les deux CPU s'appellent :</p>
+<ul>
+<li><strong>PRO_CPU</strong> : <i>protocol</i>, le protocole ;</li>
+<li><strong>APP_CPU</strong> : <i>application</i>, l'application.</li>
+</ul>
+<p>Pour la plupart des usages, les deux CPU sont interchangeables. Sur le schéma, chacun accède à la mémoire embarquée (Embedded Memory), au cache, puis par la MMU à la mémoire externe (External Memory), et aux périphériques (Peripheral) ; le DMA accède aussi à la mémoire embarquée. On retrouve l'architecture Harvard et la MMU du chapitre 2 : bus d'instructions et de données séparés, traduction d'adresses vers la mémoire externe.</p>
+<h3>Le DMA (diapositive 12)</h3>
+<p><strong>Direct Memory Access (DMA)</strong> : il sert aux transferts rapides de données entre périphériques et mémoire, et de mémoire à mémoire. Les données sont déplacées sans aucune intervention du CPU, ce qui permet d'utiliser les cœurs plus efficacement pour traiter les données. Le moteur DMA (DMA_ENGINE) accède à la SRAM par le bus AHB, avec des descripteurs de sortie (out_link0 … out_linkn) et d'entrée (in_link0 … in_linkn).</p>
+
+<div id="fig-dma"></div>
+
+<h3>Le plan d'adressage (diapositive 13)</h3>
+<div class="tableau"><table>
+<tr><th>Plage d'adresses</th><th>Destination</th></tr>
+<tr><td>0x3F40_0000 à 0x3F7F_FFFF</td><td>Cache, puis MMU vers External Flash et External SRAM</td></tr>
+<tr><td>0x3F80_0000 à 0x3FBF_FFFF</td><td>Cache, puis MMU vers la mémoire externe</td></tr>
+<tr><td>0x3FF0_0000 à 0x3FF7_FFFF</td><td>Peripheral</td></tr>
+<tr><td>0x3FF8_0000 à 0x3FF8_1FFF</td><td>RTC FAST Memory</td></tr>
+<tr><td>0x3FF9_0000 à 0x3FF9_FFFF</td><td>Internal ROM</td></tr>
+<tr><td>0x3FFA_E000 à 0x3FFF_FFFF</td><td>Internal SRAM</td></tr>
+<tr><td>0x4000_0000 à 0x4005_FFFF</td><td>Internal ROM</td></tr>
+<tr><td>0x4007_0000 à 0x400B_FFFF</td><td>Internal SRAM</td></tr>
+<tr><td>0x400C_0000 à 0x400C_1FFF</td><td>RTC FAST Memory</td></tr>
+<tr><td>0x400C_2000 à 0x40BF_FFFF</td><td>Cache, puis MMU vers la mémoire externe</td></tr>
+<tr><td>0x5000_0000 à 0x5000_1FFF</td><td>RTC SLOW Memory</td></tr>
+</table></div>
+<p>Les autres plages (0x0000_0000 à 0x3F3F_FFFF, 0x3FC0_0000 à 0x3FEF_FFFF, 0x3FF8_2000 à 0x3FF8_FFFF, 0x3FFA_0000 à 0x3FFA_DFFF, 0x4006_0000 à 0x4006_FFFF, 0x40C0_0000 à 0x4FFF_FFFF, 0x5000_2000 à 0xFFFF_FFFF) sont grisées : aucune mémoire n'y est reliée sur le schéma. Le DMA est relié à la SRAM interne. Entre la MMU et les mémoires externes, le schéma porte les nombres 24 (vers la flash externe) et 23 (vers la SRAM externe).</p>
+
+<div id="fig-adresses"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Le holter échantillonne l'ECG à 500 échantillons par seconde, 2 octets par échantillon. Le DMA copie \(500 \times 2 = 1000\) octets par seconde de l'ADC vers la SRAM interne, soit 10 000 octets en 10 s, sans un cycle de CPU. Le programme lit ces octets dans la SRAM interne, par exemple à l'adresse 0x3FFB_0000 (comprise entre 0x3FFA_E000 et 0x3FFF_FFFF). Une table de constantes en ROM se lit à 0x4000_8000 (entre 0x4000_0000 et 0x4005_FFFF), et un registre de périphérique à 0x3FF4_4000 (entre 0x3FF0_0000 et 0x3FF7_FFFF).</p>
+
+<h2>Formules clés</h2>
+<p>ESP32 : 2 CPU Xtensa LX6 Harvard, PRO_CPU (protocole) et APP_CPU (application), interchangeables. DMA : transfert périphérique ↔ mémoire ou mémoire ↔ mémoire, sans CPU, par le bus AHB. Une adresse appartient à une plage ; la plage donne la mémoire : SRAM interne, ROM interne, périphériques, RTC FAST, RTC SLOW, ou cache et MMU vers la mémoire externe.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/coeurs-memoire.js"></script>
+</body>
+</html>
