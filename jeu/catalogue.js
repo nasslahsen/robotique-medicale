@@ -43,10 +43,10 @@ window.CATALOGUE = {
     { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", ancien: "angles-euler", pret: true },
     { id: "boss-orientations", chapitre: 3, titre: "Décode la pince", boss: true, pret: true },
 
-    { id: "changement-repere", chapitre: 4, titre: "Changement de repère", ancien: "changement-repere" },
-    { id: "matrice-homogene", chapitre: 4, titre: "Matrice homogène", ancien: "matrice-homogene" },
-    { id: "composition", chapitre: 4, titre: "Composition des transformations", ancien: "composition" },
-    { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", ancien: "bras-2r" },
-    { id: "boss-transformations", chapitre: 4, titre: "Le bras 2R atteint la cible", boss: true }
+    { id: "changement-repere", chapitre: 4, titre: "Changement de repère", ancien: "changement-repere", pret: true },
+    { id: "matrice-homogene", chapitre: 4, titre: "Matrice homogène", ancien: "matrice-homogene", pret: true },
+    { id: "composition", chapitre: 4, titre: "Composition des transformations", ancien: "composition", pret: true },
+    { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", ancien: "bras-2r", pret: true },
+    { id: "boss-transformations", chapitre: 4, titre: "Le bras 2R atteint la cible", boss: true, pret: true }
   ]
 };

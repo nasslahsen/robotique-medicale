@@ -243,4 +243,29 @@ test("chapitre 3 du jeu : réponses attendues dans les niveaux", () => {
   procheVec(m.colonne(m.matMul(m.Rz(90 * D), m.Ry(90 * D)), 0), [0, 0, -1]);
 });
 
+test("chapitre 4 du jeu : réponses attendues dans les niveaux", () => {
+  const R = m.Rz(90 * D);
+  procheVec(m.matVec(R, [0.5, 0, 0]), [0, 0.5, 0]);
+  procheVec(m.add([1, 2, 0], m.matVec(R, [0.5, 0, 0])), [1, 2.5, 0]);
+  procheVec(m.matVec(m.transpose(R), [0, 1, 0]), [1, 0, 0]);
+  // matrice homogène, point (1) et vecteur (0), inverse
+  const T = [[0, -1, 0, 1], [1, 0, 0, 2], [0, 0, 1, 0], [0, 0, 0, 1]];
+  procheVec(m.matVec(T, [0.5, 0, 0, 1]), [1, 2.5, 0, 1]); procheVec(m.matVec(T, [0.5, 0, 0, 0]), [0, 0.5, 0, 0]);
+  procheVec(m.scale(m.matVec(m.transpose(R), [1, 2, 0]), -1), [-2, 1, 0]);
+  // composition : Rot·Trans et Trans·Rot
+  const Rot = [[0, -1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], Tr = [[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+  procheVec(m.colonne(m.matMul(Rot, Tr), 3), [0, 1, 0, 1]); procheVec(m.colonne(m.matMul(Tr, Rot), 3), [1, 0, 0, 1]);
+  // chaîne à trois segments : une solution à 5° près atteint la cible
+  const L = [1, 0.8, 0.5], th = [80, 30, -115]; let p = [0, 0], c = 0;
+  th.forEach((t, i) => { c += t; p = [p[0] + L[i] * Math.cos(c * D), p[1] + L[i] * Math.sin(c * D)]; });
+  assert.ok(Math.hypot(p[0] - 0.4, p[1] - 1.7) < 0.07);
+  // bras 2R : exemple, cible, boss
+  const r = m.bras2R(30 * D, 45 * D, 0.4, 0.3); proche(r.M[0], 0.424, 1e-3); proche(r.M[1], 0.490, 1e-3);
+  proche(r.T02[0][3], 0.346, 1e-3); proche(r.T02[1][3], 0.2, 1e-9);
+  const c2 = m.bras2R(60 * D, 60 * D, 0.4, 0.3); assert.ok(Math.hypot(c2.M[0] - 0.05, c2.M[1] - 0.606) < 0.012);
+  const c3 = m.bras2R(45 * D, 30 * D, 0.4, 0.3); assert.ok(Math.hypot(c3.M[0] - 0.36, c3.M[1] - 0.573) < 0.012);
+  procheVec(m.bras2R(90 * D, -90 * D, 0.5, 0.5).M, [0.5, 0.5, 0]);
+  proche(Math.abs(0.4 - 0.3), 0.1, 1e-12); assert.ok(0.8 > 0.4 + 0.3);
+});
+
 console.log(`${n} tests réussis`);
