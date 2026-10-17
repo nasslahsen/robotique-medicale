@@ -48,7 +48,7 @@ NIVEAU({
     }
     function autoclave() {
       E.s("rect", { x: 40, y: 150, width: 600, height: 300, rx: 20, fill: "#fff1e6", stroke: "#e8945a", "stroke-width": 3 }, g);
-      D.texte(g, "stérilisation : l'appareil chauffe", [340, 120], { taille: 20, coul: "#b8601e" });
+      D.texte(g, "stérilisation : l'appareil chauffe", [340, 120], { taille: 20, coul: "#b8601e" });
       MECA.arbre(g, 80, 600, 300, 30);
       [150, 530].forEach(function (x) { [1, -1].forEach(function (s) { MECA.roulement(g, x, 300 - s * 30, 60, 60, { type: "billes", sens: s }); }); });
       D.texte(g, "?", [150, 196], { taille: 30, coul: C.acc }); D.texte(g, "?", [530, 196], { taille: 30, coul: C.acc });
@@ -72,61 +72,61 @@ NIVEAU({
   },
   etapes: [
     { nom: "La table", jouer: function (j, n) {
-      j.fig.astuce("Exemple ajouté : une table d'examen sur rail.");
-      j.titre("Un patient de 900 N s'allonge : la table descend de 0,3 mm sur ses guidages. Quelle raideur ?");
+      j.fig.astuce("Exemple ajouté : une table d'examen sur rail.");
+      j.titre("Un patient de 900 N s'allonge : la table descend de 0,3 mm sur ses guidages. Quelle raideur ?");
       j.nombre({ avant: "k =", apres: "\\text{N/mm}", cases: [{ attendu: 3000, tol: 0.5 }], ligne: true,
         aide: function () { return "\\(k = F/\\delta\\), avec \\(\\delta\\) en mm."; },
         ok: function () { j.bravo("k = 3000 N/mm."); j.suite(); } });
     } },
     { nom: "La centrifugeuse", jouer: function (j, n) {
       n.mode = "centrifugeuse"; n.dessin();
-      j.fig.astuce("Exemple ajouté : centrifugeuse de laboratoire.");
-      j.titre("Le roulement du rotor reçoit une charge axiale (le poids) et une charge radiale (le balourd), à grande vitesse. Quel type ?");
+      j.fig.astuce("Exemple ajouté : centrifugeuse de laboratoire.");
+      j.titre("Le roulement du rotor reçoit une charge axiale (le poids) et une charge radiale (le balourd), à grande vitesse. Quel type ?");
       j.choix([
         { html: "Rigide à billes, une rangée", juste: true },
-        { html: "Rouleaux cylindriques", aide: "Ils ne supportent aucune charge axiale : regarde la flèche verticale." },
+        { html: "Rouleaux cylindriques", aide: "Ils ne supportent aucune charge axiale : regarde la flèche verticale." },
         { html: "Butée à billes", aide: "Une butée ne prend pas la charge radiale et n'accepte pas d'aussi grandes vitesses." }
       ], { colonnes: 1, ok: function () {
-        j.bravo("Charges combinées : le rigide à billes, type très employé.");
+        j.bravo("Charges combinées : le rigide à billes, type très employé.");
         j.suite();
       } });
     } },
     { nom: "Sa durée", jouer: function (j, n) {
-      j.titre("Ce roulement à billes : C = 10 kN, P = 2 kN, n = 5000 tr/min. Durée en millions de tours, puis en heures ?");
+      j.titre("Ce roulement à billes : C = 10 kN, P = 2 kN, n = 5000 tr/min. Durée en millions de tours, puis en heures ?");
       j.nombre({ avant: "L_{10},\\ L_{10h} :", cases: [{ attendu: 125, tol: 0.05 }, { attendu: 125e6 / (60 * 5000), tol: 0.5 }], ligne: true,
         aide: function (k) { return k === 0 ? "\\((C/P)^3\\) avec \\(C/P = 5\\)." : "\\(L_{10h} = 10^6 L_{10} / (60\\,n)\\)."; },
-        ok: function () { j.bravo("125 millions de tours, environ 417 h : la grande vitesse use vite les heures."); j.suite(); } });
+        ok: function () { j.bravo("125 millions de tours, environ 417 h : la grande vitesse use vite les heures."); j.suite(); } });
     } },
-    { nom: "Radial ou butée ?", jouer: function (j, n) {
+    { nom: "Radial ou butée ?", jouer: function (j, n) {
       n.mode = "contact"; n.dessin();
       j.fig.astuce("");
-      j.titre("Un roulement a un angle de contact de 40°. Dans quel groupe est-il ?");
+      j.titre("Un roulement a un angle de contact de 40°. Dans quel groupe est-il ?");
       j.choix([
         { html: "Roulement radial", juste: true },
         { html: "Butée", aide: "Compare 40° à la limite de 45°." }
       ], { colonnes: 2, ok: function () {
-        j.bravo("40° ≤ 45° : radial, à contact oblique, il reprend aussi de l'axial.");
+        j.bravo("40° ≤ 45° : radial, à contact oblique, il reprend aussi de l'axial.");
         j.suite();
       } });
     } },
     { nom: "Stérilisation", jouer: function (j, n) {
       n.mode = "autoclave"; n.dessin();
       j.fig.astuce("");
-      j.titre("Cet appareil est chauffé à chaque cycle de stérilisation. Comment monter les deux roulements de son arbre long ?");
+      j.titre("Cet appareil est chauffé à chaque cycle de stérilisation. Comment monter les deux roulements de son arbre long ?");
       j.choix([
         { html: "Un palier fixe et un palier libre", juste: true },
-        { html: "Deux paliers fixes, pour qu'il ne bouge pas", aide: "L'arbre s'allonge en chauffant : deux paliers fixes l'en empêchent." },
+        { html: "Deux paliers fixes, pour qu'il ne bouge pas", aide: "L'arbre s'allonge en chauffant : deux paliers fixes l'en empêchent." },
         { html: "Deux paliers libres", aide: "Plus rien ne positionnerait l'arbre axialement." }
-      ], { colonnes: 1, ok: function () { j.bravo("Fixe-libre : positionné, mais libre de se dilater."); j.suite(); } });
+      ], { colonnes: 1, ok: function () { j.bravo("Fixe-libre : positionné, mais libre de se dilater."); j.suite(); } });
     } },
     { nom: "Le poignet bouge", jouer: function (j, n) {
       n.mode = "poignet"; n.dessin();
       j.fig.astuce("");
-      j.titre("Sous un petit effort, l'instrument bouge de quelques centièmes de millimètre. D'où cela peut-il venir, et quel remède ?");
+      j.titre("Sous un petit effort, l'instrument bouge de quelques centièmes de millimètre. D'où cela peut-il venir, et quel remède ?");
       j.choix([
-        { html: "Du jeu dans les roulements : on les précharge", juste: true },
-        { html: "D'une durée L₁₀ trop faible : on prend un roulement plus gros", aide: "La durée de vie ne dit rien du déplacement sous charge. Pense au jeu et à la rigidité." },
-        { html: "De la dilatation : on monte deux paliers fixes", aide: "La dilatation est lente et thermique ; ici le mouvement apparaît sous un petit effort." }
+        { html: "Du jeu dans les roulements : on les précharge", juste: true },
+        { html: "D'une durée L₁₀ trop faible : on prend un roulement plus gros", aide: "La durée de vie ne dit rien du déplacement sous charge. Pense au jeu et à la rigidité." },
+        { html: "De la dilatation : on monte deux paliers fixes", aide: "La dilatation est lente et thermique ; ici le mouvement apparaît sous un petit effort." }
       ], { colonnes: 1, ok: function () {
         j.bravo("La précharge supprime le jeu et augmente la rigidité.");
         j.suite();

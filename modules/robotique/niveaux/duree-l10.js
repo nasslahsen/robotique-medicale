@@ -39,19 +39,19 @@ NIVEAU({
   etapes: [
     { nom: "En tours", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Roulement à billes : C = 3,2 kN, P = 0,8 kN. Combien de millions de tours tient-il ?");
+      j.titre("Roulement à billes : C = 3,2 kN, P = 0,8 kN. Combien de millions de tours tient-il ?");
       j.nombre({ avant: "L_{10} =", apres: "\\text{millions de tours}", cases: [{ attendu: 64, tol: 0.05 }], ligne: true,
-        aide: function () { return "\\(L_{10} = (C/P)^p\\) avec \\(p = 3\\) pour les billes : \\(C/P = 4\\)."; },
+        aide: function () { return "\\(L_{10} = (C/P)^p\\) avec \\(p = 3\\) pour les billes : \\(C/P = 4\\)."; },
         ok: function () {
           j.bravo("64 millions de tours.");
-          j.expliquer("\\[ L_{10} = \\left(\\frac{C}{P}\\right)^p \\]<p>\\(L_{10}\\) : durée nominale de base, en millions de tours ; \\(C\\) : capacité dynamique de base (N) ; \\(P\\) : charge dynamique équivalente (N) ; \\(p\\) : exposant de durée, \\(p = 3\\) pour les roulements à billes et \\(p = 10/3\\) pour les roulements à rouleaux.</p>");
+          j.expliquer("\\[ L_{10} = \\left(\\frac{C}{P}\\right)^p \\]<p>\\(L_{10}\\) : durée nominale de base, en millions de tours ; \\(C\\) : capacité dynamique de base (N) ; \\(P\\) : charge dynamique équivalente (N) ; \\(p\\) : exposant de durée, \\(p = 3\\) pour les roulements à billes et \\(p = 10/3\\) pour les roulements à rouleaux.</p>");
           j.suite();
         } });
     } },
     { nom: "En heures", jouer: function (j, n) {
-      j.titre("Il tourne à n = 300 tr/min. Combien d'heures cela fait-il ?");
+      j.titre("Il tourne à n = 300 tr/min. Combien d'heures cela fait-il ?");
       j.nombre({ avant: "L_{10h} \\approx", apres: "\\text{h}", cases: [{ attendu: 64e6 / (60 * 300), tol: 1 }], ligne: true,
-        aide: function () { return "Passe en tours (\\(\\times 10^6\\)), puis divise par le nombre de tours en une heure : \\(60 \\times n\\)."; },
+        aide: function () { return "Passe en tours (\\(\\times 10^6\\)), puis divise par le nombre de tours en une heure : \\(60 \\times n\\)."; },
         ok: function () {
           n.montrerH = true; n.dessin();
           j.bravo("Environ 3556 h.");
@@ -61,19 +61,19 @@ NIVEAU({
     } },
     { nom: "Charge doublée", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Prédis : la charge P double (1,6 kN). Par combien la durée L₁₀ est-elle divisée ?");
-      j.choix([{ html: "par 2", aide: "La durée ne suit pas la charge proportionnellement : regarde l'exposant." }, { html: "par 4", aide: "Ce serait un carré. Pour les billes, \\(p = 3\\)." }, { html: "par 8", juste: true }], { ok: function () {
+      j.titre("Prédis : la charge P double (1,6 kN). Par combien la durée L₁₀ est-elle divisée ?");
+      j.choix([{ html: "par 2", aide: "La durée ne suit pas la charge proportionnellement : regarde l'exposant." }, { html: "par 4", aide: "Ce serait un carré. Pour les billes, \\(p = 3\\)." }, { html: "par 8", juste: true }], { ok: function () {
         var P0 = 0.8;
         E.anime(900, function (e) { n.P = P0 + 0.8 * e; n.dessin(); });
         j.bravo("\\(2^3 = 8\\) : de 64 à 8 millions de tours.");
-        j.expliquer("<p>La durée chute très vite quand la charge augmente : c'est la puissance \\(p\\). Inversement, diviser la charge par deux multiplie la durée par 8.</p>");
+        j.expliquer("<p>La durée chute très vite quand la charge augmente : c'est la puissance \\(p\\). Inversement, diviser la charge par deux multiplie la durée par 8.</p>");
         j.suite();
       } });
     } },
     { nom: "À rouleaux", jouer: function (j, n) {
       n.P = 0.8; n.p = 10 / 3; n.rouleaux = true; n.montrerH = false; n.dessin();
       j.fig.astuce("Même rapport C/P = 4, mais un roulement à rouleaux.");
-      j.titre("Même C/P = 4 pour un roulement à rouleaux. Combien de millions de tours ?");
+      j.titre("Même C/P = 4 pour un roulement à rouleaux. Combien de millions de tours ?");
       j.nombre({ avant: "L_{10} \\approx", apres: "\\text{millions de tours}", cases: [{ attendu: Math.pow(4, 10 / 3), tol: 0.2 }], ligne: true,
         aide: function () { return "Pour les rouleaux, \\(p = 10/3\\) : calcule \\(4^{10/3}\\)."; },
         ok: function () {
@@ -86,19 +86,19 @@ NIVEAU({
       j.fig.astuce("");
       j.titre("Exemple ajouté. On veut 10 000 h à 300 tr/min sous P = 0,8 kN, avec des billes. Quelle capacité dynamique minimale \\(C_{req}\\) ?");
       j.nombre({ avant: "C_{req} \\approx", apres: "\\text{kN}", cases: [{ attendu: 0.8 * Math.cbrt(180), tol: 0.01 }], ligne: true,
-        aide: function () { return "D'abord le nombre de tours requis : \\(L_{10} = 10\\,000 \\times 60 \\times 300 / 10^6 = 180\\) millions. Puis \\(C = P \\, L_{10}^{1/3}\\)."; },
+        aide: function () { return "D'abord le nombre de tours requis : \\(L_{10} = 10\\,000 \\times 60 \\times 300 / 10^6 = 180\\) millions. Puis \\(C = P \\, L_{10}^{1/3}\\)."; },
         ok: function () {
           n.C = 0.8 * Math.cbrt(180); n.dessin();
-          j.bravo("Environ 4,52 kN : le roulement de 3,2 kN ne suffit pas.");
+          j.bravo("Environ 4,52 kN : le roulement de 3,2 kN ne suffit pas.");
           j.expliquer("\\[ L_{10} = \\frac{60\\,n\\,t}{10^6} \\qquad C_{req} = P\\,L_{10}^{1/p} \\]<p>On pré-sélectionne ensuite sur catalogue un roulement de capacité \\(C \\ge C_{req}\\).</p>");
           j.suite();
         } });
     } },
     { nom: "Trouve l'erreur", jouer: function (j, n) {
-      j.titre("Un camarade écrit : « mon roulement durera exactement 3556 h dans le robot ». Qu'est-ce qui ne va pas ?");
+      j.titre("Un camarade écrit : « mon roulement durera exactement 3556 h dans le robot ». Qu'est-ce qui ne va pas ?");
       j.choix([
         { html: "L₁₀ est une base statistique à 90 % de fiabilité, en conditions de laboratoire parfaites", juste: true },
-        { html: "Il faut multiplier par 60, pas diviser", aide: "Le calcul en heures est juste : 64 millions de tours divisés par 18 000 tours par heure." },
+        { html: "Il faut multiplier par 60, pas diviser", aide: "Le calcul en heures est juste : 64 millions de tours divisés par 18 000 tours par heure." },
         { html: "Rien, la formule est exacte", aide: "La formule donne une durée nominale de base, pas une durée garantie pour chaque roulement." }
       ], { colonnes: 1, ok: function () {
         j.bravo("Une durée nominale, pas une promesse.");

@@ -5,11 +5,11 @@ NIVEAU({
     var C = D.C, g = E.s("g", null, fig.svg);
     // fiches du cours : dessin (types MECA, deux rangées éventuelles) et ce que dit la fiche
     var FICHES = {
-      rotule: { nom: "Deux rangées de billes, à rotule", dessin: [["rotule", 2]], lignes: ["charges radiales moyennes, axiales faibles", "grandes fréquences de rotation", "alignement précis des paliers difficile", "déversement admissible : 1,5° à 3°"] },
-      cylindriques: { nom: "Rouleaux cylindriques", dessin: [["rouleaux", 1]], lignes: ["charges radiales élevées, aucune charge axiale", "grandes fréquences de rotation", "très bonne coaxialité des portées", "bague séparable ; déversement : 2'"] },
-      aiguilles: { nom: "Roulement à aiguilles", dessin: [["aiguilles", 1]], lignes: ["charges radiales importantes, encombrement réduit", "aucune charge axiale ; résiste bien aux chocs", "très bonne coaxialité ; déversement ≈ 0", "bague intérieure séparable"] },
-      coniques: { nom: "Rouleaux coniques", dessin: [["conique", 1]], lignes: ["charges radiales et axiales importantes", "pas pour les grandes fréquences de rotation", "montés par paire en opposition, réglage du jeu", "cuvette séparable ; déversement : 2'"] },
-      combine: { nom: "Combiné aiguilles et billes", dessin: [["aiguilles", 1], ["butee", 1]], lignes: ["paliers fixes, charges radiales et axiales", "radiales : par les aiguilles", "axiales : par les billes", "encombrement très réduit"] }
+      rotule: { nom: "Deux rangées de billes, à rotule", dessin: [["rotule", 2]], lignes: ["charges radiales moyennes, axiales faibles", "grandes fréquences de rotation", "alignement précis des paliers difficile", "déversement admissible : 1,5° à 3°"] },
+      cylindriques: { nom: "Rouleaux cylindriques", dessin: [["rouleaux", 1]], lignes: ["charges radiales élevées, aucune charge axiale", "grandes fréquences de rotation", "très bonne coaxialité des portées", "bague séparable ; déversement : 2'"] },
+      aiguilles: { nom: "Roulement à aiguilles", dessin: [["aiguilles", 1]], lignes: ["charges radiales importantes, encombrement réduit", "aucune charge axiale ; résiste bien aux chocs", "très bonne coaxialité ; déversement ≈ 0", "bague intérieure séparable"] },
+      coniques: { nom: "Rouleaux coniques", dessin: [["conique", 1]], lignes: ["charges radiales et axiales importantes", "pas pour les grandes fréquences de rotation", "montés par paire en opposition, réglage du jeu", "cuvette séparable ; déversement : 2'"] },
+      combine: { nom: "Combiné aiguilles et billes", dessin: [["aiguilles", 1], ["butee", 1]], lignes: ["paliers fixes, charges radiales et axiales", "radiales : par les aiguilles", "axiales : par les billes", "encombrement très réduit"] }
     };
     var n = { mode: "besoin", besoin: null, fiche: null };
     function besoin(o) {
@@ -77,9 +77,9 @@ NIVEAU({
     { nom: "Paliers mal alignés", jouer: function (j, n) {
       n.mode = "besoin"; n.besoin = { radial: 2, axial: 1, desal: 2, texte: ["grande vitesse de rotation", "paliers difficiles à aligner"] }; n.dessin();
       j.fig.astuce("Un arbre long porté par deux paliers éloignés.");
-      j.titre("Charge radiale moyenne, charge axiale faible, grande vitesse, et les paliers sont désalignés de 2°. Quel roulement ?");
+      j.titre("Charge radiale moyenne, charge axiale faible, grande vitesse, et les paliers sont désalignés de 2°. Quel roulement ?");
       j.choix([
-        { html: "Rigide à billes, une rangée", aide: "Son déversement admissible n'est que de 2' à 10' (minutes d'angle) : 2° est bien au-delà." },
+        { html: "Rigide à billes, une rangée", aide: "Son déversement admissible n'est que de 2' à 10' (minutes d'angle) : 2° est bien au-delà." },
         { html: "Deux rangées de billes, à rotule", juste: true },
         { html: "Rouleaux cylindriques", aide: "Il exige une très bonne coaxialité (2') et ne prend aucune charge axiale." }
       ], { colonnes: 1, ok: function () {
@@ -92,7 +92,7 @@ NIVEAU({
     { nom: "Radial pur", jouer: function (j, n) {
       n.mode = "besoin"; n.besoin = { radial: 3, texte: ["aucune charge axiale, grande vitesse", "on veut séparer une bague au montage"] }; n.dessin();
       j.fig.astuce("");
-      j.titre("Charge radiale élevée, aucune charge axiale, grande vitesse, et une bague doit se séparer pour le montage. Quel roulement ?");
+      j.titre("Charge radiale élevée, aucune charge axiale, grande vitesse, et une bague doit se séparer pour le montage. Quel roulement ?");
       j.choix([
         { html: "Rouleaux cylindriques", juste: true },
         { html: "Rouleaux coniques", aide: "Ils ne conviennent pas pour les grandes fréquences de rotation." },
@@ -106,26 +106,26 @@ NIVEAU({
     { nom: "Peu de place", jouer: function (j, n) {
       n.mode = "besoin"; n.besoin = { radial: 3, place: true, texte: ["l'articulation subit des chocs"] }; n.dessin();
       j.fig.astuce("Une petite articulation d'exosquelette.");
-      j.titre("Charge radiale importante, chocs, et presque pas de place autour de l'arbre. Quel roulement ?");
+      j.titre("Charge radiale importante, chocs, et presque pas de place autour de l'arbre. Quel roulement ?");
       j.choix([
-        { html: "Rigide à billes", aide: "Ses billes imposent une hauteur radiale plus grande : regarde la place disponible." },
+        { html: "Rigide à billes", aide: "Ses billes imposent une hauteur radiale plus grande : regarde la place disponible." },
         { html: "Roulement à aiguilles", juste: true },
-        { html: "Butée à billes", aide: "La charge est radiale : une butée reprend les charges dans l'axe." }
+        { html: "Butée à billes", aide: "La charge est radiale : une butée reprend les charges dans l'axe." }
       ], { colonnes: 1, ok: function () {
         n.montrer("aiguilles");
-        j.bravo("Les aiguilles : radial important sous encombrement réduit.");
-        j.expliquer("<p>Les roulements à aiguilles exigent des portées très coaxiales et, sans bague intérieure (douilles, cages à aiguilles), des surfaces de roulement assez dures et lisses : HRC min. = 57, Ra max. = 0,2.</p>");
+        j.bravo("Les aiguilles : radial important sous encombrement réduit.");
+        j.expliquer("<p>Les roulements à aiguilles exigent des portées très coaxiales et, sans bague intérieure (douilles, cages à aiguilles), des surfaces de roulement assez dures et lisses : HRC min. = 57, Ra max. = 0,2.</p>");
         j.suite();
       } });
     } },
     { nom: "Radial et axial", jouer: function (j, n) {
       n.mode = "besoin"; n.besoin = { radial: 3, axial: 3, alterne: true, texte: ["vitesse modérée", "on veut pouvoir régler le jeu de fonctionnement"] }; n.dessin();
       j.fig.astuce("");
-      j.titre("Charges radiales et axiales importantes, dans les deux sens, vitesse modérée, et on veut régler le jeu. Quel choix ?");
+      j.titre("Charges radiales et axiales importantes, dans les deux sens, vitesse modérée, et on veut régler le jeu. Quel choix ?");
       j.choix([
         { html: "Deux roulements à rouleaux coniques montés en opposition", juste: true },
         { html: "Deux roulements à aiguilles", aide: "Les aiguilles ne supportent aucune charge axiale." },
-        { html: "Une butée à billes simple effet", aide: "Simple effet : un seul sens de charge axiale, et pas de charge radiale." }
+        { html: "Une butée à billes simple effet", aide: "Simple effet : un seul sens de charge axiale, et pas de charge radiale." }
       ], { colonnes: 1, ok: function () {
         n.montrer("coniques");
         j.bravo("Par paire en opposition, avec réglage du jeu.");
@@ -141,19 +141,19 @@ NIVEAU({
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "3", html: "2 rangées de rouleaux, rotule" }, { id: "1", html: "contact oblique, 1 rangée" }, { id: "4", html: "2 rangées de billes, rotule" }, { id: "2", html: "rigide à billes" }],
-        aide: "Contact oblique : ≈ 0. Rigide à billes : 2' à 10'. Les rotules se comptent en degrés : 1° à 2,5° pour les rouleaux, 1,5° à 3° pour les billes.",
+        aide: "Contact oblique : ≈ 0. Rigide à billes : 2' à 10'. Les rotules se comptent en degrés : 1° à 2,5° pour les rouleaux, 1,5° à 3° pour les billes.",
         ok: function () {
           n.revele = true; n.dessin();
           j.bravo("De ≈ 0 jusqu'à 3°.");
-          j.expliquer("<p>Attention aux unités : 1' (une minute d'angle) vaut 1/60 de degré. Les roulements à rotule acceptent des désalignements de l'ordre du degré ; le rigide à billes, quelques minutes ; le contact oblique, presque rien.</p>");
+          j.expliquer("<p>Attention aux unités : 1' (une minute d'angle) vaut 1/60 de degré. Les roulements à rotule acceptent des désalignements de l'ordre du degré ; le rigide à billes, quelques minutes ; le contact oblique, presque rien.</p>");
           j.suite();
         }
       });
     } },
-    { nom: "Qui porte quoi ?", jouer: function (j, n) {
+    { nom: "Qui porte quoi ?", jouer: function (j, n) {
       n.montrer("combine");
       j.fig.astuce("");
-      j.titre("Ce roulement combiné à aiguilles et à billes tient un palier fixe compact. Qui reprend quelle charge ?");
+      j.titre("Ce roulement combiné à aiguilles et à billes tient un palier fixe compact. Qui reprend quelle charge ?");
       var z = j.zone("", '<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:12px"><span style="width:170px">charges radiales</span><span class="trou" data-attendu="aig" style="min-width:150px"></span></div><div style="display:flex;align-items:center;gap:12px"><span style="width:170px">charges axiales</span><span class="trou" data-attendu="bil" style="min-width:150px"></span></div></div>');
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
@@ -161,7 +161,7 @@ NIVEAU({
         aide: "L'aiguille, comme le rouleau cylindrique, ne prend aucune charge axiale.",
         ok: function () {
           j.bravo("Aiguilles pour le radial, billes pour l'axial.");
-          j.expliquer("<p>Types NX et NKX (simple effet), NKIA (simple effet, avec bague intérieure), NKIB (double effet) : par rapport aux charges supportées, leur encombrement est très réduit.</p>");
+          j.expliquer("<p>Types NX et NKX (simple effet), NKIA (simple effet, avec bague intérieure), NKIB (double effet) : par rapport aux charges supportées, leur encombrement est très réduit.</p>");
           j.suite();
         }
       });

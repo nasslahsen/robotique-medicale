@@ -44,8 +44,8 @@ NIVEAU({
   },
   etapes: [
     { nom: "Les roulements", jouer: function (j, n) {
-      j.fig.astuce("Axe du poignet : instrument à gauche, moteur à droite.");
-      j.titre("En A, il faut reprendre des charges radiales et axiales dans les deux sens, sans jeu, avec une grande rigidité. Que montes-tu ?");
+      j.fig.astuce("Axe du poignet : instrument à gauche, moteur à droite.");
+      j.titre("En A, il faut reprendre des charges radiales et axiales dans les deux sens, sans jeu, avec une grande rigidité. Que montes-tu ?");
       j.choix([
         { html: "Deux roulements à contact oblique, montés en opposition et préchargés", juste: true },
         { html: "Deux roulements à rouleaux cylindriques", aide: "Aucune charge axiale possible." },
@@ -53,21 +53,21 @@ NIVEAU({
         { html: "Un roulement à aiguilles", aide: "Aucune charge axiale." }
       ], { colonnes: 1, ok: function () {
         n.revele = 1; n.dessin();
-        j.bravo("Contact oblique en opposition, préchargé : ni jeu, ni souplesse.");
+        j.bravo("Contact oblique en opposition, préchargé : ni jeu, ni souplesse.");
         j.suite();
       } });
     } },
     { nom: "Raideur", jouer: function (j, n) {
       n.effort = true; n.dessin();
       j.fig.astuce("");
-      j.titre("Le chirurgien appuie de 50 N sur l'instrument. Le palier ne doit pas céder de plus de 0,02 mm. Raideur minimale ?");
+      j.titre("Le chirurgien appuie de 50 N sur l'instrument. Le palier ne doit pas céder de plus de 0,02 mm. Raideur minimale ?");
       j.nombre({ avant: "k_{min} =", apres: "\\text{N/mm}", cases: [{ attendu: 2500, tol: 0.5 }], ligne: true,
         aide: function () { return "Regarde quelle grandeur divise laquelle dans la définition de la raideur."; },
         ok: function () { j.bravo("2500 N/mm au moins."); j.suite(); } });
     } },
     { nom: "Capacité", jouer: function (j, n) {
       n.effort = false; n.dessin();
-      j.titre("Le roulement B (à billes) doit tenir 20 000 h à 100 tr/min sous P = 0,4 kN. Quelle capacité dynamique minimale ?");
+      j.titre("Le roulement B (à billes) doit tenir 20 000 h à 100 tr/min sous P = 0,4 kN. Quelle capacité dynamique minimale ?");
       j.nombre({ avant: "C_{req} \\approx", apres: "\\text{kN}", cases: [{ attendu: 0.4 * Math.cbrt(120), tol: 0.01 }], ligne: true,
         aide: function () { return "Commence par le nombre de millions de tours sur 20 000 h, puis retourne \\(L_{10} = (C/P)^p\\)."; },
         ok: function () { j.bravo("Environ 1,97 kN (120 millions de tours)."); j.suite(); } });
@@ -78,7 +78,7 @@ NIVEAU({
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "B", html: "B, bague extérieure coulissante" }, { id: "A", html: "A, la paire préchargée" }],
-        aide: "Le palier fixe positionne l'arbre dans l'axe : il faut un palier qui reprend l'axial dans les deux sens.",
+        aide: "Le palier fixe positionne l'arbre dans l'axe : il faut un palier qui reprend l'axial dans les deux sens.",
         ok: function () {
           n.revele = 2; n.dessin();
           j.bravo("A positionne l'arbre, B laisse la dilatation se faire.");
@@ -87,11 +87,11 @@ NIVEAU({
       });
     } },
     { nom: "Trouve les erreurs", jouer: function (j, n) {
-      j.titre("Relis ce compte rendu : « Si la charge P double, L₁₀ est divisée par 2. Pour gagner encore en rigidité, on serre la précharge au maximum. » Combien d'erreurs ?");
+      j.titre("Relis ce compte rendu : « Si la charge P double, L₁₀ est divisée par 2. Pour gagner encore en rigidité, on serre la précharge au maximum. » Combien d'erreurs ?");
       j.choix([
-        { html: "Deux : L₁₀ est divisée par 8, et une précharge trop forte réduit la durée de vie", juste: true },
-        { html: "Une seule : L₁₀ est divisée par 8", aide: "Relis la deuxième phrase : que fait une précharge trop forte ?" },
-        { html: "Une seule : la précharge", aide: "Relis la première phrase : quel est l'exposant pour des billes ?" },
+        { html: "Deux : L₁₀ est divisée par 8, et une précharge trop forte réduit la durée de vie", juste: true },
+        { html: "Une seule : L₁₀ est divisée par 8", aide: "Relis la deuxième phrase : que fait une précharge trop forte ?" },
+        { html: "Une seule : la précharge", aide: "Relis la première phrase : quel est l'exposant pour des billes ?" },
         { html: "Aucune", aide: "Relis chaque phrase en pensant à l'exposant p et aux effets de la précharge." }
       ], { colonnes: 1, ok: function () {
         j.bravo("Palier du poignet validé.");

@@ -49,8 +49,8 @@ NIVEAU({
         D.fleche(g, [340, 272], [340, 120], ok ? C.ko : C.acc, 5); D.texte(g, "y", [360, 125], { coul: ok ? C.ko : C.acc });
         D.fleche(g, [340, 272], [250, 400], ok ? C.ko : C.acc, 5); D.texte(g, "z", [232, 410], { coul: ok ? C.ko : C.acc });
         if (ok) {
-          D.texte(g, "translation x : libre", [340, 470], { coul: C.ok, taille: 20 });
-          D.texte(g, "les 5 autres mouvements : bloqués", [340, 505], { coul: C.ko, taille: 20 });
+          D.texte(g, "translation x : libre", [340, 470], { coul: C.ok, taille: 20 });
+          D.texte(g, "les 5 autres mouvements : bloqués", [340, 505], { coul: C.ko, taille: 20 });
         }
         return;
       }
@@ -81,66 +81,66 @@ NIVEAU({
   etapes: [
     { nom: "DDL utiles", jouer: function (j, n) {
       n.ddl = true; n.dessin();
-      j.fig.astuce("Un chariot sur rail : la table d'un appareil d'imagerie.");
-      j.titre("Ce guidage linéaire porte la table. Quel mouvement doit-il laisser libre ?");
+      j.fig.astuce("Un chariot sur rail : la table d'un appareil d'imagerie.");
+      j.titre("Ce guidage linéaire porte la table. Quel mouvement doit-il laisser libre ?");
       j.choix([
         { html: "La translation le long du rail, x", juste: true },
-        { html: "Les trois translations", aide: "Si la table pouvait monter ou partir sur le côté, le patient ne serait plus guidé. Regarde le rail : il impose une seule direction." },
-        { html: "Aucun mouvement", aide: "Un guidage qui bloque tout est un encastrement : la table ne pourrait plus avancer." }
+        { html: "Les trois translations", aide: "Si la table pouvait monter ou partir sur le côté, le patient ne serait plus guidé. Regarde le rail : il impose une seule direction." },
+        { html: "Aucun mouvement", aide: "Un guidage qui bloque tout est un encastrement : la table ne pourrait plus avancer." }
       ], { colonnes: 1, ok: function () {
         n.ddlRevele = true; n.dessin();
-        j.bravo("Un seul DDL utile : la translation x.");
-        j.expliquer("<p>Un <b>guidage</b> doit autoriser les degrés de liberté utiles et contraindre les autres. On le juge sur : charge radiale et axiale, moment, rigidité, jeu, frottement, vitesse, durée de vie, précision géométrique, lubrification, contamination et encombrement.</p>");
+        j.bravo("Un seul DDL utile : la translation x.");
+        j.expliquer("<p>Un <b>guidage</b> doit autoriser les degrés de liberté utiles et contraindre les autres. On le juge sur : charge radiale et axiale, moment, rigidité, jeu, frottement, vitesse, durée de vie, précision géométrique, lubrification, contamination et encombrement.</p>");
         j.suite();
       } });
     } },
     { nom: "La raideur", jouer: function (j, n) {
       n.ddl = false; n.F = 200; n.chariots = [["", 4000]]; n.dessin();
       j.fig.astuce("Déformation très agrandie pour la voir.");
-      j.titre("Sous 200 N, le chariot s'enfonce de 0,05 mm. Quelle est la raideur du guidage ?");
+      j.titre("Sous 200 N, le chariot s'enfonce de 0,05 mm. Quelle est la raideur du guidage ?");
       j.nombre({ avant: "k =", apres: "\\text{N/mm}", cases: [{ attendu: 4000, tol: 0.5 }], ligne: true,
-        aide: function () { return "La raideur, c'est l'effort divisé par le déplacement : \\(200 / 0{,}05\\)."; },
+        aide: function () { return "La raideur, c'est l'effort divisé par le déplacement : \\(200 / 0{,}05\\)."; },
         ok: function () {
           j.bravo("k = 4000 N/mm.");
-          j.expliquer("\\[ k = \\frac{F}{\\delta} \\]<p>C'est une modélisation linéaire locale : \\(k\\) en N/m ou N/mm, \\(F\\) l'effort appliqué, \\(\\delta\\) le déplacement ou la déformation. Sur le graphe, \\(k\\) est la pente de la droite.</p>");
+          j.expliquer("\\[ k = \\frac{F}{\\delta} \\]<p>C'est une modélisation linéaire locale : \\(k\\) en N/m ou N/mm, \\(F\\) l'effort appliqué, \\(\\delta\\) le déplacement ou la déformation. Sur le graphe, \\(k\\) est la pente de la droite.</p>");
           j.suite();
         } });
     } },
     { nom: "Comparer", jouer: function (j, n) {
       n.F = 200; n.chariots = [["A", 5000], ["B", 20000]]; n.dessin();
       j.fig.astuce("Même charge sur deux guidages.");
-      j.titre("Même charge de 200 N : A s'enfonce de 0,04 mm, B de 0,01 mm. Lequel est le plus raide ?");
+      j.titre("Même charge de 200 N : A s'enfonce de 0,04 mm, B de 0,01 mm. Lequel est le plus raide ?");
       j.choix([
-        { html: "A", aide: "A se déforme le plus. Regarde les pentes du graphe : la plus raide est celle qui monte le plus vite." },
+        { html: "A", aide: "A se déforme le plus. Regarde les pentes du graphe : la plus raide est celle qui monte le plus vite." },
         { html: "B", juste: true },
-        { html: "Les deux, la charge est la même", aide: "La charge est la même, pas la déformation : \\(k = F/\\delta\\) change." }
+        { html: "Les deux, la charge est la même", aide: "La charge est la même, pas la déformation : \\(k = F/\\delta\\) change." }
       ], { ok: function () {
-        j.bravo("B : 20 000 N/mm, quatre fois A.");
-        j.expliquer("<p>Moins de déformation sous la même charge, c'est plus de raideur : \\(k_A = 200/0{,}04 = 5000\\) N/mm et \\(k_B = 200/0{,}01 = 20\\,000\\) N/mm. Pour un instrument, une faible déformation garde l'outil où on l'a placé.</p>");
+        j.bravo("B : 20 000 N/mm, quatre fois A.");
+        j.expliquer("<p>Moins de déformation sous la même charge, c'est plus de raideur : \\(k_A = 200/0{,}04 = 5000\\) N/mm et \\(k_B = 200/0{,}01 = 20\\,000\\) N/mm. Pour un instrument, une faible déformation garde l'outil où on l'a placé.</p>");
         j.suite();
       } });
     } },
     { nom: "Charge maximale", jouer: function (j, n) {
       n.F = 50; n.chariots = [["", 4000]]; n.cible = 0.03; n.dessin();
       j.fig.astuce("Fais varier la charge pour voir le chariot descendre.");
-      j.titre("Ce guidage (k = 4000 N/mm) ne doit pas s'enfoncer de plus de 0,03 mm. Quelle charge maximale ?");
+      j.titre("Ce guidage (k = 4000 N/mm) ne doit pas s'enfoncer de plus de 0,03 mm. Quelle charge maximale ?");
       j.curseur({ nom: "F", min: 0, max: 300, pas: 10, val: 50, unite: " N", change: function (v) { n.F = v; n.dessin(); } });
       j.nombre({ avant: "F_{max} =", apres: "\\text{N}", cases: [{ attendu: 120, tol: 0.5 }], ligne: true,
-        aide: function () { return "Retourne la formule : \\(F = k\\,\\delta\\)."; },
+        aide: function () { return "Retourne la formule : \\(F = k\\,\\delta\\)."; },
         ok: function () {
           n.F = 120; n.dessin();
-          j.bravo("120 N : au-delà, la déformation dépasse 0,03 mm.");
+          j.bravo("120 N : au-delà, la déformation dépasse 0,03 mm.");
           j.suite();
         } });
     } },
     { nom: "En rotation", jouer: function (j, n) {
       n.cible = null; n.rotation = true; n.dessin();
       j.fig.astuce("Inclinaison très agrandie.");
-      j.titre("Pour un guidage en rotation, on parle de raideur angulaire. Quelle est son unité ?");
+      j.titre("Pour un guidage en rotation, on parle de raideur angulaire. Quelle est son unité ?");
       j.choix([
-        { html: "N/mm", aide: "C'est l'unité d'une raideur linéaire : un effort par déplacement. Ici on fait pivoter le guidage." },
+        { html: "N/mm", aide: "C'est l'unité d'une raideur linéaire : un effort par déplacement. Ici on fait pivoter le guidage." },
         { html: "N·m/rad", juste: true },
-        { html: "rad/N", aide: "C'est l'inverse : une souplesse. La raideur met l'effort au numérateur." }
+        { html: "rad/N", aide: "C'est l'inverse : une souplesse. La raideur met l'effort au numérateur." }
       ], { ok: function () {
         j.bravo("Un couple par radian.");
         j.expliquer("<p>La raideur angulaire est le couple nécessaire pour faire pivoter le guidage d'un certain angle hors de son axe théorique, en N·m/rad. C'est la même idée que la rigidité torsionnelle \\(k_\\theta = C/\\theta\\) du chapitre 5.</p>");

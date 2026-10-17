@@ -103,11 +103,11 @@ NIVEAU({
   etapes: [
     { nom: "Glisser ou rouler", jouer: function (j, n) {
       j.fig.astuce("Deux caisses identiques, poussées à vitesse constante.");
-      j.titre("Une caisse glisse sur le sol, l'autre roule sur des rouleaux. Laquelle faut-il pousser le moins fort ?");
+      j.titre("Une caisse glisse sur le sol, l'autre roule sur des rouleaux. Laquelle faut-il pousser le moins fort ?");
       j.choix([
-        { html: "Celle qui glisse", aide: "Regarde les flèches rouges : l'effort nécessaire n'est pas le même." },
+        { html: "Celle qui glisse", aide: "Regarde les flèches rouges : l'effort nécessaire n'est pas le même." },
         { html: "Celle sur les rouleaux", juste: true },
-        { html: "Le même effort", aide: "Le contact n'est pas le même : frottement de glissement d'un côté, de roulement de l'autre." }
+        { html: "Le même effort", aide: "Le contact n'est pas le même : frottement de glissement d'un côté, de roulement de l'autre." }
       ], { ok: function () {
         n.revele = true; n.dessin();
         j.bravo("Le frottement de roulement est bien plus faible.");
@@ -128,8 +128,8 @@ NIVEAU({
           n.choisis[id] = true; n.dessin(); k++;
           if (k < ordre.length) { j.info("Oui."); poser(); return; }
           n.surTouche = null; cons.innerHTML = "";
-          j.bravo("Bagues, billes et cage : tout est repéré.");
-          j.expliquer("<p>De l'extérieur vers l'intérieur : 1 bague extérieure, 2 chemin de roulement, 3 bille, 4 cage, 5 chemin de roulement, 6 bague intérieure. Les chemins de roulement (pointillés) sont les pistes creusées dans chaque bague, sur lesquelles roulent les billes.</p>");
+          j.bravo("Bagues, billes et cage : tout est repéré.");
+          j.expliquer("<p>De l'extérieur vers l'intérieur : 1 bague extérieure, 2 chemin de roulement, 3 bille, 4 cage, 5 chemin de roulement, 6 bague intérieure. Les chemins de roulement (pointillés) sont les pistes creusées dans chaque bague, sur lesquelles roulent les billes.</p>");
           j.suite();
         } else if (!n.choisis[id]) {
           n.choisis[id] = false; n.dessin();
@@ -142,15 +142,15 @@ NIVEAU({
     { nom: "Bille ou rouleau", jouer: function (j, n) {
       n.mode = "contact"; n.revele = false; n.dessin();
       j.fig.astuce("");
-      j.titre("À taille égale, le rouleau porte une charge radiale plus forte que la bille. Pourquoi ?");
+      j.titre("À taille égale, le rouleau porte une charge radiale plus forte que la bille. Pourquoi ?");
       j.choix([
-        { html: "Son contact avec le chemin est une ligne : la zone d'appui est un rectangle, plus étendu", juste: true },
-        { html: "Il est plus lourd", aide: "La masse de l'élément roulant ne porte pas la charge : regarde la zone de contact sous chaque élément." },
+        { html: "Son contact avec le chemin est une ligne : la zone d'appui est un rectangle, plus étendu", juste: true },
+        { html: "Il est plus lourd", aide: "La masse de l'élément roulant ne porte pas la charge : regarde la zone de contact sous chaque élément." },
         { html: "Il tourne moins vite", aide: "La vitesse n'est pas en cause. Compare les deux empreintes en bas de la figure." }
       ], { colonnes: 1, ok: function () {
         n.revele = true; n.dessin();
-        j.bravo("Bille : contact elliptique. Rouleau : contact rectangulaire.");
-        j.expliquer("<p>Deux types d'éléments roulants de base distinguent deux familles : la <b>bille</b>, pour les roulements à billes (contact elliptique), et le <b>rouleau</b>, pour les roulements à rouleaux (contact rectangulaire).</p>");
+        j.bravo("Bille : contact elliptique. Rouleau : contact rectangulaire.");
+        j.expliquer("<p>Deux types d'éléments roulants de base distinguent deux familles : la <b>bille</b>, pour les roulements à billes (contact elliptique), et le <b>rouleau</b>, pour les roulements à rouleaux (contact rectangulaire).</p>");
         j.suite();
       } });
     } },
@@ -163,7 +163,7 @@ NIVEAU({
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "oblique", html: "contact oblique" }, { id: "butee", html: "butée" }, { id: "billes", html: "rigide à billes" }, { id: "aiguilles", html: "aiguilles" }, { id: "rouleaux", html: "rouleaux cylindriques" }],
-        aide: "Regarde les éléments roulants : le rouleau long porte le radial, l'aiguille est fine, la butée a ses bagues perpendiculaires à l'axe.",
+        aide: "Regarde les éléments roulants : le rouleau long porte le radial, l'aiguille est fine, la butée a ses bagues perpendiculaires à l'axe.",
         ok: function () {
           j.bravo("Chaque famille a son point fort.");
           j.expliquer("<p>Les roulements rigides à billes conviennent à de nombreuses applications. Les roulements à contact oblique reprennent bien les efforts axiaux et se prêtent aux montages préchargés. Les rouleaux cylindriques supportent de fortes charges radiales. Les roulements à aiguilles réduisent l'encombrement radial. Les butées reprennent les efforts axiaux.</p>");
@@ -171,11 +171,11 @@ NIVEAU({
         }
       });
     } },
-    { nom: "Par où commencer ?", jouer: function (j, n) {
-      j.titre("Tu ouvres le catalogue d'un fabricant pour le poignet d'un robot. Par quoi commences-tu ?");
+    { nom: "Par où commencer ?", jouer: function (j, n) {
+      j.titre("Tu ouvres le catalogue d'un fabricant pour le poignet d'un robot. Par quoi commences-tu ?");
       j.choix([
         { html: "Choisir la famille de roulement, puis la référence", juste: true },
-        { html: "Choisir la référence la moins chère, puis vérifier", aide: "Une référence appartient à une famille : sans savoir quelles charges reprendre, impossible de comparer." },
+        { html: "Choisir la référence la moins chère, puis vérifier", aide: "Une référence appartient à une famille : sans savoir quelles charges reprendre, impossible de comparer." },
         { html: "Choisir la plus petite référence qui rentre", aide: "L'encombrement compte, mais la nature des charges décide d'abord de la famille." }
       ], { colonnes: 1, ok: function () {
         j.bravo("D'abord la famille, ensuite la référence.");

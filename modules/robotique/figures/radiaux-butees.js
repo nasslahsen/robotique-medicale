@@ -7,8 +7,8 @@
     var f = R.figure("fig-angle", {
       largeur: 960, hauteur: 540,
       titre: "Angle de contact α et groupe du roulement",
-      essai: "<strong>Essaie</strong> : fais tourner la ligne de contact de 0° à 90°. " +
-        "<strong>Observe</strong> : à 0°, les bagues sont l'une au-dessus de l'autre, l'effort passe en travers de l'axe ; à 90°, elles sont côte à côte, l'effort passe le long de l'axe. La frontière est à 45°."
+      essai: "<strong>Essaie</strong> : fais tourner la ligne de contact de 0° à 90°. " +
+        "<strong>Observe</strong> : à 0°, les bagues sont l'une au-dessus de l'autre, l'effort passe en travers de l'axe ; à 90°, elles sont côte à côte, l'effort passe le long de l'axe. La frontière est à 45°."
     });
     var g = R.el("g", null, f.svg);
     var cA = R.curseur(f.reglages, { nom: "α", min: 0, max: 90, pas: 1, val: 20, unite: "°", surChange: dessiner });
@@ -47,8 +47,8 @@
     var f = R.figure("fig-montage", {
       largeur: 960, hauteur: 520,
       titre: "Un arbre, deux roulements radiaux",
-      essai: "<strong>Essaie</strong> : règle la charge radiale et la charge axiale. " +
-        "<strong>Observe</strong> : la charge radiale (au milieu) se partage entre les deux roulements ; toute la charge axiale passe par le roulement rigide à billes, le roulement à rouleaux cylindriques n'en prend aucune."
+      essai: "<strong>Essaie</strong> : règle la charge radiale et la charge axiale. " +
+        "<strong>Observe</strong> : la charge radiale (au milieu) se partage entre les deux roulements ; toute la charge axiale passe par le roulement rigide à billes, le roulement à rouleaux cylindriques n'en prend aucune."
     });
     var g = R.el("g", null, f.svg);
     var cR = R.curseur(f.reglages, { nom: "Charge radiale", min: 0, max: 1000, pas: 50, val: 600, unite: " N", surChange: dessiner });
@@ -68,7 +68,7 @@
         R.texte(g, i === 0 ? "rouleaux cylindriques" : "rigide à billes", [x, y], { italique: false, gras: true, taille: 18 });
         R.texte(g, "radiale " + Math.round(Fr / 2) + " N · axiale " + (i === 0 ? 0 : Fa) + " N", [x, y + 28], { italique: false, couleur: i === 0 || Fa === 0 ? C.doux : C.acc, taille: 17 });
       });
-      R.rendre(zone, "\\text{rouleaux : } F_r = " + Math.round(Fr / 2) + "\\ \\text{N},\\ F_a = 0 \\qquad \\text{billes : } F_r = " + Math.round(Fr / 2) + "\\ \\text{N},\\ F_a = " + Fa + "\\ \\text{N}");
+      R.rendre(zone, "\\text{rouleaux : } F_r = " + Math.round(Fr / 2) + "\\ \\text{N},\\ F_a = 0 \\qquad \\text{billes : } F_r = " + Math.round(Fr / 2) + "\\ \\text{N},\\ F_a = " + Fa + "\\ \\text{N}");
     }
     dessiner();
   })();
@@ -78,8 +78,8 @@
     var f = R.figure("fig-butees", {
       largeur: 960, hauteur: 460,
       titre: "Deux butées en demi-coupe",
-      essai: "<strong>Essaie</strong> : touche « Ajouter une charge radiale ». " +
-        "<strong>Observe</strong> : la butée à billes, aux rondelles perpendiculaires à l'axe, ne peut rien reprendre en travers ; la butée à contact incliné reprend une charge combinée."
+      essai: "<strong>Essaie</strong> : touche « Ajouter une charge radiale ». " +
+        "<strong>Observe</strong> : la butée à billes, aux rondelles perpendiculaires à l'axe, ne peut rien reprendre en travers ; la butée à contact incliné reprend une charge combinée."
     });
     var g = R.el("g", null, f.svg), radiale = false;
     var b = R.boutons(f.reglages);

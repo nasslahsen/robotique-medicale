@@ -67,7 +67,7 @@ NIVEAU({
       if (n.dil > 0) {
         if (bloque) {
           D.fleche(g, [xs.D + 120, yc], [xs.D + 50, yc], C.ko, 7); D.fleche(g, [xs.G - 120, yc], [xs.G - 50, yc], C.ko, 7);
-          D.texte(g, "l'arbre ne peut pas s'allonger : efforts axiaux parasites", [340, 572], { taille: 19, coul: C.ko });
+          D.texte(g, "l'arbre ne peut pas s'allonger : efforts axiaux parasites", [340, 572], { taille: 19, coul: C.ko });
         } else D.texte(g, "l'arbre s'allonge librement (dilatation agrandie)", [340, 572], { taille: 19, coul: C.ok });
       }
       if (n.legende) D.texte(g, n.legende, [340, 90], { taille: 21, coul: C.doux });
@@ -91,14 +91,14 @@ NIVEAU({
   etapes: [
     { nom: "Il chauffe", jouer: function (j, n) {
       n.legende = "toutes les bagues sont tenues axialement"; n.dessin();
-      j.fig.astuce("Les blocs noirs : arrêts axiaux des bagues.");
-      j.titre("Le moteur chauffe l'arbre, qui s'allonge. Toutes les bagues sont tenues. Que se passe-t-il ?");
+      j.fig.astuce("Les blocs noirs : arrêts axiaux des bagues.");
+      j.titre("Le moteur chauffe l'arbre, qui s'allonge. Toutes les bagues sont tenues. Que se passe-t-il ?");
       j.choix([
-        { html: "L'arbre ne peut pas s'allonger : il est sur-contraint, des efforts axiaux parasites chargent les roulements", juste: true },
-        { html: "Rien, les roulements tournent toujours", aide: "Ils tournent, mais regarde les arrêts : rien ne laisse l'arbre s'allonger entre les deux roulements." },
-        { html: "L'arbre se raccourcit", aide: "Un métal qui chauffe se dilate : il s'allonge." }
+        { html: "L'arbre ne peut pas s'allonger : il est sur-contraint, des efforts axiaux parasites chargent les roulements", juste: true },
+        { html: "Rien, les roulements tournent toujours", aide: "Ils tournent, mais regarde les arrêts : rien ne laisse l'arbre s'allonger entre les deux roulements." },
+        { html: "L'arbre se raccourcit", aide: "Un métal qui chauffe se dilate : il s'allonge." }
       ], { colonnes: 1, ok: function () {
-        j.bravo("Montage hyperstatique : la dilatation est empêchée.");
+        j.bravo("Montage hyperstatique : la dilatation est empêchée.");
         n.chauffer(function () { j.suite(); });
       } });
     } },
@@ -110,13 +110,13 @@ NIVEAU({
       n.surTouche = function (k) {
         if (!n.libre) return;
         n.choisi = k; n.choisiOk = k[1] === "e";
-        if (!n.choisiOk) { n.dessin(); j.erreur("Les bagues intérieures tournent avec l'arbre : elles restent tenues. Cherche une bague extérieure."); setTimeout(function () { if (n.libre) { n.choisi = null; n.dessin(); } }, 900); return; }
+        if (!n.choisiOk) { n.dessin(); j.erreur("Les bagues intérieures tournent avec l'arbre : elles restent tenues. Cherche une bague extérieure."); setTimeout(function () { if (n.libre) { n.choisi = null; n.dessin(); } }, 900); return; }
         n.libre = false; n.surTouche = null;
         n.tenus = { Gi: true, Ge: true, Di: true, De: true }; n.tenus[k] = false;
         n.dessin();
-        j.bravo("Une bague extérieure coulissante : ce roulement devient le palier libre.");
+        j.bravo("Une bague extérieure coulissante : ce roulement devient le palier libre.");
         n.chauffer(function () {
-          j.expliquer("<p>Un montage <b>fixe-libre</b> définit axialement l'arbre sans le sur-contraindre lors des variations thermiques. Le palier fixe assure le positionnement axial ; le palier libre permet le déplacement axial relatif nécessaire à la dilatation. Ici, les deux bagues intérieures sont maintenues latéralement et un roulement a sa bague extérieure coulissante (jeu ≈ 0,1).</p>");
+          j.expliquer("<p>Un montage <b>fixe-libre</b> définit axialement l'arbre sans le sur-contraindre lors des variations thermiques. Le palier fixe assure le positionnement axial ; le palier libre permet le déplacement axial relatif nécessaire à la dilatation. Ici, les deux bagues intérieures sont maintenues latéralement et un roulement a sa bague extérieure coulissante (jeu ≈ 0,1).</p>");
           j.suite();
         });
       };
@@ -125,7 +125,7 @@ NIVEAU({
     { nom: "Logement tournant", jouer: function (j, n) {
       n.dil = 0; n.choisi = null; n.legende = "logement tournant, charge de direction fixe"; n.tenus = { Gi: true, Ge: true, Di: true, De: true }; n.dessin();
       j.fig.astuce("Cette fois, c'est le logement qui tourne autour de l'arbre.");
-      j.titre("À l'inverse, c'est le logement qui tourne. Quelles bagues sont maintenues axialement ?");
+      j.titre("À l'inverse, c'est le logement qui tourne. Quelles bagues sont maintenues axialement ?");
       j.choix([
         { html: "Les deux bagues extérieures, et une bague intérieure coulisse", juste: true },
         { html: "Les deux bagues intérieures, et une bague extérieure coulisse", aide: "Ça, c'est le cas de l'arbre tournant. Ici, ce sont les bagues qui tournent avec le logement qu'on tient." },
@@ -134,18 +134,18 @@ NIVEAU({
         n.tenus = { Gi: true, Ge: true, Di: false, De: true }; n.dessin();
         j.bravo("Bagues extérieures tenues, une bague intérieure coulissante.");
         n.chauffer(function () {
-          j.expliquer("<p>Le maintien axial de la bague intérieure du roulement fixe peut se faire par écrou à encoches et rondelle frein : il assure une excellente sécurité.</p>");
+          j.expliquer("<p>Le maintien axial de la bague intérieure du roulement fixe peut se faire par écrou à encoches et rondelle frein : il assure une excellente sécurité.</p>");
           j.suite();
         });
       } });
     } },
-    { nom: "Pourquoi un fixe ?", jouer: function (j, n) {
+    { nom: "Pourquoi un fixe ?", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Pourquoi ne pas rendre les deux roulements libres, pour être tranquille avec la dilatation ?");
+      j.titre("Pourquoi ne pas rendre les deux roulements libres, pour être tranquille avec la dilatation ?");
       j.choix([
         { html: "Il faut un palier fixe pour positionner l'arbre axialement", juste: true },
-        { html: "Deux paliers libres coûteraient plus cher", aide: "Le coût n'est pas la raison : imagine une charge axiale sur l'arbre." },
-        { html: "La dilatation serait alors empêchée", aide: "Au contraire, rien ne la gênerait. Mais qu'est-ce qui tiendrait l'arbre dans l'axe ?" }
+        { html: "Deux paliers libres coûteraient plus cher", aide: "Le coût n'est pas la raison : imagine une charge axiale sur l'arbre." },
+        { html: "La dilatation serait alors empêchée", aide: "Au contraire, rien ne la gênerait. Mais qu'est-ce qui tiendrait l'arbre dans l'axe ?" }
       ], { colonnes: 1, ok: function () {
         j.bravo("Sans palier fixe, l'arbre se déplacerait le long de son axe.");
         j.suite();
@@ -160,10 +160,10 @@ NIVEAU({
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "pression", html: "pression de contact uniforme" }, { id: "jeu", html: "règle le jeu de fonctionnement" }, { id: "frein", html: "empêche le desserrage de l'écrou" }],
-        aide: "L'écrou se visse pour rapprocher les bagues ; la rondelle frein bloque l'écrou ; la rondelle plate répartit l'appui sur la bague.",
+        aide: "L'écrou se visse pour rapprocher les bagues ; la rondelle frein bloque l'écrou ; la rondelle plate répartit l'appui sur la bague.",
         ok: function () {
           j.bravo("Réglage simple et précis du jeu.");
-          j.expliquer("<p>Le réglage du jeu de fonctionnement est obtenu par un écrou à encoches et une rondelle frein. Une rondelle plate, interposée entre la rondelle frein et la bague intérieure, donne une pression de contact uniforme ; elle est immobilisée en rotation par une languette logée dans une rainure de l'arbre.</p>");
+          j.expliquer("<p>Le réglage du jeu de fonctionnement est obtenu par un écrou à encoches et une rondelle frein. Une rondelle plate, interposée entre la rondelle frein et la bague intérieure, donne une pression de contact uniforme ; elle est immobilisée en rotation par une languette logée dans une rainure de l'arbre.</p>");
           j.suite();
         }
       });

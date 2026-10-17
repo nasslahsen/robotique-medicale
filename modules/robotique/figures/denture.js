@@ -84,7 +84,6 @@
         R.fleche(g, [fd[0] + 40, fd[1] + 90], fd, { couleur: C.fonce, epaisseur: 2 }); R.texte(g, "fond", [fd[0] + 44, fd[1] + 104], { italique: false, taille: 16, ancre: "start" });
       }
       info.textContent = TXT[mode];
-      void dim;
     }
     maj();
   })();

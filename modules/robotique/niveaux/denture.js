@@ -174,11 +174,11 @@ NIVEAU({
       n.mode = "tableau"; n.colonne = null; n.dessin();
       j.fig.astuce("Tableau du cours : pour éviter l'interférence entre les dents.");
       j.titre("Une roue a 40 dents. Combien de dents faut-il au minimum au pignon qui l'entraîne ?");
-      j.nombre({ avant: "Z_A \\ge", cases: [{ attendu: 16, tol: 0 }], ligne: true,
+      j.nombre({ avant: "Z_A \\ge", cases: [{ attendu: 15, tol: 0 }], ligne: true,
         aide: function () { return "Cherche la première colonne dont la plage \\(Z_B\\) contient 40."; },
         ok: function () {
-          n.colonne = 3; n.dessin();
-          j.bravo("16 dents : la colonne 13 à 101 contient 40.");
+          n.colonne = 2; n.dessin();
+          j.bravo("15 dents : la colonne 13 à 45 contient 40 ; celle de 14 dents s'arrête à 26.");
           j.expliquer("<p>Avec trop peu de dents, le sommet des dents de la roue vient creuser le pied du pignon : c'est l'<b>interférence</b>. Un pignon de 17 dents peut engrener avec n'importe quelle roue.</p>");
           j.suite();
         } });

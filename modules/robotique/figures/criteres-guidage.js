@@ -7,8 +7,8 @@
     var f = R.figure("fig-ddl", {
       largeur: 960, hauteur: 540,
       titre: "Six mouvements possibles, un seul autorisé",
-      essai: "<strong>Essaie</strong> : choisis le guidage, puis touche un des six mouvements dans la liste. " +
-        "<strong>Observe</strong> : seul le mouvement utile se fait ; les cinq autres sont bloqués par le guidage."
+      essai: "<strong>Essaie</strong> : choisis le guidage, puis touche un des six mouvements dans la liste. " +
+        "<strong>Observe</strong> : seul le mouvement utile se fait ; les cinq autres sont bloqués par le guidage."
     });
     var g = R.el("g", null, f.svg);
     var b = R.boutons(f.reglages), type = "translation", essai = null, t = 0;
@@ -58,8 +58,8 @@
     var f = R.figure("fig-raideur", {
       largeur: 960, hauteur: 540,
       titre: "Un chariot chargé s'enfonce de δ",
-      essai: "<strong>Essaie</strong> : augmente la charge, puis change la raideur. " +
-        "<strong>Observe</strong> : δ grandit avec F, en ligne droite ; une raideur plus grande donne une droite plus pentue et un chariot qui s'enfonce moins. La déformation est très agrandie sur le dessin."
+      essai: "<strong>Essaie</strong> : augmente la charge, puis change la raideur. " +
+        "<strong>Observe</strong> : δ grandit avec F, en ligne droite ; une raideur plus grande donne une droite plus pentue et un chariot qui s'enfonce moins. La déformation est très agrandie sur le dessin."
     });
     var g = R.el("g", null, f.svg);
     var cF = R.curseur(f.reglages, { nom: "Charge F", min: 0, max: 400, pas: 10, val: 200, unite: " N", surChange: dessiner });

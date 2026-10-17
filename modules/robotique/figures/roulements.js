@@ -7,8 +7,8 @@
     var f = R.figure("fig-frottement", {
       largeur: 960, hauteur: 450,
       titre: "Même poussée, deux contacts",
-      essai: "<strong>Essaie</strong> : appuie sur « Pousser ». " +
-        "<strong>Observe</strong> : la même impulsion envoie la caisse sur rouleaux bien plus loin que la caisse qui glisse. Allure qualitative, pas un calcul."
+      essai: "<strong>Essaie</strong> : appuie sur « Pousser ». " +
+        "<strong>Observe</strong> : la même impulsion envoie la caisse sur rouleaux bien plus loin que la caisse qui glisse. Allure qualitative, pas un calcul."
     });
     var g = R.el("g", null, f.svg), x1 = 0, x2 = 0, a = 0;
     var b = R.boutons(f.reglages);
@@ -23,9 +23,9 @@
     }
     function dessiner() {
       R.vider(g);
-      ligneSol(200, "glissement : la caisse frotte sur le sol");
+      ligneSol(200, "glissement : la caisse frotte sur le sol");
       R.el("rect", { x: 60 + x1, y: 120, width: 120, height: 80, rx: 6, fill: "#9aa0ad", stroke: C.fonce, "stroke-width": 2.5 }, g);
-      ligneSol(410, "roulement : la caisse roule sur des rouleaux");
+      ligneSol(410, "roulement : la caisse roule sur des rouleaux");
       [0, 1, 2].forEach(function (i) {
         var cx = 80 + i * 40 + x2 * 0.5, cy = 392;
         R.el("circle", { cx: cx, cy: cy, r: 18, fill: "#dfe3ea", stroke: C.fonce, "stroke-width": 2 }, g);
@@ -40,9 +40,9 @@
   (function () {
     var f = R.figure("fig-constitution", {
       largeur: 960, hauteur: 540,
-      titre: "Roulement à billes : vue de face et coupe",
-      essai: "<strong>Essaie</strong> : touche un numéro de 1 à 6. " +
-        "<strong>Observe</strong> : la pièce s'allume sur la vue de face et sur la coupe. Les deux chemins de roulement sont les gorges creusées dans les bagues."
+      titre: "Roulement à billes : vue de face et coupe",
+      essai: "<strong>Essaie</strong> : touche un numéro de 1 à 6. " +
+        "<strong>Observe</strong> : la pièce s'allume sur la vue de face et sur la coupe. Les deux chemins de roulement sont les gorges creusées dans les bagues."
     });
     var g = R.el("g", null, f.svg);
     var NOMS = ["", "bague extérieure", "chemin de roulement (bague extérieure)", "bille", "cage", "chemin de roulement (bague intérieure)", "bague intérieure"];
@@ -87,8 +87,8 @@
     var f = R.figure("fig-contact", {
       largeur: 960, hauteur: 460,
       titre: "Zone de contact sous charge, vue de dessus",
-      essai: "<strong>Essaie</strong> : augmente la charge. " +
-        "<strong>Observe</strong> : la bille touche son chemin sur une petite ellipse, le rouleau sur un rectangle qui couvre toute sa longueur. Tailles exagérées, allure qualitative."
+      essai: "<strong>Essaie</strong> : augmente la charge. " +
+        "<strong>Observe</strong> : la bille touche son chemin sur une petite ellipse, le rouleau sur un rectangle qui couvre toute sa longueur. Tailles exagérées, allure qualitative."
     });
     var g = R.el("g", null, f.svg);
     var cQ = R.curseur(f.reglages, { nom: "Charge", min: 0, max: 100, pas: 1, val: 50, unite: " %", surChange: dessiner });

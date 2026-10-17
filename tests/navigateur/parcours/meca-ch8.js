@@ -55,7 +55,7 @@ tous["denture"] = async (a, pg) => {
   await a.nombres([34, 38, 29]); await a.suite();
   await a.nombres([4.712]); await a.suite();
   await a.nombres([2.62]); await a.choix(1); await a.suite();
-  await a.nombres([16]); await a.suite();
+  await a.nombres([15]); await a.suite();
 };
 
 tous["rapport-engrenage"] = async (a, pg) => {

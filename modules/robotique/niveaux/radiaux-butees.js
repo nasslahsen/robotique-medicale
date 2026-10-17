@@ -73,15 +73,15 @@ NIVEAU({
     return n;
   },
   etapes: [
-    { nom: "Quelle charge ?", jouer: function (j, n) {
+    { nom: "Quelle charge ?", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("L'arbre porte une charge radiale et une charge axiale. Un seul roulement est à rouleaux cylindriques et ne reprend que la charge radiale. Lequel ?");
+      j.titre("L'arbre porte une charge radiale et une charge axiale. Un seul roulement est à rouleaux cylindriques et ne reprend que la charge radiale. Lequel ?");
       j.choix([
         { html: "A", juste: true },
-        { html: "B", aide: "B est un roulement rigide à billes : il peut reprendre des charges combinées. Regarde l'élément roulant de A." }
+        { html: "B", aide: "B est un roulement rigide à billes : il peut reprendre des charges combinées. Regarde l'élément roulant de A." }
       ], { colonnes: 2, ok: function () {
         n.revele = true; n.dessin();
-        j.bravo("A, à rouleaux cylindriques : charge purement radiale.");
+        j.bravo("A, à rouleaux cylindriques : charge purement radiale.");
         j.expliquer("<p>Les roulements radiaux sont choisis en fonction de la nature des charges à supporter. Les roulements à rouleaux cylindriques supportent des charges purement radiales. Les roulements rigides à billes peuvent supporter des charges combinées (radiale et axiale).</p>");
         j.suite();
       } });
@@ -95,10 +95,10 @@ NIVEAU({
       var b = E.h("button", "btn bleu", "Valider", j.el); b.type = "button";
       function verifier() {
         if (!n.libre) return;
-        if (n.alpha !== 45) { j.erreur(n.alpha < 45 ? "Le roulement est encore radial : la limite est plus loin." : "Au-delà de la limite, c'est déjà une butée : reviens en arrière."); return; }
+        if (n.alpha !== 45) { j.erreur(n.alpha < 45 ? "Le roulement est encore radial : la limite est plus loin." : "Au-delà de la limite, c'est déjà une butée : reviens en arrière."); return; }
         n.libre = false; b.remove();
-        j.bravo("45° : jusqu'à 45°, radial ; au-delà, butée.");
-        j.expliquer("<p>L'angle de contact détermine le groupe auquel appartient le roulement. Les roulements avec un angle de contact \\(\\alpha \\le 45°\\) sont des roulements radiaux ; les autres sont des butées.</p>");
+        j.bravo("45° : jusqu'à 45°, radial ; au-delà, butée.");
+        j.expliquer("<p>L'angle de contact détermine le groupe auquel appartient le roulement. Les roulements avec un angle de contact \\(\\alpha \\le 45°\\) sont des roulements radiaux ; les autres sont des butées.</p>");
         j.suite();
       }
       b.addEventListener("click", verifier);
@@ -113,15 +113,15 @@ NIVEAU({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "R", html: "radial" }, { id: "B", html: "butée" }, { id: "R", html: "radial" }, { id: "B", html: "butée" }],
         aide: "Compare chaque angle à 45°. Tu peux vérifier avec le curseur de la figure précédente.",
-        ok: function () { j.bravo("15° et 40° : radiaux. 60° et 90° : butées."); j.suite(); }
+        ok: function () { j.bravo("15° et 40° : radiaux. 60° et 90° : butées."); j.suite(); }
       });
     } },
-    { nom: "Pourquoi pas ?", jouer: function (j, n) {
-      j.titre("Une broche tourne très vite et ne subit presque qu'une charge axiale. Un camarade y met une butée de mêmes dimensions qu'un roulement radial. Quel risque ?");
+    { nom: "Pourquoi pas ?", jouer: function (j, n) {
+      j.titre("Une broche tourne très vite et ne subit presque qu'une charge axiale. Un camarade y met une butée de mêmes dimensions qu'un roulement radial. Quel risque ?");
       j.choix([
         { html: "Les butées n'acceptent pas des vitesses aussi élevées que les roulements radiaux", juste: true },
-        { html: "Une butée ne supporte aucune charge axiale", aide: "C'est l'inverse : la butée est faite pour les charges qui agissent dans l'axe de l'arbre." },
-        { html: "Aucun risque", aide: "La charge convient à une butée, mais regarde l'autre exigence : la vitesse." }
+        { html: "Une butée ne supporte aucune charge axiale", aide: "C'est l'inverse : la butée est faite pour les charges qui agissent dans l'axe de l'arbre." },
+        { html: "Aucun risque", aide: "La charge convient à une butée, mais regarde l'autre exigence : la vitesse." }
       ], { colonnes: 1, ok: function () {
         j.bravo("La vitesse est la limite de la butée.");
         j.suite();
@@ -130,13 +130,13 @@ NIVEAU({
     { nom: "Charge combinée", jouer: function (j, n) {
       n.mode = "butees"; n.revele = false; n.dessin();
       j.fig.astuce("Deux butées, charge axiale en rouge.");
-      j.titre("On ajoute une charge radiale. Laquelle de ces deux butées peut aussi la supporter ?");
+      j.titre("On ajoute une charge radiale. Laquelle de ces deux butées peut aussi la supporter ?");
       j.choix([
-        { html: "A, à billes", aide: "Ses rondelles sont perpendiculaires à l'axe : la bille ne peut être appuyée que dans l'axe." },
+        { html: "A, à billes", aide: "Ses rondelles sont perpendiculaires à l'axe : la bille ne peut être appuyée que dans l'axe." },
         { html: "B, à rouleaux inclinés", juste: true }
       ], { colonnes: 2, ok: function () {
         n.revele = true; n.dessin();
-        j.bravo("B : son contact incliné reprend aussi un effort radial.");
+        j.bravo("B : son contact incliné reprend aussi un effort radial.");
         j.expliquer("<p>Les butées supportent des charges agissant principalement dans l'axe de l'arbre. Selon leur conception, elles supportent des charges purement axiales, et certaines peuvent aussi supporter des charges radiales (charges combinées).</p>");
         j.suite();
       } });
