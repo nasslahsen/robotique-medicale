@@ -1,23 +1,29 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Session terminée · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="calme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
-<header class="barre"><a class="marque" href="tableau-a.html">Semestre 5</a><div class="droite"></div></header>
-<main class="page" style="padding-top:96px">
-<h1>C'est fait pour aujourd'hui.</h1>
-<p class="calme">12 cartes revues et une page terminée, en 10 minutes.</p>
-<a class="action" href="tableau-a.html">Retour à l'accueil</a>
-<details class="plie seul" style="margin-top:56px"><summary>Le détail</summary><div class="contenu">
-<table class="tab"><tbody><tr><td>Cartes faciles</td><td>8</td></tr><tr><td>Cartes difficiles</td><td>3</td></tr><tr><td>Cartes pas sues</td><td>1, elle revient demain</td></tr>
-<tr><td>Page terminée</td><td>Rotations élémentaires</td></tr><tr><td>Demain</td><td>6 cartes à revoir</td></tr></tbody></table></div></details>
+<style>
+.chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+.chiffre { padding: 22px 24px; border-radius: 12px; background: var(--gris); }
+.chiffre b { display: block; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
+.chiffre span { color: var(--txt2); }
+</style>
+<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>Session de 10 min</span><div class="droite"></div></header>
+<main class="page" style="padding-top:72px">
+<h1 style="margin-top:0">C'est fait pour aujourd'hui</h1>
+<p class="chapeau">Dix minutes, rien de plus. Les cartes pas sues reviendront demain.</p>
+<div class="chiffres"><div class="chiffre"><b>12</b><span>cartes revues</span></div><div class="chiffre"><b>1</b><span>page terminée</span></div><div class="chiffre"><b>9:48</b><span>minutes</span></div></div>
+<div class="zone-action" style="margin-top:34px"><a class="action" href="tableau-a.html">Retour à l'accueil</a></div>
+<details class="tog" style="margin-top:30px"><summary>Le détail</summary><div class="dedans">
+<table class="tab"><tbody><tr><td>Faciles</td><td>8</td></tr><tr><td>Difficiles</td><td>3</td></tr><tr><td>Pas sues</td><td>1</td></tr><tr><td>Page terminée</td><td>Rotations élémentaires</td></tr><tr><td>Demain</td><td>6 cartes à revoir</td></tr></tbody></table></div></details>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>
 </body>

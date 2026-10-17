@@ -1,37 +1,38 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maquettes · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="calme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
 <style>
-.ecran { display: flex; align-items: center; gap: 20px; min-height: 84px; border-bottom: 1px solid var(--trait); font-size: 21px; }
-.ecran:first-of-type { border-top: 1px solid var(--trait); }
-.ecran .n { width: 30px; font: 500 16px "JetBrains Mono", monospace; color: #8a90a0; }
-.ecran .liens { margin-left: auto; display: flex; gap: 10px; }
-.ecran .liens a { min-height: 52px; min-width: 56px; padding: 0 18px; font-size: 17px; }
+.ecran { display: flex; align-items: center; gap: 16px; min-height: 68px; border-bottom: 1px solid var(--ligne); font-size: 18px; }
+.ecran:first-child { border-top: 1px solid var(--ligne); }
+.ecran .n { width: 28px; color: var(--txt3); }
+.ecran .liens { margin-left: auto; display: flex; gap: 8px; }
+.ecran .liens a { min-height: 46px; min-width: 52px; padding: 0 14px; font-size: 16px; }
 </style>
-<header class="barre"><a class="marque" href="tableau-a.html">Semestre 5</a><div class="droite"></div></header>
-<main class="page">
+<header class="haut"><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Maquettes</span><div class="droite"></div></header>
+<div class="couverture grise basse"></div><main class="page">
+<div class="icone-page" style="color:#37352f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg></div>
 <h1>Maquettes</h1>
-<p class="calme">Version calme. Tout est cliquable, rien n'est enregistré, les chiffres sont inventés. Les écrans 1 à 3 existent en deux versions.</p>
-<div style="margin-top:44px">
-<div class="ecran"><span class="n">1</span>Tableau de bord<div class="liens"><a class="second" href="tableau-a.html">A</a><a class="second" href="tableau-b.html">B</a></div></div>
-<div class="ecran"><span class="n">2</span>Carte du module<div class="liens"><a class="second" href="carte-a.html">A</a><a class="second" href="carte-b.html">B</a></div></div>
-<div class="ecran"><span class="n">3</span>Vue d'un chapitre<div class="liens"><a class="second" href="chapitre-a.html">A</a><a class="second" href="chapitre-b.html">B</a></div></div>
-<div class="ecran"><span class="n">4</span>Cartes mémoire<div class="liens"><a class="second" href="cartes.html">Ouvrir</a></div></div>
-<div class="ecran"><span class="n">5</span>Quiz du chapitre<div class="liens"><a class="second" href="quiz.html#juste">Juste</a><a class="second" href="quiz.html#faux">Faux</a></div></div>
-<div class="ecran"><span class="n">6</span>Examen blanc<div class="liens"><a class="second" href="examen.html">Réglages</a><a class="second" href="examen-resultats.html">Résultats</a></div></div>
-<div class="ecran"><span class="n">7</span>Fiche de révision<div class="liens"><a class="second" href="fiche.html">Ouvrir</a></div></div>
-<div class="ecran"><span class="n">8</span>Session de 10 min<div class="liens"><a class="second" href="session.html">Pendant</a><a class="second" href="session-fin.html">Fin</a></div></div>
-<div class="ecran"><span class="n">9</span>Module Connaissances<div class="liens"><a class="second" href="connaissances.html">Ouvrir</a></div></div>
-<div class="ecran"><span class="n">10</span>Sources et ajouts<div class="liens"><a class="second" href="sources.html">Ouvrir</a></div></div>
+<p class="chapeau">Style Notion : propre, avec la couleur de chaque module. Tout est cliquable, rien n'est enregistré, les chiffres sont inventés.</p>
+<div style="margin-top:34px">
+<div class="ecran"><span class="n">1</span>Tableau de bord<div class="liens"><a class=second href=tableau-a.html>A</a><a class=second href=tableau-b.html>B</a></div></div>
+<div class="ecran"><span class="n">2</span>Carte du module<div class="liens"><a class=second href=carte-a.html>A</a><a class=second href=carte-b.html>B</a></div></div>
+<div class="ecran"><span class="n">3</span>Vue d'un chapitre<div class="liens"><a class=second href=chapitre-a.html>A</a><a class=second href=chapitre-b.html>B</a></div></div>
+<div class="ecran"><span class="n">4</span>Cartes mémoire<div class="liens"><a class=second href=cartes.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">5</span>Quiz du chapitre<div class="liens"><a class=second href=quiz.html#juste>Juste</a><a class=second href=quiz.html#faux>Faux</a></div></div>
+<div class="ecran"><span class="n">6</span>Examen blanc<div class="liens"><a class=second href=examen.html>Réglages</a><a class=second href=examen-resultats.html>Résultats</a></div></div>
+<div class="ecran"><span class="n">7</span>Fiche de révision<div class="liens"><a class=second href=fiche.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">8</span>Session de 10 min<div class="liens"><a class=second href=session.html>Pendant</a><a class=second href=session-page.html>Page</a><a class=second href=session-fin.html>Fin</a></div></div>
+<div class="ecran"><span class="n">9</span>Module Connaissances<div class="liens"><a class=second href=connaissances.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">10</span>Sources et ajouts<div class="liens"><a class=second href=sources.html>Ouvrir</a></div></div>
 </div>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>

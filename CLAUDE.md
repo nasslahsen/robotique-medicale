@@ -145,24 +145,33 @@ formules en direct. Sous chaque figure : une ligne « Essaie : … Observe : …
 - Dessins qui remplissent le cadre, traits épais, étiquettes qui ne se chevauchent pas (halo blanc).
 - Pas de barre latérale, pas de table des matières, pas de décoration sans rôle.
 
-### Principe permanent : une interface calme, peu stimulante
+### Principe permanent : propre et calme, façon Notion
 
-Trop d'éléments, de badges et de petits textes surstimulent l'utilisatrice. Chaque écran suit ces règles,
-avant toute autre considération de design :
-- Une seule action principale par écran, nettement la plus visible. Tout le reste est secondaire et discret.
-- Beaucoup d'espace blanc. Moins d'éléments, plus grands et plus calmes.
-- Pas de petit texte inutile. Ce qui ne sert que parfois (sources, dépendances, numéros de diapos,
-  « pourquoi c'est utile ») est caché derrière un toucher (dépliable, icône).
-- Couleur avec parcimonie : l'accent du module seulement là où il a un sens. Le reste est neutre.
-- Aucune animation qui pulse, clignote ou tourne en boucle. Du mouvement seulement en retour bref d'une action
-  (retourner une carte, une bonne réponse).
-- Pas de compteurs, badges ou indicateurs de progression sur chaque élément. La progression est montrée une fois,
-  simplement, là où elle compte.
+L'interface est propre et calme, avec de la couleur et une personnalité, comme une page Notion. Le problème à éviter
+n'est jamais la couleur, c'est l'encombrement : trop de petites étiquettes, de badges et de petits textes
+surstimulent l'utilisatrice. Ces règles passent avant toute autre considération de design :
+
+- **Pages** : fond blanc, beaucoup d'espace, hiérarchie nette (grands titres de page, texte courant lisible),
+  Inter partout. Texte `#37352f`, texte secondaire `#787774`, traits `#e9e9e7`.
+- **En-tête de module** : une bande de couverture douce dans la couleur du module (du `clair` vers la `couleur`),
+  une icône au trait simple dans un carré blanc qui chevauche la couverture, puis le titre. Pas d'emoji.
+- **Tableau de bord** : les modules en galerie, comme une vue galerie Notion : bande de couleur, titre,
+  sous-modules en étiquettes douces (fond `clair`, texte `texte`), exactement comme les étiquettes Notion.
+- **Teintes claires** (`clair` du module, ou les teintes Notion vert, rouge, jaune, gris) en fond de bloc seulement
+  pour regrouper ce qui va ensemble : le chapitre en cours, la formule clé, un retour de quiz. Jamais en décoration.
+- **Bascules** (▸ qui se déplie, façon Notion) pour tout ce qui est secondaire : sources, dépendances, détails.
+  Sous un bloc, une bascule grise « Source » affiche « Chapitre 2, diapos 14–16 » ; ce qui ne vient pas des diapos
+  a une bascule « Ajouté » en jaune.
+- Traits fins gris clair, coins arrondis, survol et toucher doux (léger fond gris).
+- **Une seule action principale par écran**, nettement la plus visible : un bouton plein dans la couleur du module.
+  Le reste est secondaire et discret.
+- **Pas d'encombrement** : pas d'étiquettes, badges ou compteurs sur chaque élément, pas de petit texte inutile.
+- **La progression** est une seule barre fine, là où elle compte (en-tête du module, résultats, haut d'une série).
 - Pas de chronomètre visible par défaut (sessions, mode examen) : il est optionnel.
-- Sources : une petite icône discrète qui affiche « Chapitre 2, diapos 14–16 » au toucher, pas une ligne de texte
-  partout. Même chose pour la marque « Ajouté ».
+- Aucune animation qui pulse, clignote ou tourne en boucle. Du mouvement seulement en retour bref d'une action.
+- Les figures interactives des niveaux gardent toutes leurs couleurs (axes, accents, réussite, erreur).
 
-Les maquettes de référence sont dans `maquette/` (publiées à `/maquette/`).
+Les maquettes de référence sont dans `maquette/` (publiées à `/maquette/`, générées avec `maquette/notion.css`).
 
 ## 8. Contenu et écriture
 
