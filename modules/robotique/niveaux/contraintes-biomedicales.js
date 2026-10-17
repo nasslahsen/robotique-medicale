@@ -61,7 +61,7 @@ NIVEAU({
         var choisi = n.choixAB === c[1];
         if (choisi) E.s("rect", { x: x - 100, y: 90, width: 260, height: 470, rx: 20, fill: "none", stroke: C.ok, "stroke-width": 4 }, g);
       });
-      D.texte(g, "bleu : moteur", [340, 580], { taille: 17, coul: C.doux, gras: false });
+      D.texte(g, "bleu : moteur", [340, 580], { taille: 17, coul: C.doux, gras: false });
     }
 
     n.dessin = function () {
@@ -84,7 +84,7 @@ NIVEAU({
   etapes: [
     { nom: "Trier", jouer: function (j, n) {
       j.fig.astuce("Un robot de rééducation au contact du patient.");
-      j.titre("Range chaque critère de choix : classique pour toute machine, ou propre au biomédical.");
+      j.titre("Range chaque critère de choix : classique pour toute machine, ou propre au biomédical.");
       var t = function (c) { return '<span class="trou" data-attendu="' + c + '" style="min-width:116px"></span>'; };
       var z = j.zone("", '<p class="consigne" style="margin:4px 0">Critères classiques</p><div style="display:flex;flex-wrap:wrap;gap:6px">' + [t("c"), t("c"), t("c")].join("") + '</div><p class="consigne" style="margin:10px 0 4px">Contexte biomédical</p><div style="display:flex;flex-wrap:wrap;gap:6px">' + [t("b"), t("b"), t("b")].join("") + "</div>");
       j.jetons({
@@ -101,14 +101,14 @@ NIVEAU({
     { nom: "Pincement", jouer: function (j, n) {
       n.mode = "pince"; n.plie = 70; n.libre = true; n.dessin();
       j.fig.astuce("Plie le coude de l'orthèse avec la poignée.");
-      j.titre("Plie le coude de l'orthèse au maximum. Que se passe-t-il pour la main posée là ?");
+      j.titre("Plie le coude de l'orthèse au maximum. Que se passe-t-il pour la main posée là ?");
       var fini = false;
       function valider() {
         if (fini) return;
         fini = true; n.libre = false; n.surPlie = null; n.plie = 12; n.dessin();
-        j.consigne("Quel critère du cours ce défaut viole-t-il ?");
-        j.choix([{ html: "Le bruit", aide: "Rien ne fait de bruit ici : regarde ce que deviennent les deux segments quand l'angle se ferme." }, { html: "Un point de pincement", juste: true }, { html: "La durée de vie", aide: "La machine ne s'use pas ici : c'est le doigt qui est en danger." }], { ok: function () {
-          j.bravo("Un point de pincement : l'espace se referme sur le doigt.");
+        j.consigne("Quel critère du cours ce défaut viole-t-il ?");
+        j.choix([{ html: "Le bruit", aide: "Rien ne fait de bruit ici : regarde ce que deviennent les deux segments quand l'angle se ferme." }, { html: "Un point de pincement", juste: true }, { html: "La durée de vie", aide: "La machine ne s'use pas ici : c'est le doigt qui est en danger." }], { ok: function () {
+          j.bravo("Un point de pincement : l'espace se referme sur le doigt.");
           j.expliquer("<p>Partout où deux pièces se rapprochent pendant le mouvement, un doigt ou un tissu peut être coincé. Dans un robot qui touche le patient, on supprime ces zones (carter, butée, écart minimal) dès la conception.</p>");
           j.suite();
         } });
@@ -119,8 +119,8 @@ NIVEAU({
     { nom: "Lubrifiant", jouer: function (j, n) {
       n.mode = "fuite"; n.dessin();
       j.fig.astuce("Le réducteur graissé d'un bras, au-dessus du patient.");
-      j.titre("Ce réducteur perd un peu de graisse. Quelle exigence du cours n'est pas tenue ?");
-      j.choix([{ html: "Les lubrifiants doivent rester confinés", juste: true }, { html: "Le réducteur doit être plus rigide", aide: "La rigidité ne dit rien sur une fuite : regarde où tombe la goutte." }, { html: "Il faut un réducteur moins cher", aide: "Le coût n'est pas en cause ; ce qui gêne, c'est ce qui sort du carter." }], { colonnes: 1, ok: function () {
+      j.titre("Ce réducteur perd un peu de graisse. Quelle exigence du cours n'est pas tenue ?");
+      j.choix([{ html: "Les lubrifiants doivent rester confinés", juste: true }, { html: "Le réducteur doit être plus rigide", aide: "La rigidité ne dit rien sur une fuite : regarde où tombe la goutte." }, { html: "Il faut un réducteur moins cher", aide: "Le coût n'est pas en cause ; ce qui gêne, c'est ce qui sort du carter." }], { colonnes: 1, ok: function () {
         j.bravo("La graisse doit rester dans le carter.");
         j.expliquer("<p>Un lubrifiant qui s'échappe salit et contamine la zone de soin. D'où des carters étanches, des joints, et des surfaces faciles à nettoyer et à maintenir.</p>");
         j.suite();
@@ -129,12 +129,12 @@ NIVEAU({
     { nom: "Comparer", jouer: function (j, n) {
       n.mode = "deux"; n.choixAB = null; n.dessin();
       j.fig.astuce("Deux façons de motoriser le même coude.");
-      j.titre("Laquelle limite la masse mobile du bras ?");
-      j.choix([{ html: "A", aide: "Dans A, le moteur bleu est porté par le bras : il bouge avec lui." }, { html: "B", juste: true }], { colonnes: 2, ok: function () {
+      j.titre("Laquelle limite la masse mobile du bras ?");
+      j.choix([{ html: "A", aide: "Dans A, le moteur bleu est porté par le bras : il bouge avec lui." }, { html: "B", juste: true }], { colonnes: 2, ok: function () {
         n.choixAB = "B"; n.dessin();
-        j.bravo("B : le moteur reste sur la base.");
-        j.consigne("Mais qu'ajoute la solution B ?");
-        j.choix([{ html: "Une transmission plus longue : plus de jeu et de souplesse possibles", juste: true }, { html: "Plus de bruit, forcément", aide: "Rien ne l'impose. Regarde ce qui relie le moteur au coude." }], { colonnes: 1, ok: function () {
+        j.bravo("B : le moteur reste sur la base.");
+        j.consigne("Mais qu'ajoute la solution B ?");
+        j.choix([{ html: "Une transmission plus longue : plus de jeu et de souplesse possibles", juste: true }, { html: "Plus de bruit, forcément", aide: "Rien ne l'impose. Regarde ce qui relie le moteur au coude." }], { colonnes: 1, ok: function () {
           j.bravo("Chaque solution a son prix.");
           j.expliquer("<p>Moins de masse mobile, mais une transmission de plus dans la chaîne, avec son jeu et sa rigidité. Le choix final dépend de l'importance de chaque critère dans l'application.</p>");
           j.suite();

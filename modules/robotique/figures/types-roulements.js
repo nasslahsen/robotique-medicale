@@ -31,7 +31,7 @@
   var FILTRES = [["ax", "Il y a une charge axiale"], ["v", "Grandes vitesses"], ["dv", "Paliers mal alignés"], ["pl", "Peu de place radiale"]];
 
   var f = R.figure("fig-types", {
-    largeur: 960, hauteur: 640,
+    largeur: 960, hauteur: 600,
     titre: "Comparateur de roulements",
     essai: "<strong>Essaie</strong> : coche les besoins de ton axe, puis touche un roulement de la liste pour voir sa fiche. " +
       "<strong>Observe</strong> : en vert, ce que le cours indique comme adapté ; en gris, ce qu'il exclut ou ne précise pas. Le désalignement admissible se lit en minutes (') ou en degrés (°)."

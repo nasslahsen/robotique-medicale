@@ -7,7 +7,7 @@
     var f = R.figure("fig-torsion", {
       largeur: 960, hauteur: 420,
       titre: "Un arbre d'axe encastré, tordu par un couple",
-      essai: "<strong>Essaie</strong> : augmente le couple, puis la rigidité. <strong>Observe</strong> : les génératrices s'inclinent d'autant plus que le couple est grand et que \\(k_\\theta\\) est petit ; l'angle est grossi 60 fois sur le dessin."
+      essai: "<strong>Essaie</strong> : augmente le couple, puis la rigidité. <strong>Observe</strong> : les génératrices s'inclinent d'autant plus que le couple est grand et que \\(k_\\theta\\) est petit ; l'angle est grossi 60 fois sur le dessin."
     });
     var g = R.el("g", null, f.svg);
     var cC = R.curseur(f.reglages, { nom: "C", min: 0, max: 40, pas: 1, val: 20, unite: " N·m", surChange: dessiner });
@@ -39,7 +39,7 @@
     var f = R.figure("fig-jeu", {
       largeur: 960, hauteur: 300,
       titre: "Un petit jeu à l'axe, un grand écart au bout",
-      essai: "<strong>Essaie</strong> : allonge le bras, puis augmente le jeu. <strong>Observe</strong> : \\(\\Delta x\\) est proportionnel à \\(L\\) et à \\(\\Delta\\theta\\) ; le jeu est grossi 40 fois sur le dessin. Le bouton « Exemple du cours » règle L = 0,40 m et Δθ = 0,20°."
+      essai: "<strong>Essaie</strong> : allonge le bras, puis augmente le jeu. <strong>Observe</strong> : \\(\\Delta x\\) est proportionnel à \\(L\\) et à \\(\\Delta\\theta\\) ; le jeu est grossi 40 fois sur le dessin. Le bouton « Exemple du cours » règle L = 0,40 m et Δθ = 0,20°."
     });
     var g = R.el("g", null, f.svg);
     var cL = R.curseur(f.reglages, { nom: "L", min: 0.1, max: 0.8, pas: 0.01, val: 0.4, unite: " m", surChange: dessiner });
@@ -67,8 +67,8 @@
   (function () {
     var f = R.figure("fig-deux-jeux", {
       largeur: 960, hauteur: 480,
-      titre: "Bras à deux articulations : chaque jeu agit avec sa propre longueur",
-      essai: "<strong>Essaie</strong> : donne un jeu à l'épaule, puis au coude. <strong>Observe</strong> : à jeu égal, celui de l'épaule déplace plus la pince, car la pince est plus loin de l'épaule. Les jeux sont grossis 15 fois."
+      titre: "Bras à deux articulations : chaque jeu agit avec sa propre longueur",
+      essai: "<strong>Essaie</strong> : donne un jeu à l'épaule, puis au coude. <strong>Observe</strong> : à jeu égal, celui de l'épaule déplace plus la pince, car la pince est plus loin de l'épaule. Les jeux sont grossis 15 fois."
     });
     var g = R.el("g", null, f.svg);
     var c1 = R.curseur(f.reglages, { nom: "Δθ₁ épaule", min: 0, max: 0.5, pas: 0.01, val: 0.2, unite: "°", dec: 2, surChange: dessiner });
@@ -91,7 +91,7 @@
       R.texte(g, "L₁ = " + R.fmt(L1, 2) + " m", [470, 330], { couleur: C.v, taille: 18, italique: false });
       R.texte(g, "L₂ = " + R.fmt(L2, 2) + " m", [570, 130], { couleur: C.z, taille: 18, italique: false });
       var d1 = L1 * c1.v * Math.PI / 180 * 1000, d2 = L2 * c2.v * Math.PI / 180 * 1000;
-      R.rendre(zone, "\\Delta x_1 \\simeq L_1\\,\\Delta\\theta_1 = " + R.tn(d1, 2) + "\\ \\text{mm} \\qquad \\Delta x_2 \\simeq L_2\\,\\Delta\\theta_2 = " + R.tn(d2, 2) + "\\ \\text{mm} \\qquad \\text{au pire : } " + R.tn(d1 + d2, 2) + "\\ \\text{mm}");
+      R.rendre(zone, "\\Delta x_1 \\simeq L_1\\,\\Delta\\theta_1 = " + R.tn(d1, 2) + "\\ \\text{mm} \\qquad \\Delta x_2 \\simeq L_2\\,\\Delta\\theta_2 = " + R.tn(d2, 2) + "\\ \\text{mm} \\qquad \\text{au pire : } " + R.tn(d1 + d2, 2) + "\\ \\text{mm}");
     }
     dessiner();
   })();

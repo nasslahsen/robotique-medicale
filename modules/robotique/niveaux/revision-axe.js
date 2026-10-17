@@ -41,12 +41,12 @@ NIVEAU({
         D.texte(g, "jeu Δθ = 0,1°" + (n.montrer ? " (grossi 40 fois)" : ""), [340, 470], { taille: 18, coul: C.doux, gras: false });
       } else if (n.mode === "deux") {
         arbreTordu(200, 1000, "A"); arbreTordu(430, 4000, "B");
-        D.texte(g, "même couple : 8 N·m (angles grossis)", [300, 560], { taille: 16, coul: C.doux, gras: false });
+        D.texte(g, "même couple : 8 N·m (angles grossis)", [300, 560], { taille: 16, coul: C.doux, gras: false });
       } else if (n.mode === "reducteur") {
         moteur([110, 300], 120, 100);
         M.arbre(g, 170, 230, 300, 12, { axe: false });
         E.s("rect", { x: 230, y: 220, width: 170, height: 160, rx: 18, fill: "#eef0f5", stroke: C.encre, "stroke-width": 3 }, g);
-        D.texte(g, "i = ?", [315, 300], { taille: 32, mono: true });
+        D.texte(g, "i = ?", [315, 300], { taille: 32, mono: true });
         M.arbre(g, 400, 470, 300, 16, { axe: false });
         D.ligne(g, [490, 300], [630, 180], "#c6cbd8", 24); D.rond(g, [490, 300], 26, { fill: "#fff", stroke: C.encre, ep: 4 });
         D.texte(g, "Cm = 0,4 N·m", [110, 200], { taille: 18, mono: true, coul: C.z });
@@ -70,16 +70,16 @@ NIVEAU({
   etapes: [
     { nom: "Axe de pipette", jouer: function (j, n) {
       j.fig.astuce("Un robot de laboratoire déplace une pipette au-dessus de tubes.");
-      j.titre("Le moteur de l'axe vertical tourne à 1500 tr/min avec un couple de 0,5 N·m. Vitesse angulaire et puissance ?");
-      j.nombre({ avant: "\\omega\\ (\\text{rad/s}),\\ P\\ (\\text{W}) :", cases: [{ attendu: 2 * Math.PI * 1500 / 60, tol: 0.05 }, { attendu: 0.5 * 2 * Math.PI * 1500 / 60, tol: 0.1 }], ligne: true,
+      j.titre("Le moteur de l'axe vertical tourne à 1500 tr/min avec un couple de 0,5 N·m. Vitesse angulaire et puissance ?");
+      j.nombre({ avant: "\\omega\\ (\\text{rad/s}),\\ P\\ (\\text{W}) :", cases: [{ attendu: 2 * Math.PI * 1500 / 60, tol: 0.05 }, { attendu: 0.5 * 2 * Math.PI * 1500 / 60, tol: 0.1 }], ligne: true,
         aide: function (k) { return k === 0 ? "\\(\\omega = 2\\pi n / 60\\)." : "\\(P = C\\,\\omega\\)."; },
         ok: function () { j.bravo("\\(\\omega \\approx 157{,}08\\) rad/s, \\(P \\approx 78{,}5\\) W."); j.suite(); } });
     } },
     { nom: "Trouve l'erreur", jouer: function (j, n) {
       n.mode = "bras"; n.montrer = false; n.dessin();
       j.fig.astuce("");
-      j.titre("Bras de 0,5 m, jeu de 0,1°. Un camarade écrit : \\(\\Delta x = 0{,}5 \\times 0{,}1 = 0{,}05\\) m, soit 5 cm. Où est l'erreur ?");
-      j.choix([{ html: "L'angle doit être en radians", juste: true }, { html: "Il faut diviser par L au lieu de multiplier", aide: "\\(\\Delta x \\simeq L\\,\\Delta\\theta\\) : la formule est bonne. Regarde l'unité de \\(\\Delta\\theta\\)." }, { html: "Il n'y en a pas", aide: "5 cm de déplacement pour 0,1° de jeu ? Vérifie l'unité de l'angle." }], { colonnes: 1, ok: function () {
+      j.titre("Bras de 0,5 m, jeu de 0,1°. Un camarade écrit : \\(\\Delta x = 0{,}5 \\times 0{,}1 = 0{,}05\\) m, soit 5 cm. Où est l'erreur ?");
+      j.choix([{ html: "L'angle doit être en radians", juste: true }, { html: "Il faut diviser par L au lieu de multiplier", aide: "\\(\\Delta x \\simeq L\\,\\Delta\\theta\\) : la formule est bonne. Regarde l'unité de \\(\\Delta\\theta\\)." }, { html: "Il n'y en a pas", aide: "5 cm de déplacement pour 0,1° de jeu ? Vérifie l'unité de l'angle." }], { colonnes: 1, ok: function () {
         n.montrer = true; n.dessin();
         j.bravo("\\(0{,}1° = 1{,}75 \\times 10^{-3}\\) rad, donc \\(\\Delta x \\simeq 0{,}87\\) mm.");
         j.suite();
@@ -88,15 +88,15 @@ NIVEAU({
     { nom: "Deux rigidités", jouer: function (j, n) {
       n.mode = "deux"; n.dessin();
       j.fig.astuce("Deux axes soumis au même couple.");
-      j.titre("Axe A : \\(k_\\theta = 1000\\) N·m/rad. Axe B : \\(k_\\theta = 4000\\) N·m/rad. Combien de fois B se tord-il moins que A ?");
+      j.titre("Axe A : \\(k_\\theta = 1000\\) N·m/rad. Axe B : \\(k_\\theta = 4000\\) N·m/rad. Combien de fois B se tord-il moins que A ?");
       j.nombre({ avant: "\\theta_A / \\theta_B =", cases: [{ attendu: 4, tol: 0.001 }], ligne: true,
         aide: function () { return "\\(\\theta = C / k_\\theta\\) avec le même \\(C\\) pour les deux."; },
-        ok: function () { j.bravo("4 fois : 8 mrad pour A, 2 mrad pour B."); j.suite(); } });
+        ok: function () { j.bravo("4 fois : 8 mrad pour A, 2 mrad pour B."); j.suite(); } });
     } },
     { nom: "Rapport minimal", jouer: function (j, n) {
       n.mode = "reducteur"; n.dessin();
       j.fig.astuce("Un moteur trop faible pour le bras, seul.");
-      j.titre("Le bras demande 15 N·m. Le moteur donne 0,4 N·m et le réducteur a un rendement de 0,75. Quel rapport \\(i\\) minimal ?");
+      j.titre("Le bras demande 15 N·m. Le moteur donne 0,4 N·m et le réducteur a un rendement de 0,75. Quel rapport \\(i\\) minimal ?");
       j.nombre({ avant: "i =", cases: [{ attendu: 15 / (0.75 * 0.4), tol: 0.01 }], ligne: true,
         aide: function () { return "Pars de \\(C_s \\simeq \\eta\\, i\\, C_e\\) et isole \\(i\\)."; },
         ok: function () { j.bravo("\\(i = 15 / (0{,}75 \\times 0{,}4) = 50\\)."); j.suite(); } });
@@ -104,8 +104,8 @@ NIVEAU({
     { nom: "Cas nouveau", jouer: function (j, n) {
       n.mode = "echo"; n.dessin();
       j.fig.astuce("Un bras d'échographie au-dessus d'un patient allongé.");
-      j.titre("Ce bras pose la sonde sur le ventre et passe près du visage du patient. Quels critères passent avant les autres ?");
-      j.choix([{ html: "Masse mobile limitée, pas de point de pincement, peu de bruit", juste: true }, { html: "La vitesse la plus grande possible", aide: "Le bras travaille au contact d'une personne : la vitesse n'est pas l'enjeu principal." }, { html: "Le coût le plus bas, avant tout", aide: "Le coût compte, mais le cours insiste sur ce qui protège le patient." }], { colonnes: 1, ok: function () {
+      j.titre("Ce bras pose la sonde sur le ventre et passe près du visage du patient. Quels critères passent avant les autres ?");
+      j.choix([{ html: "Masse mobile limitée, pas de point de pincement, peu de bruit", juste: true }, { html: "La vitesse la plus grande possible", aide: "Le bras travaille au contact d'une personne : la vitesse n'est pas l'enjeu principal." }, { html: "Le coût le plus bas, avant tout", aide: "Le coût compte, mais le cours insiste sur ce qui protège le patient." }], { colonnes: 1, ok: function () {
         j.bravo("Le patient d'abord.");
         j.expliquer("<p>Les critères classiques restent (charge, rigidité, durée de vie, coût), mais au contact du patient la masse mobile, le bruit, les vibrations, les points de pincement, le nettoyage et le confinement des lubrifiants pèsent lourd. Le choix final dépend de l'importance de chaque critère.</p>");
         j.suite();

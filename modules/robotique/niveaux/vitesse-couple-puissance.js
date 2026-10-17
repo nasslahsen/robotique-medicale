@@ -59,8 +59,8 @@ NIVEAU({
         disque([510, 210], 80, 1.2, 0);
         D.texte(g, "ωe = 314 rad/s", [90, 100], { taille: 18, mono: true, coul: C.z });
         D.texte(g, "Ce = " + E.fmt(n.Ce, 2) + " N·m", [90, 300], { taille: 18, mono: true, coul: C.z });
-        D.texte(g, n.montrer ? "ωs = " + E.fmt(314.159 / n.i, 2) + " rad/s" : "ωs = ?", [510, 100], { taille: 18, mono: true, coul: C.v });
-        D.texte(g, n.montrer ? "Cs = " + E.fmt(n.eta * n.i * n.Ce, 1) + " N·m" : "Cs = ?", [510, 320], { taille: 18, mono: true, coul: C.v });
+        D.texte(g, n.montrer ? "ωs = " + E.fmt(314.159 / n.i, 2) + " rad/s" : "ωs = ?", [510, 100], { taille: 18, mono: true, coul: C.v });
+        D.texte(g, n.montrer ? "Cs = " + E.fmt(n.eta * n.i * n.Ce, 1) + " N·m" : "Cs = ?", [510, 320], { taille: 18, mono: true, coul: C.v });
         if (n.barres) {
           var Pe = n.Ce * 2 * Math.PI * 3000 / 60, Ps = n.eta * Pe;
           E.s("rect", { x: 80, y: 400, width: Pe * 4.6, height: 40, rx: 8, fill: C.z }, g);
@@ -77,8 +77,8 @@ NIVEAU({
   },
   etapes: [
     { nom: "Un tour par seconde", jouer: function (j, n) {
-      j.fig.astuce("Lance la rotation : la zone colorée montre l'angle balayé.");
-      j.titre("Le disque tourne à 60 tr/min. Quel angle balaie-t-il en une seconde, en radians ?");
+      j.fig.astuce("Lance la rotation : la zone colorée montre l'angle balayé.");
+      j.titre("Le disque tourne à 60 tr/min. Quel angle balaie-t-il en une seconde, en radians ?");
       var bt = E.h("button", "btn clair", "Tourner pendant 1 s", j.el); bt.type = "button";
       bt.addEventListener("click", function () {
         bt.disabled = true; n.montrer = false;
@@ -88,8 +88,8 @@ NIVEAU({
         aide: function () { return "60 tr/min, c'est un tour par seconde. Un tour vaut \\(2\\pi\\) rad."; },
         ok: function () {
           bt.remove(); n.angle = n.balaye = 2 * Math.PI; n.montrer = true; n.dessin();
-          j.bravo("Un tour : \\(2\\pi \\approx 6{,}28\\) rad en une seconde.");
-          j.expliquer("<p>La vitesse angulaire \\(\\omega\\) est l'angle balayé par seconde, en rad/s. La vitesse de rotation \\(n\\) compte des tours par minute. Un tour vaut \\(2\\pi\\) rad et une minute 60 s :</p>\\[ \\omega = \\frac{2\\pi n}{60} \\]");
+          j.bravo("Un tour : \\(2\\pi \\approx 6{,}28\\) rad en une seconde.");
+          j.expliquer("<p>La vitesse angulaire \\(\\omega\\) est l'angle balayé par seconde, en rad/s. La vitesse de rotation \\(n\\) compte des tours par minute. Un tour vaut \\(2\\pi\\) rad et une minute 60 s :</p>\\[ \\omega = \\frac{2\\pi n}{60} \\]");
           j.suite();
         } });
     } },
@@ -107,7 +107,7 @@ NIVEAU({
     { nom: "Viser 100 W", jouer: function (j, n) {
       n.mode = "puissance"; n.couple = 0.1; n.dessin();
       j.fig.astuce("La barre montre la puissance mécanique fournie.");
-      j.titre("Toujours à 3000 tr/min : règle le couple pour que le moteur fournisse 100 W.");
+      j.titre("Toujours à 3000 tr/min : règle le couple pour que le moteur fournisse 100 W.");
       var fini = false;
       var cu = j.curseur({ nom: "C", min: 0, max: 0.6, pas: 0.01, val: 0.1, unite: " N·m", dec: 2, change: function (v) {
         if (fini) return;
@@ -117,7 +117,7 @@ NIVEAU({
       function gagne() {
         if (fini) return;
         fini = true; cu.input.disabled = true;
-        j.bravo("Environ 0,32 N·m : \\(P = C\\omega = 0{,}32 \\times 314{,}16 \\approx 100\\) W.");
+        j.bravo("Environ 0,32 N·m : \\(P = C\\omega = 0{,}32 \\times 314{,}16 \\approx 100\\) W.");
         j.expliquer("<p>La puissance mécanique de rotation vaut</p>\\[ P = C\\,\\omega \\]<p>avec \\(P\\) en W, \\(C\\) en N·m et \\(\\omega\\) en rad/s. À vitesse donnée, la puissance est proportionnelle au couple.</p>");
         j.suite();
       }
@@ -125,21 +125,21 @@ NIVEAU({
     } },
     { nom: "Le réducteur", jouer: function (j, n) {
       n.mode = "reducteur"; n.i = 50; n.eta = 0.8; n.Ce = 0.32; n.montrer = false; n.barres = false; n.dessin();
-      j.fig.astuce("i = ωe / ωs : le réducteur divise la vitesse par 50.");
-      j.titre("Ce moteur entraîne un réducteur de rapport \\(i = 50\\) et de rendement \\(\\eta = 0{,}8\\). Vitesse et couple en sortie ?");
-      j.nombre({ avant: "\\omega_s,\\ C_s :", cases: [{ attendu: 2 * Math.PI * 50 / 50, tol: 0.02 }, { attendu: 0.8 * 50 * 0.32, tol: 0.05 }], ligne: true,
+      j.fig.astuce("i = ωe / ωs : le réducteur divise la vitesse par 50.");
+      j.titre("Ce moteur entraîne un réducteur de rapport \\(i = 50\\) et de rendement \\(\\eta = 0{,}8\\). Vitesse et couple en sortie ?");
+      j.nombre({ avant: "\\omega_s,\\ C_s :", cases: [{ attendu: 2 * Math.PI * 50 / 50, tol: 0.02 }, { attendu: 0.8 * 50 * 0.32, tol: 0.05 }], ligne: true,
         aide: function (k) { return k === 0 ? "\\(i = \\omega_e / \\omega_s\\), donc \\(\\omega_s = \\omega_e / i\\)." : "\\(C_s \\simeq \\eta\\, i\\, C_e\\)."; },
         ok: function () {
           n.montrer = true; n.dessin();
           j.bravo("\\(\\omega_s \\approx 6{,}28\\) rad/s et \\(C_s \\simeq 0{,}8 \\times 50 \\times 0{,}32 = 12{,}8\\) N·m.");
-          j.expliquer("<p>Pour une transmission de rapport \\(i = \\omega_e / \\omega_s\\) et de rendement \\(\\eta\\) :</p>\\[ C_s \\simeq \\eta\\, i\\, C_e \\]<p>La vitesse est divisée par \\(i\\), le couple multiplié par \\(i\\), moins les pertes.</p>");
+          j.expliquer("<p>Pour une transmission de rapport \\(i = \\omega_e / \\omega_s\\) et de rendement \\(\\eta\\) :</p>\\[ C_s \\simeq \\eta\\, i\\, C_e \\]<p>La vitesse est divisée par \\(i\\), le couple multiplié par \\(i\\), moins les pertes.</p>");
           j.suite();
         } });
     } },
     { nom: "Comparer", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("On remplace le réducteur par un réducteur de rapport 100, même rendement, même moteur. Que devient le couple de sortie ?");
-      j.choix([{ html: "Il double, et la vitesse de sortie est divisée par deux", juste: true }, { html: "Il ne change pas", aide: "Regarde le rôle de \\(i\\) dans \\(C_s \\simeq \\eta\\, i\\, C_e\\)." }, { html: "Il double, et la vitesse de sortie double aussi", aide: "\\(\\omega_s = \\omega_e / i\\) : si \\(i\\) grandit, la sortie ralentit." }], { colonnes: 1, ok: function () {
+      j.titre("On remplace le réducteur par un réducteur de rapport 100, même rendement, même moteur. Que devient le couple de sortie ?");
+      j.choix([{ html: "Il double, et la vitesse de sortie est divisée par deux", juste: true }, { html: "Il ne change pas", aide: "Regarde le rôle de \\(i\\) dans \\(C_s \\simeq \\eta\\, i\\, C_e\\)." }, { html: "Il double, et la vitesse de sortie double aussi", aide: "\\(\\omega_s = \\omega_e / i\\) : si \\(i\\) grandit, la sortie ralentit." }], { colonnes: 1, ok: function () {
         n.i = 100; n.montrer = true; n.dessin();
         j.bravo("25,6 N·m à 3,14 rad/s.");
         j.suite();
@@ -148,10 +148,10 @@ NIVEAU({
     { nom: "Trouve l'erreur", jouer: function (j, n) {
       n.i = 50; n.barres = true; n.dessin();
       j.fig.astuce("Les barres comparent la puissance qui entre et celle qui sort.");
-      j.titre("Un camarade écrit : « le réducteur multiplie le couple par 50, donc il multiplie aussi la puissance ». Où est l'erreur ?");
-      j.choix([{ html: "La vitesse est divisée d'autant : la puissance de sortie vaut \\(\\eta\\) fois celle d'entrée", juste: true }, { html: "Le couple n'est pas multiplié, seulement la vitesse", aide: "Si : \\(C_s \\simeq \\eta\\, i\\, C_e\\). Regarde plutôt ce que devient la vitesse." }, { html: "Il n'y a pas d'erreur", aide: "Compare les deux barres de la figure." }], { colonnes: 1, ok: function () {
-        j.bravo("\\(P_s = C_s\\,\\omega_s = \\eta\\,P_e\\) : 80 W sortent pour 100 W entrés.");
-        j.expliquer("<p>Un réducteur échange de la vitesse contre du couple. Il ne crée pas de puissance : il en perd une partie, d'où \\(\\eta < 1\\).</p>");
+      j.titre("Un camarade écrit : « le réducteur multiplie le couple par 50, donc il multiplie aussi la puissance ». Où est l'erreur ?");
+      j.choix([{ html: "La vitesse est divisée d'autant : la puissance de sortie vaut \\(\\eta\\) fois celle d'entrée", juste: true }, { html: "Le couple n'est pas multiplié, seulement la vitesse", aide: "Si : \\(C_s \\simeq \\eta\\, i\\, C_e\\). Regarde plutôt ce que devient la vitesse." }, { html: "Il n'y a pas d'erreur", aide: "Compare les deux barres de la figure." }], { colonnes: 1, ok: function () {
+        j.bravo("\\(P_s = C_s\\,\\omega_s = \\eta\\,P_e\\) : 80 W sortent pour 100 W entrés.");
+        j.expliquer("<p>Un réducteur échange de la vitesse contre du couple. Il ne crée pas de puissance : il en perd une partie, d'où \\(\\eta < 1\\).</p>");
         j.suite();
       } });
     } }

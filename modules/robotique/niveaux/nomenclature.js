@@ -95,11 +95,11 @@ NIVEAU({
       n.cartes = [{ d: "moteur", sens: ["puissance", "mécanique"], unite: "W" }, { d: "roulement", sens: ["charge dynamique", "équivalente"], unite: "N" }];
       n.dessin();
       j.fig.astuce("Deux sens possibles pour la même lettre.");
-      j.titre("Sur cette fiche, P vaut 0,8 kN. De quel P s'agit-il ?");
-      j.choix([{ html: "Une puissance mécanique", aide: "Une puissance s'exprime en watts (W). Ici l'unité est le kN : c'est une force." }, { html: "La charge dynamique équivalente du roulement", juste: true }], { colonnes: 1, ok: function () {
+      j.titre("Sur cette fiche, P vaut 0,8 kN. De quel P s'agit-il ?");
+      j.choix([{ html: "Une puissance mécanique", aide: "Une puissance s'exprime en watts (W). Ici l'unité est le kN : c'est une force." }, { html: "La charge dynamique équivalente du roulement", juste: true }], { colonnes: 1, ok: function () {
         n.bon = 1; n.dessin();
-        j.bravo("Des kN : c'est une force, donc la charge sur le roulement.");
-        j.expliquer("<p>Le cours utilise les unités du Système international. Certaines lettres ont plusieurs sens : P est une puissance (W) ou la charge dynamique équivalente d'un roulement (N). L'unité permet d'identifier le sens utilisé.</p>");
+        j.bravo("Des kN : c'est une force, donc la charge sur le roulement.");
+        j.expliquer("<p>Le cours utilise les unités du Système international. Certaines lettres ont plusieurs sens : P est une puissance (W) ou la charge dynamique équivalente d'un roulement (N). L'unité permet d'identifier le sens utilisé.</p>");
         j.suite();
       } });
     } },
@@ -108,11 +108,11 @@ NIVEAU({
       n.cartes = [{ d: "roulement", sens: ["capacité dynamique", "d'un roulement"], unite: "N" }, { d: "arbre", sens: ["couple", "mécanique"], unite: "N·m" }];
       n.dessin();
       j.fig.astuce("Lis l'unité avant de choisir.");
-      j.titre("Une clavette doit transmettre C = 8 N·m. Que représente ce C ?");
+      j.titre("Une clavette doit transmettre C = 8 N·m. Que représente ce C ?");
       j.choix([{ html: "Une capacité de roulement", aide: "Une capacité de roulement est une force, en N. Ici l'unité est le N·m." }, { html: "Un couple", juste: true }], { colonnes: 2, ok: function () {
         n.bon = 1; n.dessin();
-        j.bravo("Des N·m : un couple.");
-        j.expliquer("<p>C désigne un couple (N·m) ou la capacité dynamique d'un roulement (N). Dans les tableaux de roulements, C et P sont des forces : ne pas les confondre avec le couple et la puissance.</p>");
+        j.bravo("Des N·m : un couple.");
+        j.expliquer("<p>C désigne un couple (N·m) ou la capacité dynamique d'un roulement (N). Dans les tableaux de roulements, C et P sont des forces : ne pas les confondre avec le couple et la puissance.</p>");
         j.suite();
       } });
     } },
@@ -124,7 +124,7 @@ NIVEAU({
       j.titre("Même question pour m = 2 mm.");
       j.choix([{ html: "Une masse", aide: "Une masse se mesure en kg. Le mm est une longueur." }, { html: "Le module de la denture", juste: true }], { colonnes: 2, ok: function () {
         n.bon = 1; n.dessin();
-        j.bravo("Une longueur en mm : le module, celui de \\(d = mZ\\).");
+        j.bravo("Une longueur en mm : le module, celui de \\(d = mZ\\).");
         j.suite();
       } });
     } },
@@ -147,10 +147,10 @@ NIVEAU({
     } },
     { nom: "Indices", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Dans \\(C_s \\simeq \\eta\\, i\\, C_e\\), que veulent dire les indices \\(e\\) et \\(s\\) ?");
-      j.choix([{ html: "équivalent et statique", aide: "« eq » veut dire équivalent et « 0 » statique. Ici, une seule lettre : regarde le tableau des indices." }, { html: "entrée et sortie", juste: true }, { html: "externe et serrage", aide: "Externe s'écrit « ext ». Pense au chemin du couple dans le réducteur." }], { colonnes: 1, ok: function () {
+      j.titre("Dans \\(C_s \\simeq \\eta\\, i\\, C_e\\), que veulent dire les indices \\(e\\) et \\(s\\) ?");
+      j.choix([{ html: "équivalent et statique", aide: "« eq » veut dire équivalent et « 0 » statique. Ici, une seule lettre : regarde le tableau des indices." }, { html: "entrée et sortie", juste: true }, { html: "externe et serrage", aide: "Externe s'écrit « ext ». Pense au chemin du couple dans le réducteur." }], { colonnes: 1, ok: function () {
         j.bravo("Couple d'entrée, couple de sortie.");
-        j.expliquer("<p>Indices du cours : e entrée, s sortie, m moteur, g gravitaire, d dimensionnement, f frottement, ext externe, eq équivalent, req requis, tot total, 0 initial ou statique, 1, 2, … organe ou étage numéroté.</p>");
+        j.expliquer("<p>Indices du cours : e entrée, s sortie, m moteur, g gravitaire, d dimensionnement, f frottement, ext externe, eq équivalent, req requis, tot total, 0 initial ou statique, 1, 2, … organe ou étage numéroté.</p>");
         j.suite();
       } });
     } },
@@ -159,8 +159,8 @@ NIVEAU({
       n.cartes = [{ d: "roulement", sens: ["exposant", "de durée"], unite: "sans unité" }, { d: "courroie", sens: ["pas de la", "courroie"], unite: "mm" }, { d: "vis", sens: ["avance", "par tour"], unite: "mm/tr" }];
       n.dessin();
       j.fig.astuce("p a trois sens dans le cours.");
-      j.titre("Pour un roulement à billes, un camarade note p = 3 mm. Qu'est-ce qui cloche ?");
-      j.choix([{ html: "Pour un roulement, p est l'exposant de durée : il n'a pas d'unité", juste: true }, { html: "Pour des billes, p vaut 10/3", aide: "10/3, c'est pour les roulements à rouleaux. Le nombre 3 est juste ; regarde l'unité." }, { html: "Rien : p est le pas, en mm", aide: "Le pas en mm, c'est pour une courroie synchrone. Ici on parle d'un roulement." }], { colonnes: 1, ok: function () {
+      j.titre("Pour un roulement à billes, un camarade note p = 3 mm. Qu'est-ce qui cloche ?");
+      j.choix([{ html: "Pour un roulement, p est l'exposant de durée : il n'a pas d'unité", juste: true }, { html: "Pour des billes, p vaut 10/3", aide: "10/3, c'est pour les roulements à rouleaux. Le nombre 3 est juste ; regarde l'unité." }, { html: "Rien : p est le pas, en mm", aide: "Le pas en mm, c'est pour une courroie synchrone. Ici on parle d'un roulement." }], { colonnes: 1, ok: function () {
         n.bon = 0; n.dessin();
         j.bravo("p = 3, sans unité, dans \\(L_{10} = (C/P)^p\\).");
         j.expliquer("<p>p désigne l'exposant de durée d'un roulement (3 pour les billes, 10/3 pour les rouleaux), le pas d'une courroie (mm) ou l'avance d'une vis par tour (mm/tr). Toujours écrire l'unité, c'est elle qui lève le doute.</p>");

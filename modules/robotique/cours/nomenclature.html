@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<title>Nomenclature : symboles, unités, indices · Robotique médicale</title>
+<title>Nomenclature : symboles, unités, indices · Robotique médicale</title>
 <link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
 <link rel="stylesheet" href="../../../commun/css/cours.css">
 <link rel="stylesheet" href="../../../commun/css/barre.css">
@@ -17,37 +17,37 @@
 <body>
 <main>
 <p class="etiquette" data-etiquette></p>
-<h1>Nomenclature : symboles, unités, indices</h1>
-<p class="chapeau">Sur la fiche d'un roulement, tu lis P = 0,8 kN. Ce n'est pas une puissance : c'est une force. Avant de calculer quoi que ce soit sur un axe de robot, il faut savoir lire ses symboles.</p>
+<h1>Nomenclature : symboles, unités, indices</h1>
+<p class="chapeau">Sur la fiche d'un roulement, tu lis P = 0,8 kN. Ce n'est pas une puissance : c'est une force. Avant de calculer quoi que ce soit sur un axe de robot, il faut savoir lire ses symboles.</p>
 
 <h2>Intuition</h2>
-<p>Le cours d'éléments mécaniques réunit des domaines qui ont chacun leurs habitudes : moteurs, assemblages, roulements, engrenages, courroies. Résultat : une même lettre sert plusieurs fois. P est une puissance pour un moteur et une charge pour un roulement ; C est un couple pour un arbre et une capacité pour un roulement ; p est un exposant, un pas ou une avance.</p>
-<p>Ce qui lève le doute, c'est l'unité. Une puissance est en watts, une force en newtons, un couple en newtons-mètres. D'où la règle : toujours écrire l'unité à côté d'un nombre.</p>
+<p>Le cours d'éléments mécaniques réunit des domaines qui ont chacun leurs habitudes : moteurs, assemblages, roulements, engrenages, courroies. Résultat : une même lettre sert plusieurs fois. P est une puissance pour un moteur et une charge pour un roulement ; C est un couple pour un arbre et une capacité pour un roulement ; p est un exposant, un pas ou une avance.</p>
+<p>Ce qui lève le doute, c'est l'unité. Une puissance est en watts, une force en newtons, un couple en newtons-mètres. D'où la règle : toujours écrire l'unité à côté d'un nombre.</p>
 
 <div id="fig-lexique"></div>
 
-<p>Les indices disent où vit la grandeur dans l'axe : au moteur, à l'entrée ou à la sortie d'un réducteur, dans un étage, au bras.</p>
+<p>Les indices disent où vit la grandeur dans l'axe : au moteur, à l'entrée ou à la sortie d'un réducteur, dans un étage, au bras.</p>
 
 <div id="fig-axe-symboles"></div>
 
 <h2>Formalisation</h2>
-<p>Les équations utilisent les unités du Système international (SI), sauf indication contraire. La nomenclature précise le sens des symboles. Certains symboles ont plusieurs sens : <strong>P</strong> désigne une puissance (en W) ou la charge dynamique équivalente d'un roulement (en N) ; <strong>C</strong> un couple (en N·m) ou la capacité dynamique d'un roulement (en N) ; <strong>p</strong> l'exposant de durée d'un roulement, le pas d'une courroie ou l'avance d'une vis ; <strong>m</strong> le module d'un engrenage ou une masse. Les unités permettent d'identifier le sens utilisé.</p>
+<p>Les équations utilisent les unités du Système international (SI), sauf indication contraire. La nomenclature précise le sens des symboles. Certains symboles ont plusieurs sens : <strong>P</strong> désigne une puissance (en W) ou la charge dynamique équivalente d'un roulement (en N) ; <strong>C</strong> un couple (en N·m) ou la capacité dynamique d'un roulement (en N) ; <strong>p</strong> l'exposant de durée d'un roulement, le pas d'une courroie ou l'avance d'une vis ; <strong>m</strong> le module d'un engrenage ou une masse. Les unités permettent d'identifier le sens utilisé.</p>
 
 <h3>Rotation, puissance et axe</h3>
 <div class="tableau"><table>
 <tr><th>Symbole</th><th>Définition</th><th>Unité</th><th>Contexte, remarque</th></tr>
-<tr><td>\(g\)</td><td>Accélération de la pesanteur. Dans les exemples : \(g \approx 9{,}81\) m/s².</td><td>m/s²</td><td>Couple gravitaire.</td></tr>
-<tr><td>\(n ;\ n_m ;\ n_s\)</td><td>Vitesse de rotation ; indices m = moteur, s = sortie.</td><td>tr/min</td><td>Cinématique de rotation.</td></tr>
-<tr><td>\(\omega ;\ \omega_e ;\ \omega_s ;\ \omega_1 ;\ \omega_2\)</td><td>Vitesse angulaire ; e = entrée, s = sortie, 1 et 2 = organes considérés.</td><td>rad/s</td><td>Rotation, rapports de transmission.</td></tr>
-<tr><td>\(P\) (puissance)</td><td>Puissance mécanique transmise.</td><td>W</td><td>\(P = C\omega\) ; calcul du couple moteur.</td></tr>
-<tr><td>\(C ;\ C_e ;\ C_s ;\ C_m\)</td><td>Couple mécanique ; e = entrée, s = sortie, m = moteur.</td><td>N·m</td><td>Transmissions et moteurs.</td></tr>
+<tr><td>\(g\)</td><td>Accélération de la pesanteur. Dans les exemples : \(g \approx 9{,}81\) m/s².</td><td>m/s²</td><td>Couple gravitaire.</td></tr>
+<tr><td>\(n ;\ n_m ;\ n_s\)</td><td>Vitesse de rotation ; indices m = moteur, s = sortie.</td><td>tr/min</td><td>Cinématique de rotation.</td></tr>
+<tr><td>\(\omega ;\ \omega_e ;\ \omega_s ;\ \omega_1 ;\ \omega_2\)</td><td>Vitesse angulaire ; e = entrée, s = sortie, 1 et 2 = organes considérés.</td><td>rad/s</td><td>Rotation, rapports de transmission.</td></tr>
+<tr><td>\(P\) (puissance)</td><td>Puissance mécanique transmise.</td><td>W</td><td>\(P = C\omega\) ; calcul du couple moteur.</td></tr>
+<tr><td>\(C ;\ C_e ;\ C_s ;\ C_m\)</td><td>Couple mécanique ; e = entrée, s = sortie, m = moteur.</td><td>N·m</td><td>Transmissions et moteurs.</td></tr>
 <tr><td>\(C_g ;\ C_d ;\ C_f ;\ C_{ext}\)</td><td>Couples gravitaire, de dimensionnement, de frottement et externe.</td><td>N·m</td><td>Étude intégrée de l'axe robotique.</td></tr>
-<tr><td>\(i ;\ i_k ;\ i_{tot}\)</td><td>Rapport de transmission ; \(i_k\) = rapport d'un étage, \(i_{tot}\) = rapport total.</td><td>sans dimension</td><td>Réducteurs, engrenages, courroies.</td></tr>
-<tr><td>\(\eta ;\ \eta_k ;\ \eta_{tot}\)</td><td>Rendement énergétique ; \(\eta_k\) = rendement d'un étage, \(\eta_{tot}\) = rendement global.</td><td>sans dimension (0 à 1)</td><td>Transmissions et vis-écrou.</td></tr>
+<tr><td>\(i ;\ i_k ;\ i_{tot}\)</td><td>Rapport de transmission ; \(i_k\) = rapport d'un étage, \(i_{tot}\) = rapport total.</td><td>sans dimension</td><td>Réducteurs, engrenages, courroies.</td></tr>
+<tr><td>\(\eta ;\ \eta_k ;\ \eta_{tot}\)</td><td>Rendement énergétique ; \(\eta_k\) = rendement d'un étage, \(\eta_{tot}\) = rendement global.</td><td>sans dimension (0 à 1)</td><td>Transmissions et vis-écrou.</td></tr>
 <tr><td>\(k_\theta\)</td><td>Rigidité torsionnelle, rapport couple / déformation angulaire.</td><td>N·m/rad</td><td>Compliance d'un axe.</td></tr>
-<tr><td>\(\theta ;\ \Delta\theta ;\ \Delta\theta_s\)</td><td>Angle ; variation ou jeu angulaire ; résolution angulaire théorique en sortie.</td><td>rad (ou ° si indiqué)</td><td>Jeu, déformation, résolution.</td></tr>
-<tr><td>\(\Delta x ;\ x ;\ \delta\)</td><td>Déplacement linéaire ; \(x\) = position ou déplacement, \(\delta\) = déformation élastique.</td><td>m ou mm</td><td>Erreur en bout de bras, ressorts, guidages, vis-écrou.</td></tr>
-<tr><td>\(L\) (bras)</td><td>Longueur caractéristique entre l'axe et le point fonctionnel.</td><td>m</td><td>Conversion jeu angulaire → déplacement ; couple gravitaire.</td></tr>
+<tr><td>\(\theta ;\ \Delta\theta ;\ \Delta\theta_s\)</td><td>Angle ; variation ou jeu angulaire ; résolution angulaire théorique en sortie.</td><td>rad (ou ° si indiqué)</td><td>Jeu, déformation, résolution.</td></tr>
+<tr><td>\(\Delta x ;\ x ;\ \delta\)</td><td>Déplacement linéaire ; \(x\) = position ou déplacement, \(\delta\) = déformation élastique.</td><td>m ou mm</td><td>Erreur en bout de bras, ressorts, guidages, vis-écrou.</td></tr>
+<tr><td>\(L\) (bras)</td><td>Longueur caractéristique entre l'axe et le point fonctionnel.</td><td>m</td><td>Conversion jeu angulaire → déplacement ; couple gravitaire.</td></tr>
 <tr><td>\(m\) (masse)</td><td>Masse portée.</td><td>kg</td><td>Couple gravitaire \(C_g = mgL\).</td></tr>
 <tr><td>\(J_L\)</td><td>Moment d'inertie de la charge côté sortie.</td><td>kg·m²</td><td>Inertie réfléchie.</td></tr>
 <tr><td>\(J_{L,m}\)</td><td>Moment d'inertie de charge ramené côté moteur.</td><td>kg·m²</td><td>\(J_{L,m} = J_L / i^2\).</td></tr>
@@ -60,15 +60,15 @@
 <h3>Assemblages et ressorts</h3>
 <div class="tableau"><table>
 <tr><th>Symbole</th><th>Définition</th><th>Unité</th><th>Contexte, remarque</th></tr>
-<tr><td>\(T\) (serrage, vis)</td><td>Couple de serrage d'une vis ou couple requis pour entraîner une vis-écrou, selon le contexte.</td><td>N·m</td><td>Assemblages vissés ; transformation vis-écrou.</td></tr>
+<tr><td>\(T\) (serrage, vis)</td><td>Couple de serrage d'une vis ou couple requis pour entraîner une vis-écrou, selon le contexte.</td><td>N·m</td><td>Assemblages vissés ; transformation vis-écrou.</td></tr>
 <tr><td>\(K\)</td><td>Coefficient empirique couple-précharge d'un assemblage vissé.</td><td>sans dimension</td><td>Couple de serrage \(\approx K F_0 d\). Ce n'est pas une constante universelle.</td></tr>
 <tr><td>\(F_0\)</td><td>Précharge axiale initiale d'une vis.</td><td>N</td><td>Assemblages vissés.</td></tr>
-<tr><td>\(F ;\ F_t\)</td><td>Force ; \(F_t\) = composante tangentielle transmise.</td><td>N</td><td>Ressorts, guidages, clavettes, vis-écrou.</td></tr>
+<tr><td>\(F ;\ F_t\)</td><td>Force ; \(F_t\) = composante tangentielle transmise.</td><td>N</td><td>Ressorts, guidages, clavettes, vis-écrou.</td></tr>
 <tr><td>\(d\) (arbre, vis)</td><td>Diamètre de l'arbre ou diamètre nominal de la vis, selon le contexte.</td><td>m ou mm</td><td>Clavettes, assemblages vissés.</td></tr>
 <tr><td>\(b\)</td><td>Largeur utile d'une clavette.</td><td>mm</td><td>Contrainte moyenne de cisaillement d'une clavette.</td></tr>
 <tr><td>\(L\) (clavette)</td><td>Longueur utile de la clavette.</td><td>mm</td><td>Contrainte de cisaillement d'une clavette.</td></tr>
 <tr><td>\(\tau\)</td><td>Contrainte moyenne de cisaillement.</td><td>Pa ou MPa</td><td>Clavettes.</td></tr>
-<tr><td>\(k\) (linéaire)</td><td>Raideur linéaire d'un ressort ou d'un guidage.</td><td>N/m ou N/mm</td><td>\(F = kx\) ; \(k = F/\delta\).</td></tr>
+<tr><td>\(k\) (linéaire)</td><td>Raideur linéaire d'un ressort ou d'un guidage.</td><td>N/m ou N/mm</td><td>\(F = kx\) ; \(k = F/\delta\).</td></tr>
 </table></div>
 
 <h3>Roulements</h3>
@@ -79,7 +79,7 @@
 <tr><td>\(P\) (roulement)</td><td>Charge dynamique équivalente appliquée au roulement. À ne pas confondre avec la puissance \(P\).</td><td>N</td><td>Durée nominale ISO 281.</td></tr>
 <tr><td>\(L_{10}\)</td><td>Durée nominale de base correspondant à 90 % de fiabilité pour le modèle de base.</td><td>millions de tours</td><td>Roulements.</td></tr>
 <tr><td>\(L_{10h}\)</td><td>Durée nominale de base exprimée en heures.</td><td>h</td><td>Roulements.</td></tr>
-<tr><td>\(p\) (roulement)</td><td>Exposant de durée : \(p = 3\) pour roulements à billes ; \(p = 10/3\) pour roulements à rouleaux.</td><td>sans dimension</td><td>\(L_{10} = (C/P)^p\).</td></tr>
+<tr><td>\(p\) (roulement)</td><td>Exposant de durée : \(p = 3\) pour roulements à billes ; \(p = 10/3\) pour roulements à rouleaux.</td><td>sans dimension</td><td>\(L_{10} = (C/P)^p\).</td></tr>
 <tr><td>\(M\)</td><td>Moment mécanique appliqué à une paire d'appuis.</td><td>N·m</td><td>Influence de l'entraxe des roulements.</td></tr>
 <tr><td>\(e\)</td><td>Entraxe ou distance entre les appuis considérés.</td><td>m ou mm</td><td>Approximation \(F \simeq M/e\).</td></tr>
 <tr><td>\(t\)</td><td>Durée de fonctionnement.</td><td>h ou s selon contexte</td><td>Calcul du nombre de tours requis pour un roulement.</td></tr>
@@ -93,7 +93,7 @@
 <tr><td>\(Z ;\ Z_1 ;\ Z_2\)</td><td>Nombre de dents d'un engrenage ou d'une poulie synchrone.</td><td>sans dimension</td><td>Engrenages et courroies.</td></tr>
 <tr><td>\(d ;\ d_1 ;\ d_2\)</td><td>Diamètre primitif d'un engrenage.</td><td>mm</td><td>Géométrie des engrenages.</td></tr>
 <tr><td>\(a\)</td><td>Entraxe entre deux axes, poulies ou engrenages.</td><td>mm</td><td>Engrenages et courroies.</td></tr>
-<tr><td>\(N\) (étages)</td><td>Nombre total d'étages dans un produit de rapports ou de rendements.</td><td>entier</td><td>\(i_{tot} = \prod i_k\) ; \(\eta_{tot} = \prod \eta_k\).</td></tr>
+<tr><td>\(N\) (étages)</td><td>Nombre total d'étages dans un produit de rapports ou de rendements.</td><td>entier</td><td>\(i_{tot} = \prod i_k\) ; \(\eta_{tot} = \prod \eta_k\).</td></tr>
 <tr><td>\(p\) (courroie)</td><td>Pas de la courroie synchrone, distance primitive entre dents successives.</td><td>mm</td><td>\(d_p = Zp/\pi\). À ne pas confondre avec l'exposant \(p\) des roulements.</td></tr>
 <tr><td>\(d_p\)</td><td>Diamètre primitif d'une poulie synchrone.</td><td>mm</td><td>Courroies synchrones.</td></tr>
 <tr><td>\(D ;\ d\) (courroie)</td><td>Grands et petits diamètres primitifs des deux poulies.</td><td>mm</td><td>Longueur primitive d'une courroie ouverte.</td></tr>
@@ -123,13 +123,13 @@
 <tr><td>d</td><td>dimensionnement</td><td>0</td><td>initial ou statique selon le symbole</td></tr>
 <tr><td>f</td><td>frottement</td><td>1, 2, …</td><td>organe, étage ou composant numéroté</td></tr>
 </table></div>
-<p>La lettre \(\alpha\) sert aussi deux fois de plus dans le support : l'angle de contact d'un roulement (chapitre 3) et l'angle de pression d'une denture (chapitre 4). Là encore, le contexte et l'unité tranchent : rad/s² pour une accélération, degrés pour un angle.</p>
+<p>La lettre \(\alpha\) sert aussi deux fois de plus dans le support : l'angle de contact d'un roulement (chapitre 3) et l'angle de pression d'une denture (chapitre 4). Là encore, le contexte et l'unité tranchent : rad/s² pour une accélération, degrés pour un angle.</p>
 
 <h2>Exemple du cours</h2>
-<p>Dans l'exemple de durée d'un roulement à billes, les données sont \(C = 3{,}2\) kN, \(P = 0{,}8\) kN et \(n = 300\) tr/min. Les unités disent tout : \(C\) et \(P\) sont en kN, ce sont des forces, donc la capacité dynamique de base et la charge dynamique équivalente du roulement, pas un couple ni une puissance. \(n\) en tr/min est la vitesse de rotation. Le calcul \(L_{10} = (C/P)^p\) compare deux forces : le rapport est sans dimension, comme il se doit pour une puissance \(p = 3\).</p>
+<p>Dans l'exemple de durée d'un roulement à billes, les données sont \(C = 3{,}2\) kN, \(P = 0{,}8\) kN et \(n = 300\) tr/min. Les unités disent tout : \(C\) et \(P\) sont en kN, ce sont des forces, donc la capacité dynamique de base et la charge dynamique équivalente du roulement, pas un couple ni une puissance. \(n\) en tr/min est la vitesse de rotation. Le calcul \(L_{10} = (C/P)^p\) compare deux forces : le rapport est sans dimension, comme il se doit pour une puissance \(p = 3\).</p>
 
 <h2>Formules clés</h2>
-<p>Relations données dans la nomenclature, avec leur unité :</p>
+<p>Relations données dans la nomenclature, avec leur unité :</p>
 \[ P = C\,\omega \qquad F = kx \qquad k = \frac{F}{\delta} \qquad T \approx K F_0 d \qquad L_{10} = \left(\frac{C}{P}\right)^p \qquad d = mZ \]
 \[ i_{tot} = \prod i_k \qquad \eta_{tot} = \prod \eta_k \qquad d_p = \frac{Zp}{\pi} \qquad x = Np \qquad v = r\,\omega \qquad J_{L,m} = \frac{J_L}{i^2} \qquad C_g = mgL \qquad F \simeq \frac{M}{e} \]
 

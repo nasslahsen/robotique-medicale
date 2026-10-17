@@ -91,10 +91,10 @@ NIVEAU({
       n.mode = "bras"; n.deux = true; n.montrer = false; n.dessin();
       j.fig.astuce("Deux bras, même articulation, même jeu.");
       j.titre("Les deux articulations ont le même petit jeu. Au bout du bras deux fois plus long, le déplacement est…");
-      j.choix([{ html: "le même", aide: "Le jeu est un angle : plus on s'éloigne de l'axe, plus cet angle donne un grand arc." }, { html: "deux fois plus grand", juste: true }, { html: "quatre fois plus grand", aide: "Pour un petit angle, l'arc est proportionnel au rayon, pas à son carré." }], { colonnes: 3, ok: function () {
+      j.choix([{ html: "le même", aide: "Le jeu est un angle : plus on s'éloigne de l'axe, plus cet angle donne un grand arc." }, { html: "deux fois plus grand", juste: true }, { html: "quatre fois plus grand", aide: "Pour un petit angle, l'arc est proportionnel au rayon, pas à son carré." }], { colonnes: 3, ok: function () {
         n.montrer = true; n.dessin();
         j.bravo("Deux fois plus long, deux fois plus de déplacement.");
-        j.expliquer("<p>Un petit jeu angulaire \\(\\Delta\\theta\\) dans l'articulation devient, au bout d'un bras de longueur \\(L\\), un déplacement linéaire :</p>\\[ \\Delta x \\simeq L\\,\\Delta\\theta, \\qquad \\Delta\\theta \\text{ en radians} \\]");
+        j.expliquer("<p>Un petit jeu angulaire \\(\\Delta\\theta\\) dans l'articulation devient, au bout d'un bras de longueur \\(L\\), un déplacement linéaire :</p>\\[ \\Delta x \\simeq L\\,\\Delta\\theta, \\qquad \\Delta\\theta \\text{ en radians} \\]");
         j.suite();
       } });
     } },
@@ -102,7 +102,7 @@ NIVEAU({
       n.deux = false; n.montrer = true; n.dessin();
       j.fig.astuce("Bras de 0,40 m, jeu total de 0,20°.");
       j.titre("Bras de longueur \\(L = 0{,}40\\) m, jeu total \\(\\Delta\\theta = 0{,}20°\\). Convertis le jeu en radians, puis calcule \\(\\Delta x\\).");
-      j.nombre({ avant: "\\Delta\\theta\\ (10^{-3}\\,\\text{rad}),\\ \\Delta x\\ (\\text{mm}) :", cases: [{ attendu: 0.2 * Math.PI / 180 * 1000, tol: 0.01 }, { attendu: 0.4 * 0.2 * Math.PI / 180 * 1000, tol: 0.01 }], ligne: true,
+      j.nombre({ avant: "\\Delta\\theta\\ (10^{-3}\\,\\text{rad}),\\ \\Delta x\\ (\\text{mm}) :", cases: [{ attendu: 0.2 * Math.PI / 180 * 1000, tol: 0.01 }, { attendu: 0.4 * 0.2 * Math.PI / 180 * 1000, tol: 0.01 }], ligne: true,
         aide: function (k) { return k === 0 ? "\\(\\Delta\\theta = 0{,}20 \\times \\pi / 180\\), puis multiplie par 1000 pour l'avoir en \\(10^{-3}\\) rad." : "\\(\\Delta x \\simeq L\\,\\Delta\\theta\\) en mètres, puis en millimètres."; },
         ok: function () {
           j.bravo("\\(\\Delta\\theta = 3{,}49 \\times 10^{-3}\\) rad et \\(\\Delta x \\simeq 1{,}40\\) mm.");
@@ -113,37 +113,37 @@ NIVEAU({
     { nom: "Torsion", jouer: function (j, n) {
       n.mode = "torsion"; n.C = 0; n.k = 2000; n.dessin();
       j.fig.astuce("Un arbre d'axe, encastré à gauche. Applique un couple à droite.");
-      j.titre("Applique 20 N·m avec le curseur et lis l'angle de torsion. Quelle est la rigidité torsionnelle de cet axe ?");
+      j.titre("Applique 20 N·m avec le curseur et lis l'angle de torsion. Quelle est la rigidité torsionnelle de cet axe ?");
       j.curseur({ nom: "C", min: 0, max: 40, pas: 1, val: 0, unite: " N·m", change: function (v) { n.C = v; n.dessin(); } });
       j.nombre({ avant: "k_\\theta =", apres: "\\text{N}\\cdot\\text{m/rad}", cases: [{ attendu: 2000, tol: 1 }], ligne: true,
         aide: function () { return "À 20 N·m, la figure donne \\(\\theta = 10 \\times 10^{-3}\\) rad. \\(k_\\theta = C / \\theta\\)."; },
         ok: function () {
           n.C = 20; n.dessin();
           j.bravo("\\(k_\\theta = 20 / 0{,}010 = 2000\\) N·m/rad.");
-          j.expliquer("<p>Dans un axe asservi, la <b>rigidité torsionnelle</b> compte aussi :</p>\\[ k_\\theta = \\frac{C}{\\theta} \\]<p>\\(C\\) le couple appliqué (N·m), \\(\\theta\\) l'angle de torsion (rad). Plus \\(k_\\theta\\) est grand, moins l'axe se tord.</p>");
+          j.expliquer("<p>Dans un axe asservi, la <b>rigidité torsionnelle</b> compte aussi :</p>\\[ k_\\theta = \\frac{C}{\\theta} \\]<p>\\(C\\) le couple appliqué (N·m), \\(\\theta\\) l'angle de torsion (rad). Plus \\(k_\\theta\\) est grand, moins l'axe se tord.</p>");
           j.suite();
         } });
     } },
     { nom: "De la torsion au bout du bras", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Cet axe (\\(k_\\theta = 2000\\) N·m/rad) porte un bras de 0,40 m. La charge crée un couple de 10 N·m. De combien le bout du bras descend-il ?");
+      j.titre("Cet axe (\\(k_\\theta = 2000\\) N·m/rad) porte un bras de 0,40 m. La charge crée un couple de 10 N·m. De combien le bout du bras descend-il ?");
       j.nombre({ avant: "\\Delta x =", apres: "\\text{mm}", cases: [{ attendu: 0.4 * 10 / 2000 * 1000, tol: 0.01 }], ligne: true,
         aide: function () { return "D'abord \\(\\theta = C / k_\\theta\\) en radians, puis \\(\\Delta x \\simeq L\\,\\theta\\)."; },
         ok: function () {
           n.C = 10; n.dessin();
           j.bravo("\\(\\theta = 0{,}005\\) rad, donc \\(\\Delta x \\simeq 0{,}40 \\times 0{,}005 = 2\\) mm.");
-          j.expliquer("<p>Jeu et souplesse se traitent de la même façon : un petit angle à l'axe, multiplié par la longueur du bras. Ici la torsion (2 mm) pèse plus que le jeu de 0,20° (1,40 mm).</p>");
+          j.expliquer("<p>Jeu et souplesse se traitent de la même façon : un petit angle à l'axe, multiplié par la longueur du bras. Ici la torsion (2 mm) pèse plus que le jeu de 0,20° (1,40 mm).</p>");
           j.suite();
         } });
     } },
-    { nom: "Épaule ou coude ?", jouer: function (j, n) {
+    { nom: "Épaule ou coude ?", jouer: function (j, n) {
       n.mode = "deux"; n.montrer = false; n.dessin();
       j.fig.astuce("Un bras à deux articulations, comme sur la figure 3 du cours.");
-      j.titre("L'épaule et le coude ont le même jeu \\(\\Delta\\theta\\). Lequel déplace le plus la pince ?");
+      j.titre("L'épaule et le coude ont le même jeu \\(\\Delta\\theta\\). Lequel déplace le plus la pince ?");
       j.choix([{ html: "Le jeu de l'épaule", juste: true }, { html: "Le jeu du coude", aide: "Mesure la distance entre chaque articulation et la pince." }, { html: "Les deux pareil", aide: "Même angle, mais pas même distance jusqu'à la pince." }], { colonnes: 3, ok: function () {
         n.montrer = true; n.dessin();
         j.bravo("L'épaule est la plus loin de la pince.");
-        j.expliquer("<p>Chaque jeu agit avec la distance entre son axe et la pince : \\(\\Delta x_1 \\simeq L_1\\,\\Delta\\theta_1\\) pour l'épaule, \\(\\Delta x_2 \\simeq L_2\\,\\Delta\\theta_2\\) pour le coude. Les articulations proches de la base demandent donc le moins de jeu et le plus de rigidité.</p>");
+        j.expliquer("<p>Chaque jeu agit avec la distance entre son axe et la pince : \\(\\Delta x_1 \\simeq L_1\\,\\Delta\\theta_1\\) pour l'épaule, \\(\\Delta x_2 \\simeq L_2\\,\\Delta\\theta_2\\) pour le coude. Les articulations proches de la base demandent donc le moins de jeu et le plus de rigidité.</p>");
         j.suite();
       } });
     } }

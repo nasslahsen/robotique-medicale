@@ -80,14 +80,14 @@ NIVEAU({
   },
   etapes: [
     { nom: "La chaîne", jouer: function (j, n) {
-      j.fig.astuce("Un axe de robot vu en coupe : de gauche à droite.");
+      j.fig.astuce("Un axe de robot vu en coupe : de gauche à droite.");
       j.titre("Le mouvement part du moteur et arrive au bras. Remets la chaîne dans l'ordre.");
       var fl = '<span style="font-size:22px;color:#9aa0ad">→</span>';
       var z = j.zone("", '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">' + ["moteur", "reduction", "transmission", "guidage", "bras"].map(function (c) { return '<span class="trou" data-attendu="' + c + '" style="min-width:118px"></span>'; }).join(fl) + "</div>");
       j.jetons({
         trous: [].slice.call(z.querySelectorAll(".trou")),
         jetons: [{ id: "guidage", html: "Guidage" }, { id: "moteur", html: "Moteur" }, { id: "bras", html: "Bras / effecteur" }, { id: "transmission", html: "Transmission" }, { id: "reduction", html: "Réduction" }],
-        aide: "Suis la figure de gauche à droite : le moteur, puis ce qui ralentit, puis ce qui transmet, ce qui guide, et enfin ce qui bouge.",
+        aide: "Suis la figure de gauche à droite : le moteur, puis ce qui ralentit, puis ce qui transmet, ce qui guide, et enfin ce qui bouge.",
         ok: function () {
           E.anime(1600, function (u) { n.flux = u; n.rot1 = u * 6; n.dessin(); });
           j.bravo("Moteur → Réduction → Transmission → Guidage → Bras / effecteur.");
@@ -99,7 +99,7 @@ NIVEAU({
     { nom: "Les constituants", jouer: function (j, n) {
       n.flux = -1; n.dessin();
       j.fig.astuce("Touche les parties de l'axe sur la figure.");
-      var ordre = [["actionneur", "l'<b>actionneur</b> : ce qui crée le mouvement"], ["energie", "la <b>source d'énergie</b> qui l'alimente"], ["guidage", "le <b>guidage</b> : ce qui tient l'arbre en rotation"], ["transmission", "la <b>transmission</b> : réducteur et arbre"], ["structure", "la <b>structure</b> : la pièce rigide qui porte la charge"]];
+      var ordre = [["actionneur", "l'<b>actionneur</b> : ce qui crée le mouvement"], ["energie", "la <b>source d'énergie</b> qui l'alimente"], ["guidage", "le <b>guidage</b> : ce qui tient l'arbre en rotation"], ["transmission", "la <b>transmission</b> : réducteur et arbre"], ["structure", "la <b>structure</b> : la pièce rigide qui porte la charge"]];
       var k = 0;
       j.titre("Un axe associe cinq constituants. Touche-les un par un.");
       var consigne = j.consigne("");
@@ -125,34 +125,34 @@ NIVEAU({
     { nom: "Compter les axes", jouer: function (j, n) {
       n.mode = "robot"; n.choisis = {}; n.axes = false; n.dessin();
       j.fig.astuce("Un bras de laboratoire fait de modules d'articulation et de pièces de liaison.");
-      j.titre("Chaque module d'articulation est un axe : moteur, réducteur, guidage. Combien d'axes de rotation a ce bras ?");
+      j.titre("Chaque module d'articulation est un axe : moteur, réducteur, guidage. Combien d'axes de rotation a ce bras ?");
       var bt = E.h("button", "btn clair", "Montrer les rotations", j.el); bt.type = "button";
       bt.addEventListener("click", function () { n.axes = !n.axes; n.dessin(); bt.textContent = n.axes ? "Cacher les rotations" : "Montrer les rotations"; });
       j.nombre({ avant: "\\text{axes} =", cases: [{ attendu: 5, tol: 0 }], ligne: true,
         aide: function () { return "Compte la rotation de la base sur elle-même et celle de l'outil sur lui-même, en plus des trois pivots visibles."; },
         ok: function () {
           bt.remove(); n.axes = true; n.dessin();
-          j.bravo("5 axes : un bras à 5 degrés de liberté.");
-          j.expliquer("<p>Un robot est une suite d'axes. Chacun reprend la même chaîne : moteur, réduction, transmission, guidage, puis le segment suivant. C'est cette chaîne, axe par axe, que le module étudie.</p>");
+          j.bravo("5 axes : un bras à 5 degrés de liberté.");
+          j.expliquer("<p>Un robot est une suite d'axes. Chacun reprend la même chaîne : moteur, réduction, transmission, guidage, puis le segment suivant. C'est cette chaîne, axe par axe, que le module étudie.</p>");
           j.suite();
         } });
     } },
-    { nom: "Pourquoi ?", jouer: function (j, n) {
+    { nom: "Pourquoi ?", jouer: function (j, n) {
       j.fig.astuce("");
-      j.titre("Le moteur de l'épaule est positionné au millième de tour près, pourtant la pince se décale d'un millimètre. Pourquoi ?");
-      j.choix([{ html: "Les performances dépendent de toute la chaîne : jeu, rigidité, déformations, alignement…", juste: true }, { html: "Le moteur ne tourne pas assez vite", aide: "La vitesse ne change pas la position finale : regarde ce qu'il y a entre le moteur et la pince." }, { html: "Un millimètre est toujours négligeable", aide: "En médical, un millimètre au bout d'un instrument compte. Cherche d'où vient l'écart." }], { colonnes: 1, ok: function () {
+      j.titre("Le moteur de l'épaule est positionné au millième de tour près, pourtant la pince se décale d'un millimètre. Pourquoi ?");
+      j.choix([{ html: "Les performances dépendent de toute la chaîne : jeu, rigidité, déformations, alignement…", juste: true }, { html: "Le moteur ne tourne pas assez vite", aide: "La vitesse ne change pas la position finale : regarde ce qu'il y a entre le moteur et la pince." }, { html: "Un millimètre est toujours négligeable", aide: "En médical, un millimètre au bout d'un instrument compte. Cherche d'où vient l'écart." }], { colonnes: 1, ok: function () {
         j.bravo("Un moteur précis ne suffit pas.");
-        j.expliquer("<p>Les performances d'un robot dépendent de toute la chaîne mécanique : <b>jeu</b>, <b>rigidité</b>, <b>frottement</b>, <b>rendement</b>, <b>déformations</b>, <b>défauts d'alignement</b> et <b>tolérances de montage</b>. Chaque maillon ajoute son petit défaut.</p>");
+        j.expliquer("<p>Les performances d'un robot dépendent de toute la chaîne mécanique : <b>jeu</b>, <b>rigidité</b>, <b>frottement</b>, <b>rendement</b>, <b>déformations</b>, <b>défauts d'alignement</b> et <b>tolérances de montage</b>. Chaque maillon ajoute son petit défaut.</p>");
         j.suite();
       } });
     } },
-    { nom: "Quel maillon ?", jouer: function (j, n) {
+    { nom: "Quel maillon ?", jouer: function (j, n) {
       n.mode = "axe"; n.dessin();
       j.fig.astuce("Le défaut se voit à l'arrêt.");
-      j.titre("Le bras s'arrête, puis la pince oscille quelques instants avant de se stabiliser. Quel défaut de la chaîne regarder d'abord ?");
-      j.choix([{ html: "Le rendement", aide: "Le rendement dit quelle part de la puissance arrive en sortie ; il ne fait pas osciller une pièce à l'arrêt." }, { html: "La rigidité", juste: true }, { html: "La source d'énergie", aide: "Le moteur est arrêté : c'est la mécanique qui bouge encore." }], { colonnes: 3, ok: function () {
+      j.titre("Le bras s'arrête, puis la pince oscille quelques instants avant de se stabiliser. Quel défaut de la chaîne regarder d'abord ?");
+      j.choix([{ html: "Le rendement", aide: "Le rendement dit quelle part de la puissance arrive en sortie ; il ne fait pas osciller une pièce à l'arrêt." }, { html: "La rigidité", juste: true }, { html: "La source d'énergie", aide: "Le moteur est arrêté : c'est la mécanique qui bouge encore." }], { colonnes: 3, ok: function () {
         j.bravo("Une chaîne souple se déforme et oscille.");
-        j.expliquer("<p>Une rigidité faible laisse la structure et la transmission se déformer sous la charge : la pince s'écarte, puis oscille. Le niveau « Rigidité et jeu angulaire » chiffre cet effet.</p>");
+        j.expliquer("<p>Une rigidité faible laisse la structure et la transmission se déformer sous la charge : la pince s'écarte, puis oscille. Le niveau « Rigidité et jeu angulaire » chiffre cet effet.</p>");
         j.suite();
       } });
     } }

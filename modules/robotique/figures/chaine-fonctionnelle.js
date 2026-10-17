@@ -7,7 +7,7 @@
     var f = R.figure("fig-robot-axes", {
       largeur: 960, hauteur: 540,
       titre: "Bras à 5 axes fait de modules d'articulation et de pièces de liaison",
-      essai: "<strong>Essaie</strong> : passe en vue éclatée, puis touche une pièce. <strong>Observe</strong> : le bras n'est qu'une pile de modules d'articulation (un axe chacun, avec son moteur) reliés par des pièces rigides de longueurs différentes."
+      essai: "<strong>Essaie</strong> : passe en vue éclatée, puis touche une pièce. <strong>Observe</strong> : le bras n'est qu'une pile de modules d'articulation (un axe chacun, avec son moteur) reliés par des pièces rigides de longueurs différentes."
     });
     var g = R.el("g", null, f.svg), t = 0, choisi = null;
     var b = R.boutons(f.reglages);
@@ -16,10 +16,10 @@
     // pièces : [id, type, position montée, décalage éclaté, nom, description]
     var P = [
       ["base", "base", [300, 470], [-150, 20], "Base", "Boîtier fixe qui porte tout le bras (et ici l'électronique)."],
-      ["a1", "module", [300, 405], [-150, -20], "Module d'articulation 1", "Rotation de tout le bras autour de l'axe vertical. Un module = un axe : moteur, réduction, guidage dans un même boîtier."],
+      ["a1", "module", [300, 405], [-150, -20], "Module d'articulation 1", "Rotation de tout le bras autour de l'axe vertical. Un module = un axe : moteur, réduction, guidage dans un même boîtier."],
       ["l1", "liaison", [300, 350], [-120, -50], "Pièce de liaison courte", "Pièce rigide qui relie deux modules. Elle fixe la distance entre deux axes."],
-      ["a2", "module", [300, 300], [-80, -80], "Module d'articulation 2 (épaule)", "Rotation de l'épaule. C'est l'axe qui porte le plus de charge : tout le bras est au-dessus."],
-      ["l2", "bras", [300, 300], [-20, -110], "Pièce de liaison longue", "Segment le plus long : un petit jeu de l'épaule devient ici un grand déplacement en bout."],
+      ["a2", "module", [300, 300], [-80, -80], "Module d'articulation 2 (épaule)", "Rotation de l'épaule. C'est l'axe qui porte le plus de charge : tout le bras est au-dessus."],
+      ["l2", "bras", [300, 300], [-20, -110], "Pièce de liaison longue", "Segment le plus long : un petit jeu de l'épaule devient ici un grand déplacement en bout."],
       ["a3", "module", [470, 170], [40, -120], "Module d'articulation 3 (coude)", "Rotation du coude."],
       ["l3", "bras2", [470, 170], [90, -90], "Pièce de liaison moyenne", "Relie le coude au poignet."],
       ["a4", "module", [640, 250], [150, -60], "Module d'articulation 4 (poignet)", "Oriente l'outil."],
@@ -58,7 +58,7 @@
         R.texte(g, "5", [692, 380], { italique: false, gras: true, couleur: C.acc, taille: 22 });
       }
       var p = P.filter(function (x) { return x[0] === choisi; })[0];
-      info.innerHTML = p ? "<strong>" + p[4] + "</strong> : " + p[5] : "Touche une pièce pour la nommer. Les flèches numérotées sont les 5 axes de rotation.";
+      info.innerHTML = p ? "<strong>" + p[4] + "</strong> : " + p[5] : "Touche une pièce pour la nommer. Les flèches numérotées sont les 5 axes de rotation.";
     }
     aller(0);
   })();
@@ -68,15 +68,15 @@
     var f = R.figure("fig-chaine", {
       largeur: 960, hauteur: 460,
       titre: "Chaîne fonctionnelle d'un axe, en coupe",
-      essai: "<strong>Essaie</strong> : touche un maillon de la chaîne. <strong>Observe</strong> : chaque maillon a sa fonction, et chacun peut ajouter un défaut (jeu, souplesse, frottement, désalignement) que l'outil subira."
+      essai: "<strong>Essaie</strong> : touche un maillon de la chaîne. <strong>Observe</strong> : chaque maillon a sa fonction, et chacun peut ajouter un défaut (jeu, souplesse, frottement, désalignement) que l'outil subira."
     });
     var g = R.el("g", null, f.svg), choisi = "moteur", info = R.h("p", null, "", f.direct);
     var MAILLONS = [
-      ["moteur", "Moteur", "Actionneur : transforme l'énergie (ici électrique) en rotation.", [40, 150]],
-      ["reduction", "Réduction", "Diminue la vitesse et augmente le couple : \\(C_s \\simeq \\eta\\, i\\, C_e\\). Peut apporter du jeu et des pertes (rendement).", [230, 150]],
+      ["moteur", "Moteur", "Actionneur : transforme l'énergie (ici électrique) en rotation.", [40, 150]],
+      ["reduction", "Réduction", "Diminue la vitesse et augmente le couple : \\(C_s \\simeq \\eta\\, i\\, C_e\\). Peut apporter du jeu et des pertes (rendement).", [230, 150]],
       ["transmission", "Transmission", "Amène le mouvement jusqu'à l'organe (arbre, accouplement). Peut se tordre (rigidité torsionnelle).", [420, 150]],
-      ["guidage", "Guidage", "Tient l'arbre : autorise la rotation utile, bloque le reste. Peut apporter jeu, frottement, défauts d'alignement.", [610, 150]],
-      ["bras", "Bras / effecteur", "Structure qui porte l'outil. Se déforme sous la charge ; un petit angle à l'axe devient un déplacement \\(L\\,\\Delta\\theta\\).", [800, 150]]
+      ["guidage", "Guidage", "Tient l'arbre : autorise la rotation utile, bloque le reste. Peut apporter jeu, frottement, défauts d'alignement.", [610, 150]],
+      ["bras", "Bras / effecteur", "Structure qui porte l'outil. Se déforme sous la charge ; un petit angle à l'axe devient un déplacement \\(L\\,\\Delta\\theta\\).", [800, 150]]
     ];
     function dessiner() {
       R.vider(g);
@@ -107,7 +107,7 @@
       R.el("path", { d: "M775 " + (Y - 40) + " L790 140 L830 140 L835 " + (Y - 40) + " Z", fill: "#c6cbd8", stroke: C.fonce, "stroke-width": 3 }, g);
       R.ligne(g, [796, 140], [786, 112], { couleur: C.fonce, epaisseur: 7 }); R.ligne(g, [824, 140], [834, 112], { couleur: C.fonce, epaisseur: 7 });
       var m = MAILLONS.filter(function (x) { return x[0] === choisi; })[0];
-      info.innerHTML = "<strong>" + m[1] + "</strong> : " + m[2];
+      info.innerHTML = "<strong>" + m[1] + "</strong> : " + m[2];
       rendreInfo();
     }
     function rendreInfo() { if (window.renderMathInElement) window.renderMathInElement(info, { delimiters: [{ left: "\\(", right: "\\)", display: false }], throwOnError: false }); }
@@ -124,16 +124,16 @@
   (function () {
     var f = R.figure("fig-biomedical", {
       largeur: 960, hauteur: 500,
-      titre: "Un bras de soin au-dessus d'un patient : où vivent les contraintes",
-      essai: "<strong>Essaie</strong> : touche les pastilles numérotées. <strong>Observe</strong> : chaque contrainte biomédicale vise un endroit précis de la machine ; le choix final pèse ces critères avec les critères classiques."
+      titre: "Un bras de soin au-dessus d'un patient : où vivent les contraintes",
+      essai: "<strong>Essaie</strong> : touche les pastilles numérotées. <strong>Observe</strong> : chaque contrainte biomédicale vise un endroit précis de la machine ; le choix final pèse ces critères avec les critères classiques."
     });
     var g = R.el("g", null, f.svg), choisi = 1, info = R.h("p", null, "", f.direct);
     var PTS = [
-      [1, [520, 150], "Masse mobile", "Tout ce que porte le bras est accéléré à chaque mouvement : moins de masse mobile, c'est moins d'inertie et un choc moins violent en cas de contact."],
-      [2, [215, 250], "Bruit et vibrations", "Moteurs et engrenages font du bruit et vibrent ; près d'un patient éveillé, on les limite."],
+      [1, [520, 150], "Masse mobile", "Tout ce que porte le bras est accéléré à chaque mouvement : moins de masse mobile, c'est moins d'inertie et un choc moins violent en cas de contact."],
+      [2, [215, 250], "Bruit et vibrations", "Moteurs et engrenages font du bruit et vibrent ; près d'un patient éveillé, on les limite."],
       [3, [395, 175], "Points de pincement", "Là où deux pièces se rapprochent pendant le mouvement, un doigt ou un tissu peut être coincé."],
       [4, [760, 260], "Nettoyage et maintenance", "Surfaces lisses, sans recoins, faciles à nettoyer et à entretenir."],
-      [5, [300, 300], "Lubrifiants confinés", "La graisse du réducteur reste dans son carter : rien ne doit tomber sur le champ de soin."],
+      [5, [300, 300], "Lubrifiants confinés", "La graisse du réducteur reste dans son carter : rien ne doit tomber sur le champ de soin."],
       [6, [120, 420], "Critères classiques", "Charge, rigidité, durée de vie et coût restent à respecter, comme pour toute machine."]
     ];
     function dessiner() {
@@ -157,7 +157,7 @@
         R.texte(gp, String(p[0]), [p[1][0], p[1][1] + 1], { italique: false, gras: true, taille: 18, couleur: sel ? "#fff" : C.fonce, halo: false });
       });
       var p = PTS[choisi - 1];
-      info.innerHTML = "<strong>" + p[2] + "</strong> : " + p[3];
+      info.innerHTML = "<strong>" + p[2] + "</strong> : " + p[3];
     }
     dessiner();
   })();

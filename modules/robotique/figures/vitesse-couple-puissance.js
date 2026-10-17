@@ -24,7 +24,7 @@
     var f = R.figure("fig-vitesse", {
       largeur: 960, hauteur: 440,
       titre: "Angle balayé en une seconde",
-      essai: "<strong>Essaie</strong> : choisis n, puis lance « Tourner pendant 1 s ». <strong>Observe</strong> : la zone colorée est l'angle balayé en une seconde, c'est-à-dire \\(\\omega\\) ; à 60 tr/min, un tour complet, \\(2\\pi\\) rad."
+      essai: "<strong>Essaie</strong> : choisis n, puis lance « Tourner pendant 1 s ». <strong>Observe</strong> : la zone colorée est l'angle balayé en une seconde, c'est-à-dire \\(\\omega\\) ; à 60 tr/min, un tour complet, \\(2\\pi\\) rad."
     });
     var g = R.el("g", null, f.svg), angle = 0, balaye = 0;
     var cn = R.curseur(f.reglages, { nom: "n", min: 5, max: 120, pas: 5, val: 60, unite: " tr/min", surChange: function () { angle = 0; balaye = 0; dessiner(); } });
@@ -48,7 +48,7 @@
     var f = R.figure("fig-reducteur", {
       largeur: 960, hauteur: 460,
       titre: "Ce que le réducteur fait de la vitesse, du couple et de la puissance",
-      essai: "<strong>Essaie</strong> : augmente le rapport \\(i\\), puis baisse le rendement \\(\\eta\\). <strong>Observe</strong> : la vitesse de sortie est divisée par \\(i\\), le couple multiplié par \\(\\eta\\, i\\) ; la puissance de sortie ne dépasse jamais celle d'entrée, l'écart part en pertes."
+      essai: "<strong>Essaie</strong> : augmente le rapport \\(i\\), puis baisse le rendement \\(\\eta\\). <strong>Observe</strong> : la vitesse de sortie est divisée par \\(i\\), le couple multiplié par \\(\\eta\\, i\\) ; la puissance de sortie ne dépasse jamais celle d'entrée, l'écart part en pertes."
     });
     var g = R.el("g", null, f.svg);
     var cn = R.curseur(f.reglages, { nom: "n moteur", min: 500, max: 6000, pas: 100, val: 3000, unite: " tr/min", surChange: dessiner });
@@ -88,8 +88,8 @@
   (function () {
     var f = R.figure("fig-couple", {
       largeur: 960, hauteur: 380,
-      titre: "Une clé sur un écrou : force et bras de levier",
-      essai: "<strong>Essaie</strong> : change la force et la distance à l'axe. <strong>Observe</strong> : le couple double si la force double, ou si on prend la clé deux fois plus loin."
+      titre: "Une clé sur un écrou : force et bras de levier",
+      essai: "<strong>Essaie</strong> : change la force et la distance à l'axe. <strong>Observe</strong> : le couple double si la force double, ou si on prend la clé deux fois plus loin."
     });
     var g = R.el("g", null, f.svg);
     var cF = R.curseur(f.reglages, { nom: "F", min: 10, max: 100, pas: 5, val: 40, unite: " N", surChange: dessiner });

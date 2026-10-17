@@ -39,8 +39,8 @@
   (function () {
     var f = R.figure("fig-lexique", {
       largeur: 960, hauteur: 400,
-      titre: "Une lettre, plusieurs sens : l'unité tranche",
-      essai: "<strong>Essaie</strong> : choisis une lettre. <strong>Observe</strong> : chaque sens a son unité ; sur une fiche technique, c'est l'unité qui dit de quelle grandeur on parle."
+      titre: "Une lettre, plusieurs sens : l'unité tranche",
+      essai: "<strong>Essaie</strong> : choisis une lettre. <strong>Observe</strong> : chaque sens a son unité ; sur une fiche technique, c'est l'unité qui dit de quelle grandeur on parle."
     });
     var SENS = {
       P: [["moteur", "puissance mécanique", "W"], ["charge", "charge dynamique équivalente", "N"]],
@@ -69,7 +69,7 @@
         R.texte(g, s[1], [x + w / 2, 268], { italique: false, taille: 18, gras: true });
         R.texte(g, s[2], [x + w / 2, 318], { italique: false, taille: 26, couleur: C.acc, gras: true });
       });
-      zone.textContent = "« " + choisie + " » a " + l.length + " sens dans le cours. Toujours écrire l'unité.";
+      zone.textContent = "« " + choisie + " » a " + l.length + " sens dans le cours. Toujours écrire l'unité.";
     }
     dessiner();
   })();
@@ -79,14 +79,14 @@
     var f = R.figure("fig-axe-symboles", {
       largeur: 960, hauteur: 360,
       titre: "Les grandeurs d'un axe, du moteur au bras",
-      essai: "<strong>Essaie</strong> : touche le moteur, le réducteur, la sortie ou le bras. <strong>Observe</strong> : les indices disent où vit la grandeur : m moteur, e entrée, s sortie, k étage, g gravitaire."
+      essai: "<strong>Essaie</strong> : touche le moteur, le réducteur, la sortie ou le bras. <strong>Observe</strong> : les indices disent où vit la grandeur : m moteur, e entrée, s sortie, k étage, g gravitaire."
     });
     var g = R.el("g", null, f.svg), choisi = "moteur", zone = R.h("div", null, "", f.direct);
     var TXT = {
-      moteur: "\\text{Moteur : } n_m \\ (\\text{tr/min}),\\ \\omega_e \\ (\\text{rad/s}),\\ C_m = C_e \\ (\\text{N}\\cdot\\text{m}),\\ P = C\\omega \\ (\\text{W}),\\ N_e \\ (\\text{incr./tour})",
-      reducteur: "\\text{Réducteur : } i_k,\\ \\eta_k \\text{ par étage},\\ i_{tot} = \\prod i_k,\\ \\eta_{tot} = \\prod \\eta_k,\\ \\text{jeu } \\Delta\\theta",
-      sortie: "\\text{Sortie : } n_s,\\ \\omega_s,\\ C_s \\simeq \\eta\\, i\\, C_e,\\ k_\\theta = C/\\theta,\\ J_{L,m} = J_L / i^2",
-      bras: "\\text{Bras : } L \\ (\\text{m}),\\ m \\ (\\text{kg}),\\ C_g = m g L,\\ \\Delta x \\simeq L\\,\\Delta\\theta"
+      moteur: "\\text{Moteur : } n_m \\ (\\text{tr/min}),\\ \\omega_e \\ (\\text{rad/s}),\\ C_m = C_e \\ (\\text{N}\\cdot\\text{m}),\\ P = C\\omega \\ (\\text{W}),\\ N_e \\ (\\text{incr./tour})",
+      reducteur: "\\text{Réducteur : } i_k,\\ \\eta_k \\text{ par étage},\\ i_{tot} = \\prod i_k,\\ \\eta_{tot} = \\prod \\eta_k,\\ \\text{jeu } \\Delta\\theta",
+      sortie: "\\text{Sortie : } n_s,\\ \\omega_s,\\ C_s \\simeq \\eta\\, i\\, C_e,\\ k_\\theta = C/\\theta,\\ J_{L,m} = J_L / i^2",
+      bras: "\\text{Bras : } L \\ (\\text{m}),\\ m \\ (\\text{kg}),\\ C_g = m g L,\\ \\Delta x \\simeq L\\,\\Delta\\theta"
     };
     var ZONES = { moteur: [60, 110, 190, 210], reducteur: [270, 90, 200, 250], sortie: [480, 120, 125, 200], bras: [612, 30, 330, 290] };
     function dessiner() {
