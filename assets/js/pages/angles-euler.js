@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : clique sur « Téléphone ZYX », puis sur « Étape suivante » trois fois. " +
       "<strong>Observe</strong> : chaque rotation se fait autour d'un axe du repère obtenu juste avant (surligné en orange), les repères précédents restent en pâle, et la matrice se construit un facteur à la fois. Passe ensuite en ordre XYZ avec les mêmes angles : l'orientation finale change."
   });
-  var V = R.vue3D(300, 275, 165, -40 * R.DEG, 24 * R.DEG);
+  var V = R.vue3D(300, 270, 180, -40 * R.DEG, 24 * R.DEG);
   var g = R.el("g", null, f.svg);
 
   var b0 = R.boutons(f.reglages);
@@ -58,9 +58,9 @@
     }
     var Rc = cumul[k];
     // sol
-    for (var q = -1; q <= 1; q += 0.5) {
-      R.ligne(g, V.p([q, -1, -0.9]), V.p([q, 1, -0.9]), { couleur: C.trait, epaisseur: 1 });
-      R.ligne(g, V.p([-1, q, -0.9]), V.p([1, q, -0.9]), { couleur: C.trait, epaisseur: 1 });
+    for (var q = -1; q <= 1.001; q += 0.25) {
+      R.ligne(g, V.p([q, -1, -0.9]), V.p([q, 1, -0.9]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g, V.p([-1, q, -0.9]), V.p([1, q, -0.9]), { couleur: "#e3e6ee", epaisseur: 1 });
     }
     if (k > 0) R.repere3D(g, V, O, m.identite(3), { couleurs: [C.gris, C.gris, C.gris], indice: "0", tirets: "5 4", epaisseur: 1.5, longueur: 1.3, taille: 17 });
     for (i = 1; i < k; i++) R.repere3D(g, V, O, cumul[i], { indice: cv.reperes[i], epaisseur: 1.6, longueur: 1.05, opacite: 0.35, taille: 16 });
@@ -71,9 +71,16 @@
       var a = m.colonne(cumul[etapeAxe], idx);
       R.ligne(g, V.p(m.scale(a, -1.5)), V.p(m.scale(a, 1.5)), { couleur: C.acc, epaisseur: 7, opacite: 0.3 });
     }
-    R.pave(g, V, O, [0.8, 0.4, 0.05], Rc, { faces: ["#e3e6ea", "#e3e6ea", "#e3e6ea", "#e3e6ea", "#cfd4da", "#7fc8b8"], opacite: 0.95 });
-    R.repere3D(g, V, O, Rc, { indice: cv.reperes[k], longueur: 1.25, epaisseur: 3.2 });
-    R.texte(g, "écran (face +z)", [92, 476], { italique: false, taille: 14, couleur: "#3f8f7d" });
+    // le téléphone : boîtier sombre, écran sur la face +z, écouteur du côté +x
+    R.pave(g, V, O, [0.8, 0.4, 0.06], Rc, { faces: ["#3a4258", "#3a4258", "#4a536b", "#4a536b", "#2b3245", "#2b3245"], opacite: 1 });
+    var sur = function (l) { return V.p(m.matVec(Rc, l)); };
+    var nz = m.colonne(Rc, 2);
+    if (V.profondeur(nz) > 0) {
+      R.polygone(g, [[-0.68, -0.33, 0.062], [0.62, -0.33, 0.062], [0.62, 0.33, 0.062], [-0.68, 0.33, 0.062]].map(sur), { remplissage: "#cfe0ff", couleur: "#8fb3ff", epaisseur: 1.5 });
+      R.ligne(g, sur([0.71, -0.1, 0.062]), sur([0.71, 0.1, 0.062]), { couleur: "#9aa0ad", epaisseur: 3 });
+    }
+    R.repere3D(g, V, O, Rc, { indice: cv.reperes[k], longueur: 1.25, epaisseur: 4 });
+    R.texte(g, "écran bleu : face +z ; écouteur côté +x", [20, 482], { italique: false, taille: 14, couleur: C.doux, ancre: "start" });
 
     // formule
     var facteurs = [], numeriques = [];

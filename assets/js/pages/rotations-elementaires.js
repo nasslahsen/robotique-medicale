@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : choisis un axe, puis fais varier l'angle de 0 à 90°. " +
       "<strong>Observe</strong> : l'axe de rotation (surligné) ne bouge pas, et sa colonne dans la matrice reste un vecteur de base. Les deux autres colonnes tournent comme dans le cas plan. Avec l'axe y, regarde où apparaît le signe moins."
   });
-  var V = R.vue3D(300, 270, 158, -40 * R.DEG, 22 * R.DEG);
+  var V = R.vue3D(300, 270, 175, -40 * R.DEG, 22 * R.DEG);
   var g = R.el("g", null, f.svg);
   var b = R.boutons(f.reglages);
   var axe = "z", btns = {};
@@ -30,12 +30,17 @@
     var t = ang.v * R.DEG, Rm = m.Raxe(axe, t), O = [0, 0, 0];
     var k = { x: 0, y: 1, z: 2 }[axe];
     var e = [0, 0, 0]; e[k] = 1;
+    // sol quadrillé sous le bloc, pour la profondeur
+    for (var q = -1; q <= 1.001; q += 0.25) {
+      R.ligne(g, V.p([q, -1, -0.75]), V.p([q, 1, -0.75]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g, V.p([-1, q, -0.75]), V.p([1, q, -0.75]), { couleur: "#e3e6ee", epaisseur: 1 });
+    }
     R.ligne(g, V.p(m.scale(e, -1.15)), V.p(m.scale(e, 1.15)), { couleur: C.acc, epaisseur: 6, opacite: 0.25 });
     var nomsFixes = ["x", "y", "z"]; nomsFixes[k] = null;
-    R.repere3D(g, V, O, m.identite(3), { couleurs: [C.gris, C.gris, C.gris], noms: nomsFixes, indice: "0", tirets: "5 4", epaisseur: 1.6, longueur: 1.35 });
-    R.pave(g, V, O, [0.62, 0.36, 0.14], Rm, { opacite: 0.8 });
+    R.repere3D(g, V, O, m.identite(3), { couleurs: ["#9aa0ad", "#9aa0ad", "#9aa0ad"], noms: nomsFixes, indice: "0", tirets: "6 5", epaisseur: 2, longueur: 1.35 });
+    R.pave(g, V, O, [0.7, 0.42, 0.16], Rm, { opacite: 0.85, faces: ["#fbd3d4", "#fbd3d4", "#c9ecdc", "#c9ecdc", "#d6defb", "#d6defb"] });
     var nomsR = ["x", "y", "z"]; nomsR[k] = nomsR[k] + "₀ = " + nomsR[k];
-    R.repere3D(g, V, O, Rm, { indice: "1", noms: nomsR, longueur: 1.35, epaisseur: 3 });
+    R.repere3D(g, V, O, Rm, { indice: "1", noms: nomsR, longueur: 1.35, epaisseur: 4 });
     // arc du sens positif autour de l'axe
     var u = [0, 0, 0], w = [0, 0, 0]; u[(k + 1) % 3] = 1; w[(k + 2) % 3] = 1;
     var pts = []; for (var i = 0; i <= 30; i++) { var s = t * i / 30; pts.push(V.p(m.add(m.scale(u, 0.55 * Math.cos(s)), m.scale(w, 0.55 * Math.sin(s))))); }

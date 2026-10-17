@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : pars d'une rotation, puis clique sur « Perturber » ou modifie un coefficient à la main. " +
       "<strong>Observe</strong> : dès qu'une colonne n'est plus unitaire ou que deux colonnes ne sont plus perpendiculaires, \\(R^T R\\) s'écarte de \\(I\\). Avec « Miroir », tout reste orthonormé mais \\(\\det R = -1\\) : le repère dessiné devient indirect."
   });
-  var V = R.vue3D(300, 265, 155, -45 * R.DEG, 24 * R.DEG);
+  var V = R.vue3D(300, 300, 175, -45 * R.DEG, 24 * R.DEG);
   var g = R.el("g", null, f.svg);
   var grille = R.h("div", { "class": "saisie-matrice" }, "", f.reglages);
   var champs = [];
@@ -38,8 +38,13 @@
   function dessiner() {
     R.vider(g);
     var O = [0, 0, 0];
-    R.repere3D(g, V, O, m.identite(3), { couleurs: [C.gris, C.gris, C.gris], indice: "0", epaisseur: 1.4, opacite: 0.6, longueur: 1.25 });
-    R.repere3D(g, V, O, M, { indice: "", noms: ["col 1", "col 2", "col 3"], epaisseur: 3.2, taille: 16 });
+    // sol quadrillé pour donner la profondeur
+    for (var t = -1; t <= 1.001; t += 0.25) {
+      R.ligne(g, V.p([t, -1, 0]), V.p([t, 1, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g, V.p([-1, t, 0]), V.p([1, t, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+    }
+    R.repere3D(g, V, O, m.identite(3), { couleurs: ["#c6cbd8", "#c6cbd8", "#c6cbd8"], indice: "0", epaisseur: 2, longueur: 1.45, taille: 17 });
+    R.repere3D(g, V, O, M, { indice: "", noms: ["col 1", "col 2", "col 3"], epaisseur: 4, taille: 17 });
     var cols = [0, 1, 2].map(function (j) { return m.colonne(M, j); });
     var n = cols.map(m.norme), d = [m.dot(cols[0], cols[1]), m.dot(cols[0], cols[2]), m.dot(cols[1], cols[2])];
     var RtR = m.matMul(m.transpose(M), M), det = m.det3(M);

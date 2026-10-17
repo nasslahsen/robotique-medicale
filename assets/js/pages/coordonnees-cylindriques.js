@@ -9,7 +9,7 @@
   });
   var P = R.plan(300, 200, 72);
   var g = R.el("g", null, f.svgs[0]), gp = R.el("g", null, f.svgs[0]);
-  var V = R.vue3D(300, 270, 70, -50 * R.DEG, 24 * R.DEG);
+  var V = R.vue3D(290, 285, 78, 20 * R.DEG, 24 * R.DEG);
   var g3 = R.el("g", null, f.svgs[1]);
   var cz = R.curseur(f.reglages, { nom: "Hauteur z", min: -1, max: 2.5, pas: 0.1, val: 1.5, surChange: dessiner });
   var b = R.boutons(f.reglages);
@@ -21,12 +21,9 @@
     R.vider(g); R.vider(gp); R.vider(g3);
     var c = m.versCylindrique(q[0], q[1], cz.v), o = P.p([0, 0]);
     // vue de dessus
-    for (var k = -3; k <= 3; k++) {
-      R.ligne(g, P.p([k, -2.6]), P.p([k, 2.6]), { couleur: C.trait, epaisseur: 1 });
-      if (Math.abs(k) <= 2) R.ligne(g, P.p([-3.9, k]), P.p([3.9, k]), { couleur: C.trait, epaisseur: 1 });
-    }
-    R.fleche(g, P.p([-4, 0]), P.p([4, 0]), { couleur: C.x, epaisseur: 1.6 });
-    R.fleche(g, P.p([0, -2.7]), P.p([0, 2.7]), { couleur: C.y, epaisseur: 1.6 });
+    R.grille(g, P, f.svgs[0], { pas: 0.5, fort: 2, axes: false });
+    R.fleche(g, P.p([-4, 0]), P.p([4, 0]), { couleur: C.x, epaisseur: 2 });
+    R.fleche(g, P.p([0, -2.7]), P.p([0, 2.7]), { couleur: C.y, epaisseur: 2 });
     R.texte(g, "X", P.p([3.85, -0.25]), { couleur: C.x });
     R.texte(g, "Y", P.p([0.25, 2.55]), { couleur: C.y });
     R.el("circle", { cx: o[0], cy: o[1], r: c.r * P.s, fill: "none", stroke: C.z, "stroke-dasharray": "3 5", opacity: 0.6 }, g);
@@ -46,16 +43,26 @@
     });
 
     // vue 3D
+    // sol quadrillé (plan X, Y)
+    for (var s0 = -3; s0 <= 3; s0++) {
+      R.ligne(g3, V.p([s0, -3, 0]), V.p([s0, 3, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g3, V.p([-3, s0, 0]), V.p([3, s0, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+    }
     var n = 48, cercle = function (zz) { var pts = []; for (var i = 0; i <= n; i++) { var t = 2 * Math.PI * i / n; pts.push(V.p([c.r * Math.cos(t), c.r * Math.sin(t), zz])); } return pts; };
-    R.el("polyline", { points: cercle(0).map(String).join(" "), fill: "none", stroke: C.z, "stroke-dasharray": "3 5", opacity: 0.6 }, g3);
+    // paroi du cylindre de rayon r, entre z = 0 et la hauteur du point
+    var bas = cercle(0), haut = cercle(cz.v);
+    R.el("polygon", { points: bas.concat(haut.slice().reverse()).map(String).join(" "), fill: C.z, opacity: 0.06 }, g3);
+    var t0 = Math.atan2(-Math.sin(V.az), Math.cos(V.az));
+    [t0, t0 + Math.PI].forEach(function (t) { R.ligne(g3, V.p([c.r * Math.cos(t), c.r * Math.sin(t), 0]), V.p([c.r * Math.cos(t), c.r * Math.sin(t), cz.v]), { couleur: C.z, epaisseur: 1, opacite: 0.35 }); });
+    R.el("polyline", { points: bas.map(String).join(" "), fill: "none", stroke: C.z, "stroke-dasharray": "3 5", opacity: 0.6 }, g3);
     R.el("polyline", { points: cercle(cz.v).map(String).join(" "), fill: "none", stroke: C.z, "stroke-dasharray": "3 5", opacity: 0.6 }, g3);
     var O = [0, 0, 0], Pt = [q[0], q[1], cz.v], Q3 = [q[0], q[1], 0];
-    R.fleche(g3, V.p(O), V.p([3, 0, 0]), { couleur: C.x, epaisseur: 1.6 });
-    R.fleche(g3, V.p(O), V.p([0, 3, 0]), { couleur: C.y, epaisseur: 1.6 });
-    R.fleche(g3, V.p(O), V.p([0, 0, 3]), { couleur: C.z, epaisseur: 1.6 });
-    R.texte(g3, "X", V.p([3.25, 0, 0]), { couleur: C.x });
-    R.texte(g3, "Y", V.p([0, 3.25, 0]), { couleur: C.y });
-    R.texte(g3, "Z", V.p([0, 0, 3.25]), { couleur: C.z });
+    R.fleche(g3, V.p(O), V.p([3.4, 0, 0]), { couleur: C.x, epaisseur: 2 });
+    R.fleche(g3, V.p(O), V.p([0, 3.4, 0]), { couleur: C.y, epaisseur: 2 });
+    R.fleche(g3, V.p(O), V.p([0, 0, 3]), { couleur: C.z, epaisseur: 2 });
+    R.texte(g3, "X", V.p([3.7, 0, 0]), { couleur: C.x });
+    R.texte(g3, "Y", V.p([0, 3.7, 0]), { couleur: C.y });
+    R.texte(g3, "Z", V.p([0, 0, 3.3]), { couleur: C.z });
     R.ligne(g3, V.p(O), V.p(Q3), { couleur: C.z, epaisseur: 3 });
     R.ligne(g3, V.p(Q3), V.p(Pt), { couleur: C.gris, epaisseur: 2, tirets: "5 4" });
     R.ligne(g3, V.p([0, 0, cz.v]), V.p(Pt), { couleur: C.gris, epaisseur: 1, tirets: "2 4" });
@@ -65,7 +72,9 @@
     R.point(g3, V.p(Pt), { couleur: C.acc, r: 7 });
     R.texte(g3, "P", m.add(V.p(Pt), [14, -12]), { couleur: C.acc, gras: true });
     R.texte(g3, "Q", m.add(V.p(Q3), [14, 10]), { couleur: C.v, gras: true });
-    R.texte(g3, "z", m.add(V.p([q[0], q[1], cz.v / 2]), [16, 0]), { couleur: C.gris, gras: true });
+    R.texte(g3, "z", m.add(V.p([q[0], q[1], cz.v / 2]), [16, 0]), { couleur: C.doux, gras: true });
+    R.texte(g3, "r", m.add(V.p([q[0] / 2, q[1] / 2, 0]), [-8, 18]), { couleur: C.z, gras: true });
+    R.texte(g3, "θ", V.p([1.05 * Math.cos(c.theta / 2), 1.05 * Math.sin(c.theta / 2), 0]), { couleur: C.acc, gras: true });
 
     var arct = q[0] !== 0 ? Math.atan(q[1] / q[0]) : NaN;
     R.rendre(zone,

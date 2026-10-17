@@ -152,10 +152,10 @@
   // Flèche de p0 à p1 (coordonnées écran).
   function fleche(g, p0, p1, o) {
     o = o || {};
-    var col = o.couleur || C.fonce, w = o.epaisseur || 2.5;
+    var col = o.couleur || C.fonce, w = o.epaisseur || 3;
     var dx = p1[0] - p0[0], dy = p1[1] - p0[1], L = Math.hypot(dx, dy);
     if (L < 0.5) return null;
-    var ux = dx / L, uy = dy / L, h = Math.min(o.tete || 13, L * 0.45), lw = h * 0.42;
+    var ux = dx / L, uy = dy / L, h = Math.min(o.tete || 15, L * 0.45), lw = h * 0.42;
     var bx = p1[0] - ux * h, by = p1[1] - uy * h;
     var grp = el("g", { opacity: o.opacite }, g);
     el("line", { x1: p0[0], y1: p0[1], x2: bx + ux * 0.5, y2: by + uy * 0.5, stroke: col, "stroke-width": w, "stroke-dasharray": o.tirets, "stroke-linecap": "round" }, grp);
@@ -168,7 +168,7 @@
   }
   function point(g, p, o) {
     o = o || {};
-    return el("circle", { cx: p[0], cy: p[1], r: o.r || 5, fill: o.couleur || C.fonce, stroke: o.contour, "stroke-width": o.contour ? 2 : undefined }, g);
+    return el("circle", { cx: p[0], cy: p[1], r: o.r || 6, fill: o.couleur || C.fonce, stroke: o.contour, "stroke-width": o.contour ? 2 : undefined }, g);
   }
   // Texte avec indice et exposant : texte(g, "x", p, {ind: "0"}).
   function texte(g, s, p, o) {
@@ -176,8 +176,11 @@
     var t = el("text", {
       x: p[0], y: p[1], fill: o.couleur || C.fonce, "font-size": o.taille || 20,
       "text-anchor": o.ancre || "middle", "dominant-baseline": "middle",
-      "font-style": o.italique === false ? "normal" : "italic", "font-weight": o.gras ? 600 : undefined,
-      opacity: o.opacite
+      "font-style": o.italique === false ? "normal" : "italic", "font-weight": o.gras ? 600 : 500,
+      opacity: o.opacite,
+      // halo blanc : l'étiquette reste lisible quand elle croise un trait (halo: false pour l'enlever)
+      stroke: o.halo === false ? undefined : "#fff", "stroke-width": o.halo === false ? undefined : 4,
+      "stroke-linejoin": "round", "paint-order": "stroke"
     }, g);
     t.appendChild(document.createTextNode(s));
     if (o.ind !== undefined) {
@@ -217,6 +220,23 @@
       p: function (v) { return [ox + s * v[0], oy - s * v[1]]; },
       inv: function (q) { return [(q[0] - ox) / s, (oy - q[1]) / s]; }
     };
+  }
+
+  // Quadrillage qui couvre tout le dessin : lignes tous les « pas » (unités monde), plus marquées tous les « fort » pas.
+  function grille(g, P, svg, o) {
+    o = o || {};
+    // La grille déborde du viewBox : quand le dessin est réduit en hauteur, les bandes latérales restent quadrillées.
+    var vb = svg.viewBox.baseVal, W = vb.width, H = vb.height, pas = (o.pas || 1) * P.s, fort = o.fort || 0;
+    var xa = -W, xb = 2 * W, ya = -H, yb = 2 * H;
+    var x0 = P.ox - Math.ceil((P.ox - xa) / pas) * pas, y0 = P.oy - Math.ceil((P.oy - ya) / pas) * pas;
+    for (var x = x0, i = Math.round((x0 - P.ox) / pas); x <= xb; x += pas, i++)
+      el("line", { x1: x, y1: ya, x2: x, y2: yb, stroke: fort && i % fort === 0 ? "#d9dde6" : "#eef0f5", "stroke-width": 1 }, g);
+    for (var y = y0, j = Math.round((P.oy - y0) / pas); y <= yb; y += pas, j--)
+      el("line", { x1: xa, y1: y, x2: xb, y2: y, stroke: fort && j % fort === 0 ? "#d9dde6" : "#eef0f5", "stroke-width": 1 }, g);
+    if (o.axes !== false) {
+      el("line", { x1: xa, y1: P.oy, x2: xb, y2: P.oy, stroke: "#c6cbd8", "stroke-width": 1.5 }, g);
+      el("line", { x1: P.ox, y1: ya, x2: P.ox, y2: yb, stroke: "#c6cbd8", "stroke-width": 1.5 }, g);
+    }
   }
 
   // Dessine un repère plan (origine o, axes ex, ey en coordonnées monde).
@@ -462,7 +482,7 @@
   var RM = {
     m: m, DEG: DEG, C: C, fmt: fmt, tn: tn, tc: tc, texMat: texMat, texVec: texVec, couleur: couleur, rendre: rendre,
     el: el, vider: vider, fleche: fleche, ligne: ligne, point: point, texte: texte, arc: arc, polygone: polygone,
-    plan: plan, repere2D: repere2D, coordSVG: coordSVG, poignee: poignee,
+    plan: plan, grille: grille, repere2D: repere2D, coordSVG: coordSVG, poignee: poignee,
     vue3D: vue3D, repere3D: repere3D, pave: pave, orbite: orbite,
     h: h, figure: figure, curseur: curseur, boutons: boutons, bouton: bouton, bascule: bascule, choix: choix,
     basculeOrbite: basculeOrbite, etapes: etapes, animer: animer, rendrePage: rendrePage

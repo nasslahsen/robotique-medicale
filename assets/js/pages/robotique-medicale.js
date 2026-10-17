@@ -39,24 +39,25 @@
       // patient ou pièce
       if (patient) {
         var gonfle = dep * 1.2;
-        R.el("path", { d: "M60 320 L60 " + (230 - gonfle) + " Q330 " + (150 - gonfle * 2) + " 560 " + (230 - gonfle) + " L560 320 Z", fill: "#f6d9c4", stroke: "#d9a982", "stroke-width": 2 }, g);
-        R.texte(g, "patient (vue en coupe)", [120, 345], { italique: false, couleur: C.doux, taille: 14 });
+        R.el("path", { d: "M40 320 L40 " + (230 - gonfle) + " Q330 " + (150 - gonfle * 2) + " 580 " + (230 - gonfle) + " L580 320 Z", fill: "#ffe6da", stroke: "#e7a98e", "stroke-width": 2.5 }, g);
+        R.el("ellipse", { cx: 330, cy: 262 - dep * mm * 0.6, rx: 120, ry: 44, fill: "#f6c2b0", stroke: "#d98c74", "stroke-width": 2 }, g);
+        R.texte(g, "patient (vue en coupe)", [40, 350], { italique: false, couleur: C.doux, taille: 16, ancre: "start" });
       } else {
-        R.el("rect", { x: 200, y: 200, width: 260, height: 120, rx: 6, fill: "#d9dde3", stroke: "#9aa2ae" }, g);
-        R.texte(g, "pièce fixe", [330, 345], { italique: false, couleur: C.doux, taille: 14 });
+        R.el("rect", { x: 190, y: 200, width: 280, height: 120, rx: 8, fill: "#e3e6ee", stroke: "#9aa0ad", "stroke-width": 2 }, g);
+        R.texte(g, "pièce fixe", [40, 350], { italique: false, couleur: C.doux, taille: 16, ancre: "start" });
       }
-      R.ligne(g, [30, 320], [590, 320], { couleur: "#9aa2ae", epaisseur: 3 });
+      R.ligne(g, [20, 320], [600, 320], { couleur: "#9aa0ad", epaisseur: 4 });
       // cible et point planifié
-      R.el("circle", { cx: 330, cy: 250, r: 7, fill: "none", stroke: C.z, "stroke-width": 2, "stroke-dasharray": "3 3" }, g);
-      R.texte(g, "point planifié", [400, 254], { italique: false, couleur: C.z, taille: 13 });
-      R.el("circle", { cx: cible[0], cy: cible[1], r: 9, fill: C.x }, g);
-      R.texte(g, "cible", [cible[0] - 40, cible[1]], { italique: false, couleur: C.x, taille: 13, gras: true });
+      R.ligne(g, [312, 250], [348, 250], { couleur: C.z, epaisseur: 2.5, tirets: "4 3" }); R.ligne(g, [330, 232], [330, 268], { couleur: C.z, epaisseur: 2.5, tirets: "4 3" });
+      R.texte(g, "point planifié", [360, 252], { italique: false, couleur: C.z, taille: 16, ancre: "start", gras: true });
+      R.el("circle", { cx: cible[0], cy: cible[1], r: 12, fill: C.acc, stroke: "#fff", "stroke-width": 3 }, g);
+      R.texte(g, "cible", [cible[0] - 24, cible[1]], { italique: false, couleur: C.acc, taille: 16, gras: true, ancre: "end" });
       // robot et aiguille (entrée oblique)
       var dir = m.scale([-0.55, 0.835], 1), entree = m.add(vise, m.scale(dir, -150)), queue = m.add(vise, m.scale(dir, -290));
-      R.el("line", { x1: queue[0], y1: queue[1], x2: entree[0] - dir[0] * 10, y2: entree[1] - dir[1] * 10, stroke: "#b8c0cb", "stroke-width": 26, "stroke-linecap": "round" }, g);
-      R.ligne(g, entree, vise, { couleur: "#5b6172", epaisseur: 3 });
-      R.point(g, vise, { couleur: C.fonce, r: 3 });
-      R.texte(g, "robot", m.add(m.add(vise, m.scale(dir, -230)), [44, 8]), { italique: false, couleur: C.doux, taille: 14 });
+      R.el("line", { x1: queue[0], y1: queue[1], x2: entree[0] - dir[0] * 10, y2: entree[1] - dir[1] * 10, stroke: "#9aa0ad", "stroke-width": 30, "stroke-linecap": "round" }, g);
+      R.ligne(g, entree, vise, { couleur: C.fonce, epaisseur: 4 });
+      R.point(g, vise, { couleur: C.fonce, r: 4 });
+      R.texte(g, "robot", m.add(m.add(vise, m.scale(dir, -230)), [48, 8]), { italique: false, couleur: C.doux, taille: 16, ancre: "start" });
       var err = Math.abs(dep * 0.6) * (suivi.checked ? 0 : 1);
       if (t - tPrec > 4 || t < tPrec) { erreurMax = 0; tPrec = t; }
       erreurMax = Math.max(erreurMax, err);
@@ -67,7 +68,7 @@
   /* ---------- Figure 2 : téléopération, mise à l'échelle et tremblement ---------- */
   (function () {
     var f = R.figure("fig-teleop", {
-      hauteur: 330,
+      hauteur: 310,
       titre: "Téléopération maître-esclave",
       essai: "<strong>Essaie</strong> : déplace la poignée orange (côté console), puis active le tremblement, change le rapport et active le filtrage. " +
         "<strong>Observe</strong> : l'instrument reproduit le geste réduit par le rapport ; le tremblement est réduit d'autant, puis presque supprimé par le filtre. Valeurs illustratives."
@@ -80,8 +81,8 @@
     R.bouton(b, "Effacer les traces", function () { traceM = []; traceE = []; });
     var zone = R.h("div", null, "", f.direct);
     // repère en cm côté console : boîte de 8 cm × 6 cm, 30 px/cm ; côté patient : 30 px/cm aussi
-    var main = [4, 3], filtrees = [4, 3], traceM = [], traceE = [];
-    var boxM = [20, 50], boxE = [320, 50], ech = 32;
+    var main = [6.5, 4.5], filtrees = [6.5, 4.5], traceM = [], traceE = [];
+    var boxM = [14, 54], boxE = [314, 54], ech = 34;
     function vers(box, p) { return [box[0] + p[0] * ech, box[1] + (6 - p[1]) * ech]; }
     boucle(f.svg, function (t) {
       R.vider(g); R.vider(gp);
@@ -94,17 +95,22 @@
       traceM.push(brut); traceE.push(instr);
       if (traceM.length > 400) { traceM.shift(); traceE.shift(); }
       [[boxM, "console (main du chirurgien)"], [boxE, "patient (instrument)"]].forEach(function (bx) {
-        R.el("rect", { x: bx[0][0], y: bx[0][1], width: 8 * ech, height: 6 * ech, rx: 8, fill: "#fafbfc", stroke: "#c3c8d0" }, g);
-        R.texte(g, bx[1], [bx[0][0] + 4 * ech, bx[0][1] - 18], { italique: false, couleur: C.doux, taille: 14 });
+        R.el("rect", { x: bx[0][0], y: bx[0][1], width: 8 * ech, height: 6 * ech, rx: 14, fill: "#fff", stroke: "#d9dde6", "stroke-width": 2 }, g);
+        R.texte(g, bx[1], [bx[0][0] + 4 * ech, bx[0][1] - 22], { italique: false, couleur: C.fonce, taille: 17, gras: true });
       });
-      for (var i = 0; i <= 8; i++) { R.ligne(g, vers(boxM, [i, 0]), vers(boxM, [i, 6]), { couleur: "#eef0f3" }); R.ligne(g, vers(boxE, [i, 0]), vers(boxE, [i, 6]), { couleur: "#eef0f3" }); }
-      for (i = 0; i <= 6; i++) { R.ligne(g, vers(boxM, [0, i]), vers(boxM, [8, i]), { couleur: "#eef0f3" }); R.ligne(g, vers(boxE, [0, i]), vers(boxE, [8, i]), { couleur: "#eef0f3" }); }
-      R.texte(g, "quadrillage : 1 cm", [boxE[0] + 8 * ech - 64, boxE[1] + 6 * ech + 18], { italique: false, couleur: C.doux, taille: 12 });
-      R.el("polyline", { points: traceM.map(function (p) { return vers(boxM, p).join(","); }).join(" "), fill: "none", stroke: "rgba(230,81,0,0.5)", "stroke-width": 1.5 }, g);
-      R.el("polyline", { points: traceE.map(function (p) { return vers(boxE, p).join(","); }).join(" "), fill: "none", stroke: "rgba(21,101,192,0.6)", "stroke-width": 1.5 }, g);
+      for (var i = 1; i < 8; i++) { R.ligne(g, vers(boxM, [i, 0]), vers(boxM, [i, 6]), { couleur: "#eef0f5" }); R.ligne(g, vers(boxE, [i, 0]), vers(boxE, [i, 6]), { couleur: "#eef0f5" }); }
+      for (i = 1; i < 6; i++) { R.ligne(g, vers(boxM, [0, i]), vers(boxM, [8, i]), { couleur: "#eef0f5" }); R.ligne(g, vers(boxE, [0, i]), vers(boxE, [8, i]), { couleur: "#eef0f5" }); }
+      // centre de chaque boîte : point de départ commun
+      [boxM, boxE].forEach(function (bx) { var c = vers(bx, centre); R.ligne(g, [c[0] - 8, c[1]], [c[0] + 8, c[1]], { couleur: C.gris, epaisseur: 2 }); R.ligne(g, [c[0], c[1] - 8], [c[0], c[1] + 8], { couleur: C.gris, epaisseur: 2 }); });
+      R.texte(g, "quadrillage : 1 cm", [boxE[0] + 8 * ech, boxE[1] + 6 * ech + 20], { italique: false, couleur: C.doux, taille: 14, ancre: "end" });
+      R.el("polyline", { points: traceM.map(function (p) { return vers(boxM, p).join(","); }).join(" "), fill: "none", stroke: "rgba(255,90,31,0.45)", "stroke-width": 2.5, "stroke-linejoin": "round" }, g);
+      R.el("polyline", { points: traceE.map(function (p) { return vers(boxE, p).join(","); }).join(" "), fill: "none", stroke: "rgba(59,91,219,0.55)", "stroke-width": 2.5, "stroke-linejoin": "round" }, g);
+      // déplacement depuis le centre : main (orange) et instrument (bleu)
+      if (m.norme(m.sub(brut, centre)) > 0.15) R.fleche(g, vers(boxM, centre), vers(boxM, brut), { couleur: C.acc, epaisseur: 3 });
+      if (m.norme(m.sub(instr, centre)) > 0.15) R.fleche(g, vers(boxE, centre), vers(boxE, instr), { couleur: C.z, epaisseur: 3 });
       var pi = vers(boxE, instr);
-      R.el("circle", { cx: pi[0], cy: pi[1], r: 7, fill: C.z }, g);
-      R.ligne(g, [pi[0], pi[1]], [pi[0] + 30, pi[1] - 30], { couleur: C.z, epaisseur: 4 });
+      R.ligne(g, [pi[0], pi[1]], [pi[0] + 34, pi[1] - 34], { couleur: C.z, epaisseur: 6 });
+      R.el("circle", { cx: pi[0], cy: pi[1], r: 10, fill: C.z, stroke: "#fff", "stroke-width": 3 }, g);
       R.poignee(f.svg, gp, vers(boxM, brut), function (q) {
         main = [Math.max(0.3, Math.min(7.7, (q[0] - boxM[0]) / ech)), Math.max(0.3, Math.min(5.7, 6 - (q[1] - boxM[1]) / ech))];
       });

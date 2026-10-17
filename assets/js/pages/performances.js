@@ -5,12 +5,12 @@
   /* ---------- Figure 1 : précision et répétabilité ---------- */
   (function () {
     var f = R.figure("fig-precision", {
-      hauteur: 400,
+      hauteur: 420,
       titre: "Cinq essais vers le point demandé P",
       essai: "<strong>Essaie</strong> : choisis les cas A à D, puis règle toi-même le décalage et la dispersion et clique sur « Relancer ». " +
         "<strong>Observe</strong> : le décalage déplace le groupe (précision) sans l'étaler ; la dispersion l'étale (répétabilité) sans le déplacer en moyenne. Les positions sont tirées au hasard, en unités arbitraires."
     });
-    var P = R.plan(300, 200, 28);
+    var P = R.plan(300, 210, 31);
     var g = R.el("g", null, f.svg);
     var b = R.boutons(f.reglages);
     var CAS = { A: [0.3, 0.4], B: [4.5, 0.4], C: [0.3, 2.4], D: [4.5, 2.4] };
@@ -25,18 +25,22 @@
     function dessiner() {
       R.vider(g);
       var o = P.p([0, 0]);
-      [2, 4, 6].forEach(function (r) { R.el("circle", { cx: o[0], cy: o[1], r: r * P.s, fill: "none", stroke: C.trait, "stroke-width": 1.5 }, g); });
-      R.ligne(g, P.p([-8, 0]), P.p([8, 0]), { couleur: C.trait }); R.ligne(g, P.p([0, -6.5]), P.p([0, 6.5]), { couleur: C.trait });
+      // cible : anneaux alternés, comme un jeu de fléchettes
+      [[6, "#f6f7fa"], [4, "#fff"], [2, "#fff0e9"]].forEach(function (r) { R.el("circle", { cx: o[0], cy: o[1], r: r[0] * P.s, fill: r[1], stroke: "#d9dde6", "stroke-width": 1.5 }, g); });
+      R.ligne(g, P.p([-9.5, 0]), P.p([9.5, 0]), { couleur: "#d9dde6" }); R.ligne(g, P.p([0, -6.6]), P.p([0, 6.6]), { couleur: "#d9dde6" });
       var dir = [0.8, 0.6], pts = bruit.map(function (n) { return [cd.v * dir[0] + cs.v * n[0], cd.v * dir[1] + cs.v * n[1]]; });
       var moy = [0, 0]; pts.forEach(function (p) { moy[0] += p[0] / pts.length; moy[1] += p[1] / pts.length; });
       var disp = Math.max.apply(null, pts.map(function (p) { return Math.hypot(p[0] - moy[0], p[1] - moy[1]); }));
-      R.el("circle", { cx: P.p(moy)[0], cy: P.p(moy)[1], r: disp * P.s, fill: "rgba(198,40,40,0.06)", stroke: C.x, "stroke-dasharray": "5 4" }, g);
-      R.fleche(g, o, P.p(moy), { couleur: C.acc, epaisseur: 2.5 });
-      pts.forEach(function (p) { var q = P.p(p); R.el("rect", { x: q[0] - 7, y: q[1] - 7, width: 14, height: 14, rx: 2, fill: C.x }, g); });
-      R.el("circle", { cx: o[0], cy: o[1], r: 8, fill: C.z }, g);
-      R.texte(g, "P (demandé)", [o[0] - 70, o[1] - 34], { couleur: C.z, gras: true, italique: false, taille: 15 });
+      R.el("circle", { cx: P.p(moy)[0], cy: P.p(moy)[1], r: Math.max(disp * P.s, 12), fill: "rgba(229,72,77,0.08)", stroke: C.x, "stroke-width": 2, "stroke-dasharray": "6 5" }, g);
+      R.el("circle", { cx: o[0], cy: o[1], r: 11, fill: C.z, stroke: "#fff", "stroke-width": 3 }, g);
+      if (Math.hypot(moy[0], moy[1]) * P.s > 18) R.fleche(g, o, P.p(moy), { couleur: C.acc, epaisseur: 3 });
+      pts.forEach(function (p) { var q = P.p(p); R.el("circle", { cx: q[0], cy: q[1], r: 10, fill: C.x, stroke: "#fff", "stroke-width": 2.5 }, g); });
       var mm = P.p(moy);
-      R.ligne(g, [mm[0] - 9, mm[1]], [mm[0] + 9, mm[1]], { couleur: C.fonce, epaisseur: 2.5 }); R.ligne(g, [mm[0], mm[1] - 9], [mm[0], mm[1] + 9], { couleur: C.fonce, epaisseur: 2.5 });
+      R.ligne(g, [mm[0] - 11, mm[1]], [mm[0] + 11, mm[1]], { couleur: C.fonce, epaisseur: 3 }); R.ligne(g, [mm[0], mm[1] - 11], [mm[0], mm[1] + 11], { couleur: C.fonce, epaisseur: 3 });
+      R.texte(g, "P demandé", [o[0] - 22, o[1] + 30], { couleur: C.z, gras: true, italique: false, taille: 17, ancre: "end" });
+      // légende
+      R.el("circle", { cx: 22, cy: 24, r: 8, fill: C.x }, g); R.texte(g, "pièce posée", [38, 25], { italique: false, ancre: "start", taille: 15 });
+      R.ligne(g, [14, 52], [30, 52], { couleur: C.fonce, epaisseur: 3 }); R.ligne(g, [22, 44], [22, 60], { couleur: C.fonce, epaisseur: 3 }); R.texte(g, "moyenne", [38, 53], { italique: false, ancre: "start", taille: 15 });
       var ec = Math.hypot(moy[0], moy[1]);
       R.rendre(zone, "\\text{écart de la moyenne à } P \\text{ (précision) : } " + R.tn(ec, 2) + "\\qquad \\text{dispersion (répétabilité) : } " + R.tn(disp, 2));
     }
@@ -67,27 +71,27 @@
     var zone = R.h("div", null, "", f.direct);
     function dessiner() {
       R.vider(g);
-      var k = ck.v, x0 = 20, ech = 230; // pixels par seconde
+      var k = ck.v, x0 = 24, ech = 230; // pixels par seconde
       var durees = PH.map(function (p) { return p[2] ? p[1] / k : p[1]; });
       var tot = durees.reduce(function (a, c) { return a + c; }, 0), tot1 = PH.reduce(function (a, p) { return a + p[1]; }, 0);
       ech = Math.min(230, 540 / Math.max(tot1, tot));
       // ligne de référence k = 1
       var x = x0;
-      R.texte(g, "vitesse initiale", [x0, 30], { italique: false, ancre: "start", couleur: C.doux, taille: 14 });
-      PH.forEach(function (p) { var w = p[1] * ech; R.el("rect", { x: x, y: 42, width: w, height: 30, fill: p[2] ? "#cfe0f3" : "#e6e8ec", stroke: "#fff" }, g); x += w; });
-      R.texte(g, R.fmt(tot1, 2) + " s", [x + 6, 58], { italique: false, ancre: "start", taille: 14, couleur: C.doux });
+      R.texte(g, "vitesse initiale", [x0, 30], { italique: false, ancre: "start", couleur: C.doux, taille: 16 });
+      PH.forEach(function (p) { var w = p[1] * ech; R.el("rect", { x: x, y: 44, width: w, height: 34, rx: 4, fill: p[2] ? "#c5d2fb" : "#e3e6ee", stroke: "#fff", "stroke-width": 2 }, g); x += w; });
+      R.texte(g, R.fmt(tot1, 2) + " s", [x + 8, 62], { italique: false, ancre: "start", taille: 16, couleur: C.doux });
       x = x0;
-      R.texte(g, "vitesse × " + R.fmt(k, 1), [x0, 112], { italique: false, ancre: "start", couleur: C.fonce, taille: 14, gras: true });
+      R.texte(g, "vitesse × " + R.fmt(k, 1), [x0, 112], { italique: false, ancre: "start", couleur: C.fonce, taille: 17, gras: true });
       PH.forEach(function (p, i) {
         var w = durees[i] * ech;
-        R.el("rect", { x: x, y: 124, width: w, height: 46, fill: p[2] ? C.z : "#9aa2ae", stroke: "#fff", "stroke-width": 2 }, g);
-        var nomBarre = w > p[0].length * 7 + 10 ? p[0] : p[3];
-        if (w > nomBarre.length * 7 + 6) R.texte(g, nomBarre, [x + w / 2, 147], { italique: false, couleur: "#fff", taille: 12 });
+        R.el("rect", { x: x, y: 126, width: w, height: 52, rx: 5, fill: p[2] ? C.z : "#9aa0ad", stroke: "#fff", "stroke-width": 2 }, g);
+        var nomBarre = w > p[0].length * 8 + 10 ? p[0] : p[3];
+        if (w > nomBarre.length * 8 + 6) R.texte(g, nomBarre, [x + w / 2, 152], { italique: false, couleur: "#fff", taille: 14, halo: false });
         x += w;
       });
-      R.texte(g, R.fmt(tot, 2) + " s", [x + 6, 148], { italique: false, ancre: "start", taille: 15, gras: true });
-      R.el("rect", { x: x0, y: 205, width: 14, height: 14, fill: C.z }, g); R.texte(g, "mouvement (dépend de la vitesse)", [x0 + 22, 213], { italique: false, ancre: "start", taille: 14 });
-      R.el("rect", { x: x0, y: 235, width: 14, height: 14, fill: "#9aa2ae" }, g); R.texte(g, "temps fixe (prise, dépose, synchronisation)", [x0 + 22, 243], { italique: false, ancre: "start", taille: 14 });
+      R.texte(g, R.fmt(tot, 2) + " s", [x + 8, 153], { italique: false, ancre: "start", taille: 18, gras: true, couleur: C.acc });
+      R.el("rect", { x: x0, y: 212, width: 18, height: 18, rx: 4, fill: C.z }, g); R.texte(g, "mouvement (dépend de la vitesse)", [x0 + 28, 222], { italique: false, ancre: "start", taille: 16 });
+      R.el("rect", { x: x0, y: 246, width: 18, height: 18, rx: 4, fill: "#9aa0ad" }, g); R.texte(g, "temps fixe (prise, dépose, synchronisation)", [x0 + 28, 256], { italique: false, ancre: "start", taille: 16 });
       R.rendre(zone, "T_{cycle} = " + durees.map(function (d) { return R.tn(d, 2); }).join(" + ") + " = " + R.tn(tot, 2) + "\\text{ s}" +
         "\\\\[6pt] N = \\frac{3600}{" + R.tn(tot, 2) + "} = " + R.tn(tot > 0 ? 3600 / tot : 0, 0) + "\\text{ cycles/h} = " + R.tn(tot > 0 ? 60 / tot : 0, 1) + "\\text{ cycles/min}");
     }
@@ -97,7 +101,7 @@
   /* ---------- Figure 3 : vitesse moyenne et vitesse instantanée ---------- */
   (function () {
     var f = R.figure("fig-derivee", {
-      hauteur: 340,
+      hauteur: 330,
       titre: "Position d'un axe en fonction du temps",
       essai: "<strong>Essaie</strong> : déplace l'instant \\(t\\), puis réduis l'intervalle \\(\\Delta t\\). " +
         "<strong>Observe</strong> : la pente de la sécante (vitesse moyenne sur \\(\\Delta t\\)) se rapproche de la pente de la tangente (vitesse instantanée) quand \\(\\Delta t\\) devient petit."
@@ -111,10 +115,11 @@
     var px = function (t) { return 70 + t * 250; }, py = function (x) { return 290 - x * 250; };
     function dessiner() {
       R.vider(g);
-      R.fleche(g, [60, 290], [580, 290], { couleur: C.gris, epaisseur: 1.3 }); R.fleche(g, [70, 300], [70, 20], { couleur: C.gris, epaisseur: 1.3 });
-      R.texte(g, "t [s]", [572, 272], { italique: false, couleur: C.doux, taille: 14 });
-      R.texte(g, "x [m]", [96, 22], { italique: false, couleur: C.doux, taille: 14 });
-      [0.5, 1, 1.5, 2].forEach(function (t) { R.texte(g, R.fmt(t, 1), [px(t), 306], { italique: false, couleur: C.doux, taille: 12 }); });
+      [0.5, 1, 1.5, 2].forEach(function (t) { R.ligne(g, [px(t), 20], [px(t), 290], { couleur: "#eef0f5" }); R.texte(g, R.fmt(t, 1), [px(t), 310], { italique: false, couleur: C.doux, taille: 15 }); });
+      [0.25, 0.5, 0.75, 1].forEach(function (x) { R.ligne(g, [70, py(x)], [580, py(x)], { couleur: "#eef0f5" }); R.texte(g, R.fmt(x, 2), [62, py(x)], { italique: false, couleur: C.doux, taille: 14, ancre: "end" }); });
+      R.fleche(g, [60, 290], [585, 290], { couleur: C.gris, epaisseur: 2 }); R.fleche(g, [70, 300], [70, 14], { couleur: C.gris, epaisseur: 2 });
+      R.texte(g, "t [s]", [572, 272], { italique: false, couleur: C.doux, taille: 16 });
+      R.texte(g, "x [m]", [100, 18], { italique: false, couleur: C.doux, taille: 16 });
       var pts = []; for (var t = 0; t <= 2.001; t += 0.02) pts.push(px(t).toFixed(1) + "," + py(X(t)).toFixed(1));
       R.el("polyline", { points: pts.join(" "), fill: "none", stroke: C.z, "stroke-width": 3 }, g);
       var t0 = ct.v, t1 = Math.min(2, t0 + cdt.v), x0 = X(t0), x1 = X(t1), vm = (x1 - x0) / (t1 - t0), vi = Vt(t0);
@@ -122,7 +127,8 @@
       R.ligne(g, [px(t0 - ext), py(x0 - vi * ext)], [px(t0 + ext), py(x0 + vi * ext)], { couleur: C.acc, epaisseur: 2.5 });
       R.ligne(g, [px(t0 - 0.2), py(x0 - vm * 0.2)], [px(t1 + 0.2), py(x1 + vm * 0.2)], { couleur: C.v, epaisseur: 2, tirets: "6 4" });
       R.point(g, [px(t0), py(x0)], { couleur: C.acc, r: 6 }); R.point(g, [px(t1), py(x1)], { couleur: C.v, r: 5 });
-      R.texte(g, "tangente", [px(t0 + ext) + 10, py(x0 + vi * ext) - 8], { couleur: C.acc, italique: false, taille: 14, ancre: "start" });
+      R.texte(g, "tangente : v(t)", [px(t0 + ext) + 10, py(x0 + vi * ext) - 8], { couleur: C.acc, italique: false, taille: 16, ancre: "start", gras: true });
+      R.texte(g, "sécante : v moyenne", [px(t1 + 0.2) + 10, py(x1 + vm * 0.2) + 14], { couleur: C.v, italique: false, taille: 16, ancre: "start" });
       R.rendre(zone, "v_{moy} = \\frac{x(t + \\Delta t) - x(t)}{\\Delta t} = \\frac{" + R.tn(x1, 3) + " - " + R.tn(x0, 3) + "}{" + R.tn(t1 - t0, 2) + "} = " + R.tn(vm, 3) + "\\text{ m/s}" +
         "\\qquad v(t) = \\dot{x}(t) = " + R.tn(vi, 3) + "\\text{ m/s}");
     }

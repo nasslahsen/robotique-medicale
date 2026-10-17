@@ -2,24 +2,33 @@
   "use strict";
   var R = RM, C = R.C, m = R.m;
 
+  // Sol quadrillé dans le plan (x, y), pour donner la profondeur.
+  function sol(g, V, L) {
+    R.polygone(g, [V.p([-L, -L, 0]), V.p([L, -L, 0]), V.p([L, L, 0]), V.p([-L, L, 0])], { remplissage: "#f6f7fa", couleur: "#d9dde6", epaisseur: 1.5 });
+    for (var k = -L; k <= L + 1e-9; k += L / 4) {
+      R.ligne(g, V.p([k, -L, 0]), V.p([k, L, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g, V.p([-L, k, 0]), V.p([L, k, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+    }
+  }
+
   function axesFixes(g, V, L) {
-    R.fleche(g, V.p([0, 0, 0]), V.p([L, 0, 0]), { couleur: C.x, epaisseur: 1.4, opacite: 0.55 });
-    R.fleche(g, V.p([0, 0, 0]), V.p([0, L, 0]), { couleur: C.y, epaisseur: 1.4, opacite: 0.55 });
-    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0, L]), { couleur: C.z, epaisseur: 1.4, opacite: 0.55 });
-    R.texte(g, "x", V.p([L + 0.15, 0, 0]), { couleur: C.x, opacite: 0.7, taille: 17 });
-    R.texte(g, "y", V.p([0, L + 0.15, 0]), { couleur: C.y, opacite: 0.7, taille: 17 });
-    R.texte(g, "z", V.p([0, 0, L + 0.15]), { couleur: C.z, opacite: 0.7, taille: 17 });
+    R.fleche(g, V.p([0, 0, 0]), V.p([L, 0, 0]), { couleur: C.x, epaisseur: 2, opacite: 0.6 });
+    R.fleche(g, V.p([0, 0, 0]), V.p([0, L, 0]), { couleur: C.y, epaisseur: 2, opacite: 0.6 });
+    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0, L]), { couleur: C.z, epaisseur: 2, opacite: 0.6 });
+    R.texte(g, "x", V.p([L + 0.15, 0, 0]), { couleur: C.x, opacite: 0.8, taille: 20 });
+    R.texte(g, "y", V.p([0, L + 0.15, 0]), { couleur: C.y, opacite: 0.8, taille: 20 });
+    R.texte(g, "z", V.p([0, 0, L + 0.15]), { couleur: C.z, opacite: 0.8, taille: 20 });
   }
 
   /* ---------- Figure 1 : u ∧ v et parallélogramme ---------- */
   (function () {
     var f = R.figure("fig-pv", {
-      hauteur: 500,
+      hauteur: 520,
       titre: "Produit vectoriel et aire du parallélogramme",
       essai: "<strong>Essaie</strong> : fais varier l'angle \\(\\theta\\) entre \\(\\vec{u}\\) et \\(\\vec{v}\\), puis clique sur « Inverser l'ordre ». " +
         "<strong>Observe</strong> : la longueur de \\(\\vec{w}\\) (orange) suit l'aire du parallélogramme ; elle est maximale à 90° et nulle quand les vecteurs sont alignés. Inverser l'ordre retourne \\(\\vec{w}\\)."
     });
-    var V = R.vue3D(300, 345, 88, -40 * R.DEG, 24 * R.DEG);
+    var V = R.vue3D(300, 375, 138, -40 * R.DEG, 22 * R.DEG);
     var g = R.el("g", null, f.svg);
     var cu = R.curseur(f.reglages, { nom: "‖u‖", min: 0.5, max: 1.6, pas: 0.1, val: 1.5, surChange: dessiner });
     var cv = R.curseur(f.reglages, { nom: "‖v‖", min: 0.5, max: 1.6, pas: 0.1, val: 1.2, surChange: dessiner });
@@ -36,15 +45,16 @@
       var u = [cu.v, 0, 0];
       var v = [cv.v * Math.cos(e) * Math.cos(t), cv.v * Math.cos(e) * Math.sin(t), cv.v * Math.sin(e)];
       var w = inverse ? m.cross(v, u) : m.cross(u, v);
-      axesFixes(g, V, 2.4);
+      sol(g, V, 1.7);
+      axesFixes(g, V, 2);
       var O = [0, 0, 0];
-      R.polygone(g, [V.p(O), V.p(u), V.p(m.add(u, v)), V.p(v)], { remplissage: "rgba(230,81,0,0.14)", couleur: "rgba(230,81,0,0.5)", epaisseur: 1 });
-      R.fleche(g, V.p(O), V.p(u), { couleur: C.v, epaisseur: 3.5 });
-      R.fleche(g, V.p(O), V.p(v), { couleur: C.z, epaisseur: 3.5 });
-      R.texte(g, "u", m.add(V.p(u), [14, 12]), { couleur: C.v, gras: true });
-      R.texte(g, "v", m.add(V.p(v), [14, -12]), { couleur: C.z, gras: true });
-      if (m.norme(w) > 0.02) R.fleche(g, V.p(O), V.p(w), { couleur: C.acc, epaisseur: 4 });
-      R.texte(g, inverse ? "w = v ∧ u" : "w = u ∧ v", m.add(V.p(w), [70, 4]), { couleur: C.acc, gras: true, italique: false });
+      R.polygone(g, [V.p(O), V.p(u), V.p(m.add(u, v)), V.p(v)], { remplissage: "rgba(255,90,31,0.16)", couleur: "rgba(255,90,31,0.6)", epaisseur: 1.5 });
+      R.fleche(g, V.p(O), V.p(u), { couleur: C.v, epaisseur: 5 });
+      R.fleche(g, V.p(O), V.p(v), { couleur: C.z, epaisseur: 5 });
+      R.texte(g, "u", m.add(V.p(u), [16, 14]), { couleur: C.v, gras: true, taille: 24 });
+      R.texte(g, "v", m.add(V.p(v), [16, -14]), { couleur: C.z, gras: true, taille: 24 });
+      if (m.norme(w) > 0.02) R.fleche(g, V.p(O), V.p(w), { couleur: C.acc, epaisseur: 5.5 });
+      R.texte(g, inverse ? "w = v ∧ u" : "w = u ∧ v", m.add(V.p(w), [16, 0]), { couleur: C.acc, gras: true, italique: false, taille: 20, ancre: "start" });
       var aire = m.norme(m.cross(u, v));
       var a = inverse ? v : u, bb = inverse ? u : v, na = inverse ? "\\vec{v}" : "\\vec{u}", nb = inverse ? "\\vec{u}" : "\\vec{v}";
       var th = Math.acos(Math.max(-1, Math.min(1, m.dot(u, v) / (m.norme(u) * m.norme(v)))));
@@ -69,7 +79,7 @@
       essai: "<strong>Essaie</strong> : choisis un produit, puis fais varier \\(\\alpha\\). " +
         "<strong>Observe</strong> : quand les deux axes sont dans le plan horizontal, le résultat (orange) est vertical, porté par \\(\\vec{z}_1\\), de longueur égale au sinus de l'angle orienté. Avec \\(\\vec{z}\\), le résultat reste dans le plan."
     });
-    var V = R.vue3D(300, 270, 165, -35 * R.DEG, 28 * R.DEG);
+    var V = R.vue3D(300, 285, 185, -35 * R.DEG, 26 * R.DEG);
     var g = R.el("g", null, f.svg);
     var al = R.curseur(f.reglages, { nom: "α", min: -90, max: 120, pas: 1, val: 30, unite: "°", surChange: dessiner });
     var bb = R.boutons(f.reglages);
@@ -96,16 +106,14 @@
       };
       var p = produits[choisi], u = vecs[p[0]], v = vecs[p[1]], w = m.cross(u, v);
       var O = [0, 0, 0];
-      R.ligne(g, V.p([-1.3, 0, 0]), V.p([1.3, 0, 0]), { couleur: C.trait });
-      R.ligne(g, V.p([0, -1.3, 0]), V.p([0, 1.3, 0]), { couleur: C.trait });
+      sol(g, V, 1.2);
       [["x1", C.z, "x", "1"], ["y1", C.z, "y", "1"], ["x2", C.v, "x", "2"], ["y2", C.v, "y", "2"], ["z1", C.fonce, "z₁ = z", "2"]].forEach(function (d) {
         var on = p[0] === d[0] || p[1] === d[0] || (d[0] === "z1" && (p[0] === "z2" || p[1] === "z1"));
-        R.fleche(g, V.p(O), V.p(vecs[d[0]]), { couleur: d[1], epaisseur: on ? 4 : 2, opacite: on ? 1 : 0.35 });
-        R.texte(g, d[2], V.p(m.scale(vecs[d[0]], 1.18)), { couleur: d[1], ind: d[3], opacite: on ? 1 : 0.5, gras: on, taille: 18 });
+        R.fleche(g, V.p(O), V.p(vecs[d[0]]), { couleur: d[1], epaisseur: on ? 5 : 2.5, opacite: on ? 1 : 0.35 });
+        R.texte(g, d[2], V.p(m.scale(vecs[d[0]], 1.2)), { couleur: d[1], ind: d[3], opacite: on ? 1 : 0.5, gras: on, taille: 21 });
       });
-      if (m.norme(w) > 0.02) R.fleche(g, V.p(O), V.p(w), { couleur: C.acc, epaisseur: 4.5 });
-      R.point(g, V.p(w), { couleur: C.acc, r: 4 });
-      R.texte(g, "résultat", m.add(V.p(w), [44, -6]), { couleur: C.acc, italique: false, taille: 16, gras: true });
+      if (m.norme(w) > 0.02) R.fleche(g, V.p(O), V.p(w), { couleur: C.acc, epaisseur: 6 });
+      R.texte(g, "résultat", m.add(V.p(w), [16, -4]), { couleur: C.acc, italique: false, taille: 18, gras: true, ancre: "start" });
       R.rendre(zone, noms[p[0]] + " \\wedge " + noms[p[1]] + " = " + p[2] + " = " + R.texVec(w, 3, C.acc) + "_{R_1}" +
         "\\qquad \\cos\\alpha = " + R.tn(Math.cos(a), 3) + ",\\ \\sin\\alpha = " + R.tn(Math.sin(a), 3));
     }
