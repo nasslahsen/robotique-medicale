@@ -12,14 +12,14 @@
 
   // pret : false pour une page pas encore écrite (affichée grisée dans le menu).
   var CONCEPTS = [
-    { partie: 0, slug: "robot-systeme", titre: "Le robot et le système robotisé", pret: false },
-    { partie: 0, slug: "anatomie", titre: "Anatomie d'un robot", pret: false },
-    { partie: 0, slug: "articulations-ddl", titre: "Articulations, DDL et configuration articulaire", pret: false },
-    { partie: 0, slug: "liaisons", titre: "DDL d'un solide et liaisons normalisées", pret: false },
-    { partie: 0, slug: "schemas-topologies", titre: "Schémas cinématiques et topologies", pret: false },
-    { partie: 0, slug: "architectures", titre: "Architectures et espace de travail", pret: false },
-    { partie: 0, slug: "performances", titre: "Précision, répétabilité et temps de cycle", pret: false },
-    { partie: 0, slug: "robotique-medicale", titre: "Spécificités de la robotique médicale", pret: false },
+    { partie: 0, slug: "robot-systeme", titre: "Le robot et le système robotisé", pret: true },
+    { partie: 0, slug: "anatomie", titre: "Anatomie d'un robot", pret: true },
+    { partie: 0, slug: "articulations-ddl", titre: "Articulations, DDL et configuration articulaire", pret: true },
+    { partie: 0, slug: "liaisons", titre: "DDL d'un solide et liaisons normalisées", pret: true },
+    { partie: 0, slug: "schemas-topologies", titre: "Schémas cinématiques et topologies", pret: true },
+    { partie: 0, slug: "architectures", titre: "Architectures et espace de travail", pret: true },
+    { partie: 0, slug: "performances", titre: "Précision, répétabilité et temps de cycle", pret: true },
+    { partie: 0, slug: "robotique-medicale", titre: "Spécificités de la robotique médicale", pret: true },
     { partie: 1, slug: "repere", titre: "Repère et coordonnées cartésiennes", pret: true },
     { partie: 1, slug: "produit-scalaire", titre: "Produit scalaire", pret: true },
     { partie: 1, slug: "produit-vectoriel", titre: "Produit vectoriel", pret: true },

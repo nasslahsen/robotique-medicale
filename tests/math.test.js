@@ -161,4 +161,17 @@ test("produit matriciel : dimensions", () => {
   assert.deepStrictEqual(m.matMul([[0, 1], [1, 0]], [[1, 2], [3, 4]]), [[3, 4], [1, 2]]);
 });
 
+test("partie A : temps de cycle du cours, vitesse doublée, question, charge, SCARA, mise à l'échelle", () => {
+  const d = [0.30, 0.20, 0.55, 0.15, 0.45, 0.35], mouvement = [true, false, true, false, true, false];
+  const T = d.reduce((a, b) => a + b, 0);
+  proche(T, 2.00, 1e-12); proche(3600 / T, 1800, 1e-9); proche(60 / T, 30, 1e-9);
+  const T2 = d.reduce((a, x, i) => a + (mouvement[i] ? x / 2 : x), 0);
+  proche(T2, 1.35, 1e-12); proche(3600 / T2, 2666.67, 0.01);
+  const Tq = 0.40 + 0.25 + 0.60 + 0.25 + 0.50 + 0.40;
+  proche(Tq, 2.40, 1e-12); proche(3600 / Tq, 1500, 1e-9); proche(60 / Tq, 25, 1e-9);
+  proche(1.2 + 2.5 + 0.3, 4.0, 1e-12);
+  proche(Math.abs(0.8 - 0.6), 0.2, 1e-12); proche(0.8 + 0.6, 1.4, 1e-12);
+  proche(2 * 3, 6); proche(1.5 * 0.3, 0.45, 1e-12);
+});
+
 console.log(`${n} tests réussis`);
