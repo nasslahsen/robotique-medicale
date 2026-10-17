@@ -114,11 +114,12 @@
         });
         return z;
       };
-      // Nombres : cfg.cases = [{ attendu, tol }], cfg.avant (KaTeX), cfg.ligne, cfg.ok(), cfg.aide(k)
+      // Nombres : cfg.cases = [{ attendu, tol }], cfg.avant (KaTeX), cfg.ligne, cfg.colonnes (cases en grille), cfg.ok(), cfg.aide(k)
       j.nombre = function (cfg) {
         var bloc = E.h("div", "nombres", "", el);
         if (cfg.avant) E.k(E.h("span", "", "", bloc), cfg.avant);
         var cs = E.h("div", "cases" + (cfg.ligne ? " ligne" : ""), "", bloc);
+        if (cfg.colonnes) cs.style.cssText = "display:grid;grid-template-columns:repeat(" + cfg.colonnes + ", minmax(0, 112px));gap:8px";
         if (cfg.apres) E.k(E.h("span", "", "", bloc), cfg.apres);
         var val = cfg.cases.map(function () { return ""; }), active = 0;
         var cases = cfg.cases.map(function (c, k) { var d = E.h("div", "saisie", "", cs); d.addEventListener("click", function () { active = k; maj(); }); return d; });

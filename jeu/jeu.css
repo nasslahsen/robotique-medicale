@@ -181,6 +181,10 @@ body.carte-jeu { min-height: 100dvh; }
 .noeud.boss { padding-top: 6px; }
 .noeud.bientot .rond { border-style: dashed; box-shadow: none; background: #fff; color: #b3b8c4; border-color: #c9cdd8; }
 .noeud.bientot { pointer-events: auto; }
+.noeud.revision .rond { border-style: double; border-width: 6px; }
+.noeud.revision .rond span { font-size: 17px; letter-spacing: .04em; }
+.a-venir-carte { margin: 22px 0 40px; padding: 26px 28px; border: 2.5px dashed #c9cdd8; border-radius: 22px; color: var(--doux); font-size: 17px; text-align: center; }
+.a-venir-carte b { color: var(--encre); }
 .noeud .ancien { font-size: 13px; color: var(--doux); }
 .pied { max-width: 1180px; margin: 30px auto 40px; padding: 0 40px; display: flex; gap: 16px; align-items: center; color: var(--doux); font-size: 15px; flex-wrap: wrap; }
 .pied button { height: 46px; padding: 0 18px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; font-weight: 600; cursor: pointer; }

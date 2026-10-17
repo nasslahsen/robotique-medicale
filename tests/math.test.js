@@ -284,4 +284,37 @@ test("chapitre 1 du jeu : réponses attendues dans les niveaux", () => {
   proche(2 * 0.3 * 10, 6, 1e-12); proche(1.5 * 0.3 * 10, 4.5, 1e-12); proche(6 - 4, 2, 0);
 });
 
+test("produit de matrices et révisions : réponses attendues", () => {
+  const A = [[0, -1, 0], [1, 0, 0], [0, 0, 1]], B = [[2, 0, 0], [0, 1, 0], [0, 0, 1]];
+  const AB = m.matMul(A, B), BA = m.matMul(B, A);
+  procheVec(AB[0].slice(0, 2), [0, -1]); procheVec(AB[1].slice(0, 2), [2, 0]);
+  procheVec(BA[0].slice(0, 2), [0, -2]); procheVec(BA[1].slice(0, 2), [1, 0]);
+  procheVec(m.transpose(A)[0].slice(0, 2), [0, 1]); procheVec(m.transpose(A)[1].slice(0, 2), [-1, 0]);
+  procheVec(m.matMul(m.transpose(A), A)[0], [1, 0, 0]);
+  proche(1 * 5 + 2 * 7, 19, 0); proche(1 * 6 + 2 * 8, 22, 0);
+  // révision des bases
+  assert.ok(Math.cos(210 * D) < 0 && Math.sin(210 * D) < 0);
+  proche(0.5 * Math.cos(120 * D), -0.25, 1e-12); proche(0.5 * Math.sin(120 * D), 0.433, 1e-3);
+  proche(3 / 5, 0.6, 1e-12); proche(4 / 5, 0.8, 1e-12);
+  procheVec(m.matVec([[1, 0, 0], [0, -1, 0], [0, 0, 1]], [2, 1, 0]), [2, -1, 0]); proche(m.det3([[1, 0, 0], [0, -1, 0], [0, 0, 1]]), -1);
+  // révision de l'espace
+  assert.ok(m.dot([2, 0, 0], [Math.cos(120 * D), Math.sin(120 * D), 0]) < 0);
+  procheVec(m.cross([0, 1, 0], [1, 0, 0]), [0, 0, -1]);
+  proche(2 * 3 * Math.sin(30 * D), 3, 1e-12);
+  proche(Math.atan2(-1, -1) / D, -135, 1e-9);
+  procheVec(m.add([1, 2, 0], m.matVec(m.Rz(90 * D), [2, 0, 0])), [1, 4, 0]);
+  // révision des orientations
+  procheVec(m.colonne(m.Rz(90 * D), 0), [0, 1, 0]);
+  proche(m.Ry(30 * D)[2][0], -0.5, 1e-12);
+  procheVec(m.colonne(m.matMul(m.Rz(0), m.Ry(90 * D)), 0), [0, 0, -1]);
+  // révision des transformations
+  const T = [[0, -1, 0, 1], [1, 0, 0, 0.6], [0, 0, 1, 0], [0, 0, 0, 1]];
+  procheVec(m.matVec(T, [1, 0, 0, 0]), [0, 1, 0, 0]); procheVec(m.matVec(T, [0, 0, 0, 1]), [1, 0.6, 0, 1]);
+  procheVec(m.bras2R(90 * D, -90 * D, 0.5, 0.3).M, [0.3, 0.5, 0]);
+  const dans = (p) => { const r = Math.hypot(p[0], p[1]); return r >= 0.2 - 1e-9 && r <= 0.8 + 1e-9; };
+  assert.ok(!dans([0.85, 0]) && !dans([0.1, 0.1]) && dans([0.4, 0.4]));
+  // révision du robot : rotule
+  proche(6 - 3, 3, 0);
+});
+
 console.log(`${n} tests réussis`);

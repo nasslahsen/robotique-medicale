@@ -48,3 +48,16 @@ Formats rotate across stages: prediction then reveal, find the value, build it (
 - `jeu/catalogue.js`: chapters and levels, in order.
 - `niveaux/<id>.js`: one file per level, registering its stages with `NIVEAU({...})`.
 - Tests: `tests/math.test.js` for the numbers, `tests/static-check.js` for equations (including those written inside level scripts), links and writing rules.
+
+## Understanding, not memorising
+
+- Each chapter ends with a review level (`revision: true` in the catalogue, "RÉV" on the map) just before its boss. It mixes the chapter's ideas in new situations.
+- Stage types to use beyond "compute": predict before the figure moves, find the mistake in a worked answer, the same idea on a robot or numbers not seen before, and "why" questions whose options are reasons, not numbers.
+- Wrong options always carry an `aide` that points to what to look at, never just the answer.
+
+## Adding a chapter
+
+1. Add the chapter to `CATALOGUE.chapitres` and its levels to `CATALOGUE.niveaux`, ending with a review level and a boss.
+2. Write one `niveaux/<id>.js` per level, built only from the new course material.
+3. Add the expected answers to `tests/math.test.js` and a play-through to the browser test, then check every stage on screenshots at 1180 × 820.
+4. The map's "Prochains chapitres" tile stays at the end until the course is complete.
