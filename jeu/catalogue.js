@@ -38,10 +38,10 @@ window.CATALOGUE = {
     { id: "boss-espace", chapitre: 2, titre: "Où est l'instrument ?", boss: true, pret: true },
 
     { id: "matrice-rotation", chapitre: 3, titre: "Matrice de rotation", pret: true },
-    { id: "so3", chapitre: 3, titre: "Le groupe SO(3)", ancien: "so3" },
-    { id: "rotations-elementaires", chapitre: 3, titre: "Rotations élémentaires", ancien: "rotations-elementaires" },
-    { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", ancien: "angles-euler" },
-    { id: "boss-orientations", chapitre: 3, titre: "Décode la pince", boss: true },
+    { id: "so3", chapitre: 3, titre: "Le groupe SO(3)", ancien: "so3", pret: true },
+    { id: "rotations-elementaires", chapitre: 3, titre: "Rotations élémentaires", ancien: "rotations-elementaires", pret: true },
+    { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", ancien: "angles-euler", pret: true },
+    { id: "boss-orientations", chapitre: 3, titre: "Décode la pince", boss: true, pret: true },
 
     { id: "changement-repere", chapitre: 4, titre: "Changement de repère", ancien: "changement-repere" },
     { id: "matrice-homogene", chapitre: 4, titre: "Matrice homogène", ancien: "matrice-homogene" },

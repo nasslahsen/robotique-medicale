@@ -9,6 +9,10 @@ window.E = (function () {
 
   // Maths
   function Rz(a) { var c = Math.cos(a), s = Math.sin(a); return [[c, -s, 0], [s, c, 0], [0, 0, 1]]; }
+  function Ry(a) { var c = Math.cos(a), s = Math.sin(a); return [[c, 0, s], [0, 1, 0], [-s, 0, c]]; }
+  function Rx(a) { var c = Math.cos(a), s = Math.sin(a); return [[1, 0, 0], [0, c, -s], [0, s, c]]; }
+  function mm(A, B) { return A.map(function (r) { return B[0].map(function (_, j) { return r.reduce(function (t, x, k) { return t + x * B[k][j]; }, 0); }); }); }
+  function tr(A) { return A[0].map(function (_, j) { return A.map(function (r) { return r[j]; }); }); }
   function mv(M, v) { return M.map(function (r) { return r[0] * v[0] + r[1] * v[1] + r[2] * v[2]; }); }
   function col(M, j) { return [M[0][j], M[1][j], M[2][j]]; }
   function angle360(a) { return ((a % 360) + 540) % 360 - 180; } // ramène dans ]-180 ; 180]
@@ -100,7 +104,7 @@ window.E = (function () {
   }
 
   return {
-    DEG: DEG, Rz: Rz, mv: mv, col: col, angle360: angle360, ecartAngle: ecartAngle,
+    DEG: DEG, Rz: Rz, Ry: Ry, Rx: Rx, mm: mm, tr: tr, mv: mv, col: col, angle360: angle360, ecartAngle: ecartAngle,
     fmt: fmt, tn: tn, tc: tc, texMat: texMat, texVec: texVec, k: k, rendre: rendre,
     s: s, vider: vider, point: point, glisser: glisser, anime: anime, h: h
   };

@@ -44,8 +44,7 @@ body.niveau { overflow: hidden; height: 100dvh; }
 .chip { position: absolute; left: 16px; top: 16px; font: 700 22px "JetBrains Mono", monospace; background: var(--pale); border-radius: 14px; padding: 8px 14px; display: none; }
 .chip.on { display: block; }
 .astuce { position: absolute; left: 16px; top: 72px; max-width: 46%; color: var(--doux); font-size: 15px; pointer-events: none; }
-.coin { position: absolute; right: 14px; bottom: 14px; }
-.figure.avec-bande .coin { bottom: 104px; }
+.coin { position: absolute; right: 14px; top: 14px; }
 .halo { transform-box: fill-box; transform-origin: center; animation: halo 1.8s ease-in-out infinite; }
 @keyframes halo { 50% { transform: scale(1.25); opacity: .55; } }
 

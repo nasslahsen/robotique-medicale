@@ -222,4 +222,25 @@ test("chapitre 2 du jeu : réponses attendues dans les niveaux", () => {
   procheVec(m.add([1, 1, 0], m.matVec(m.Rz(90 * D), [2, 0, 0])), [1, 3, 0]);
 });
 
+test("chapitre 3 du jeu : réponses attendues dans les niveaux", () => {
+  const R30 = m.Rz(30 * D), c1 = m.colonne(R30, 0), c2 = m.colonne(R30, 1);
+  proche(m.dot(c1, c1), 1, 1e-12); proche(m.dot(c1, c2), 0, 1e-12);
+  proche(m.det3([[1, 0, 0], [0, 1, 0], [0, 0, -1]]), -1); proche(m.det3(m.Rx(90 * D)), 1, 1e-12);
+  procheVec(m.transpose(R30)[0], [0.866, 0.5, 0], 1e-3);
+  // ordre des rotations : Rz(90°)Rx(90°) et l'inverse
+  procheVec(m.colonne(m.matMul(m.Rz(90 * D), m.Rx(90 * D)), 0), [0, 1, 0]);
+  procheVec(m.colonne(m.matMul(m.Rx(90 * D), m.Rz(90 * D)), 0), [0, 0, 1]);
+  // Ry(30°) : x descend
+  procheVec(m.colonne(m.Ry(30 * D), 0), [Math.cos(30 * D), 0, -0.5]);
+  // téléphone ZYX et XYZ
+  const R02 = m.matMul(m.Rz(-90 * D), m.Ry(90 * D));
+  procheVec(m.colonne(R02, 0), [0, 0, -1]);
+  const R3 = m.matMul(m.matMul(m.Rx(90 * D), m.Ry(90 * D)), m.Rz(-90 * D));
+  procheVec(m.colonne(R3, 2), [1, 0, 0]); procheVec(m.colonne(R3, 0), [0, 0, -1]); procheVec(m.colonne(R3, 1), [0, 1, 0]);
+  // boss
+  const C = m.Rz(-70 * D); proche(C[0][0], 0.342, 1e-3); proche(C[1][0], -0.940, 1e-3);
+  proche(m.det3([[0, 1, 0], [1, 0, 0], [0, 0, 1]]), -1);
+  procheVec(m.colonne(m.matMul(m.Rz(90 * D), m.Ry(90 * D)), 0), [0, 0, -1]);
+});
+
 console.log(`${n} tests réussis`);
