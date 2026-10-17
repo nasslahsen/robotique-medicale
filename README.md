@@ -1,74 +1,56 @@
-# Robotique médicale: study site
+# Robotique médicale: interactive study site
 
-Study notes for the *Robotique médicale* course (Génie biomédical, UM6SS, Pr. H. El Hansali), built with MkDocs Material. The content is in French and follows the professor's notation.
+Study site for the *Robotique médicale* course (Génie biomédical, UM6SS, Pr. H. El Hansali). The course content is reorganised as one progressive path of concepts, one concept per page, each built around interactive figures. Content is in French and follows the professor's notation (frames `R_0`, rotation matrices `R^{0,1}`, ZYX Euler angles, homogeneous matrices `T^{0,s}`).
 
-Live site (after the first deployment): https://nasslahsen.github.io/robotique-medicale/
+Live site: https://nasslahsen.github.io/robotique-medicale/
+
+Plain static site: HTML, CSS and JavaScript, no build step, no framework. Equations use KaTeX (vendored in `assets/vendor/katex`, so the site works offline).
 
 ## Structure
 
 ```
-docs/
-  index.md                      home page
-  cours/01-…md … 04-…/          one page per lecture (lecture 4 has three sub-pages)
-  rappels.md                    prerequisites (trigonometry, vectors, matrices, derivatives)
-  glossaire.md                  French glossary
-  assets/css/site.css           styling (light theme only)
-  assets/js/widgets.js          interactive figures (plain JavaScript) and their maths
-  assets/js/mathjax-config.js   MathJax settings
-  assets/vendor/mathjax/        MathJax 3.2.2, vendored so the site works offline
-  assets/figures/               the few figures taken from the slides
-tests/test_math.js              checks the maths used by the widgets and worked examples
-mkdocs.yml                      site configuration and navigation
+index.html                    home page and the list of concepts
+concepts/<slug>.html          one page per concept
+assets/css/site.css           the only stylesheet (light theme, single column)
+assets/js/nav.js              ordered list of concepts, top menu, Précédent / Suivant buttons
+assets/js/lib.js              shared maths (RM.m), number formatting, SVG drawing, 2D/3D views, sliders, step buttons
+assets/js/pages/<slug>.js     the interactive figures of one page
+assets/vendor/katex/          KaTeX 0.16.11
+tests/math.test.js            checks the maths and every worked example
+tests/static-check.js         checks every equation compiles, links, page list, writing rules
+.github/workflows/deploy.yml  runs both tests, then deploys to GitHub Pages on push to main
 ```
 
 ## Preview locally
 
-Requires Python 3.9+ (and Node.js only to run the maths tests).
+Any static file server works. With Python:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-mkdocs serve
+python3 -m http.server 8000
 ```
 
-Open http://127.0.0.1:8000. The page reloads when you save a file.
+then open http://localhost:8000. (Opening `index.html` directly from the disk also works in most browsers.)
 
-Before pushing, run the same checks as CI:
+Run the checks (Node.js 18 or later, no dependencies to install):
 
 ```bash
-mkdocs build --strict            # fails on broken links or anchors
-node tests/test_math.js          # checks rotation matrices, Euler angles, 2-link arm, conversions
+node tests/math.test.js
+node tests/static-check.js
 ```
 
-## Deploy to GitHub Pages
+## Deploy
 
-Deployment is automatic: `.github/workflows/deploy.yml` builds the site and publishes it on every push to `main`. Pull requests are built (so errors show up) but not deployed.
+Every push to `main` runs the two checks and publishes the site with GitHub Actions. One-time setting: **Settings → Pages → Build and deployment → Source: GitHub Actions**. Do not add the template workflows GitHub suggests on that page (Jekyll, static HTML): they would publish the repository a second way and overwrite the site.
 
-One-time setup: in the repository, go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**. After the next push to `main`, the site is at `https://<user>.github.io/robotique-medicale/`.
+Pull requests run the checks without deploying.
 
-## Add a fifth lecture
+## Add a page (for example, new content from a fifth lecture)
 
-1. Create `docs/cours/05-<short-title>.md` (or a folder with an `index.md` and sub-pages, like lecture 4).
-2. Follow the layout of the existing pages: for each section, an intuition paragraph, the formal version, then a worked example. Mark them with
-   ```markdown
-   Intuition
-   { .etape }
-   ```
-   End the page with `## Formules clés` and `## Questions d'auto-évaluation`. Hide answers like this (the indentation matters):
-   ```markdown
-   1. Question ?
+1. Copy an existing page, e.g. `concepts/matrice-rotation.html`, to `concepts/<new-slug>.html`, and its script `assets/js/pages/matrice-rotation.js` to `assets/js/pages/<new-slug>.js`. Update the `<title>`, the `<h1>` and the last `<script>` tag.
+2. Keep the page structure (the static check enforces it): `Intuition`, at least one figure (`<div id="fig-...">`), `Formalisation`, `Exemple`, `Formules clés`, `Questions` with answers in `<details>`. Put any prerequisite refresher on the same page, under `Rappel : ...`.
+3. Add the page to the `CONCEPTS` list in `assets/js/nav.js`, at its place in the path, with `pret: true`. Numbering, the menu and the Précédent / Suivant buttons follow automatically.
+4. Build the figure with the helpers of `lib.js`: `RM.figure(id, {...})` creates the drawing and its panels, `RM.curseur`, `RM.bascule`, `RM.bouton`, `RM.etapes` add controls, `RM.plan` (2D) or `RM.vue3D` with `RM.orbite` (3D) draw, `RM.rendre(el, tex)` shows live formulas. Add a line "Essaie / Observe" under each figure. In 3D views, keep `RM.basculeOrbite`, so that on a phone a swipe scrolls the page unless the user turns the view on.
+5. Add any new calculation to `RM.m` in `lib.js` and a test (with the page's worked example) in `tests/math.test.js`.
+6. Run both checks and push.
 
-       <details markdown><summary>Réponse</summary>
-       Answer, with math \(x = r\cos\theta\) if needed.
-       </details>
-   ```
-3. Add the page to `nav` in `mkdocs.yml`, under `Cours`.
-4. Add new terms to `docs/glossaire.md` and, if the lecture needs new prerequisites, a section to `docs/rappels.md`.
-5. Run `mkdocs build --strict` and push to `main`.
-
-Writing conventions: French; inline math `\( … \)`, display math `\[ … \]`; decimal comma inside math as `0{,}5`; no emojis, no em dashes, no admonition boxes. Keep the professor's notation (`R^{0,S}`, `T^{0,1}`, `\wedge`, ZYX angles α, β, γ). Mark anything not in the slides with *(complément)*.
-
-To add an interactive figure: write a function `W["name"] = function (root) { … }` in `docs/assets/js/widgets.js` (reuse `cadre`, `curseur`, `toile`, `fleche`, `matHTML`), put any new maths in `RM.math` with a test in `tests/test_math.js`, and place `<div class="widget" data-widget="name"></div>` in the page.
-
-Figures from the slides go in `docs/assets/figures/` (JPEG, about 1600 px wide). Keep them to the few that cannot be redrawn; never commit the original PDFs (`*.pdf` is in `.gitignore`).
+Writing rules: French; inline maths `\( ... \)`, display maths `\[ ... \]`; decimal comma written `0{,}5` inside maths; no emojis, no em dashes, no slide images or PDFs in the repository. Mark anything not in the slides as an added example or *(complément)*.

@@ -16,27 +16,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: pip install -r requirements.txt
-      - run: node tests/test_math.js
-      - run: mkdocs build --strict
+      - name: Tests des calculs
+        run: node tests/math.test.js
+      - name: Vérification statique (équations, liens, pages)
+        run: node tests/static-check.js
+      - name: Assemblage du site
+        run: |
+          mkdir _site
+          cp -r index.html concepts assets _site/
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:
-          path: site
+          path: _site
 
   deploy:
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    # Only deployments queue on the shared Pages group, so a pull request
-    # build can never cancel a pending deployment of main.
+    # Seuls les déploiements partagent ce groupe : un build de pull request ne peut pas annuler un déploiement de main.
     concurrency:
       group: pages
       cancel-in-progress: false

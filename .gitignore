@@ -1,5 +1,3 @@
-site/
-__pycache__/
-.cache/
 *.pdf
 node_modules/
+.DS_Store

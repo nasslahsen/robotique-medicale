@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Position d'un solide et relation de Chasles · Robotique médicale</title>
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Position d'un solide et relation de Chasles</h1>
+<p class="chapeau">Pour décrire un objet rigide (un os, un instrument), on lui attache un repère. Sa position est celle de l'origine de ce repère ; un point de l'objet se retrouve en enchaînant deux vecteurs.</p>
+
+<h2>Intuition</h2>
+<p>Un solide indéformable garde la même forme : un point gravé sur un instrument reste toujours au même endroit <em>par rapport à l'instrument</em>. On accroche donc au solide \(S\) un repère mobile \(R_s\), d'origine \(O_s\). Pour aller de l'origine fixe \(O_0\) à un point \(M\) du solide, on peut y aller directement, ou passer par \(O_s\) puis aller de \(O_s\) à \(M\). Les deux trajets arrivent au même point.</p>
+<p>Ce détour est utile parce que le second morceau, \(\overrightarrow{O_s M}\), est connu une fois pour toutes dans le repère du solide. Mais dès que le solide tourne, ses composantes dans \(R_0\) changent : c'est exactement le problème que résoudra la matrice de rotation.</p>
+
+<div id="fig-chasles"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Position.</strong> La position d'un corps rigide est définie par le vecteur reliant l'origine \(O_0\) du repère fixe \(R_0\) à l'origine \(O_1\) du repère mobile \(R_1\) attaché au corps :</p>
+\[ \vec{p} = \overrightarrow{O_0 O_1} = p_x\,\vec{x}_0 + p_y\,\vec{y}_0 + p_z\,\vec{z}_0 \qquad [\vec{p}]_{R_0} = \begin{bmatrix} p_x \\ p_y \\ p_z \end{bmatrix} \qquad p_x = \vec{p} \cdot \vec{x}_0,\ \dots \]
+<p>Par exemple, la pointe \(S\) d'un scalpel robotisé, exprimée dans le repère lié au patient, s'écrit \({}^P\mathbf{p}_S = \overrightarrow{O_P S}\). Pour un robot cartésien PPP dont les glissières sont alignées sur \(R_0\) : \([\vec{p}]_{R_0} = (q_1;\ q_2;\ q_3)^T\).</p>
+<p><strong>Relation fondamentale de position (Chasles).</strong> À tout solide \(S\), on attache un repère \(R_s\) pour décrire sa pose par rapport à \(R_0\). Pour un point \(M\) du solide :</p>
+\[ \overrightarrow{O_0 M} = \overrightarrow{O_0 O_s} + \overrightarrow{O_s M} \qquad (1.1) \]
+<p><strong>De la position à l'orientation.</strong> La position seule ne suffit pas : une aiguille peut changer d'orientation tout en gardant la même position de pointe, et l'orientation détermine le trajet dans les tissus. Règle fondamentale du cours : la position d'un point est décrite par un vecteur \(\vec{P}\) ; l'orientation d'un corps est décrite par un repère attaché \(\{B\}\). Sur la figure, tournez le solide sans bouger \(O_s\) : la position \(\vec{p}\) ne change pas, mais \(M\) se déplace.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Le solide a son origine en \(O_s = (2;\ 1)\) dans \(R_0\), et le point \(M\) est à \(1{,}5\) unité sur l'axe \(\vec{x}_s\) : \(\overrightarrow{O_s M} = 1{,}5\,\vec{x}_s\).</p>
+<ul>
+<li>Si \(R_s\) a les mêmes directions que \(R_0\) : \(\vec{x}_s = \vec{x}_0\), donc \(\overrightarrow{O_0 M} = (2 + 1{,}5;\ 1) = (3{,}5;\ 1)\).</li>
+<li>Si le solide a tourné de 90° : \(\vec{x}_s = \vec{y}_0\), donc \(\overrightarrow{O_s M} = (0;\ 1{,}5)\) dans \(R_0\) et \(\overrightarrow{O_0 M} = (2;\ 2{,}5)\).</li>
+</ul>
+<p>Dans les deux cas, \(\overrightarrow{O_s M}\) vaut \((1{,}5;\ 0)\) dans \(R_s\) : c'est sa traduction dans \(R_0\) qui change.</p>
+
+<h2>Formules clés</h2>
+\[ \vec{p} = \overrightarrow{O_0 O_1}, \qquad [\vec{p}]_{R_0} = (p_x;\ p_y;\ p_z)^T \]
+\[ \overrightarrow{O_0 M} = \overrightarrow{O_0 O_s} + \overrightarrow{O_s M} \qquad (1.1) \]
+
+<h2>Questions</h2>
+<ol class="questions">
+<li>Quand le solide tourne autour de \(O_s\), lesquels de ces vecteurs changent : \(\overrightarrow{O_0 O_s}\), \(\overrightarrow{O_s M}\) exprimé dans \(R_s\), \(\overrightarrow{O_s M}\) exprimé dans \(R_0\) ?
+<details><summary>Voir la réponse</summary>Seul \(\overrightarrow{O_s M}\) exprimé dans \(R_0\) change. \(\overrightarrow{O_0 O_s}\) reste le même (l'origine ne bouge pas) et \(\overrightarrow{O_s M}\) dans \(R_s\) est constant (solide indéformable).</details></li>
+<li>Pourquoi ne peut-on pas additionner directement les composantes de \(\overrightarrow{O_0 O_s}\) dans \(R_0\) et celles de \(\overrightarrow{O_s M}\) dans \(R_s\) ?
+<details><summary>Voir la réponse</summary>Parce qu'elles sont exprimées dans deux bases différentes. Il faut d'abord exprimer \(\overrightarrow{O_s M}\) dans \(R_0\), ce que fera la matrice de rotation \(R^{0,s}\).</details></li>
+<li>Combien de paramètres faut-il pour la position seule d'un corps dans l'espace ? Et pour sa situation complète ?
+<details><summary>Voir la réponse</summary>3 pour la position (\(p_x, p_y, p_z\)) ; 6 pour la situation complète (3 de position et 3 d'orientation).</details></li>
+</ol>
+</main>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/lib.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/pages/position-chasles.js"></script>
+</body>
+</html>
