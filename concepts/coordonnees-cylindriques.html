@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coordonnées polaires et cylindriques · Robotique médicale</title>
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Coordonnées polaires et cylindriques</h1>
+<p class="chapeau">Un même point peut se décrire par « avance de x, puis de y », ou par « tourne d'un angle, puis avance d'une distance ». Le second langage est celui des robots à pivots.</p>
+
+<h2>Intuition</h2>
+<p>Une sonde d'échographie pivotante décrit naturellement une cible par une distance et une direction : « la cible est à 5 cm, dans la direction de 45° ». Ce sont des coordonnées polaires. Ajoutez une hauteur et vous obtenez les coordonnées cylindriques : « le pivot + la hauteur ». Un arceau d'imagerie autour d'un patient fonctionne ainsi : \(\theta\) pour tourner autour du patient, \(r\) pour avancer ou reculer le bras, \(z\) pour monter ou descendre le lit.</p>
+
+<div id="fig-cyl"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Coordonnées polaires (plan).</strong> Un point \(P\) est défini par \((r, \theta)\) : \(r = OP \geq 0\) est la distance à l'origine, \(\theta\) l'angle mesuré depuis l'axe \(X\), positif dans le sens trigonométrique.</p>
+<p><strong>Coordonnées cylindriques (espace).</strong> Un point \(P\) est défini par \((r, \theta, z)\) : \(r\) est la distance horizontale à l'axe central \(Z\), \(\theta\) l'angle autour de cet axe (azimut dans le plan \((X, Y)\)), \(z\) la hauteur comme en cartésien. Si \(Q\) est la projection de \(P\) dans le plan \((X, Y)\), alors \(r = OQ\).</p>
+<div class="tableau"><table>
+<tr><th>Départ</th><th>Arrivée</th><th>Formules</th></tr>
+<tr><td>cylindrique \((r, \theta, z)\)</td><td>cartésien</td><td>\(x = r\cos\theta,\quad y = r\sin\theta,\quad z = z\)</td></tr>
+<tr><td>cartésien \((x, y, z)\)</td><td>cylindrique</td><td>\(r = \sqrt{x^2 + y^2},\quad \theta = \operatorname{atan2}(y, x),\quad z = z\)</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>\(P = (-1;\ 1;\ 2)\).</p>
+\[ r = \sqrt{(-1)^2 + 1^2} = \sqrt{2} \approx 1{,}414 \qquad \theta = \operatorname{atan2}(1, -1) = 135° \qquad z = 2 \]
+<p>Attention : \(\arctan(y/x) = \arctan(-1) = -45°\) donnerait la direction opposée. Retour : \(x = \sqrt{2}\cos 135° = -1\) et \(y = \sqrt{2}\sin 135° = 1\).</p>
+<p>L'analogie du cours : « la cible est à 5 cm dans la direction de 45° » correspond à \(x = 5\cos 45° \approx 3{,}54\) cm et \(y = 5\sin 45° \approx 3{,}54\) cm, si l'angle est mesuré depuis l'axe \(X\).</p>
+
+<h2>Rappel : la fonction atan2</h2>
+<p>Pour retrouver un angle à partir de \(x\) et \(y\), \(\arctan(y/x)\) ne suffit pas : les points \((1, 1)\) et \((-1, -1)\) donnent le même quotient \(y/x = 1\), alors qu'ils sont dans des directions opposées. La fonction \(\operatorname{atan2}(y, x)\) regarde les signes de \(x\) et de \(y\) séparément et renvoie l'angle dans le bon quadrant, entre \(-180°\) et \(180°\). Sur la figure, faites passer \(Q\) à gauche de l'axe vertical : les deux calculs ne donnent plus le même angle. Attention à l'ordre des arguments : \(y\) d'abord.</p>
+
+<h2>Formules clés</h2>
+\[ x = r\cos\theta \qquad y = r\sin\theta \qquad z = z \]
+\[ r = \sqrt{x^2 + y^2} \qquad \theta = \operatorname{atan2}(y, x) \]
+
+<h2>Questions</h2>
+<ol class="questions">
+<li>Convertissez \(P = (0;\ -2;\ 1)\) en coordonnées cylindriques.
+<details><summary>Voir la réponse</summary>\(r = 2\), \(\theta = \operatorname{atan2}(-2, 0) = -90°\), \(z = 1\).</details></li>
+<li>Un point est en \((r, \theta) = (4;\ 30°)\). Quelles sont ses coordonnées cartésiennes ?
+<details><summary>Voir la réponse</summary>\(x = 4\cos 30° \approx 3{,}46\) et \(y = 4\sin 30° = 2\).</details></li>
+<li>Pourquoi utilise-t-on atan2 plutôt que arctan(y/x) ?
+<details><summary>Voir la réponse</summary>atan2 tient compte des signes de \(x\) et \(y\) et donne le bon quadrant ; arctan(y/x) confond deux directions opposées et n'est pas défini pour \(x = 0\).</details></li>
+<li>Quel type de robot a un espace de travail naturellement décrit en coordonnées cylindriques ?
+<details><summary>Voir la réponse</summary>Le robot cylindrique : une rotation autour de \(Z\) (\(\theta\)), une translation radiale (\(r\)) et une translation verticale (\(z\)).</details></li>
+</ol>
+</main>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/lib.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/pages/coordonnees-cylindriques.js"></script>
+</body>
+</html>

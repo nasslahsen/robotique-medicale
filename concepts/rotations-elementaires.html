@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rotations élémentaires · Robotique médicale</title>
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Rotations élémentaires</h1>
+<p class="chapeau">Les briques de base de toute orientation : une rotation autour d'un seul axe principal, x, y ou z.</p>
+
+<h2>Intuition</h2>
+<p>Une matrice de rotation contient 9 nombres : ce n'est pas intuitif. Mais une rotation autour d'un seul axe est très simple : l'axe de rotation ne bouge pas, et les deux autres axes tournent dans le plan qui lui est perpendiculaire, exactement comme dans le cas plan de la page précédente. Toute orientation pourra ensuite s'obtenir en enchaînant trois de ces rotations simples.</p>
+<p>Les noms viennent de l'aviation et de la navigation : rotation autour de \(z\) = <strong>lacet</strong> (yaw), autour de \(y\) = <strong>tangage</strong> (pitch), autour de \(x\) = <strong>roulis</strong> (roll).</p>
+
+<div id="fig-elem"></div>
+
+<h2>Formalisation</h2>
+<p>Sens positif : règle de la main droite autour de l'axe de rotation. Les trois matrices du cours :</p>
+\[ R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad \text{axe conservé : } \vec{z}_0 = \vec{z}_1 \]
+\[ R_y(\beta) = \begin{pmatrix} \cos\beta & 0 & \sin\beta \\ 0 & 1 & 0 \\ -\sin\beta & 0 & \cos\beta \end{pmatrix} \qquad \text{axe conservé : } \vec{y}_1 = \vec{y}_2 \]
+\[ R_x(\gamma) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\gamma & -\sin\gamma \\ 0 & \sin\gamma & \cos\gamma \end{pmatrix} \qquad \text{axe conservé : } \vec{x}_2 = \vec{x}_s \]
+<p>Dans chaque matrice, la ligne et la colonne de l'axe conservé valent \((0, 1, 0)\) au bon endroit : cet axe est sa propre image.</p>
+<p><strong>Pourquoi le signe moins de \(R_y\) est en bas à gauche.</strong> L'ordre cyclique des axes est \(x \to y \to z \to x\). Pour une rotation autour de \(z\), le plan qui tourne va de \(x\) vers \(y\) ; pour \(x\), de \(y\) vers \(z\) ; pour \(y\), de \(z\) vers \(x\). Dans \(R_y\), le « premier » axe du plan est donc \(z\), et le signe moins se retrouve sur la ligne de \(z\). Avec la figure : choisissez \(y\), un petit angle positif, et regardez \(\vec{x}\) descendre vers \(-\vec{z}\) : sa troisième composante \(-\sin\beta\) est négative.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Rotation de \(90°\) autour de \(z\), puis de \(90°\) autour du nouvel axe \(x\) :</p>
+\[ R_z(90°) = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad R_x(90°) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{pmatrix} \qquad R_z(90°)\,R_x(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix} \]
+<p>Lecture par colonnes : \(\vec{x}_s = \vec{y}_0\), \(\vec{y}_s = \vec{z}_0\), \(\vec{z}_s = \vec{x}_0\). Dans l'ordre inverse, \(R_x(90°)\,R_z(90°) = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & -1 \\ 1 & 0 & 0 \end{pmatrix}\) : une orientation différente. L'ordre des rotations compte.</p>
+
+<h2>Rappel : produit de deux matrices</h2>
+<p>Pour multiplier \(A\) par \(B\), le nombre de colonnes de \(A\) doit être égal au nombre de lignes de \(B\) : \([m \times n] \times [n \times p] = [m \times p]\). L'élément \((i, j)\) du produit est le produit de la ligne \(i\) de \(A\) par la colonne \(j\) de \(B\). En général \(A B \neq B A\) : l'ordre compte. Le produit est associatif, \((AB)C = A(BC)\), ce qui permet d'écrire des chaînes de rotations sans parenthèses.</p>
+
+<h2>Formules clés</h2>
+\[ R_z(\alpha),\ R_y(\beta),\ R_x(\gamma) \text{ (ci-dessus)} \qquad \text{lacet (z), tangage (y), roulis (x)} \qquad A B \neq B A \]
+
+<h2>Questions</h2>
+<ol class="questions">
+<li>Écrivez \(R_y(90°)\). Où va l'axe \(\vec{x}\) ?
+<details><summary>Voir la réponse</summary>\(R_y(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 0 \end{pmatrix}\). Première colonne \((0;\ 0;\ -1)\) : \(\vec{x}\) pointe vers \(-\vec{z}_0\).</details></li>
+<li>Quelle ligne et quelle colonne de \(R_x(\gamma)\) ne dépendent pas de \(\gamma\) ? Pourquoi ?
+<details><summary>Voir la réponse</summary>La première ligne et la première colonne, \((1, 0, 0)\) : l'axe \(x\) est l'axe de rotation, il est conservé.</details></li>
+<li>Que vaut \(R_z(\alpha)\,R_z(\beta)\) ?
+<details><summary>Voir la réponse</summary>\(R_z(\alpha + \beta)\) : deux rotations autour du même axe s'additionnent (formules d'addition du cosinus et du sinus).</details></li>
+</ol>
+</main>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/lib.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/pages/rotations-elementaires.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Produit vectoriel · Robotique médicale</title>
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Produit vectoriel</h1>
+<p class="chapeau">Le produit vectoriel de deux vecteurs fabrique un troisième vecteur, perpendiculaire aux deux premiers. C'est ainsi que l'on construit l'axe \(\vec{z}\) d'un repère à partir de \(\vec{x}\) et \(\vec{y}\).</p>
+
+<h2>Intuition</h2>
+<p>Prenez deux vecteurs \(\vec{u}\) et \(\vec{v}\) qui partent du même point. Ils définissent un plan et un parallélogramme. Le produit vectoriel \(\vec{w} = \vec{u} \wedge \vec{v}\) est la flèche qui sort de ce plan, perpendiculairement, avec une longueur égale à l'aire du parallélogramme. Plus les vecteurs sont « en travers » l'un de l'autre, plus l'aire est grande ; s'ils sont alignés, l'aire et le produit sont nuls.</p>
+<p>Le sens de \(\vec{w}\) est donné par la main droite : on enroule les doigts de \(\vec{u}\) vers \(\vec{v}\), le pouce indique \(\vec{w}\). Si l'on inverse l'ordre, \(\vec{w}\) change de sens.</p>
+
+<div id="fig-pv"></div>
+
+<h2>Formalisation</h2>
+<p>Dans le module de rappel, le produit vectoriel est noté \(\wedge\) ; le chapitre 2 écrit la même opération avec \(\times\) (par exemple \(\vec{z} = \vec{x} \times \vec{y}\)).</p>
+<ol>
+<li><strong>Direction</strong> : \(\vec{w} \perp \vec{u}\) et \(\vec{w} \perp \vec{v}\).</li>
+<li><strong>Norme</strong> : \(\|\vec{w}\| = \|\vec{u}\|\,\|\vec{v}\|\sin\theta\), l'aire du parallélogramme construit sur \(\vec{u}\) et \(\vec{v}\).</li>
+<li><strong>Sens</strong> : règle de la main droite.</li>
+</ol>
+\[ \vec{u} \wedge \vec{v} = -(\vec{v} \wedge \vec{u}) \qquad \vec{u} \wedge (\vec{v} + \vec{t}) = \vec{u} \wedge \vec{v} + \vec{u} \wedge \vec{t} \qquad \vec{u} \wedge \vec{v} = \vec{0} \text{ si } \vec{u} \parallel \vec{v} \]
+<p>En coordonnées, les deux vecteurs étant exprimés dans la même base orthonormée directe :</p>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} u_y v_z - u_z v_y \\ u_z v_x - u_x v_z \\ u_x v_y - u_y v_x \end{pmatrix} \]
+<p>Si les vecteurs sont donnés dans deux bases différentes, \(\vec{V}_1 = a_1 \vec{x}_1 + b_1 \vec{y}_1 + c_1 \vec{z}_1\) et \(\vec{V}_2 = a_2 \vec{x}_2 + b_2 \vec{y}_2 + c_2 \vec{z}_2\), on développe par distributivité en neuf termes \(a_1 a_2 (\vec{x}_1 \wedge \vec{x}_2) + a_1 b_2 (\vec{x}_1 \wedge \vec{y}_2) + \dots\), et chaque produit d'axes se lit dans le tableau ci-dessous.</p>
+
+<h2>L'exercice des deux repères</h2>
+<p>Même situation que pour le produit scalaire : \(R_2\) tourné de \(\alpha\) autour de \(\vec{z}_1 = \vec{z}_2\). Méthode : le résultat est perpendiculaire au plan des deux vecteurs, sa norme vaut le sinus de l'angle orienté du premier vers le second, son sens suit la main droite.</p>
+
+<div id="fig-pv-reperes"></div>
+
+<p>Corrigé du cours :</p>
+<div class="tableau"><table>
+<tr><th>Produit</th><th>Résultat</th><th>Produit</th><th>Résultat</th></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{y}_1\)</td><td>\(\vec{z}_1\)</td><td>\(\vec{y}_1 \wedge \vec{x}_2\)</td><td>\(-\cos\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{x}_2\)</td><td>\(\sin\alpha\ \vec{z}_1\)</td><td>\(\vec{y}_2 \wedge \vec{x}_1\)</td><td>\(-\cos\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{y}_1 \wedge \vec{y}_2\)</td><td>\(\sin\alpha\ \vec{z}_1\)</td><td>\(\vec{y}_2 \wedge \vec{y}_1\)</td><td>\(-\sin\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{z}_2 \wedge \vec{y}_1\)</td><td>\(-\vec{x}_1\)</td><td>\(\vec{x}_2 \wedge \vec{z}_1\)</td><td>\(-\vec{y}_2\)</td></tr>
+<tr><td>\(\vec{z}_2 \wedge \vec{x}_1\)</td><td>\(\vec{y}_1\)</td><td>\(\vec{x}_2 \wedge \vec{x}_1\)</td><td>\(-\sin\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{y}_2\)</td><td>\(\cos\alpha\ \vec{z}_1\)</td><td></td><td></td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\vec{u} = (1;\ 2;\ 0)^T\) et \(\vec{v} = (0;\ 1;\ 3)^T\) :</p>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} 2 \times 3 - 0 \times 1 \\ 0 \times 0 - 1 \times 3 \\ 1 \times 1 - 2 \times 0 \end{pmatrix} = \begin{pmatrix} 6 \\ -3 \\ 1 \end{pmatrix} \]
+<p>Vérification : \(\vec{w} \cdot \vec{u} = 6 - 6 + 0 = 0\) et \(\vec{w} \cdot \vec{v} = 0 - 3 + 3 = 0\) : \(\vec{w}\) est bien perpendiculaire aux deux.</p>
+
+<h2>Rappel : la règle de la main droite</h2>
+<p>Main droite ouverte, doigts dans la direction du premier vecteur ; on les replie vers le second ; le pouce donne le sens du résultat. Avec \(\vec{x}\) puis \(\vec{y}\), le pouce indique \(\vec{z}\). Dans l'ordre cyclique \(x \to y \to z \to x\), le produit de deux axes consécutifs donne le troisième avec un signe +, et avec un signe − dans l'ordre inverse :</p>
+\[ \vec{x} \wedge \vec{y} = \vec{z} \qquad \vec{y} \wedge \vec{z} = \vec{x} \qquad \vec{z} \wedge \vec{x} = \vec{y} \qquad \vec{y} \wedge \vec{x} = -\vec{z} \]
+<p>La même règle fixe le sens positif d'une rotation : pouce le long de l'axe, les doigts enroulés indiquent le sens dans lequel l'angle augmente.</p>
+
+<h2>Formules clés</h2>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} u_y v_z - u_z v_y \\ u_z v_x - u_x v_z \\ u_x v_y - u_y v_x \end{pmatrix} \qquad \|\vec{u} \wedge \vec{v}\| = \|\vec{u}\|\,\|\vec{v}\|\sin\theta \qquad \vec{u} \wedge \vec{v} = -\vec{v} \wedge \vec{u} \]
+
+<h2>Questions</h2>
+<ol class="questions">
+<li>Calculez \(\vec{x} \wedge \vec{y}\) puis \(\vec{y} \wedge \vec{x}\) avec \(\vec{x} = (1;0;0)\) et \(\vec{y} = (0;1;0)\).
+<details><summary>Voir la réponse</summary>\(\vec{x} \wedge \vec{y} = (0;\ 0;\ 1) = \vec{z}\) et, par anticommutativité, \(\vec{y} \wedge \vec{x} = (0;\ 0;\ -1)\).</details></li>
+<li>Deux vecteurs de normes 2 et 3 font un angle de 30°. Quelle est la norme de leur produit vectoriel ?
+<details><summary>Voir la réponse</summary>\(2 \times 3 \times \sin 30° = 3\).</details></li>
+<li>Pourquoi \(\vec{x}_1 \wedge \vec{y}_2 = \cos\alpha\ \vec{z}_1\) ?
+<details><summary>Voir la réponse</summary>Les deux vecteurs sont dans le plan perpendiculaire à \(\vec{z}_1\), donc le résultat est porté par \(\vec{z}_1\). L'angle orienté de \(\vec{x}_1\) vers \(\vec{y}_2\) vaut \(\frac{\pi}{2} + \alpha\), et \(\sin(\frac{\pi}{2} + \alpha) = \cos\alpha\).</details></li>
+<li>Le produit vectoriel de deux vecteurs non nuls est nul. Que peut-on en déduire ?
+<details><summary>Voir la réponse</summary>Ils sont parallèles (colinéaires) : le sinus de leur angle est nul.</details></li>
+</ol>
+</main>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="../assets/js/lib.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/pages/produit-vectoriel.js"></script>
+</body>
+</html>
