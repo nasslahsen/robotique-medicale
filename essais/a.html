@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matrice de rotation · essai A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<style>
+:root {
+  --encre: #15171f; --doux: #5b6172; --pale: #eef0f5; --trait: #e3e6ee;
+  --acc: #3b5bdb; --acc-pale: #e8edff; --ok: #12a26b; --ok-pale: #e3f7ee; --ko: #e5484d; --ko-pale: #fdecec;
+  --x: #e5484d; --y: #12a26b; --z: #3b5bdb; --v: #8b3fd9; --surligne: #ffe066;
+  --rayon: 22px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #fff; color: var(--encre); }
+body { font: 17px/1.5 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+h1, h2, .titre { font-family: "Bricolage Grotesque", Inter, sans-serif; }
+
+/* Barre du haut */
+.barre { height: 72px; display: flex; align-items: center; gap: 28px; padding: 0 32px; }
+.barre h1 { font-size: 26px; font-weight: 800; margin: 0; letter-spacing: -0.01em; white-space: nowrap; }
+.barre .retour { color: var(--doux); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.progres { flex: 1; display: flex; gap: 8px; max-width: 560px; margin-left: auto; }
+.progres button { flex: 1; height: 44px; border: 0; background: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+.progres button span.piste { display: block; height: 8px; border-radius: 8px; background: var(--pale); overflow: hidden; }
+.progres button span.piste i { display: block; height: 100%; width: 0; background: var(--acc); border-radius: 8px; transition: width .6s cubic-bezier(.3, 1.4, .5, 1); }
+.progres button.fait span.piste i { width: 100%; background: var(--ok); }
+.progres button.courant span.piste i { width: 35%; }
+.progres button small { font-size: 12px; color: var(--doux); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.progres button:disabled { cursor: default; }
+.progres button.courant small { color: var(--encre); font-weight: 600; }
+
+/* Deux colonnes : figure et étape */
+.scene { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 28px; padding: 4px 32px 28px; height: calc(100dvh - 72px); }
+.figure { position: relative; border: 1px solid var(--trait); border-radius: var(--rayon); overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+.figure svg { flex: 1; min-height: 0; width: 100%; display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
+.hud { flex: none; display: flex; justify-content: center; align-items: center; border-top: 1px solid var(--trait); background: #fafbfd; padding: 10px 14px; font-size: 18px; min-height: 92px; transition: background .4s; }
+.hud.cache { color: var(--doux); font-size: 15px; }
+.angle { position: absolute; left: 16px; top: 16px; font: 700 22px "Bricolage Grotesque", sans-serif; background: var(--pale); border-radius: 14px; padding: 8px 14px; }
+.astuce { position: absolute; left: 16px; top: 70px; max-width: 46%; color: var(--doux); font-size: 15px; pointer-events: none; }
+
+.panneau { position: relative; overflow: hidden; }
+.etape { position: absolute; inset: 0; overflow-y: auto; padding: 8px 6px 24px 2px; transition: opacity .45s ease, transform .45s cubic-bezier(.2, .8, .2, 1); }
+.etape.sortie { opacity: 0; transform: translateX(-40px); }
+.etape.entree { opacity: 0; transform: translateX(40px); }
+.kicker { font-size: 14px; font-weight: 600; color: var(--acc); text-transform: none; letter-spacing: .02em; margin: 6px 0 8px; }
+.etape h2 { font-size: 31px; line-height: 1.18; font-weight: 800; margin: 0 0 12px; letter-spacing: -0.015em; }
+.consigne { color: var(--doux); margin: 0 0 18px; font-size: 17px; }
+
+.choix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 8px 0 14px; }
+.choix button, .chip { min-height: 92px; border: 2px solid var(--trait); background: #fff; border-radius: 18px; font-size: 19px; cursor: pointer; transition: transform .15s, border-color .2s, background .2s; color: var(--encre); }
+.choix button:active { transform: scale(.97); }
+.choix button.bon { border-color: var(--ok); background: var(--ok-pale); }
+.choix button.faux { border-color: var(--ko); background: var(--ko-pale); }
+.choix.court button { min-height: 64px; }
+.secoue { animation: secoue .4s; }
+@keyframes secoue { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+
+.retour-msg { min-height: 30px; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin: 6px 0; }
+.retour-msg.ko { color: var(--ko); }
+.retour-msg.ok { color: var(--ok); }
+.coche { flex: none; width: 30px; height: 30px; }
+.coche circle { fill: var(--ok); transform-origin: center; animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+.coche path { fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; animation: trace .35s .2s forwards; }
+@keyframes pop { from { transform: scale(0); } }
+@keyframes trace { to { stroke-dashoffset: 0; } }
+
+.explique { border-top: 1px solid var(--trait); margin-top: 14px; padding-top: 14px; opacity: 0; transform: translateY(12px); transition: opacity .5s .15s, transform .5s .15s; display: none; }
+.explique.vu { display: block; }
+.explique.vu.on { opacity: 1; transform: none; }
+.explique p { margin: 0 0 10px; }
+.explique .katex-display { margin: .6em 0; }
+.continuer { margin-top: 10px; height: 58px; padding: 0 30px; border: 0; border-radius: 16px; background: var(--encre); color: #fff; font: 600 18px Inter, sans-serif; cursor: pointer; transition: transform .15s; }
+.continuer:active { transform: scale(.97); }
+.secondaire { height: 52px; padding: 0 22px; border: 2px solid var(--trait); border-radius: 14px; background: #fff; font: 600 16px Inter, sans-serif; cursor: pointer; color: var(--encre); }
+.verifier { height: 58px; padding: 0 30px; border: 0; border-radius: 16px; background: var(--acc); color: #fff; font: 600 18px Inter, sans-serif; cursor: pointer; }
+.verifier:disabled { opacity: .35; }
+
+/* Construire la matrice */
+.atelier { display: flex; align-items: center; gap: 10px; margin: 10px 0 18px; font-size: 22px; }
+.crochet { display: flex; gap: 8px; padding: 10px 12px; border-left: 3px solid var(--encre); border-right: 3px solid var(--encre); border-radius: 10px; }
+.case { width: clamp(78px, 7.6vw, 94px); height: 124px; border: 2px dashed #c6cbd8; border-radius: 14px; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; }
+.case.survol { background: var(--acc-pale); border-color: var(--acc); }
+.case.faux { border-color: var(--ko); background: var(--ko-pale); }
+.case.bon { border-style: solid; border-color: transparent; }
+.reserve { display: flex; gap: 12px; min-height: 140px; align-items: center; flex-wrap: wrap; }
+.chip { width: clamp(78px, 7.6vw, 94px); height: 124px; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; touch-action: none; padding: 0; font-size: 17px; }
+.chip .nom { font-size: 15px; font-weight: 600; }
+.chip.x { border-color: var(--x); } .chip.y { border-color: var(--y); } .chip.z { border-color: var(--z); }
+.chip.vol { position: fixed; z-index: 10; pointer-events: none; box-shadow: 0 14px 30px rgba(20, 23, 31, .18); transform: scale(1.06) rotate(-2deg); }
+.chip.fantome { opacity: .25; }
+
+.recap { margin: 0; padding: 0; list-style: none; }
+.recap li { padding: 10px 0; border-bottom: 1px solid var(--pale); }
+.halo { transform-box: fill-box; transform-origin: center; animation: halo 1.8s ease-in-out infinite; }
+.pulse { transform-box: fill-box; transform-origin: center; animation: halo 2.4s ease-in-out infinite; }
+@keyframes halo { 50% { transform: scale(1.25); opacity: .55; } }
+@media (max-width: 1100px) { .chip { font-size: 15px; } .atelier .titre { font-size: 22px !important; } }
+@media (max-height: 760px) { .etape h2 { font-size: 27px; } .choix button { min-height: 80px; } }
+</style>
+</head>
+<body>
+<header class="barre">
+  <a class="retour" href="index.html">Essais</a>
+  <h1>Matrice de rotation</h1>
+  <nav class="progres" aria-label="Étapes"></nav>
+</header>
+<div class="scene">
+  <div class="figure">
+    <svg id="fig" viewBox="0 0 680 600" aria-label="Repère R0 et repère R1 de l'instrument, vus de dessus"></svg>
+    <div class="angle" id="angle"></div>
+    <div class="hud cache" id="hud"></div>
+    <div class="astuce" id="astuce"></div>
+  </div>
+  <div class="panneau" id="panneau"></div>
+</div>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="commun.js"></script>
+<script src="a.js"></script>
+</body>
+</html>

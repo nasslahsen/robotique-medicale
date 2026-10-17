@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matrice de rotation · essai C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Caveat:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<style>
+:root {
+  --encre: #1c2233; --doux: #5f6677; --papier: #ffffff; --carreau: #e6edf8; --carreau-fort: #d3def0;
+  --bleu: #1f4bd8; --rouge: #d6372b; --vert: #1d8a52; --marge: #f4b9b2;
+  --x: #d6372b; --y: #1d8a52; --z: #1f4bd8; --v: #7b3fc8;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #fff; color: var(--encre); overflow: hidden; }
+body { font: 18px/1.5 "Source Sans 3", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+.main { font-family: Caveat, cursive; }
+
+.tete { height: 78px; display: flex; align-items: center; gap: 22px; padding: 0 34px; }
+.tete a { color: var(--doux); text-decoration: none; font-size: 15px; }
+.tete h1 { font: 800 30px Fraunces, serif; margin: 0; position: relative; letter-spacing: -0.01em; }
+.tete h1 svg { position: absolute; left: -4px; right: -4px; bottom: -10px; width: calc(100% + 8px); height: 14px; }
+.onglets { margin-left: auto; display: flex; gap: 6px; }
+.onglets button { min-width: 112px; height: 50px; border: 1.5px solid #d9dee8; border-bottom: 0; border-radius: 14px 14px 0 0; background: #f7f8fb; font: 600 15px "Source Sans 3", sans-serif; color: var(--doux); cursor: pointer; padding: 0 14px; transform: translateY(14px); transition: transform .25s, background .25s; }
+.onglets button span { font: 700 22px Caveat, cursive; margin-right: 6px; }
+.onglets button.courant { background: #fff; color: var(--encre); transform: translateY(6px); box-shadow: 0 -4px 12px rgba(28, 34, 51, .06); }
+.onglets button.fait span { color: var(--vert); }
+.onglets button:disabled { opacity: .45; cursor: default; }
+
+.cahier { position: relative; margin: 0 26px; height: calc(100dvh - 78px - 22px); display: grid; grid-template-columns: 1.12fr 1fr; border-radius: 6px 6px 18px 18px; box-shadow: 0 18px 50px rgba(28, 34, 51, .12), 0 2px 6px rgba(28, 34, 51, .08); perspective: 2200px; }
+.page { position: relative; overflow: hidden; background-color: var(--papier);
+  background-image: linear-gradient(var(--carreau) 1px, transparent 1px), linear-gradient(90deg, var(--carreau) 1px, transparent 1px);
+  background-size: 24px 24px; }
+.page.gauche { border-radius: 6px 0 0 18px; background-image: none; }
+.page.droite { border-radius: 0 6px 18px 0; transform-origin: left center; transition: transform .38s cubic-bezier(.5, 0, .6, 1), opacity .38s; }
+.page.droite.tourne { transform: rotateY(-88deg); opacity: .4; }
+.page.droite.revient { transition: none; transform: rotateY(60deg); opacity: .4; }
+.reliure { position: absolute; top: 0; bottom: 0; left: calc(52.8% - 14px); width: 28px; background: linear-gradient(90deg, rgba(28,34,51,0) 0%, rgba(28,34,51,.09) 48%, rgba(28,34,51,.16) 50%, rgba(28,34,51,.09) 52%, rgba(28,34,51,0) 100%); pointer-events: none; z-index: 2; }
+.marge { position: absolute; top: 0; bottom: 0; left: 64px; width: 2px; background: var(--marge); opacity: .8; }
+
+#dessin { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; touch-action: none; user-select: none; -webkit-user-select: none; }
+.outils { position: absolute; left: 18px; bottom: 16px; display: flex; gap: 10px; z-index: 3; }
+.outil { height: 50px; padding: 0 18px; border-radius: 25px; border: 1.5px solid #cdd4e1; background: #fff; font: 600 16px "Source Sans 3", sans-serif; cursor: pointer; color: var(--encre); }
+.legende { position: absolute; right: 18px; bottom: 20px; font: 600 22px Caveat, cursive; color: var(--doux); }
+
+.contenu { position: absolute; inset: 0; padding: 30px 40px 28px 96px; overflow-y: auto; }
+.contenu .num { font: 700 30px Caveat, cursive; color: var(--rouge); position: absolute; left: 22px; top: 22px; }
+.contenu h2 { font: 700 30px/1.2 Fraunces, serif; margin: 2px 0 12px; letter-spacing: -0.01em; }
+.contenu .consigne { color: var(--doux); margin: 0 0 14px; }
+.main-note { font: 600 27px/1.25 Caveat, cursive; color: var(--bleu); margin: 10px 0; }
+.main-note.rouge { color: var(--rouge); }
+.main-note.vert { color: var(--vert); }
+.apparait { animation: apparait .55s ease both; }
+@keyframes apparait { from { opacity: 0; transform: translateY(8px); } }
+.explique { margin-top: 12px; padding-top: 4px; }
+.explique p { margin: 6px 0; }
+.suite { margin-top: 16px; height: 56px; padding: 0 26px; border: 0; border-radius: 28px; background: var(--encre); color: #fff; font: 600 18px "Source Sans 3", sans-serif; cursor: pointer; }
+.suite:active, .outil:active, .touche:active { transform: scale(.96); }
+.trait-main { display: inline-block; }
+
+/* Saisie numérique */
+.colonne { display: inline-flex; align-items: center; gap: 12px; margin: 6px 0 10px; font-size: 24px; }
+.cases { display: grid; grid-template-rows: repeat(3, 58px); gap: 8px; padding: 6px 10px; border-left: 3px solid var(--encre); border-right: 3px solid var(--encre); border-radius: 12px; }
+.saisie { width: 132px; border: 2px solid #cdd4e1; border-radius: 12px; background: rgba(255, 255, 255, .85); font: 700 30px Caveat, cursive; color: var(--bleu); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.saisie.active { border-color: var(--bleu); box-shadow: 0 0 0 4px rgba(31, 75, 216, .15); }
+.saisie.bon { border-color: var(--vert); color: var(--vert); }
+.saisie.faux { border-color: var(--rouge); color: var(--rouge); }
+.clavier { display: grid; grid-template-columns: repeat(4, 64px); gap: 8px; margin: 6px 0 4px; }
+.touche { height: 58px; border: 1.5px solid #cdd4e1; border-radius: 14px; background: #fff; font: 700 24px "Source Sans 3", sans-serif; cursor: pointer; color: var(--encre); }
+.touche.large { grid-column: span 2; font-size: 17px; }
+.touche.ok { background: var(--bleu); color: #fff; border-color: var(--bleu); }
+
+/* Copie à corriger */
+.copie { margin: 10px 0; }
+.ligne { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 4px 12px; border-radius: 12px; cursor: pointer; font: 600 27px Caveat, cursive; color: #2a3350; transition: background .2s; position: relative; }
+.ligne:hover { background: rgba(31, 75, 216, .05); }
+.ligne .katex { font-size: 1em; }
+.ligne.juste { color: var(--vert); }
+.ligne.erreur { color: var(--rouge); }
+.ligne .numero { font: 700 20px "Source Sans 3", sans-serif; color: #a2a9b8; width: 22px; }
+.ligne .barre { position: absolute; left: 44px; right: 12px; top: 50%; height: 3px; background: var(--rouge); transform-origin: left; transform: scaleX(0); transition: transform .5s; border-radius: 3px; }
+.ligne.erreur .barre { transform: scaleX(1); }
+.correction { font: 700 28px Caveat, cursive; color: var(--rouge); margin: 0 0 6px 46px; }
+
+/* Fiche */
+.fiche { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-width: 100%; margin: 10px 0; padding: 10px 12px; border-left: 3px solid var(--encre); border-right: 3px solid var(--encre); border-radius: 14px; }
+.postit { position: relative; height: 92px; border: 0; border-radius: 6px; background: #fff7c2; box-shadow: 0 3px 8px rgba(28, 34, 51, .12); cursor: pointer; font: 700 26px Caveat, cursive; color: #8a7a1f; transition: transform .35s, background .3s; transform: rotate(-1.5deg); }
+.postit:nth-child(2n) { transform: rotate(1.2deg); }
+.postit.ouvert .katex { font-size: 1.02em; }
+.postit.ouvert { background: #fff; box-shadow: none; color: var(--encre); transform: none; font: 400 16px "Source Sans 3", sans-serif; cursor: default; }
+.secoue { animation: secoue .4s; }
+@keyframes secoue { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+</style>
+</head>
+<body>
+<header class="tete">
+  <a href="index.html">Essais</a>
+  <h1>Matrice de rotation<svg viewBox="0 0 300 14" preserveAspectRatio="none"><path d="M3 9 C 80 3, 160 12, 297 5" fill="none" stroke="#d6372b" stroke-width="3" stroke-linecap="round"/></svg></h1>
+  <nav class="onglets" id="onglets" aria-label="Pages"></nav>
+</header>
+<div class="cahier">
+  <section class="page gauche">
+    <svg id="dessin" viewBox="0 0 640 640" aria-label="Page de dessin"></svg>
+    <div class="outils" id="outils"></div>
+    <div class="legende" id="legende"></div>
+  </section>
+  <section class="page droite" id="droite"><div class="marge"></div><div class="contenu" id="contenu"></div></section>
+  <div class="reliure"></div>
+</div>
+<script src="../assets/vendor/katex/katex.min.js"></script>
+<script src="../assets/vendor/katex/auto-render.min.js"></script>
+<script src="commun.js"></script>
+<script src="c.js"></script>
+</body>
+</html>

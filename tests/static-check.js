@@ -59,6 +59,30 @@ for (const f of fichiers) {
 }
 if (fs.readdirSync(racine).some(f => /\.pdf$/i.test(f))) err("PDF présent dans le dépôt");
 
+// Essais (prototypes) : pages, scripts, équations écrites dans les chaînes JavaScript
+const dossierEssais = path.join(racine, "essais");
+if (fs.existsSync(dossierEssais)) {
+  for (const f of fs.readdirSync(dossierEssais).filter(f => /\.(html|js)$/.test(f))) {
+    const brut = fs.readFileSync(path.join(dossierEssais, f), "utf8");
+    if (brut.includes("—")) err(`essais/${f} : tiret cadratin`);
+    if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(brut)) err(`essais/${f} : emoji`);
+    if (/\.(png|jpe?g|pdf)\b/i.test(brut)) err(`essais/${f} : référence à une image ou un PDF`);
+    // dans un script, « \\( » s'écrit avec deux barres : on enlève l'échappement JavaScript
+    const s = f.endsWith(".js") ? brut.replace(/\\\\/g, "\\").replace(/\\'/g, "'") : brut;
+    const re = /\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)/g;
+    let x;
+    while ((x = re.exec(s))) {
+      const tex = x[1] !== undefined ? x[1] : x[2];
+      nbMaths++;
+      try { katex.renderToString(tex, { displayMode: x[1] !== undefined, throwOnError: true, strict: "ignore" }); }
+      catch (e) { err(`essais/${f} : KaTeX « ${tex.slice(0, 60)} » : ${e.message}`); }
+    }
+    if (f.endsWith(".html")) for (const l of brut.matchAll(/(?:href|src)="([^"#:]+)(#[^"]*)?"/g)) {
+      if (!fs.existsSync(path.normalize(path.join(dossierEssais, l[1])))) err(`essais/${f} : lien cassé ${l[1]}`);
+    }
+  }
+}
+
 console.log(`${pages.length} pages, ${concepts.filter(c => c.pret).length} concepts prêts, ${nbMaths} équations vérifiées`);
 if (erreurs) { console.error(`${erreurs} erreur(s)`); process.exit(1); }
 console.log("vérification statique réussie");
