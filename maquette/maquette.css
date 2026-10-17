@@ -1,0 +1,100 @@
+/* Maquettes de la plateforme : composants nouveaux, dans le style du site (jeu.css, barre.css, tableau.css). */
+body { min-height: 100dvh; background: #fff; }
+.mq { max-width: 1180px; margin: 0 auto; padding: 28px 40px 70px; }
+.mq h1 { font-size: 44px; line-height: 1.05; letter-spacing: -0.025em; font-weight: 800; margin: 6px 0 8px; }
+.mq .sous { color: var(--doux); font-size: 18px; margin: 0; max-width: 760px; }
+.kick { font: 700 13px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--jeu-texte, var(--jeu)); text-transform: uppercase; }
+.section-titre { margin: 40px 0 16px; padding-top: 14px; border-top: 2px solid var(--encre); display: flex; align-items: baseline; gap: 14px; font-size: 26px; font-weight: 800; letter-spacing: -0.015em; }
+.section-titre small { margin-left: auto; font: 500 15px Inter, sans-serif; color: var(--doux); letter-spacing: 0; }
+a { color: inherit; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.petit { height: 46px; padding: 0 18px; font-size: 16px; border-radius: 14px; box-shadow: 3px 3px 0 var(--encre); }
+.btn.petit.plein { box-shadow: 3px 3px 0 var(--jeu); }
+.puce { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--jeu-pale); color: var(--jeu-texte, var(--jeu)); white-space: nowrap; }
+.puce.gris { background: var(--pale); color: var(--doux); }
+.puce.ok { background: var(--ok-pale); color: #0d7a50; }
+
+/* Fil d'Ariane dans la barre */
+.ariane { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 15px; color: var(--doux); white-space: nowrap; overflow: hidden; }
+.ariane a { color: var(--doux); text-decoration: none; font-weight: 500; }
+.ariane a:hover { color: var(--encre); }
+.ariane .sep { color: #b3b8c4; }
+.ariane b { color: var(--encre); font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+.ariane .pastille { width: 12px; height: 12px; border-radius: 4px; background: var(--jeu); flex: none; }
+.barre-carte { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border: 2px solid var(--encre); border-radius: 12px; font: 600 15px Inter, sans-serif; color: var(--encre); text-decoration: none; white-space: nowrap; background: #fff; }
+.barre-carte svg { width: 18px; height: 18px; }
+
+/* Bouton outil (icône + libellé) */
+.outil { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; font: 600 15px Inter, sans-serif; color: var(--encre); text-decoration: none; cursor: pointer; white-space: nowrap; }
+.outil svg { width: 18px; height: 18px; flex: none; }
+
+/* Anneau de progression */
+.anneau { position: relative; width: 54px; height: 54px; flex: none; }
+.anneau svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.anneau b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 700 13px "JetBrains Mono", monospace; }
+.anneau.grand { width: 120px; height: 120px; }
+.anneau.grand b { font-size: 26px; flex-direction: column; line-height: 1; }
+.anneau.grand b small { font: 500 12px Inter, sans-serif; color: var(--doux); margin-top: 4px; }
+
+/* Ligne de source et étiquette « Ajouté » */
+.source { display: flex; align-items: flex-start; flex-wrap: nowrap; gap: 6px 10px; margin-top: 14px; font-size: 13px; color: #8a90a0; }
+.source svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+.source b { font-weight: 600; color: var(--doux); white-space: nowrap; }
+.ajoute { display: inline-flex; align-items: center; gap: 4px; padding: 0 6px; border: 1.5px dashed #c9a227; border-radius: 6px; font: 600 12px Inter, sans-serif; line-height: 20px; color: #8a6d0f; background: #fffbea; cursor: help; vertical-align: 2px; }
+.ajoute-trait { text-decoration: underline dotted #c9a227 2px; text-underline-offset: 4px; }
+
+/* Cartes génériques */
+.carte { position: relative; border: 2.5px solid var(--encre); border-radius: 24px; background: #fff; box-shadow: 5px 5px 0 var(--encre); }
+.carte.douce { border: 1.5px solid var(--trait); box-shadow: none; background: #fafbfd; }
+
+/* Chronomètre de session */
+.temps { position: sticky; top: 72px; z-index: 15; height: 8px; background: var(--pale); }
+.temps i { display: block; height: 100%; background: var(--jeu); border-radius: 0 8px 8px 0; }
+
+/* Retournement des cartes mémoire */
+.flip { perspective: 1600px; cursor: pointer; }
+.flip-int { position: relative; transition: transform .6s cubic-bezier(.3, .8, .3, 1); transform-style: preserve-3d; }
+.flip.retournee .flip-int { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; padding: 34px 40px; }
+.face.dos { transform: rotateY(180deg); }
+
+/* Choix de quiz */
+.choix-q { display: grid; gap: 12px; }
+.choix-q button { display: flex; align-items: center; gap: 16px; min-height: 70px; padding: 14px 22px; border: 2px solid var(--trait); border-radius: 18px; background: #fff; font: 500 18px Inter, sans-serif; text-align: left; color: var(--encre); cursor: pointer; }
+.choix-q button .lettre { flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--pale); display: flex; align-items: center; justify-content: center; font: 700 15px "JetBrains Mono", monospace; }
+.choix-q button.bon { border-color: var(--ok); background: var(--ok-pale); }
+.choix-q button.bon .lettre { background: var(--ok); color: #fff; }
+.choix-q button.faux { border-color: var(--ko); background: var(--ko-pale); }
+.choix-q button.faux .lettre { background: var(--ko); color: #fff; }
+
+/* Contrôle segmenté */
+.segm { display: inline-flex; gap: 6px; padding: 5px; background: var(--pale); border-radius: 16px; }
+.segm button { height: 48px; min-width: 84px; padding: 0 20px; border: 0; border-radius: 12px; background: transparent; font: 600 17px Inter, sans-serif; color: var(--doux); cursor: pointer; }
+.segm button.on { background: var(--encre); color: #fff; box-shadow: 3px 3px 0 var(--jeu); }
+
+/* Bascule */
+.bascule-mq { display: inline-flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 500; cursor: pointer; }
+.bascule-mq i { position: relative; width: 52px; height: 30px; border-radius: 999px; background: var(--trait); transition: background .15s; }
+.bascule-mq i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: left .15s; }
+.bascule-mq.on i { background: var(--ok); }
+.bascule-mq.on i::after { left: 25px; }
+
+/* Sections dépliables (modules Connaissances) */
+.depli { border: 1.5px solid var(--trait); border-radius: 18px; background: #fff; margin: 10px 0; overflow: hidden; }
+.depli > summary { list-style: none; display: flex; align-items: center; gap: 14px; padding: 18px 22px; cursor: pointer; font-size: 18px; }
+.depli > summary::-webkit-details-marker { display: none; }
+.depli > summary b { font-weight: 700; }
+.depli > summary span { color: var(--doux); }
+.depli > summary .plus { margin-left: auto; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--pale); display: flex; align-items: center; justify-content: center; font: 700 20px Inter, sans-serif; color: var(--encre); transition: transform .2s; }
+.depli[open] > summary .plus { transform: rotate(45deg); }
+.depli > div { padding: 0 22px 20px 22px; border-top: 1.5px solid var(--trait); padding-top: 16px; }
+
+/* Tableaux */
+.tab { width: 100%; border-collapse: collapse; font-size: 16px; }
+.tab th, .tab td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--trait); vertical-align: top; }
+.tab th { background: var(--fond, #f6f7fa); font-weight: 600; }
+.tab-cadre { border: 1.5px solid var(--trait); border-radius: 16px; overflow: hidden; }
+
+/* Lien vers le sommaire des maquettes */
+.vers-sommaire { position: fixed; left: 12px; bottom: 12px; z-index: 50; display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 10px; background: rgba(21, 23, 31, .62); color: #fff; font: 600 13px Inter, sans-serif; text-decoration: none; }

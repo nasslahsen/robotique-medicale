@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mode examen · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.reglage { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: center; padding: 22px 0; border-bottom: 1.5px solid var(--trait); }
+.reglage h3 { margin: 0; font-size: 20px; }
+.reglage p { margin: 4px 0 0; font-size: 14px; color: var(--doux); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip-on { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 16px; border: 2px solid var(--encre); border-radius: 14px; background: var(--jeu-pale); font: 600 15px Inter, sans-serif; cursor: pointer; }
+.chip-on svg { width: 18px; height: 18px; color: var(--jeu); }
+.chip-on.off { background: #fff; border-color: var(--trait); color: var(--doux); }
+.chip-on.off svg { visibility: hidden; width: 0; margin-right: -8px; }
+.recap-ex { margin-top: 28px; display: flex; align-items: center; gap: 22px; padding: 22px 26px; border-radius: 22px; background: var(--encre); color: #fff; }
+.recap-ex b { font: 700 28px "JetBrains Mono", monospace; display: block; }
+.recap-ex span { color: #c9ccd6; font-size: 14px; }
+.recap-ex .btn { margin-left: auto; background: #fff; color: var(--encre); border-color: #fff; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-a.html">Robotique médicale</a><span class="sep">›</span><b>Mode examen</b></nav>
+  <div class="droite"><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
+</div></header>
+<main class="mq" style="max-width:980px"><span class="kick">MODE EXAMEN · ROBOTIQUE MÉDICALE</span><h1>Un examen blanc, tout le module mélangé.</h1>
+<p class="sous">Les questions viennent des quiz et des cartes de tous les chapitres choisis. À la fin : ton score par chapitre et chaque erreur reliée à sa page.</p>
+<div class="reglage"><div><h3>Nombre de questions</h3><p>Tirées au hasard</p></div><div class="segm"><button type="button">10</button><button type="button" class="on">20</button><button type="button">30</button></div></div>
+<div class="reglage"><div><h3>Chronomètre</h3><p>Environ 1 minute par question</p></div><div style="display:flex;align-items:center;gap:20px"><span class="bascule-mq on"><i></i>Chronométré</span><span style="color:var(--doux)">20 min, comme en examen</span></div></div>
+<div class="reglage"><div><h3>Chapitres inclus</h3><p>Touche pour enlever un chapitre</p></div><div class="chips">
+<span class="chip-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>0 · Les bases</span><span class="chip-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>1 · Le robot et sa description</span><span class="chip-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>2 · Repères et vecteurs</span><span class="chip-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>3 · Orientations</span><span class="chip-on off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>4 · Transformations</span></div></div>
+<div class="reglage" style="border:0"><div><h3>Retour</h3><p>Pendant ou à la fin</p></div><div class="segm"><button type="button">Après chaque question</button><button type="button" class="on">À la fin seulement</button></div></div>
+<div class="recap-ex"><div><b>20 questions · 20 min</b><span>Chapitres 0 à 3 · Robotique biomédicale</span></div><a class="btn" href="examen-resultats.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>Commencer l'examen</a></div>
+</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="maquette.js"></script>
+</body>
+</html>

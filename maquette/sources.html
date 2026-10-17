@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sources et ajouts · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="../commun/css/tableau.css">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body class="">
+<style>
+.compteur { font: 700 16px "JetBrains Mono", monospace; }
+.paquet { height: 8px; border-radius: 8px; background: var(--pale); overflow: hidden; margin: 6px 0 26px; }
+.paquet i { display: block; height: 100%; width: 33%; background: var(--jeu); }
+.flip { width: 820px; height: 420px; margin: 0 auto; }
+.flip-int { width: 100%; height: 100%; }
+.face { border: 2.5px solid var(--encre); border-radius: 28px; background: #fff; box-shadow: 6px 6px 0 var(--encre); }
+.face.dos { background: #fff; border-color: var(--jeu); box-shadow: 6px 6px 0 var(--jeu); }
+.face .q { margin: auto 0; font: 800 34px/1.2 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.015em; }
+.face .rep { margin: 18px 0 0; font-size: 22px; line-height: 1.45; font-weight: 500; }
+.face .formule { margin: 18px 0 0; padding: 14px; border-radius: 16px; background: #f6f7fa; text-align: center; font-size: 22px; }
+.face .indice { font-size: 15px; color: var(--doux); display: flex; align-items: center; gap: 8px; }
+.face .indice svg { width: 18px; height: 18px; }
+.face .haut { display: flex; justify-content: space-between; align-items: center; }
+.reponses { width: 820px; margin: 30px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.reponses a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 10px; border: 2.5px solid var(--encre); border-radius: 18px; background: #fff; text-decoration: none; color: var(--encre); box-shadow: 4px 4px 0 var(--encre); }
+.reponses a b { font-size: 19px; }
+.reponses a span { font-size: 14px; color: var(--doux); }
+.reponses a.r1 { border-color: var(--ko); box-shadow: 4px 4px 0 var(--ko); }
+.reponses a.r3 { border-color: var(--ok); box-shadow: 4px 4px 0 var(--ok); }
+.aide-flip { text-align: center; margin-top: 18px; color: var(--doux); font-size: 15px; }
+.katex { font-size: 1.05em; }
+</style>
+<style>
+.trois { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.etiq { font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--doux); margin-bottom: 10px; display: block; }
+.extrait { padding: 26px 28px; border: 1.5px solid var(--trait); border-radius: 20px; background: #fff; }
+.extrait h3 { margin: 0 0 8px; font-size: 24px; }
+.extrait p { margin: 0 0 10px; font-size: 17px; line-height: 1.6; }
+.extrait .formule { margin: 12px 0; padding: 12px; border-radius: 14px; background: #f6f7fa; text-align: center; font-size: 19px; }
+.flip { width: 100%; height: 330px; cursor: default; }
+.face .rep { font-size: 19px; }
+.face .formule { font-size: 19px; }
+.retour-mini { padding: 20px 22px; border-radius: 20px; border: 2.5px solid var(--ok); background: var(--ok-pale); }
+.retour-mini > b { font-size: 20px; color: #0d7a50; }
+.retour-mini p { margin: 8px 0 0; font-size: 16px; line-height: 1.55; }
+.regles { margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.7; }
+</style>
+<header class="site-barre"><div class="site-barre-int">
+  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-a.html">Robotique médicale</a><span class="sep">›</span><b>Sources et ajouts</b></nav>
+  <div class="droite"><a class="barre-carte" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
+</div></header>
+<main class="mq"><span class="kick">COMMENT LES SOURCES S'AFFICHENT</span>
+<h1>D'où vient chaque chose</h1>
+<p class="sous">Une ligne grise discrète en bas de chaque bloc : le PDF et les diapos. Ce qui ne vient pas des diapos porte l'étiquette <span class="ajoute">Ajouté</span>. Touche-la pour voir ce qu'elle dit.</p>
+
+<h2 class="section-titre">Sur une page de cours</h2>
+<div class="extrait"><h3>Rotations élémentaires</h3>
+<p>Une rotation autour d'un seul axe garde cet axe fixe. Autour de \(z\), seules les composantes en \(x\) et \(y\) changent :</p>
+<div class="formule">\[R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\]</div>
+<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 25–28</b></span></div>
+<p style="margin-top:20px">Exemple : avec \(\alpha = 30^\circ\), le point \((1\,;\,0\,;\,0)\) arrive en \((0{,}87\,;\,0{,}5\,;\,0)\). <span class="ajoute">Ajouté</span></p>
+<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>exemple calculé avec la formule des diapos 25–28</b></span></div></div>
+
+<h2 class="section-titre">Sur une carte et dans un retour de quiz</h2>
+<div class="trois"><div><span class="etiq">VERSO D'UNE CARTE</span>
+<div class="flip retournee"><div class="flip-int">
+  <div class="face"><div class="haut"><span class="kick">CHAPITRE 3 · ORIENTATIONS</span><span class="indice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="7" width="14" height="13" rx="2.5"/><path d="M7 4h11.5A2.5 2.5 0 0 1 21 6.5V17"/></svg>Recto</span></div>
+    <p class="q"></p><span class="indice">Touche la carte pour voir la réponse</span></div>
+  <div class="face dos"><div class="haut"><span class="kick">CHAPITRE 3 · ORIENTATIONS</span><span class="indice">Verso</span></div>
+    <p class="rep">En ZYX, l'angle \(\beta\) tourne autour de l'axe \(y\) déjà tourné, pas autour du \(y\) fixe.</p><div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div><div style="margin-top:auto"><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 34–36</b></span></div></div></div>
+</div></div></div>
+<div><span class="etiq">RETOUR D'UNE QUESTION DE QUIZ</span><div class="retour-mini"><b>Juste</b>
+<p>Une matrice de rotation est orthonormée : son inverse est sa transposée, donc pas besoin de calculer l'inverse.</p>
+<div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 19–24</b></span></div>
+<p style="margin-top:14px">Astuce pour le vérifier vite : le produit \(R\,R^T\) doit donner l'identité. <span class="ajoute">Ajouté</span></p></div></div></div>
+
+<h2 class="section-titre">Les règles</h2>
+<ul class="regles">
+<li>Chaque page, carte et question a sa ligne de source : nom du PDF et numéros de diapos.</li>
+<li>Un exemple, une astuce ou un rappel qui n'est pas dans les diapos porte l'étiquette « Ajouté », à l'endroit exact.</li>
+<li>Touché, « Ajouté » affiche : « Pas dans les diapos, à vérifier ».</li>
+<li>Le chapitre 0 « Les bases » est entièrement ajouté : l'étiquette est sur le bloc, pas sur chaque ligne.</li>
+</ul>
+</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<script src="../commun/vendor/katex/katex.min.js"></script>
+<script src="../commun/vendor/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>
+<script src="maquette.js"></script>
+</body>
+</html>
