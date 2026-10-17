@@ -1,9 +1,10 @@
 # Style spec: the course as a game
 
-Chosen from the three prototypes in `essais/`: the structure of A (short stages that unlock, figure beside the challenge) with the game feel of B (missions, dial, live dashboard, success panel). Built for iPad in landscape, touch and Apple Pencil. Everything on screen is in French, with the course's notation.
+The structure of prototype A (short stages that unlock, figure beside the challenge) with the game feel of prototype B (missions, dial, live dashboard, success panel); the prototypes themselves were removed once the style was chosen. Built for iPad in landscape, touch and Apple Pencil. Everything on screen is in French, with the course's notation.
 
 ## Structure
 
+- **Two tabs** in a shared top bar (`assets/css/onglets.css`): **Jeu** (the map) and **Cours** (the course pages). A level with a course page shows a "Cours" button next to "Carte"; a course page shows "Jouer le niveau".
 - **Map** (`index.html`): the whole course as a path of levels grouped in chapters. A finished level shows its stars, the next one pulses, later ones are locked. Each chapter ends with a boss level. Progress is saved in the browser of the iPad (`localStorage`); "Tout débloquer" opens every level.
 - **Level** (`jouer.html#<id>`): 3 to 6 stages. A stage is one challenge; the next stage unlocks when it is solved. A level ends on a results panel with 1 to 3 stars.
 - **Stars**: 3 stars with no mistake, 2 with one or two, 1 otherwise. Replaying keeps the best score.

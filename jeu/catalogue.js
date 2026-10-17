@@ -1,6 +1,7 @@
 /*
  * Chapitres et niveaux, dans l'ordre du parcours.
- * ancien : page de l'ancienne version, proposée tant que le niveau n'est pas prêt.
+ * cours : le niveau a une page de cours, concepts/<id>.html (onglet Cours).
+ * revision, boss : niveaux de fin de chapitre. pret : niveau jouable.
  */
 window.CATALOGUE = {
   chapitres: [
@@ -22,36 +23,36 @@ window.CATALOGUE = {
     { id: "revision-bases", chapitre: 0, titre: "Révision : les bases", revision: true, pret: true },
     { id: "boss-bases", chapitre: 0, titre: "Le bras qui vise", boss: true, pret: true },
 
-    { id: "robot-systeme", chapitre: 1, titre: "Le robot et le système robotisé", ancien: "robot-systeme", pret: true },
-    { id: "anatomie", chapitre: 1, titre: "Anatomie d'un robot", ancien: "anatomie", pret: true },
-    { id: "articulations-ddl", chapitre: 1, titre: "Articulations et DDL", ancien: "articulations-ddl", pret: true },
-    { id: "liaisons", chapitre: 1, titre: "Liaisons normalisées", ancien: "liaisons", pret: true },
-    { id: "schemas-topologies", chapitre: 1, titre: "Schémas et topologies", ancien: "schemas-topologies", pret: true },
-    { id: "architectures", chapitre: 1, titre: "Architectures et espace de travail", ancien: "architectures", pret: true },
-    { id: "performances", chapitre: 1, titre: "Précision et temps de cycle", ancien: "performances", pret: true },
-    { id: "robotique-medicale", chapitre: 1, titre: "Spécificités du médical", ancien: "robotique-medicale", pret: true },
+    { id: "robot-systeme", chapitre: 1, titre: "Le robot et le système robotisé", cours: true, pret: true },
+    { id: "anatomie", chapitre: 1, titre: "Anatomie d'un robot", cours: true, pret: true },
+    { id: "articulations-ddl", chapitre: 1, titre: "Articulations et DDL", cours: true, pret: true },
+    { id: "liaisons", chapitre: 1, titre: "Liaisons normalisées", cours: true, pret: true },
+    { id: "schemas-topologies", chapitre: 1, titre: "Schémas et topologies", cours: true, pret: true },
+    { id: "architectures", chapitre: 1, titre: "Architectures et espace de travail", cours: true, pret: true },
+    { id: "performances", chapitre: 1, titre: "Précision et temps de cycle", cours: true, pret: true },
+    { id: "robotique-medicale", chapitre: 1, titre: "Spécificités du médical", cours: true, pret: true },
     { id: "revision-robot", chapitre: 1, titre: "Révision : le robot", revision: true, pret: true },
     { id: "boss-robot", chapitre: 1, titre: "Fiche d'identité d'un robot", boss: true, pret: true },
 
-    { id: "repere", chapitre: 2, titre: "Repère et coordonnées", ancien: "repere", pret: true },
-    { id: "produit-scalaire", chapitre: 2, titre: "Produit scalaire", ancien: "produit-scalaire", pret: true },
-    { id: "produit-vectoriel", chapitre: 2, titre: "Produit vectoriel", ancien: "produit-vectoriel", pret: true },
-    { id: "coordonnees-cylindriques", chapitre: 2, titre: "Coordonnées cylindriques", ancien: "coordonnees-cylindriques", pret: true },
-    { id: "position-chasles", chapitre: 2, titre: "Position et relation de Chasles", ancien: "position-chasles", pret: true },
+    { id: "repere", chapitre: 2, titre: "Repère et coordonnées", cours: true, pret: true },
+    { id: "produit-scalaire", chapitre: 2, titre: "Produit scalaire", cours: true, pret: true },
+    { id: "produit-vectoriel", chapitre: 2, titre: "Produit vectoriel", cours: true, pret: true },
+    { id: "coordonnees-cylindriques", chapitre: 2, titre: "Coordonnées cylindriques", cours: true, pret: true },
+    { id: "position-chasles", chapitre: 2, titre: "Position et relation de Chasles", cours: true, pret: true },
     { id: "revision-espace", chapitre: 2, titre: "Révision : l'espace", revision: true, pret: true },
     { id: "boss-espace", chapitre: 2, titre: "Où est l'instrument ?", boss: true, pret: true },
 
-    { id: "matrice-rotation", chapitre: 3, titre: "Matrice de rotation", pret: true },
-    { id: "so3", chapitre: 3, titre: "Le groupe SO(3)", ancien: "so3", pret: true },
-    { id: "rotations-elementaires", chapitre: 3, titre: "Rotations élémentaires", ancien: "rotations-elementaires", pret: true },
-    { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", ancien: "angles-euler", pret: true },
+    { id: "matrice-rotation", chapitre: 3, titre: "Matrice de rotation", cours: true, pret: true },
+    { id: "so3", chapitre: 3, titre: "Le groupe SO(3)", cours: true, pret: true },
+    { id: "rotations-elementaires", chapitre: 3, titre: "Rotations élémentaires", cours: true, pret: true },
+    { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", cours: true, pret: true },
     { id: "revision-orientations", chapitre: 3, titre: "Révision : les orientations", revision: true, pret: true },
     { id: "boss-orientations", chapitre: 3, titre: "Décode la pince", boss: true, pret: true },
 
-    { id: "changement-repere", chapitre: 4, titre: "Changement de repère", ancien: "changement-repere", pret: true },
-    { id: "matrice-homogene", chapitre: 4, titre: "Matrice homogène", ancien: "matrice-homogene", pret: true },
-    { id: "composition", chapitre: 4, titre: "Composition des transformations", ancien: "composition", pret: true },
-    { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", ancien: "bras-2r", pret: true },
+    { id: "changement-repere", chapitre: 4, titre: "Changement de repère", cours: true, pret: true },
+    { id: "matrice-homogene", chapitre: 4, titre: "Matrice homogène", cours: true, pret: true },
+    { id: "composition", chapitre: 4, titre: "Composition des transformations", cours: true, pret: true },
+    { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", cours: true, pret: true },
     { id: "revision-transformations", chapitre: 4, titre: "Révision : les transformations", revision: true, pret: true },
     { id: "boss-transformations", chapitre: 4, titre: "Le bras 2R atteint la cible", boss: true, pret: true }
   ]
