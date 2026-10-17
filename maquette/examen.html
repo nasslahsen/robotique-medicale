@@ -1,27 +1,28 @@
 <!doctype html>
-<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844;--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Examen blanc · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="notion.css">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="ux.css">
 </head>
-<body>
-<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Examen blanc</span><div class="droite"></div></header>
-<div class="couverture basse"></div><main class="page">
-<div class="icone-page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg></div>
-<h1>Examen blanc</h1>
-<p class="chapeau">Des questions de tout le module, mélangées. Le score et les erreurs à la fin.</p>
-<div class="props">
-<div class="prop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h14M5 15h14M10 4l-2 16M16 4l-2 16"/></svg>Questions</span><div class="segm"><button type="button">10</button><button type="button" class="on">20</button><button type="button">30</button></div></div>
-<div class="prop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>Chapitres</span><div class="puces"><button type="button">Les bases</button><button type="button">Le robot et sa description</button><button type="button">Repères et vecteurs</button><button type="button">Orientations</button><button type="button">Transformations</button></div></div>
-<div class="prop"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/></svg>Chronomètre</span><button class="bascule" type="button" data-cible="duree"><i></i></button></div>
-<div class="prop" id="duree" hidden><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2"/></svg>Durée</span><div class="segm"><button type="button">15 min</button><button type="button" class="on">20 min</button><button type="button">30 min</button></div></div>
+<body class="carte-jeu">
+<header class="site-barre"><div class="site-barre-int"><a class="monter" href="reviser.html" aria-label="Remonter d'un niveau"></a><nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau.html" title="Semestre 5">Semestre 5</a><span class="sep">/</span><span class="pastille"></span><a href="module.html" title="Robotique médicale">Robotique médicale</a><span class="sep">/</span><b title="Examen blanc">Examen blanc</b></nav><div class="droite"></div></div></header>
+<main class="activite">
+<span class="kick">Réviser</span>
+<h1 style="font-size:44px">Examen blanc</h1>
+<p class="sous" style="color:var(--doux);font-size:19px;margin:0">Des questions de tout le module, mélangées. Ton score et tes erreurs à la fin.</p>
+<div class="reglages-ex">
+<div class="reglage"><span>Questions</span><div class="choix-seg"><button type="button">10</button><button type="button" class="on">20</button><button type="button">30</button></div></div>
+<div class="reglage"><span>Chronomètre<small>Désactivé par défaut</small></span><button class="inter" type="button"><i></i></button></div>
 </div>
-<div class="zone-action" style="margin-top:36px"><a class="action pleine" href="examen-resultats.html">Commencer</a></div>
+<details class="tog grand" style="margin-top:8px"><summary>Chapitres : tous</summary><div class="dedans"><div class="puces"><button type="button">0 · Les bases</button><button type="button">1 · Le robot et sa description</button><button type="button">2 · Repères et vecteurs</button><button type="button">3 · Orientations</button><button type="button">4 · Transformations</button></div></div></details>
+<div class="fin-act"><a class="btn" href="examen-resultats.html">Commencer l'examen</a></div>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>
 </body>

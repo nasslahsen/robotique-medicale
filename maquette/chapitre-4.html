@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844;--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chapitre 4 · Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="ux.css">
+</head>
+<body class="carte-jeu">
+<header class="site-barre"><div class="site-barre-int"><a class="monter" href="module.html" aria-label="Remonter d'un niveau"></a><nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau.html" title="Semestre 5">Semestre 5</a><span class="sep">/</span><span class="pastille"></span><a href="module.html" title="Robotique médicale">Robotique médicale</a><span class="sep">/</span><b title="Transformations">Transformations</b></nav><div class="droite"></div></div></header>
+<main class="page etroite">
+<span class="kick">Chapitre 4</span>
+<h1>Transformations</h1>
+<p class="sous">Changement de repère, matrices homogènes, bras 2R.</p>
+<div class="zone-action"><a class="btn" href="lecon.html">Commencer : Changement de repère</a><span class="apres">Leçon 4.1</span></div>
+<details class="tog" style="margin-top:14px"><summary>Où se place ce chapitre</summary><div class="dedans">Chapitre 4 sur 5. Il s'appuie sur <a class="lien-doux" href="chapitre-1.html">Le robot et sa description</a> et <a class="lien-doux" href="chapitre-3.html">Orientations</a>. C'est le dernier chapitre du sous-module.</div></details>
+<h2 class="titre-section">Les idées clés</h2>
+<ol class="idees"><li><div><p>Changer de repère, c'est une rotation puis une translation.</p><details class="tog"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 46–48</div></details></div></li><li><div><p>La matrice homogène réunit les deux dans une seule matrice 4 × 4.</p><details class="tog"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 49–51</div></details></div></li><li><div><p>Les transformations se composent par produit : on obtient la position de l'outil du bras 2R.</p><details class="tog"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 52–56</div></details></div></li></ol>
+<h2 class="titre-section">Après ce chapitre, tu sauras</h2>
+<ul class="sauras"><li>Écrire une matrice homogène.</li><li>Composer des transformations.</li><li>Trouver la position de l'outil d'un bras 2R.</li></ul>
+<h2 class="titre-section">Les leçons</h2>
+<div class="lecons"><a class="lecon-l" href="lecon.html"><span class="n">4.1</span>Changement de repère<span class="fin"><span class="chev"></span></span></a><a class="lecon-l" href="lecon.html"><span class="n">4.2</span>Matrice homogène<span class="fin"><span class="chev"></span></span></a><a class="lecon-l" href="lecon.html"><span class="n">4.3</span>Composition des transformations<span class="fin"><span class="chev"></span></span></a><a class="lecon-l" href="lecon.html"><span class="n">4.4</span>Le bras 2R<span class="fin"><span class="chev"></span></span></a></div>
+<h2 class="titre-section">Fin du chapitre</h2>
+<div class="lecons"><a class="lecon-l" href="lecon.html"><span class="n">RÉV</span>Révision : les transformations<span class="fin"><span class="chev"></span></span></a><a class="lecon-l" href="lecon.html"><span class="n">DÉFI</span>Le bras 2R atteint la cible<span class="fin"><span class="chev"></span></span></a><a class="lecon-l" href="quiz.html"><span class="n">QUIZ</span>Quiz du chapitre<span class="fin"><span class="chev"></span></span></a></div>
+
+</main><a class="vers-sommaire" href="index.html">Maquettes</a>
+<script src="../commun/vendor/katex/katex.min.js"></script>
+<script src="../commun/vendor/katex/auto-render.min.js"></script>
+<script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>
+<script src="maquette.js"></script>
+</body>
+</html>
