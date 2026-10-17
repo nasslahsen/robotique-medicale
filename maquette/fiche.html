@@ -1,38 +1,37 @@
 <!doctype html>
-<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844;--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fiche de révision · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="notion.css">
+<link rel="stylesheet" href="../commun/css/cours.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="ux.css">
 </head>
-<body>
-<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg>Fiche de révision</span><div class="droite"><button class="lien" type="button" onclick="window.print()">Imprimer</button></div></header>
-<div class="couverture"></div><main class="page">
-<div class="icone-page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg></div>
+<body class="">
+<header class="site-barre"><div class="site-barre-int"><a class="monter" href="reviser.html" aria-label="Remonter d'un niveau"></a><nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau.html" title="Semestre 5">Semestre 5</a><span class="sep">/</span><span class="pastille"></span><a href="module.html" title="Robotique médicale">Robotique médicale</a><span class="sep">/</span><b title="Fiche · Robotique biomédicale">Fiche · Robotique biomédicale</b></nav><div class="droite"><button class="action-barre" type="button" onclick="window.print()">Imprimer</button></div></div></header>
+<main>
+<p class="etiquette">Fiche de révision · sous-module</p>
 <h1>Robotique biomédicale</h1>
 <p class="chapeau">Les formules, le vocabulaire et les pièges du sous-module, sur une page.</p>
 <h2>Formules</h2>
-<table class="tab"><tbody><tr><td style="width:230px;color:var(--txt2)">Identité de base</td><td><div class="formule">\(\cos^2\theta + \sin^2\theta = 1\)</div></td></tr><tr><td style="width:230px;color:var(--txt2)">Matrice de rotation</td><td><div class="formule">\(R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\)</div></td></tr><tr><td style="width:230px;color:var(--txt2)">Inverse</td><td><div class="formule">\(R^{-1} = R^{T}, \qquad \det R = 1\)</div></td></tr><tr><td style="width:230px;color:var(--txt2)">Rotation autour de z</td><td><div class="formule">\(R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\)</div></td></tr><tr><td style="width:230px;color:var(--txt2)">Angles d'Euler ZYX</td><td><div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div></td></tr><tr><td style="width:230px;color:var(--txt2)">Matrice homogène</td><td><div class="formule">\(T^{0,1} = \begin{bmatrix} R^{0,1} & \vec{p}^{\,0} \\ 0\;0\;0 & 1 \end{bmatrix}\)</div></td></tr></tbody></table>
-<details class="tog source ajout"><summary>Ajouté</summary><div class="dedans">L'identité de base est un prérequis, pas dans les diapos.</div></details>
-<details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 12–18, 19–24, 25–28, 34–45, 46–50</div></details>
+<div class="cles-carte">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\] \[R^{-1} = R^{T}, \qquad \det R = 1\] \[R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\] \[R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\]</div>
+<details class="tog"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 12–45</div></details>
 <h2>Vocabulaire</h2>
-<table class="tab"><tbody>
-<tr><td style="width:230px;font-weight:500">Degré de liberté</td><td>Un mouvement indépendant du robot : une translation ou une rotation.</td></tr>
-<tr><td style="font-weight:500">Liaison rotoïde</td><td>Articulation qui tourne autour d'un axe, notée R.</td></tr>
-<tr><td style="font-weight:500">Liaison prismatique</td><td>Articulation qui glisse le long d'un axe, notée P.</td></tr>
-<tr><td style="font-weight:500">Espace de travail</td><td>L'ensemble des positions que l'outil peut atteindre.</td></tr></tbody></table>
-<details class="tog source"><summary>Source</summary><div class="dedans">Partie 2 ch. 1, diapos 8–15 ; Semaine 1, diapos 31–33</div></details>
+<div class="tableau"><table><tbody>
+<tr><td><strong>Degré de liberté</strong></td><td>Un mouvement indépendant du robot : une translation ou une rotation.</td></tr>
+<tr><td><strong>Liaison rotoïde</strong></td><td>Articulation qui tourne autour d'un axe, notée R.</td></tr>
+<tr><td><strong>Liaison prismatique</strong></td><td>Articulation qui glisse le long d'un axe, notée P.</td></tr>
+<tr><td><strong>Espace de travail</strong></td><td>L'ensemble des positions que l'outil peut atteindre.</td></tr></tbody></table></div>
+<details class="tog"><summary>Source</summary><div class="dedans">Partie 2 ch. 1, diapos 8–15 ; Semaine 1, diapos 31–33</div></details>
 <h2>À ne pas confondre</h2>
-<div class="teinte"><ul style="margin:0;padding-left:22px;font-size:18px">
-<li>L'ordre des rotations compte : \(R_z R_y \neq R_y R_z\).</li>
-<li>Les colonnes de \(R^{0,1}\) sont les axes de \(R_1\) vus depuis \(R_0\), pas l'inverse.</li>
-<li>En ZYX, \(\beta = \pm 90^\circ\) donne une singularité.</li></ul></div>
-<details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 15, 30–31, 41–43</div></details>
+<ul><li>L'ordre des rotations compte : \(R_z R_y \neq R_y R_z\).</li><li>Les colonnes de \(R^{0,1}\) sont les axes de \(R_1\) vus depuis \(R_0\), pas l'inverse.</li><li>En ZYX, \(\beta = \pm 90^\circ\) donne une singularité.</li></ul>
+<details class="tog"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 15, 30–31, 41–43</div></details>
+<div class="zone-action" style="margin-top:64px;padding-top:24px;border-top:2px solid var(--encre)"><a class="btn" href="cartes.html" style="display:inline-flex;align-items:center;text-decoration:none">Me tester avec les cartes</a></div>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>

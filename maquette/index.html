@@ -1,39 +1,51 @@
 <!doctype html>
-<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
+<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844;--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maquettes · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="notion.css">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../commun/css/jeu.css">
+<link rel="stylesheet" href="../commun/css/barre.css">
+<link rel="stylesheet" href="ux.css">
 </head>
-<body>
+<body class="carte-jeu">
 <style>
-.ecran { display: flex; align-items: center; gap: 16px; min-height: 68px; border-bottom: 1px solid var(--ligne); font-size: 18px; }
-.ecran:first-child { border-top: 1px solid var(--ligne); }
-.ecran .n { width: 28px; color: var(--txt3); }
-.ecran .liens { margin-left: auto; display: flex; gap: 8px; }
-.ecran .liens a { min-height: 46px; min-width: 52px; padding: 0 14px; font-size: 16px; }
+.ecran { display: flex; align-items: center; gap: 16px; min-height: 66px; border-bottom: 1px solid var(--trait); font-size: 18px; }
+.ecran .n { width: 30px; font: 700 14px "JetBrains Mono", monospace; color: var(--doux); }
+.ecran .liens { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.ecran .liens a { height: 44px; padding: 0 14px; display: inline-flex; align-items: center; border: 2px solid var(--encre); border-radius: 12px; font: 600 15px Inter, sans-serif; color: var(--encre); text-decoration: none; background: #fff; }
+.parcours-mq { margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.7; }
+.parcours-mq li { margin-bottom: 8px; }
 </style>
-<header class="haut"><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Maquettes</span><div class="droite"></div></header>
-<div class="couverture grise basse"></div><main class="page">
-<div class="icone-page" style="color:#37352f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg></div>
-<h1>Maquettes</h1>
-<p class="chapeau">Style Notion : propre, avec la couleur de chaque module. Tout est cliquable, rien n'est enregistré, les chiffres sont inventés.</p>
-<div style="margin-top:34px">
-<div class="ecran"><span class="n">1</span>Tableau de bord<div class="liens"><a class=second href=tableau-a.html>A</a><a class=second href=tableau-b.html>B</a></div></div>
-<div class="ecran"><span class="n">2</span>Carte du module<div class="liens"><a class=second href=carte-a.html>A</a><a class=second href=carte-b.html>B</a></div></div>
-<div class="ecran"><span class="n">3</span>Vue d'un chapitre<div class="liens"><a class=second href=chapitre-a.html>A</a><a class=second href=chapitre-b.html>B</a></div></div>
-<div class="ecran"><span class="n">4</span>Cartes mémoire<div class="liens"><a class=second href=cartes.html>Ouvrir</a></div></div>
-<div class="ecran"><span class="n">5</span>Quiz du chapitre<div class="liens"><a class=second href=quiz.html#juste>Juste</a><a class=second href=quiz.html#faux>Faux</a></div></div>
-<div class="ecran"><span class="n">6</span>Examen blanc<div class="liens"><a class=second href=examen.html>Réglages</a><a class=second href=examen-resultats.html>Résultats</a></div></div>
-<div class="ecran"><span class="n">7</span>Fiche de révision<div class="liens"><a class=second href=fiche.html>Ouvrir</a></div></div>
-<div class="ecran"><span class="n">8</span>Session de 10 min<div class="liens"><a class=second href=session.html>Pendant</a><a class=second href=session-page.html>Page</a><a class=second href=session-fin.html>Fin</a></div></div>
-<div class="ecran"><span class="n">9</span>Module Connaissances<div class="liens"><a class=second href=connaissances.html>Ouvrir</a></div></div>
-<div class="ecran"><span class="n">10</span>Sources et ajouts<div class="liens"><a class=second href=sources.html>Ouvrir</a></div></div>
-</div>
+<header class="site-barre"><div class="site-barre-int"><span class="site-marque">Maquettes</span></div></header><main class="page etroite">
+<span class="kick">Nouvelle organisation · données fictives</span>
+<h1>Tableau de bord › Module › Chapitre › Leçon</h1>
+<p class="sous">Le style du site ne change pas. Partout : la flèche en haut à gauche remonte d'un niveau, le fil d'Ariane dit où tu es, l'action principale est le bouton noir.</p>
+<h2 class="titre-section">Les écrans</h2>
+<div class="ecran"><span class="n">1</span>Tableau de bord<div class="liens"><a href=tableau.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">2</span>Module : Apprendre (carte)<div class="liens"><a href=module.html>Ouvrir</a><a href=module.html#nouveau>Avec un nouveau chapitre</a></div></div>
+<div class="ecran"><span class="n">3</span>Module : Réviser<div class="liens"><a href=reviser.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">4</span>Chapitre<div class="liens"><a href=chapitre-0.html>0</a><a href=chapitre-1.html>1</a><a href=chapitre-2.html>2</a><a href=chapitre-3.html>3</a><a href=chapitre-4.html>4</a></div></div>
+<div class="ecran"><span class="n">5</span>Leçon : Pratiquer<div class="liens"><a href=lecon.html>Ouvrir</a><a href=lecon-fin.html>Fin</a><a href=lecon-fin-chapitre.html>Fin du chapitre</a></div></div>
+<div class="ecran"><span class="n">6</span>Leçon : Relire<div class="liens"><a href=relire.html>3.3</a><a href=relire-bases.html>0.1, ajoutée</a></div></div>
+<div class="ecran"><span class="n">7</span>Leçon d'un module Connaissances<div class="liens"><a href=lecon-notes.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">8</span>Cartes mémoire<div class="liens"><a href=cartes.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">9</span>Quiz du chapitre<div class="liens"><a href=quiz.html#juste>Juste</a><a href=quiz.html#faux>Faux</a></div></div>
+<div class="ecran"><span class="n">10</span>Examen blanc<div class="liens"><a href=examen.html>Réglages</a><a href=examen-resultats.html>Résultats</a></div></div>
+<div class="ecran"><span class="n">11</span>Fiche de révision<div class="liens"><a href=fiche.html>Ouvrir</a></div></div>
+<div class="ecran"><span class="n">12</span>Session de 10 min<div class="liens"><a href=session.html>Cartes</a><a href=session-lecon.html>Leçon</a><a href=session-fin.html>Fin</a></div></div>
+<h2 class="titre-section">Les parcours à essayer</h2>
+<ol class="parcours-mq">
+<li><b>Continuer :</b> <a class="lien-doux" href="tableau.html">tableau de bord</a> → Continuer → la leçon → Continuer → fin de leçon → Leçon suivante.</li>
+<li><b>Réviser avant un examen :</b> <a class="lien-doux" href="module.html">module</a> → onglet Réviser → Examen blanc → Commencer → Revoir mes erreurs.</li>
+<li><b>Relire une notion :</b> <a class="lien-doux" href="reviser.html">Réviser</a> → Toutes les leçons → une leçon ; ou, dans une leçon, Relire en haut à droite.</li>
+<li><b>Ouvrir un chapitre directement :</b> <a class="lien-doux" href="module.html">carte du module</a> → touche n'importe quel bloc.</li>
+<li><b>Un cours ajouté :</b> <a class="lien-doux" href="module.html#nouveau">module avec la ligne « Nouveau »</a>.</li>
+<li><b>Fil d'Ariane long :</b> <a class="lien-doux" href="lecon-notes.html">leçon d'Architecture hospitalière</a>, les éléments du milieu sont raccourcis.</li>
+</ol>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>
 </body>

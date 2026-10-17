@@ -30,6 +30,26 @@
     if (location.hash === "#faux") repondre(z.querySelector("button:not([data-juste])"));
   });
 
+  // Étape de leçon : une erreur donne une aide et laisse réessayer, la bonne réponse montre l'explication
+  tous(".choix[data-niveau]", function (z) {
+    z.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (z.classList.contains("fini")) return;
+        if (!b.hasAttribute("data-juste")) { b.classList.add("faux"); document.getElementById("niv-aide").hidden = false; return; }
+        z.classList.add("fini"); b.classList.add("bon");
+        document.getElementById("niv-aide").hidden = true;
+        document.getElementById("niv-bon").hidden = false;
+      });
+    });
+  });
+  // Éléments montrés seulement avec une ancre (« Nouveau » sur l'accueil du module)
+  tous("[data-si-hash]", function (e) { if (location.hash === "#" + e.getAttribute("data-si-hash")) e.hidden = false; });
+  // Contrôles segmentés et interrupteurs de la maquette d'examen
+  tous(".choix-seg", function (s) {
+    s.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); }); });
+  });
+  tous(".inter", function (b) { b.addEventListener("click", function () { b.classList.toggle("on"); }); });
+
   // Contrôles segmentés, bascules, puces de chapitres
   tous(".segm", function (s) {
     s.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); }); });

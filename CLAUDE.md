@@ -145,33 +145,23 @@ formules en direct. Sous chaque figure : une ligne « Essaie : … Observe : …
 - Dessins qui remplissent le cadre, traits épais, étiquettes qui ne se chevauchent pas (halo blanc).
 - Pas de barre latérale, pas de table des matières, pas de décoration sans rôle.
 
-### Principe permanent : propre et calme, façon Notion
+### Principe permanent : une organisation claire, sans encombrement
 
-L'interface est propre et calme, avec de la couleur et une personnalité, comme une page Notion. Le problème à éviter
-n'est jamais la couleur, c'est l'encombrement : trop de petites étiquettes, de badges et de petits textes
-surstimulent l'utilisatrice. Ces règles passent avant toute autre considération de design :
+Le style visuel du site ne change pas (polices, couleurs, contours, ombres, composants ci-dessus). Ce qui compte,
+c'est l'organisation. Trop de petites étiquettes, de badges et de petits textes surstimulent l'utilisatrice :
 
-- **Pages** : fond blanc, beaucoup d'espace, hiérarchie nette (grands titres de page, texte courant lisible),
-  Inter partout. Texte `#37352f`, texte secondaire `#787774`, traits `#e9e9e7`.
-- **En-tête de module** : une bande de couverture douce dans la couleur du module (du `clair` vers la `couleur`),
-  une icône au trait simple dans un carré blanc qui chevauche la couverture, puis le titre. Pas d'emoji.
-- **Tableau de bord** : les modules en galerie, comme une vue galerie Notion : bande de couleur, titre,
-  sous-modules en étiquettes douces (fond `clair`, texte `texte`), exactement comme les étiquettes Notion.
-- **Teintes claires** (`clair` du module, ou les teintes Notion vert, rouge, jaune, gris) en fond de bloc seulement
-  pour regrouper ce qui va ensemble : le chapitre en cours, la formule clé, un retour de quiz. Jamais en décoration.
-- **Bascules** (▸ qui se déplie, façon Notion) pour tout ce qui est secondaire : sources, dépendances, détails.
-  Sous un bloc, une bascule grise « Source » affiche « Chapitre 2, diapos 14–16 » ; ce qui ne vient pas des diapos
-  a une bascule « Ajouté » en jaune.
-- Traits fins gris clair, coins arrondis, survol et toucher doux (léger fond gris).
-- **Une seule action principale par écran**, nettement la plus visible : un bouton plein dans la couleur du module.
-  Le reste est secondaire et discret.
-- **Pas d'encombrement** : pas d'étiquettes, badges ou compteurs sur chaque élément, pas de petit texte inutile.
-- **La progression** est une seule barre fine, là où elle compte (en-tête du module, résultats, haut d'une série).
-- Pas de chronomètre visible par défaut (sessions, mode examen) : il est optionnel.
-- Aucune animation qui pulse, clignote ou tourne en boucle. Du mouvement seulement en retour bref d'une action.
-- Les figures interactives des niveaux gardent toutes leurs couleurs (axes, accents, réussite, erreur).
+- Une hiérarchie unique, partout : Tableau de bord › Module › Chapitre › Leçon.
+- Une barre identique sur chaque écran : à gauche, la flèche qui remonte d'un niveau puis le fil d'Ariane
+  (les éléments du milieu se raccourcissent, jamais sur deux lignes) ; au centre, sur un module, les onglets
+  Apprendre | Réviser ; à droite, au plus une action secondaire.
+- Une seule action principale par écran, le bouton noir : sous le titre sur les pages de navigation, en bas à droite
+  dans les activités.
+- Le secondaire (sources, dépendances, détails) derrière une bascule ▸, pas affiché partout.
+- Pas d'étiquettes, badges ou compteurs sur chaque élément. La progression est montrée une fois, là où elle compte ;
+  les étoiles seulement sur l'écran de fin d'une leçon.
+- Pas de chronomètre visible par défaut. Aucune animation qui pulse ou tourne en boucle.
 
-Les maquettes de référence sont dans `maquette/` (publiées à `/maquette/`, générées avec `maquette/notion.css`).
+Les maquettes de cette organisation sont dans `maquette/` (publiées à `/maquette/`).
 
 ## 8. Contenu et écriture
 
