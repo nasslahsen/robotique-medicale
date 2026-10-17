@@ -39,13 +39,13 @@
     var noeuds = [];
     liste.forEach(function (n, i) {
       if (n.chapitre !== ch.id) return;
-      numero++;
+      if (!n.boss && !n.revision) numero++;
       var st = statut[i], k = noeuds.length, rangee = Math.floor(k / 4), col = rangee % 2 === 0 ? k % 4 : 3 - (k % 4);
-      var el = E.h(st === "ferme" || (st === "bientot" && !n.ancien) ? "div" : "a", "noeud " + st + (n.boss ? " boss" : ""), "", grille);
+      var el = E.h(st === "ferme" || (st === "bientot" && !n.ancien) ? "div" : "a", "noeud " + st + (n.boss ? " boss" : "") + (n.revision ? " revision" : ""), "", grille);
       el.style.gridRow = rangee + 1; el.style.gridColumn = col + 1;
       if (st !== "ferme" && st !== "bientot") el.href = "jouer.html#" + n.id;
       if (st === "bientot" && n.ancien) el.href = "concepts/" + n.ancien + ".html";
-      E.h("div", "rond", n.boss ? "<span>BOSS</span>" : String(numero), el);
+      E.h("div", "rond", n.boss ? "<span>BOSS</span>" : n.revision ? "<span>RÉV</span>" : String(numero), el);
       E.h("div", "nomn", n.titre, el);
       if (st === "bientot") E.h("div", "ancien", n.ancien ? "bientôt · page de cours" : "bientôt", el);
       else {
@@ -72,6 +72,12 @@
     addEventListener("resize", relier);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(relier);
   });
+
+  // fin de la carte : la suite du cours viendra ici
+  var fini = liste.every(function (n, i) { return !n.pret || statut[i] === "fait"; });
+  var suite = E.h("section", "chapitre a-venir", "", zone);
+  E.h("header", "", '<span class="num">LA SUITE</span><h2>Prochains chapitres</h2>', suite);
+  E.h("div", "a-venir-carte", (fini ? "<b>Tout le cours actuel est terminé.</b> " : "") + "Les chapitres suivants s'ajouteront ici, au fil du cours.", suite);
 
   var bT = document.getElementById("tout");
   bT.textContent = libre ? "Remettre le déblocage dans l'ordre" : "Tout débloquer";
