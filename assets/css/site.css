@@ -96,7 +96,7 @@ th { font-weight: 600; background: var(--fond-doux); }
 /* ---------- Figures interactives : cartes ---------- */
 .fig { margin: 28px 0 36px; padding: 18px; background: var(--fond-doux); border: 1.5px solid var(--trait); border-radius: 28px; }
 .fig svg.dessin {
-  display: block; width: 100%; height: auto; max-height: 72vh;
+  display: block; width: 100%; height: auto; max-height: 72vh; margin: 0 auto;
   border: 1.5px solid var(--trait); border-radius: var(--rayon); background: #fff;
   touch-action: pan-y; user-select: none; -webkit-user-select: none;
 }

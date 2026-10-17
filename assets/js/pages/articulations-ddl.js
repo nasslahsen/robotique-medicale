@@ -9,6 +9,7 @@
       "<strong>Observe</strong> : le vecteur \\(q\\) a une ligne par articulation, mais l'outil n'a jamais plus de 3 DDL dans le plan. Avec un robot PP, l'outil ne peut plus tourner."
   });
   var P = R.plan(300, 300, 72);
+  var TEINTES = ["#ff8a5c", "#8b3fd9", "#3b5bdb", "#12a26b", "#ff8a5c", "#8b3fd9"];
   var g = R.el("g", null, f.svg);
   var b = R.boutons(f.reglages);
   var joints = [];
@@ -70,32 +71,37 @@
 
   function dessiner() {
     R.vider(g);
-    for (var i = -4; i <= 4; i++) R.ligne(g, P.p([i, -4]), P.p([i, 2.4]), { couleur: C.trait, epaisseur: 1 });
-    for (i = -4; i <= 2; i++) R.ligne(g, P.p([-4.2, i]), P.p([4.2, i]), { couleur: C.trait, epaisseur: 1 });
     var vals = joints.map(function (j) { return j.v; }), ps = pose(joints, vals), pts = ps.pts;
-    R.el("rect", { x: P.p([0, 0])[0] - 30, y: P.p([0, 0])[1] + 10, width: 60, height: 20, rx: 4, fill: "#7a8492" }, g);
+    // échelle adaptée à la portée maximale de la chaîne, pour que le bras remplisse la figure
+    var portee = joints.reduce(function (a, j) { return a + (j.t === "R" ? L : 1.6); }, 0) + 0.6;
+    P = R.plan(300, 250, Math.max(80, Math.min(150, 210 / portee)));
+    R.grille(g, P, f.svg, { pas: 0.5, fort: 2 });
+    R.el("rect", { x: P.p([0, 0])[0] - 34, y: P.p([0, 0])[1] + 12, width: 68, height: 22, rx: 5, fill: "#5b6172" }, g);
     var phi = 0;
     joints.forEach(function (j, k) {
       var a = P.p(pts[k]), bb = P.p(pts[k + 1]);
       if (j.t === "R") {
         phi += j.v * R.DEG;
-        R.el("line", { x1: a[0], y1: a[1], x2: bb[0], y2: bb[1], stroke: "#5c7fa8", "stroke-width": 12, "stroke-linecap": "round" }, g);
-        R.el("circle", { cx: a[0], cy: a[1], r: 11, fill: "#fff", stroke: C.fonce, "stroke-width": 2.5 }, g);
+        R.el("line", { x1: a[0], y1: a[1], x2: bb[0], y2: bb[1], stroke: TEINTES[k], "stroke-width": 16, "stroke-linecap": "round" }, g);
+        R.el("circle", { cx: a[0], cy: a[1], r: 12, fill: "#fff", stroke: C.fonce, "stroke-width": 3 }, g);
         R.el("circle", { cx: a[0], cy: a[1], r: 3, fill: C.fonce }, g);
       } else {
         var u = [Math.cos(phi), -Math.sin(phi)], n = [-u[1], u[0]];
         // fourreau fixe puis tige coulissante
-        var fe = m.add(a, m.scale(u, 26));
-        R.polygone(g, [m.add(a, m.scale(n, 11)), m.add(fe, m.scale(n, 11)), m.add(fe, m.scale(n, -11)), m.add(a, m.scale(n, -11))], { remplissage: "#c9d3df", couleur: C.fonce, epaisseur: 1.5 });
-        R.el("line", { x1: a[0], y1: a[1], x2: bb[0], y2: bb[1], stroke: "#b5651d", "stroke-width": 9, "stroke-linecap": "round" }, g);
+        var fe = m.add(a, m.scale(u, 44));
+        R.el("line", { x1: a[0], y1: a[1], x2: bb[0], y2: bb[1], stroke: TEINTES[k], "stroke-width": 10, "stroke-linecap": "round" }, g);
+        R.polygone(g, [m.add(a, m.scale(n, 11)), m.add(fe, m.scale(n, 11)), m.add(fe, m.scale(n, -11)), m.add(a, m.scale(n, -11))], { remplissage: "#fff", couleur: C.fonce, epaisseur: 3 });
         phi += Math.PI / 2;
       }
-      R.texte(g, "q" + (k + 1), m.add(P.p(m.scale(m.add(pts[k], pts[k + 1]), 0.5)), [0, -16]), { couleur: j.t === "R" ? "#3d5f88" : "#b5651d", taille: 15 });
+      // étiquette décalée perpendiculairement au segment, pour ne pas le recouvrir
+      var pa = P.p(pts[k]), pb = P.p(pts[k + 1]), dd = m.sub(pb, pa), ll = Math.hypot(dd[0], dd[1]) || 1, nn = [dd[1] / ll, -dd[0] / ll];
+      if (nn[1] > 0) nn = [-nn[0], -nn[1]];
+      R.texte(g, "q", m.add(m.scale(m.add(pa, pb), 0.5), m.scale(nn, 24)), { couleur: TEINTES[k], taille: 18, gras: true, ind: String(k + 1) });
     });
     // repère de l'effecteur
     var tip = [ps.x, ps.y];
-    R.repere2D(g, P, tip, [Math.cos(ps.phi), Math.sin(ps.phi)], [-Math.sin(ps.phi), Math.cos(ps.phi)], { longueur: 0.55, indice: "T", epaisseur: 2.5, origine: false });
-    R.point(g, P.p(tip), { couleur: C.acc, r: 6 });
+    R.repere2D(g, P, tip, [Math.cos(ps.phi), Math.sin(ps.phi)], [-Math.sin(ps.phi), Math.cos(ps.phi)], { longueur: 50 / P.s, ecartNom: 18 / P.s / 0.16, indice: "T", epaisseur: 3, origine: false });
+    R.point(g, P.p(tip), { couleur: C.acc, r: 8, contour: "#fff" });
 
     var n = joints.length, d = ddlEffecteur(joints);
     var qTex = joints.map(function (j, k) { return (j.t === "R" ? "\\theta_{" + (k + 1) + "}" : "d_{" + (k + 1) + "}"); });

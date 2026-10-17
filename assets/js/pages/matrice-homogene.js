@@ -3,12 +3,12 @@
   var R = RM, C = R.C, m = R.m;
 
   var f = R.figure("fig-homog", {
-    hauteur: 450,
+    largeur: 960, hauteur: 540,
     titre: "Matrice homogène du solide S et point M",
     essai: "<strong>Essaie</strong> : déplace \\(O_s\\) et fais tourner le solide. Puis coche « Vu depuis le solide ». " +
       "<strong>Observe</strong> : la quatrième colonne (orange) suit la position de \\(O_s\\), les trois premières (rouge, vert, bleu) suivent l'orientation. Vu depuis le solide, c'est \\(R_0\\) qui semble bouger, et la scène est décrite par l'inverse \\(T^{s,0}\\)."
   });
-  var P = R.plan(300, 225, 70);
+  var P = R.plan(400, 350, 125);
   var g = R.el("g", null, f.svg), gp = R.el("g", null, f.svg);
   var b0 = R.boutons(f.reglages);
   R.bouton(b0, "Exemple de la page", function () { Os = [1, 2]; ca.set(90); cmx.set(0.5); cmy.set(0); dessiner(); });
@@ -30,29 +30,29 @@
     var vue = depuisS.checked ? Ti : m.identite(4);
     var W = function (p3) { var q = m.appliquer(vue, p3); return P.p([q[0], q[1]]); };
     var dirW = function (d3) { var q = m.matVec(m.blocR(vue), d3); return q; };
-    for (var i = -4; i <= 4; i++) { R.ligne(g, P.p([i, -3]), P.p([i, 3]), { couleur: C.trait, epaisseur: 1 }); }
-    for (i = -3; i <= 3; i++) { R.ligne(g, P.p([-4.2, i]), P.p([4.2, i]), { couleur: C.trait, epaisseur: 1 }); }
+    R.grille(g, P, f.svg, { pas: 0.5, fort: 2, axes: false });
     // repère R0
     var o0 = W([0, 0, 0]), x0 = dirW([1, 0, 0]), y0 = dirW([0, 1, 0]);
-    R.fleche(g, o0, m.add(o0, [x0[0] * 70, -x0[1] * 70]), { couleur: C.gris, epaisseur: 2.5 });
-    R.fleche(g, o0, m.add(o0, [y0[0] * 70, -y0[1] * 70]), { couleur: C.gris, epaisseur: 2.5 });
-    R.texte(g, "x", m.add(o0, [x0[0] * 84, -x0[1] * 84]), { couleur: C.gris, ind: "0" });
-    R.texte(g, "y", m.add(o0, [y0[0] * 84, -y0[1] * 84]), { couleur: C.gris, ind: "0" });
-    R.texte(g, "O₀", m.add(o0, [-14, 18]), { taille: 17 });
+    R.fleche(g, o0, m.add(o0, [x0[0] * 90, -x0[1] * 90]), { couleur: C.doux, epaisseur: 3 });
+    R.fleche(g, o0, m.add(o0, [y0[0] * 90, -y0[1] * 90]), { couleur: C.doux, epaisseur: 3 });
+    R.texte(g, "x", m.add(o0, [x0[0] * 108, -x0[1] * 108]), { couleur: C.doux, ind: "0" });
+    R.texte(g, "y", m.add(o0, [y0[0] * 108, -y0[1] * 108]), { couleur: C.doux, ind: "0" });
+    R.el("circle", { cx: o0[0], cy: o0[1], r: 7, fill: "#fff", stroke: C.fonce, "stroke-width": 2.5 }, g);
+    R.texte(g, "O₀", m.add(o0, [-x0[0] * 24 - y0[0] * 24, x0[1] * 24 + y0[1] * 24]), { taille: 19 });
     // repère Rs
     var os = W([Os[0], Os[1], 0]), xs = dirW([Math.cos(a), Math.sin(a), 0]), ys = dirW([-Math.sin(a), Math.cos(a), 0]);
-    R.fleche(g, os, m.add(os, [xs[0] * 64, -xs[1] * 64]), { couleur: C.x, epaisseur: 3 });
-    R.fleche(g, os, m.add(os, [ys[0] * 64, -ys[1] * 64]), { couleur: C.y, epaisseur: 3 });
-    R.texte(g, "x", m.add(os, [xs[0] * 78, -xs[1] * 78]), { couleur: C.x, ind: "s" });
-    R.texte(g, "y", m.add(os, [ys[0] * 78, -ys[1] * 78]), { couleur: C.y, ind: "s" });
-    R.texte(g, "Oₛ", m.add(os, [-14, 20]), { taille: 17 });
-    R.fleche(g, o0, os, { couleur: C.acc, epaisseur: 3 });
+    R.fleche(g, o0, os, { couleur: C.acc, epaisseur: 4 });
+    R.fleche(g, os, m.add(os, [xs[0] * 86, -xs[1] * 86]), { couleur: C.x, epaisseur: 3.5 });
+    R.fleche(g, os, m.add(os, [ys[0] * 86, -ys[1] * 86]), { couleur: C.y, epaisseur: 3.5 });
+    R.texte(g, "x", m.add(os, [xs[0] * 104, -xs[1] * 104]), { couleur: C.x, ind: "s" });
+    R.texte(g, "y", m.add(os, [ys[0] * 104, -ys[1] * 104]), { couleur: C.y, ind: "s" });
+    R.texte(g, "Oₛ", m.add(os, [-xs[0] * 26 - ys[0] * 26, xs[1] * 26 + ys[1] * 26]), { taille: 19 });
     var mp = W(M);
-    R.fleche(g, os, mp, { couleur: C.v, epaisseur: 3 });
-    R.point(g, mp, { couleur: C.v, r: 6 });
-    R.texte(g, "M", m.add(mp, [14, -14]), { couleur: C.v, gras: true });
+    R.fleche(g, os, mp, { couleur: C.v, epaisseur: 4 });
+    R.point(g, mp, { couleur: C.v, r: 8, contour: "#fff" });
+    R.texte(g, "M", m.add(mp, [18, -18]), { couleur: C.v, gras: true, taille: 22 });
     if (!depuisS.checked) R.poignee(f.svg, gp, os, function (q) { var w = P.inv(q); Os = [Math.max(-3.5, Math.min(3.5, Math.round(w[0] * 10) / 10)), Math.max(-2.5, Math.min(2.5, Math.round(w[1] * 10) / 10))]; dessiner(); });
-    R.texte(g, depuisS.checked ? "Vue depuis Rₛ : Rₛ est fixe, R₀ semble bouger" : "Vue depuis R₀", [300, 432], { italique: false, taille: 15, couleur: C.doux });
+    R.texte(g, depuisS.checked ? "Vue depuis Rₛ : Rₛ est fixe, R₀ semble bouger" : "Vue depuis R₀", [480, 520], { italique: false, taille: 17, couleur: C.doux });
 
     var cols = [C.x, C.y, C.z, C.acc];
     var cellT = function (i, j, t) { return i === 3 ? R.couleur(C.gris, t) : R.couleur(cols[j], t); };

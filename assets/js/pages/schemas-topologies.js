@@ -10,7 +10,7 @@
       essai: "<strong>Essaie</strong> : coche « Trace de P », fais varier \\(\\theta_1\\) et \\(\\theta_2\\), puis passe de « plan » à « spatial ». " +
         "<strong>Observe</strong> : avec des axes parallèles, P reste dans un plan horizontal (schéma plan suffisant) ; avec \\(\\vec{z}_0 \\perp \\vec{z}_1\\), P sort de ce plan et il faut un schéma spatial."
     });
-    var V = R.vue3D(300, 330, 120, -40 * R.DEG, 24 * R.DEG);
+    var V = R.vue3D(300, 360, 145, -40 * R.DEG, 24 * R.DEG);
     var g = R.el("g", null, f.svg);
     var b = R.boutons(f.reglages);
     var mode = R.choix(b, [["spatial", "Schéma spatial : z₀ ⊥ z₁"], ["plan", "Schéma plan : z₀ ∥ z₁"]], function () { trace = []; dessiner(); });
@@ -28,7 +28,7 @@
       var n = [d[1] / l, -d[0] / l];
       if (n[1] > 0 || (Math.abs(n[1]) < 1e-6 && n[0] > 0)) n = [-n[0], -n[1]];
       var dist = 14 + 32 * Math.abs(n[0]);
-      R.texte(g, txt, m.add(m.scale(m.add(pa, pb), 0.5), m.scale(n, dist)), { couleur: couleur, italique: false, taille: 14 });
+      R.texte(g, txt, m.add(m.scale(m.add(pa, pb), 0.5), m.scale(n, dist)), { couleur: couleur, italique: false, taille: 15, gras: true });
     }
 
     function dessiner() {
@@ -47,26 +47,26 @@
         P = m.add(O2, m.matVec(m.Rz(t1 + t2), [L2, 0, 0]));
       }
       // bâti et sol
-      R.polygone(g, [V.p([-1.6, -1.6, 0]), V.p([1.6, -1.6, 0]), V.p([1.6, 1.6, 0]), V.p([-1.6, 1.6, 0])], { remplissage: "#f3f5f8", couleur: C.trait });
-      if (!spatial) R.polygone(g, [V.p([-2.2, -2.2, H]), V.p([2.2, -2.2, H]), V.p([2.2, 2.2, H]), V.p([-2.2, 2.2, H])], { remplissage: "rgba(46,125,50,0.06)", couleur: "rgba(46,125,50,0.35)" });
-      R.el("line", { x1: V.p([0, 0, 0])[0], y1: V.p([0, 0, 0])[1], x2: V.p(O1)[0], y2: V.p(O1)[1], stroke: "#7a8492", "stroke-width": 12 }, g);
-      R.texte(g, "bâti 0", m.add(V.p([0, 0, 0]), [0, 22]), { italique: false, couleur: C.doux, taille: 14 });
-      // axes des pivots
-      R.ligne(g, V.p(m.add(O1, [0, 0, -0.5])), V.p(m.add(O1, [0, 0, 0.9])), { couleur: C.z, tirets: "6 5", epaisseur: 2 });
-      R.texte(g, "z₀", V.p(m.add(O1, [0, 0, 1.0])), { couleur: C.z, gras: true });
-      R.ligne(g, V.p(m.add(O2, m.scale(z1, -0.6))), V.p(m.add(O2, m.scale(z1, 0.6))), { couleur: C.x, tirets: "6 5", epaisseur: 2 });
-      R.texte(g, "z₁", V.p(m.add(O2, m.scale(z1, 0.72))), { couleur: C.x, gras: true });
+      R.polygone(g, [V.p([-1.3, -1.3, 0]), V.p([1.3, -1.3, 0]), V.p([1.3, 1.3, 0]), V.p([-1.3, 1.3, 0])], { remplissage: "#f6f7fa", couleur: "#d9dde6", epaisseur: 1.5 });
+      if (!spatial) R.polygone(g, [V.p([-1.6, -1.6, H]), V.p([1.6, -1.6, H]), V.p([1.6, 1.6, H]), V.p([-1.6, 1.6, H])], { remplissage: "rgba(18,162,107,0.07)", couleur: "rgba(18,162,107,0.4)", epaisseur: 1.5 });
+      R.el("line", { x1: V.p([0, 0, 0])[0], y1: V.p([0, 0, 0])[1], x2: V.p(O1)[0], y2: V.p(O1)[1], stroke: "#5b6172", "stroke-width": 16, "stroke-linecap": "round" }, g);
+      R.texte(g, "bâti 0", m.add(V.p([0, 0, 0]), [0, 26]), { italique: false, couleur: C.doux, taille: 15 });
       // trace
       if (ctrace.checked) { trace.push(P); if (trace.length > 800) trace.shift(); }
-      if (ctrace.checked && trace.length > 1) R.el("polyline", { points: trace.map(function (q) { return V.p(q).join(","); }).join(" "), fill: "none", stroke: C.acc, "stroke-width": 2, opacity: 0.75 }, g);
+      if (ctrace.checked && trace.length > 1) R.el("polyline", { points: trace.map(function (q) { return V.p(q).join(","); }).join(" "), fill: "none", stroke: C.acc, "stroke-width": 2.5, opacity: 0.75 }, g);
       // solides
-      R.el("line", { x1: V.p(O1)[0], y1: V.p(O1)[1], x2: V.p(O2)[0], y2: V.p(O2)[1], stroke: "#5e3a99", "stroke-width": 10, "stroke-linecap": "round" }, g);
-      R.el("line", { x1: V.p(O2)[0], y1: V.p(O2)[1], x2: V.p(P)[0], y2: V.p(P)[1], stroke: "#d0603a", "stroke-width": 9, "stroke-linecap": "round" }, g);
-      [O1, O2].forEach(function (o) { var q = V.p(o); R.el("circle", { cx: q[0], cy: q[1], r: 9, fill: "#fff", stroke: C.fonce, "stroke-width": 2 }, g); });
-      R.point(g, V.p(P), { couleur: C.acc, r: 7 });
+      R.el("line", { x1: V.p(O1)[0], y1: V.p(O1)[1], x2: V.p(O2)[0], y2: V.p(O2)[1], stroke: "#8b3fd9", "stroke-width": 14, "stroke-linecap": "round" }, g);
+      R.el("line", { x1: V.p(O2)[0], y1: V.p(O2)[1], x2: V.p(P)[0], y2: V.p(P)[1], stroke: "#ff8a5c", "stroke-width": 12, "stroke-linecap": "round" }, g);
+      [O1, O2].forEach(function (o) { var q = V.p(o); R.el("circle", { cx: q[0], cy: q[1], r: 11, fill: "#fff", stroke: C.fonce, "stroke-width": 3 }, g); });
+      // axes des pivots : dessinés par-dessus les solides, étiquettes au bout des axes
+      R.ligne(g, V.p(m.add(O1, [0, 0, -0.5])), V.p(m.add(O1, [0, 0, 1.9])), { couleur: C.z, tirets: "7 6", epaisseur: 3 });
+      R.texte(g, "z₀", m.add(V.p(m.add(O1, [0, 0, 1.9])), [0, -16]), { couleur: C.z, gras: true });
+      R.ligne(g, V.p(m.add(O2, m.scale(z1, -0.9))), V.p(m.add(O2, m.scale(z1, 0.9))), { couleur: C.x, tirets: "7 6", epaisseur: 3 });
+      R.texte(g, "z₁", m.add(V.p(m.add(O2, m.scale(z1, 0.9))), [14, -14]), { couleur: C.x, gras: true });
+      R.point(g, V.p(P), { couleur: C.acc, r: 9, contour: "#fff" });
       R.texte(g, "P", m.add(V.p(P), [14, -12]), { couleur: C.acc, gras: true });
-      etiquetteSegment("solide 1", O1, O2, "#5e3a99");
-      etiquetteSegment("solide 2", O2, P, "#d0603a");
+      etiquetteSegment("solide 1", O1, O2, "#8b3fd9");
+      etiquetteSegment("solide 2", O2, P, "#ff5a1f");
       R.rendre(zone, (spatial ? "\\vec{z}_0 \\perp \\vec{z}_1 :\\ \\text{schéma spatial}" : "\\vec{z}_0 \\parallel \\vec{z}_1 \\parallel \\vec{Z} :\\ \\text{schéma plan}") +
         "\\qquad \\text{hauteur de } P : z_P = " + R.tn(P[2], 2));
     }
@@ -122,16 +122,17 @@
       T.e.forEach(function (e, k) {
         var boucle = dansBoucle(T, k), actif = choisi >= 0 && (e[0] === choisi || e[1] === choisi);
         var a = T.n[e[0]], z = T.n[e[1]];
-        R.ligne(g, a, z, { couleur: actif ? C.z : boucle ? C.acc : C.fonce, epaisseur: actif ? 5 : boucle ? 4 : 2.5 });
-        R.texte(g, "R", [(a[0] + z[0]) / 2 + 10, (a[1] + z[1]) / 2 - 10], { italique: false, couleur: C.doux, taille: 13 });
+        R.ligne(g, a, z, { couleur: actif ? C.z : boucle ? C.acc : C.fonce, epaisseur: actif ? 6 : boucle ? 5 : 3 });
+        var dx = z[0] - a[0], dy = z[1] - a[1], ll = Math.hypot(dx, dy) || 1;
+        R.texte(g, "R", [(a[0] + z[0]) / 2 + dy / ll * 14, (a[1] + z[1]) / 2 - dx / ll * 14], { italique: false, couleur: C.doux, taille: 14 });
       });
       var vs = choisi >= 0 ? voisins(choisi) : [];
       T.n.forEach(function (n, i) {
         var on = i === choisi, voisin = vs.indexOf(i) >= 0;
         var cg = R.el("g", { style: "cursor:pointer" }, g);
         cg.addEventListener("click", function () { choisi = i; dessiner(); });
-        R.el("circle", { cx: n[0], cy: n[1], r: 24, fill: on ? C.z : voisin ? "#d4e2f3" : "#fff", stroke: C.fonce, "stroke-width": 2 }, cg);
-        R.texte(cg, n[2], [n[0], n[1] + 1], { italique: false, gras: true, couleur: on ? "#fff" : C.fonce, taille: 18 });
+        R.el("circle", { cx: n[0], cy: n[1], r: 26, fill: on ? C.z : voisin ? "#e8edff" : "#fff", stroke: C.fonce, "stroke-width": 3 }, cg);
+        R.texte(cg, n[2], [n[0], n[1] + 1], { italique: false, gras: true, couleur: on ? "#fff" : C.fonce, taille: 19, halo: false });
       });
       var txt = "\\text{solides } N = " + T.n.length + ",\\ \\text{liaisons } L = " + T.e.length + ",\\ \\text{boucles } L - N + 1 = " + nbBoucles;
       if (choisi >= 0) txt += "\\qquad \\text{le solide " + T.n[choisi][2] + " a " + vs.length + " voisin" + (vs.length > 1 ? "s" : "") + "}";

@@ -10,7 +10,7 @@
       essai: "<strong>Essaie</strong> : déplace les extrémités orange de \\(\\vec{a}\\) et de \\(\\vec{b}\\). " +
         "<strong>Observe</strong> : le segment vert est la projection de \\(\\vec{b}\\) sur la direction de \\(\\vec{a}\\). Quand les vecteurs deviennent perpendiculaires, la projection disparaît et le produit vaut 0 ; au-delà de 90°, il devient négatif."
     });
-    var P = R.plan(230, 300, 62);
+    var P = R.plan(240, 290, 66);
     var g = R.el("g", null, f.svg), gp = R.el("g", null, f.svg);
     var a = [3.5, 1], b = [1.5, 3];
     var zone = R.h("div", null, "", f.direct), verdict = R.h("p", null, "", f.direct);
@@ -19,25 +19,23 @@
 
     function dessiner() {
       R.vider(g); R.vider(gp);
-      for (var k = -3; k <= 5; k++) R.ligne(g, P.p([k, -4.4]), P.p([k, 2.8]), { couleur: C.trait, epaisseur: 1 });
-      for (k = -4; k <= 2; k++) R.ligne(g, P.p([-3.5, k]), P.p([5.8, k]), { couleur: C.trait, epaisseur: 1 });
-      R.fleche(g, P.p([-3.5, 0]), P.p([5.8, 0]), { couleur: C.gris, epaisseur: 1.2 });
-      R.fleche(g, P.p([0, -4.4]), P.p([0, 2.9]), { couleur: C.gris, epaisseur: 1.2 });
+      R.grille(g, P, f.svg, { pas: 0.5, fort: 2 });
       var na = m.norme(a), nb = m.norme(b), ps = m.dot(a, b);
       var ua = na > 1e-9 ? m.scale(a, 1 / na) : [1, 0];
       var t = ps / Math.max(na, 1e-9), pied = m.scale(ua, t);
       // droite support de a
       R.ligne(g, P.p(m.scale(ua, -6)), P.p(m.scale(ua, 7)), { couleur: C.gris, tirets: "2 5", epaisseur: 1 });
       R.ligne(g, P.p(b), P.p(pied), { couleur: C.gris, tirets: "5 4" });
-      R.ligne(g, P.p([0, 0]), P.p(pied), { couleur: C.y, epaisseur: 8, opacite: 0.55 });
+      R.ligne(g, P.p([0, 0]), P.p(pied), { couleur: C.y, epaisseur: 10, opacite: 0.6 });
+      if (Math.abs(t) > 0.3) R.texte(g, "projection", m.add(P.p(m.scale(pied, 0.5)), [ua[1] * 26, ua[0] * 26]), { couleur: C.y, italique: false, taille: 15, gras: true });
       var aa = Math.atan2(a[1], a[0]), ab = Math.atan2(b[1], b[0]), d = ab - aa;
       while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
-      R.arc(g, P.p([0, 0]), 38, aa, aa + d, { couleur: C.fonce });
-      R.texte(g, "θ", [P.p([0, 0])[0] + 56 * Math.cos(aa + d / 2), P.p([0, 0])[1] - 56 * Math.sin(aa + d / 2)], {});
-      R.fleche(g, P.p([0, 0]), P.p(a), { couleur: C.v, epaisseur: 3 });
-      R.fleche(g, P.p([0, 0]), P.p(b), { couleur: C.z, epaisseur: 3 });
-      R.texte(g, "a", m.add(P.p(a), [16, -16]), { couleur: C.v, gras: true });
-      R.texte(g, "b", m.add(P.p(b), [16, -16]), { couleur: C.z, gras: true });
+      R.arc(g, P.p([0, 0]), 40, aa, aa + d, { couleur: C.acc, epaisseur: 3 });
+      R.texte(g, "θ", [P.p([0, 0])[0] + 60 * Math.cos(aa + d / 2), P.p([0, 0])[1] - 60 * Math.sin(aa + d / 2)], { couleur: C.acc, taille: 22 });
+      R.fleche(g, P.p([0, 0]), P.p(a), { couleur: C.v, epaisseur: 4 });
+      R.fleche(g, P.p([0, 0]), P.p(b), { couleur: C.z, epaisseur: 4 });
+      R.texte(g, "a", m.add(P.p(a), [18, -18]), { couleur: C.v, gras: true, taille: 24 });
+      R.texte(g, "b", m.add(P.p(b), [18, -18]), { couleur: C.z, gras: true, taille: 24 });
       R.poignee(f.svg, gp, P.p(a), function (q) { a = borne(P.inv(q)); dessiner(); });
       R.poignee(f.svg, gp, P.p(b), function (q) { b = borne(P.inv(q)); dessiner(); });
 
@@ -62,7 +60,7 @@
       essai: "<strong>Essaie</strong> : choisis un produit avec les boutons, puis fais varier \\(\\alpha\\). " +
         "<strong>Observe</strong> : l'arc orange montre l'angle entre les deux axes choisis, et le produit vaut son cosinus. Compare \\(\\vec{y}_1 \\cdot \\vec{x}_2\\) et \\(\\vec{x}_1 \\cdot \\vec{y}_2\\) : même valeur absolue, signes opposés."
     });
-    var P = R.plan(300, 250, 150);
+    var P = R.plan(300, 235, 168);
     var g = R.el("g", null, f.svg);
     var al = R.curseur(f.reglages, { nom: "α", min: -90, max: 120, pas: 1, val: 30, unite: "°", surChange: dessiner });
     var bb = R.boutons(f.reglages);
@@ -93,25 +91,26 @@
       var actif = function (n) { return n === pr[1] || n === pr[2]; };
       [["x1", C.z, "x", "1"], ["y1", C.z, "y", "1"], ["x2", C.v, "x", "2"], ["y2", C.v, "y", "2"]].forEach(function (d) {
         var on = actif(d[0]);
-        R.fleche(g, P.p([0, 0]), P.p(vec(dirs[d[0]])), { couleur: d[1], epaisseur: on ? 4 : 2, opacite: on ? 1 : 0.35 });
-        R.texte(g, d[2], P.p(m.scale(vec(dirs[d[0]]), 1.14)), { couleur: d[1], ind: d[3], opacite: on ? 1 : 0.45, gras: on });
+        R.fleche(g, P.p([0, 0]), P.p(vec(dirs[d[0]])), { couleur: d[1], epaisseur: on ? 5 : 2.5, opacite: on ? 1 : 0.35 });
+        R.texte(g, d[2], P.p(m.scale(vec(dirs[d[0]]), 1.15)), { couleur: d[1], ind: d[3], opacite: on ? 1 : 0.45, gras: on, taille: 24 });
       });
       var o = P.p([0, 0]);
       var zOn = actif("z");
+      R.el("circle", { cx: o[0], cy: o[1], r: P.s, fill: "none", stroke: "#e3e6ee", "stroke-width": 1.5, "stroke-dasharray": "4 6" }, g);
       R.el("circle", { cx: o[0], cy: o[1], r: 9, fill: "#fff", stroke: zOn ? C.acc : C.fonce, "stroke-width": zOn ? 3 : 1.5 }, g);
       R.el("circle", { cx: o[0], cy: o[1], r: 2.5, fill: zOn ? C.acc : C.fonce }, g);
-      R.texte(g, "z₁ = z₂ (vers vous)", [o[0] - 10, o[1] + 34], { italique: false, taille: 15, couleur: C.doux });
+      R.texte(g, "z₁ = z₂ (vers toi)", [o[0] - 16, o[1] + 30], { italique: false, taille: 16, couleur: C.doux, ancre: "end" });
       var val, angle;
       if (pr[1] === "z") {
         angle = Math.PI / 2; val = 0;
         R.texte(g, "z₂ est perpendiculaire au plan : angle de 90°", [300, 405], { couleur: C.acc, italique: false, taille: 17 });
       } else {
         var t1 = dirs[pr[1]], t2 = dirs[pr[2]];
-        R.arc(g, o, 62, t1, t2, { couleur: C.acc, epaisseur: 3 });
+        R.arc(g, o, 64, t1, t2, { couleur: C.acc, epaisseur: 4 });
         var mid = (t1 + t2) / 2;
         angle = Math.abs(t2 - t1);
         val = Math.cos(t2 - t1);
-        R.texte(g, R.fmt(angle / R.DEG, 0) + "°", [o[0] + 86 * Math.cos(mid), o[1] - 86 * Math.sin(mid)], { couleur: C.acc, italique: false, gras: true, taille: 17 });
+        R.texte(g, R.fmt(angle / R.DEG, 0) + "°", [o[0] + 86 * Math.cos(mid), o[1] - 86 * Math.sin(mid)], { couleur: C.acc, italique: false, gras: true, taille: 20 });
       }
       R.rendre(zone, pr[0] + " = \\cos\\left(" + pr[3] + "\\right) = " + pr[4] + " = \\cos(" + R.tn(angle / R.DEG, 0) + "°) = \\mathbf{" + R.tn(val, 3) + "}" +
         "\\qquad \\cos\\alpha = " + R.tn(Math.cos(a), 3) + ",\\ \\sin\\alpha = " + R.tn(Math.sin(a), 3));
@@ -137,17 +136,18 @@
     function dessiner() {
       R.vider(g);
       var a = al.v * R.DEG, o = P.p([0, 0]);
-      R.el("circle", { cx: o[0], cy: o[1], r: P.s, fill: "none", stroke: C.trait, "stroke-width": 2 }, g);
-      R.fleche(g, P.p([-1.3, 0]), P.p([1.35, 0]), { couleur: C.gris, epaisseur: 1.2 });
-      R.fleche(g, P.p([0, -1.3]), P.p([0, 1.3]), { couleur: C.gris, epaisseur: 1.2 });
+      R.grille(g, P, f.svg, { pas: 0.25, fort: 4, axes: false });
+      R.el("circle", { cx: o[0], cy: o[1], r: P.s, fill: "none", stroke: "#c6cbd8", "stroke-width": 2.5 }, g);
+      R.fleche(g, P.p([-1.3, 0]), P.p([1.35, 0]), { couleur: C.gris, epaisseur: 2 });
+      R.fleche(g, P.p([0, -1.3]), P.p([0, 1.3]), { couleur: C.gris, epaisseur: 2 });
       var q = [Math.cos(a), Math.sin(a)];
-      R.ligne(g, P.p(q), P.p([q[0], 0]), { couleur: C.z, epaisseur: 3 });
-      R.ligne(g, o, P.p([q[0], 0]), { couleur: C.x, epaisseur: 5, opacite: 0.7 });
-      R.texte(g, "cos α", m.add(P.p([q[0] / 2, 0]), [0, q[1] >= 0 ? 18 : -18]), { couleur: C.x, italique: false, taille: 16 });
-      R.texte(g, "sin α", m.add(P.p([q[0], q[1] / 2]), [q[0] >= 0 ? 34 : -34, 0]), { couleur: C.z, italique: false, taille: 16 });
-      R.ligne(g, o, P.p(q), { couleur: C.fonce, epaisseur: 2 });
-      R.arc(g, o, 30, 0, a, { couleur: C.fonce });
-      R.point(g, P.p(q), { couleur: C.acc, r: 7 });
+      R.ligne(g, P.p(q), P.p([q[0], 0]), { couleur: C.z, epaisseur: 5 });
+      R.ligne(g, o, P.p([q[0], 0]), { couleur: C.x, epaisseur: 6, opacite: 0.85 });
+      R.texte(g, "cos α", m.add(P.p([q[0] / 2, 0]), [0, q[1] >= 0 ? 22 : -22]), { couleur: C.x, italique: false, taille: 18, gras: true });
+      R.texte(g, "sin α", m.add(P.p([q[0], q[1] / 2]), [q[0] >= 0 ? 40 : -40, 0]), { couleur: C.z, italique: false, taille: 18, gras: true });
+      R.ligne(g, o, P.p(q), { couleur: C.fonce, epaisseur: 3 });
+      R.arc(g, o, 34, 0, a, { couleur: C.acc, epaisseur: 3 });
+      R.point(g, P.p(q), { couleur: C.acc, r: 9, contour: "#fff" });
       var tex = "\\cos\\alpha = " + R.tn(q[0], 3) + "\\qquad \\sin\\alpha = " + R.tn(q[1], 3) + "\\qquad \\cos^2\\alpha + \\sin^2\\alpha = " + R.tn(q[0] * q[0] + q[1] * q[1], 3);
       if (assoc.checked) {
         var q1 = [Math.cos(Math.PI / 2 - a), Math.sin(Math.PI / 2 - a)], q2 = [Math.cos(Math.PI / 2 + a), Math.sin(Math.PI / 2 + a)];

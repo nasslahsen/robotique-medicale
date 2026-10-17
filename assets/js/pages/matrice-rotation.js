@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : fais varier \\(\\alpha\\) de 0 à 90°. " +
       "<strong>Observe</strong> : la colonne 1 de la matrice (rouge) contient les longueurs des projections de \\(\\vec{x}_1\\) sur \\(\\vec{x}_0\\) et \\(\\vec{y}_0\\), la colonne 2 (verte) celles de \\(\\vec{y}_1\\). Le vecteur \\(\\vec{V}\\) tourne avec \\(R_1\\) : ses composantes \\(V^1\\) restent fixes, \\(V^0\\) change."
   });
-  var P = R.plan(300, 250, 135);
+  var P = R.plan(300, 235, 140);
   var g = R.el("g", null, f.svg);
   var ca = R.curseur(f.reglages, { nom: "α", min: -180, max: 180, pas: 1, val: 30, unite: "°", surChange: dessiner });
   var cvx = R.curseur(f.reglages, { nom: "V¹ sur x₁", min: -2, max: 2, pas: 0.1, val: 1.2, surChange: dessiner });
@@ -26,10 +26,7 @@
     R.vider(g);
     var a = ca.v * R.DEG, Rz = m.Rz(a), x1 = [Rz[0][0], Rz[1][0]], y1 = [Rz[0][1], Rz[1][1]];
     var V1 = [cvx.v, cvy.v, 0], V0 = m.matVec(Rz, V1), s = 1.2;
-    for (var k = -2; k <= 2; k++) {
-      R.ligne(g, P.p([k / 1.5, -1.65]), P.p([k / 1.5, 1.6]), { couleur: C.trait, epaisseur: 1 });
-      R.ligne(g, P.p([-2.1, k / 1.5]), P.p([2.1, k / 1.5]), { couleur: C.trait, epaisseur: 1 });
-    }
+    R.grille(g, P, f.svg, { pas: 0.25, fort: 4 });
     R.repere2D(g, P, [0, 0], [1, 0], [0, 1], { longueur: s, indice: "0", couleurX: C.gris, couleurY: C.gris, epaisseur: 1.8 });
     if (proj.checked) {
       var px = m.scale(x1, s), py = m.scale(y1, s);
@@ -48,7 +45,7 @@
     var v0s = m.scale([V0[0], V0[1]], 0.7);
     R.fleche(g, P.p([0, 0]), P.p(v0s), { couleur: C.v, epaisseur: 3.5 });
     R.texte(g, "V", m.add(P.p(v0s), [14, -14]), { couleur: C.v, gras: true });
-    R.texte(g, "z₀ = z₁ vers vous", [92, 412], { italique: false, taille: 15, couleur: C.doux });
+    R.texte(g, "z₀ = z₁ vers vous", [20, 412], { italique: false, taille: 15, couleur: C.doux, ancre: "start" });
 
     var cols = [C.x, C.y, C.z];
     var cell = function (i, j, t) { return (ligne > 0 && i === ligne - 1) ? R.couleur(C.acc, "\\mathbf{" + t + "}") : R.couleur(cols[j], t); };

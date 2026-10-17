@@ -8,7 +8,7 @@
     essai: "<strong>Essaie</strong> : choisis une architecture, bouge ses trois articulations, puis clique sur « Balayer l'espace de travail ». Réduis ensuite les limites articulaires et balaie de nouveau. " +
       "<strong>Observe</strong> : le nuage de points (positions atteintes) prend la forme d'une boîte, d'un cylindre, d'une sphère ou d'une forme complexe selon l'architecture, et rétrécit avec les limites."
   });
-  var V = R.vue3D(300, 330, 140, -40 * R.DEG, 22 * R.DEG);
+  var V = R.vue3D(300, 340, 165, -40 * R.DEG, 22 * R.DEG);
   var g = R.el("g", null, f.svg), gn = R.el("g", null, f.svg);
   // Chaque architecture : trois variables (nom, min, max, unité) et un modèle géométrique direct très simple.
   var ARCHI = {
@@ -59,26 +59,33 @@
   function dessiner() {
     R.vider(g); R.vider(gn);
     var k = sel.value;
-    R.polygone(g, [V.p([-1.5, -1.5, 0]), V.p([1.5, -1.5, 0]), V.p([1.5, 1.5, 0]), V.p([-1.5, 1.5, 0])], { remplissage: "#f3f5f8", couleur: C.trait });
-    R.fleche(g, V.p([0, 0, 0]), V.p([0.6, 0, 0]), { couleur: C.x, epaisseur: 1.6 });
-    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0.6, 0]), { couleur: C.y, epaisseur: 1.6 });
-    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0, 0.6]), { couleur: C.z, epaisseur: 1.6 });
+    R.polygone(g, [V.p([-1.5, -1.5, 0]), V.p([1.5, -1.5, 0]), V.p([1.5, 1.5, 0]), V.p([-1.5, 1.5, 0])], { remplissage: "#f6f7fa", couleur: "#d9dde6", epaisseur: 1.5 });
+    for (var s = -1; s <= 1; s += 0.5) {
+      R.ligne(g, V.p([s, -1.5, 0]), V.p([s, 1.5, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+      R.ligne(g, V.p([-1.5, s, 0]), V.p([1.5, s, 0]), { couleur: "#e3e6ee", epaisseur: 1 });
+    }
+    R.fleche(g, V.p([0, 0, 0]), V.p([0.55, 0, 0]), { couleur: C.x, epaisseur: 3 });
+    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0.55, 0]), { couleur: C.y, epaisseur: 3 });
+    R.fleche(g, V.p([0, 0, 0]), V.p([0, 0, 0.55]), { couleur: C.z, epaisseur: 3 });
+    R.texte(g, "x", V.p([0.7, 0, 0]), { couleur: C.x, taille: 17 }); R.texte(g, "y", V.p([0, 0.7, 0]), { couleur: C.y, taille: 17 }); R.texte(g, "z", V.p([0, 0, 0.68]), { couleur: C.z, taille: 17 });
     if (nuage.length) {
       var d = nuage.map(function (q) { var s = V.p(q); return "M" + s[0].toFixed(1) + " " + s[1].toFixed(1) + "h0"; }).join("");
-      R.el("path", { d: d, stroke: "rgba(21,101,192,0.35)", "stroke-width": 3.2, "stroke-linecap": "round", fill: "none" }, gn);
+      R.el("path", { d: d, stroke: "rgba(59,91,219,0.35)", "stroke-width": 3.5, "stroke-linecap": "round", fill: "none" }, gn);
     }
     if (k === "cartesien") {
-      // portique
-      [[-0.8, -0.8], [0.8, -0.8]].forEach(function (p) { R.ligne(g, V.p([p[0], p[1], 0]), V.p([p[0], p[1], 1.3]), { couleur: "#9aa2ae", epaisseur: 6 }); });
-      R.ligne(g, V.p([-0.8, -0.8, 1.3]), V.p([0.8, -0.8, 1.3]), { couleur: "#9aa2ae", epaisseur: 6 });
+      // portique : quatre montants, deux rails selon x, une poutre selon y qui roule sur les rails
+      var qx = curs.length ? curs[0].v : 0;
+      [[-0.9, -0.8], [0.9, -0.8], [-0.9, 0.8], [0.9, 0.8]].forEach(function (p) { R.ligne(g, V.p([p[0], p[1], 0]), V.p([p[0], p[1], 1.3]), { couleur: "#9aa0ad", epaisseur: 7 }); });
+      [-0.8, 0.8].forEach(function (y) { R.ligne(g, V.p([-0.9, y, 1.3]), V.p([0.9, y, 1.3]), { couleur: "#9aa0ad", epaisseur: 7 }); });
+      R.ligne(g, V.p([qx, -0.8, 1.3]), V.p([qx, 0.8, 1.3]), { couleur: "#5b6172", epaisseur: 8 });
     }
     var q = curs.map(function (c) { return c.v; }), r = ARCHI[k].mgd(q);
     for (var i = 0; i < r.pts.length - 1; i++) {
       var a = V.p(r.pts[i]), z = V.p(r.pts[i + 1]);
-      R.el("line", { x1: a[0], y1: a[1], x2: z[0], y2: z[1], stroke: i % 2 ? "#d0603a" : "#5e3a99", "stroke-width": 10, "stroke-linecap": "round" }, g);
-      if (i > 0) R.el("circle", { cx: a[0], cy: a[1], r: 7, fill: "#fff", stroke: C.fonce, "stroke-width": 2 }, g);
+      R.el("line", { x1: a[0], y1: a[1], x2: z[0], y2: z[1], stroke: i % 2 ? "#ff8a5c" : "#8b3fd9", "stroke-width": 13, "stroke-linecap": "round" }, g);
+      if (i > 0) R.el("circle", { cx: a[0], cy: a[1], r: 9, fill: "#fff", stroke: C.fonce, "stroke-width": 2.5 }, g);
     }
-    R.point(g, V.p(r.outil), { couleur: C.acc, r: 7 });
+    R.point(g, V.p(r.outil), { couleur: C.acc, r: 9, contour: "#fff" });
     R.rendre(zone, "\\text{position de l'outil : } (" + r.outil.map(function (x) { return R.tn(x, 2); }).join(";\\ ") + ")" +
       (nuage.length ? "\\qquad " + nuage.length + " \\text{ positions tirées au hasard dans les limites articulaires}" : ""));
   }
