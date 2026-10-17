@@ -2,60 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<title>Propriétés : le groupe SO(3) · Robotique médicale</title>
-<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../assets/css/site.css">
-<link rel="stylesheet" href="../assets/css/onglets.css">
+<title>Page déplacée</title>
+<meta http-equiv="refresh" content="0; url=../modules/robotique/cours/so3.html">
+<link rel="canonical" href="../modules/robotique/cours/so3.html">
+<script>location.replace("../modules/robotique/cours/so3.html");</script>
 </head>
-<body>
-<main>
-<p class="etiquette" data-etiquette></p>
-<h1>Propriétés : le groupe SO(3)</h1>
-<p class="chapeau">N'importe quel tableau de 9 nombres n'est pas une rotation. Ses colonnes doivent former un vrai repère : trois vecteurs unitaires, perpendiculaires, dans le bon sens.</p>
-
-<h2>Intuition</h2>
-<p>Les colonnes d'une matrice de rotation sont les axes d'un repère tourné. Un repère ne se déforme pas quand on le tourne : ses axes restent de longueur 1 et perpendiculaires entre eux, et la main droite reste une main droite. Ces trois conditions définissent l'ensemble des matrices de rotation, noté \(SO(3)\). Elles ont une conséquence très pratique : pour défaire une rotation, il suffit de transposer la matrice.</p>
-
-<div id="fig-so3"></div>
-
-<h2>Formalisation</h2>
-<p>L'ensemble des matrices de rotation forme le groupe spécial orthogonal \(SO(3)\), caractérisé par :</p>
-<div class="tableau"><table>
-<tr><th>Propriété</th><th>Expression</th><th>Signification</th></tr>
-<tr><td>Orthogonalité</td><td>\(\mathbf{R}^T\mathbf{R} = \mathbf{I}\)</td><td>les colonnes sont orthonormées</td></tr>
-<tr><td>Inverse = transposée</td><td>\(\mathbf{R}^{-1} = \mathbf{R}^T\)</td><td>changement de repère facile</td></tr>
-<tr><td>Déterminant unitaire</td><td>\(\det(\mathbf{R}) = +1\)</td><td>conservation de l'orientation (pas de réflexion)</td></tr>
-<tr><td>Norme des colonnes</td><td>\(\|\vec{x}'\| = \|\vec{y}'\| = \|\vec{z}'\| = 1\)</td><td>vecteurs unitaires</td></tr>
-</table></div>
-<p><strong>Conséquence pratique</strong> : l'inverse d'une rotation est sa transposée, ce qui est très économique en calcul (pas d'inversion matricielle coûteuse).</p>
-<p>Pourquoi \(\mathbf{R}^T\mathbf{R} = \mathbf{I}\) : l'élément \((i, j)\) de \(\mathbf{R}^T\mathbf{R}\) est le produit scalaire de la colonne \(i\) par la colonne \(j\). Les colonnes étant les axes d'un repère orthonormé, ce produit vaut 1 si \(i = j\) et 0 sinon. C'est ce que la figure affiche dans la matrice \(\mathbf{R}^T\mathbf{R}\).</p>
-<p>Conséquence pour le nombre de paramètres : les 9 coefficients sont liés par 6 contraintes (3 normes égales à 1, 3 produits scalaires nuls). Il ne reste que \(9 - 6 = 3\) paramètres indépendants pour décrire une orientation : on les choisira sous forme d'angles d'Euler.</p>
-
-<h2>Exemple</h2>
-<p class="complement">Exemple ajouté.</p>
-<p>Avec \(R = R_z(30°)\) :</p>
-\[ \text{colonne 1} \cdot \text{colonne 1} = 0{,}866^2 + 0{,}5^2 = 0{,}75 + 0{,}25 = 1 \]
-\[ \text{colonne 1} \cdot \text{colonne 2} = 0{,}866 \times (-0{,}5) + 0{,}5 \times 0{,}866 = 0 \qquad \det R = 0{,}866^2 + 0{,}5^2 = 1 \]
-<p>Et la matrice \(\begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1 \end{pmatrix}\) a des colonnes orthonormées mais un déterminant \(-1\) : c'est un miroir (l'axe \(z\) est retourné), pas une rotation. Bouton « Miroir » sur la figure.</p>
-
-<h2>Rappel : transposée et déterminant</h2>
-<p><strong>Transposée.</strong> On échange lignes et colonnes : la ligne \(i\) devient la colonne \(i\). Une matrice \([m \times n]\) devient \([n \times m]\). Règle utile : \((AB)^T = B^T A^T\).</p>
-<p><strong>Déterminant.</strong> Pour une matrice \(2 \times 2\) : \(\det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc\). Pour une \(3 \times 3\), on développe sur la première ligne :</p>
-\[ \det\begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix} = a(ei - fh) - b(di - fg) + c(dh - eg) \]
-<p>Le déterminant mesure comment la matrice change les volumes, avec un signe. Une rotation ne change ni les volumes ni le sens du repère : \(\det R = +1\). Un déterminant \(-1\) correspond à un repère indirect.</p>
-
-<h2>Formules clés</h2>
-\[ \mathbf{R}^T\mathbf{R} = \mathbf{I} \qquad \mathbf{R}^{-1} = \mathbf{R}^T \qquad \det\mathbf{R} = +1 \qquad 9 - 6 = 3 \text{ paramètres} \]
-
-</main>
-<script src="../assets/vendor/katex/katex.min.js"></script>
-<script src="../assets/vendor/katex/auto-render.min.js"></script>
-<script src="../assets/js/lib.js"></script>
-<script src="../assets/js/nav.js"></script>
-<script src="../assets/js/pages/so3.js"></script>
-</body>
+<body><p>Cette page a déménagé : <a href="../modules/robotique/cours/so3.html">../modules/robotique/cours/so3.html</a>.</p></body>
 </html>

@@ -2,62 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<title>Angles d'Euler · Robotique médicale</title>
-<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../assets/css/site.css">
-<link rel="stylesheet" href="../assets/css/onglets.css">
+<title>Page déplacée</title>
+<meta http-equiv="refresh" content="0; url=../modules/robotique/cours/angles-euler.html">
+<link rel="canonical" href="../modules/robotique/cours/angles-euler.html">
+<script>location.replace("../modules/robotique/cours/angles-euler.html");</script>
 </head>
-<body>
-<main>
-<p class="etiquette" data-etiquette></p>
-<h1>Angles d'Euler</h1>
-<p class="chapeau">Au lieu de donner 9 coefficients, on dit : « pour arriver à cette orientation, j'ai effectué 3 rotations simples l'une après l'autre ».</p>
-
-<h2>Intuition</h2>
-<p>Prenez un téléphone posé à plat. Tournez-le d'abord sur la table (lacet), puis inclinez-le autour de son nouvel axe transversal (tangage), puis faites-le rouler autour de son nouvel axe longitudinal (roulis). Trois angles suffisent pour décrire n'importe quelle orientation, ce qui est bien plus parlant que 9 nombres. Le point délicat : chaque rotation se fait autour d'un axe <strong>du téléphone déjà tourné</strong>, et l'ordre des rotations doit toujours être précisé.</p>
-
-<div id="fig-euler"></div>
-
-<h2>Formalisation</h2>
-<p>Objectif du cours : décrire n'importe quelle orientation 3D avec seulement 3 angles de rotation successifs, et identifier les limites de cette méthode (singularités). Il existe 12 conventions (combinaisons d'axes) ; en robotique et en santé digitale, on utilise principalement deux familles : <strong>Z-Y-X (angles RPY)</strong> et <strong>Z-Y-Z</strong>.</p>
-<p><strong>Convention ZYX</strong>, la convention par défaut dans la plupart des logiciels de robotique (ROS, MATLAB Robotics Toolbox, KUKA, ABB) :</p>
-<ul>
-<li>séquence : rotation autour de \(Z\) (lacet, yaw), puis autour de \(Y\) (tangage, pitch), puis autour de \(X\) (roulis, roll) ;</li>
-<li>type : axes <strong>mobiles</strong> (intrinsèques) : on tourne d'abord autour de l'axe \(Z\) du robot, puis autour de son <em>nouvel</em> axe \(Y\), puis autour de son <em>nouvel</em> axe \(X\).</li>
-</ul>
-<div class="tableau"><table>
-<tr><th>Étape</th><th>Rotation</th><th>Matrice</th><th>Axe conservé</th></tr>
-<tr><td>1. lacet</td><td>\(R_0\) tourne de \(\alpha\) autour de \(\vec{z}_0\) pour devenir \(R_1\)</td><td>\(R^{(0,1)} = R_z(\alpha)\)</td><td>\(\vec{z}_0 = \vec{z}_1\)</td></tr>
-<tr><td>2. tangage</td><td>à partir de \(R_1\), rotation \(\beta\) autour du nouvel axe \(\vec{y}_1\) : \(R_2\)</td><td>\(R^{(1,2)} = R_y(\beta)\)</td><td>\(\vec{y}_1 = \vec{y}_2\)</td></tr>
-<tr><td>3. roulis</td><td>à partir de \(R_2\), rotation \(\gamma\) autour du nouvel axe \(\vec{x}_2\) : \(R_s\)</td><td>\(R^{(2,s)} = R_x(\gamma)\)</td><td>\(\vec{x}_2 = \vec{x}_s\)</td></tr>
-</table></div>
-\[ R^{(0,2)} = R_z(\alpha)\,R_y(\beta) \qquad R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma) \]
-<p>Pourquoi en robotique : cette séquence correspond intuitivement au mouvement d'un véhicule ou d'un effecteur ; l'axe \(Z\) est souvent l'axe vertical de la base du robot ; l'axe \(X\) pointe souvent vers l'avant de l'outil.</p>
-<p>Pourquoi les matrices se multiplient à droite, dans l'ordre des rotations : chaque nouvelle rotation est décrite dans le repère obtenu juste avant, comme les maillons d'une chaîne \(R^{(0,1)}\,R^{(1,2)}\,R^{(2,s)}\).</p>
-<p><strong>Convention XYZ (téléphone du cours)</strong> : roulis autour de \(X\), puis tangage autour de \(Y\), puis lacet autour de \(Z\), toujours en axes mobiles :</p>
-\[ {}^0R_3 = R_x(\varphi)\,R_y(\theta)\,R_z(\psi) \]
-<p><strong>Singularité.</strong> Quand l'angle du milieu vaut \(\pm 90°\), le premier et le dernier axe de rotation sont alignés. Les deux rotations correspondantes produisent alors le même mouvement : on perd un degré de liberté dans la description. En ZYX, cela arrive pour \(\beta = \pm 90°\) ; dans l'exemple XYZ du cours, à \(\theta = 90°\), \(\vec{z}_2 = \vec{x}_0\).</p>
-
-<h2>Exemple du cours : le téléphone</h2>
-<p>Au départ, le repère du téléphone coïncide avec \(R_0 = (O_0, \vec{x}_0, \vec{y}_0, \vec{z}_0)\) : \(\vec{x}_0\) longitudinal, \(\vec{y}_0\) transversal, \(\vec{z}_0\) vers le plafond (vérification : \(\vec{x}_0 \times \vec{y}_0 = \vec{z}_0\)).</p>
-<p><strong>ZYX.</strong> Lacet : tourner de 90° vers la droite, \(\alpha = -90°\) (sens horaire vu de dessus) ; le téléphone reste à plat. Tangage : soulever puis incliner de 90° autour du nouvel axe \(\vec{y}_1\), \(\beta = +90°\) ; le téléphone est vertical. Calcul :</p>
-\[ R_z(-90°) = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \quad R_y(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 0 \end{pmatrix} \quad R^{(0,2)} = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & -1 \\ -1 & 0 & 0 \end{pmatrix} \]
-<p>(La diapositive nomme ces deux angles \(\psi\) et \(\theta\) ; dans les matrices de la convention ZYX ce sont \(\alpha\) et \(\beta\).) Première colonne : \(\vec{x}_2 = -\vec{z}_0\). Le roulis, autour de \(\vec{x}_2\), se fait donc autour de la verticale : c'est la singularité, le roulis produit le même effet qu'un lacet. Bouton « Téléphone ZYX » sur la figure, puis « Étape suivante » trois fois en faisant varier \(\gamma\).</p>
-<p><strong>XYZ.</strong> \(\varphi = +90°\) autour de \(\vec{x}_0\) : \(\vec{x}_1 = \vec{x}_0\), \(\vec{y}_1 = \vec{z}_0\), \(\vec{z}_1 = -\vec{y}_0\) (l'écran regarde vers \(-\vec{y}_0\)). \(\theta = +90°\) autour de \(\vec{y}_1\) : \(\vec{x}_2 = \vec{y}_0\), \(\vec{y}_2 = \vec{z}_0\), \(\vec{z}_2 = \vec{x}_0\) (l'écran regarde vers \(\vec{x}_0\)). \(\psi = -90°\) autour de \(\vec{z}_2\) : \(\vec{x}_3 = -\vec{z}_0\), \(\vec{y}_3 = \vec{y}_0\), \(\vec{z}_3 = \vec{x}_0\). Bouton « Téléphone XYZ » sur la figure : vérifiez chaque égalité à chaque étape.</p>
-
-<h2>Formules clés</h2>
-\[ \text{ZYX : } R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma) \qquad \text{XYZ : } {}^0R_3 = R_x(\varphi)\,R_y(\theta)\,R_z(\psi) \]
-<p>Axes mobiles : chaque rotation autour d'un axe du repère obtenu juste avant ; matrices multipliées à droite. Singularité quand l'angle du milieu vaut \(\pm 90°\).</p>
-
-</main>
-<script src="../assets/vendor/katex/katex.min.js"></script>
-<script src="../assets/vendor/katex/auto-render.min.js"></script>
-<script src="../assets/js/lib.js"></script>
-<script src="../assets/js/nav.js"></script>
-<script src="../assets/js/pages/angles-euler.js"></script>
-</body>
+<body><p>Cette page a déménagé : <a href="../modules/robotique/cours/angles-euler.html">../modules/robotique/cours/angles-euler.html</a>.</p></body>
 </html>

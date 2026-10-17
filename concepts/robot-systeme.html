@@ -2,78 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<title>Le robot et le système robotisé · Robotique médicale</title>
-<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../assets/css/site.css">
-<link rel="stylesheet" href="../assets/css/onglets.css">
+<title>Page déplacée</title>
+<meta http-equiv="refresh" content="0; url=../modules/robotique/cours/robot-systeme.html">
+<link rel="canonical" href="../modules/robotique/cours/robot-systeme.html">
+<script>location.replace("../modules/robotique/cours/robot-systeme.html");</script>
 </head>
-<body>
-<main>
-<p class="etiquette" data-etiquette></p>
-<h1>Le robot et le système robotisé</h1>
-<p class="chapeau">Ce qu'est un robot, comment il fonctionne en boucle, de quoi est faite une cellule robotisée, et comment on classe les robots.</p>
-
-<h2>Intuition</h2>
-<p>Un robot fonctionne comme un humain qui fait un geste : il regarde, réfléchit, décide, bouge, puis regarde à nouveau le résultat. Dans une cellule robotisée, ce cycle se répète à chaque pièce : une caméra voit la pièce arriver, l'automate autorise le cycle, le bras va la chercher, la saisit, la déplace et la dépose. Le bras n'est qu'une partie de l'installation : il faut aussi des capteurs, une commande, de l'énergie et de la sécurité.</p>
-
-<div id="fig-cellule"></div>
-
-<h2>Formalisation</h2>
-<h3>Robotique et robot</h3>
-<p>La robotique est un domaine pluridisciplinaire consacré à l'étude, la conception, la réalisation, la programmation, la commande et l'utilisation des robots. Elle est à l'intersection de l'ingénierie électrique et mécanique, de la science des matériaux, des mathématiques, de l'informatique, des sciences cognitives et de la biologie.</p>
-<p>Le cours compare trois définitions du robot : celle du Larousse (appareil automatique capable de manipuler des objets ou d'exécuter des opérations selon un programme fixe, modifiable ou adaptable), celle de Wikipédia (dispositif mécatronique, alliant mécanique, électronique et informatique, conçu pour accomplir automatiquement des tâches imitant ou reproduisant des actions humaines), et la définition retenue :</p>
-<p><strong>Un robot est un système programmable capable d'exécuter des actions dans son environnement afin d'accomplir une tâche donnée, de manière automatique, semi-autonome ou sous le contrôle d'un opérateur.</strong> Mots clés : programmable, action, environnement, tâche.</p>
-<h3>Principe de fonctionnement</h3>
-<div class="tableau"><table>
-<tr><th>Action</th><th>Rôle</th><th>Moyens</th></tr>
-<tr><td>1. Percevoir</td><td>acquérir des informations sur l'environnement et sur son propre état</td><td>capteurs (entrées)</td></tr>
-<tr><td>2. Traiter</td><td>traiter les informations reçues</td><td>système de commande : ordinateur, API</td></tr>
-<tr><td>3. Décider</td><td>analyser les données et prendre une décision selon le programme et la situation</td><td>plan d'action</td></tr>
-<tr><td>4. Agir</td><td>exécuter l'action décidée</td><td>actionneurs (sorties)</td></tr>
-</table></div>
-<p>Le résultat de l'action modifie l'environnement, qui fournit de nouvelles informations : c'est l'interaction avec l'environnement, qui referme la boucle.</p>
-<h3>Le système robotisé</h3>
-<p>Un robot industriel est un manipulateur programmable, commandé automatiquement, capable de réaliser différents mouvements afin d'effectuer des tâches dans un processus de production. Il ne constitue qu'un élément de la cellule : <strong>un système robotisé est un ensemble de composants qui coopèrent pour réaliser automatiquement une tâche industrielle.</strong></p>
-<p>Composants d'un robot industriel : manipulateur (bras, articulations, transmissions, réducteurs), actionneurs (servomoteurs), capteurs (codeurs absolus, capteurs de couple, vision), contrôleur (armoire de commande, cartes de puissance, calcul cinématique), effecteur terminal (EOAT : pince, ventouse, torche, outil de mesure), teach pendant (pupitre de programmation).</p>
-<div class="tableau"><table>
-<tr><th>Sous-système</th><th>Rôle</th><th>Éléments</th></tr>
-<tr><td>Chaîne d'information</td><td>mesurer l'état du système, traiter les informations, générer les commandes : acquérir, traiter, communiquer, commander</td><td>capteurs, vision, contrôleur, API, IHM, réseau</td></tr>
-<tr><td>Chaîne d'énergie</td><td>alimenter et moduler l'énergie</td><td>alimentation, variateurs, moteurs</td></tr>
-<tr><td>Chaîne d'action</td><td>transformer les ordres de commande en action physique : transformer l'énergie, transmettre le mouvement, agir sur le procédé</td><td>actionneurs et transmissions, manipulateur, effecteur</td></tr>
-<tr><td>Sécurité</td><td>prévenir les accidents et protéger opérateurs, équipements et procédé</td><td>arrêt d'urgence, barrière immatérielle, porte interverrouillée, scanner laser, automate de sécurité</td></tr>
-</table></div>
-<p>Équipements périphériques : convoyeur, magasin de pièces, montage ou gabarit, machine-outil, système de vision, IHM de supervision. Pourquoi des robots dans l'industrie : ils prennent en charge les tâches répétitives, pénibles, dangereuses ou exigeant des performances constantes (productivité, répétabilité, précision, flexibilité, sécurité, qualité) ; ils assistent l'humain plus qu'ils ne le remplacent.</p>
-
-<h2>Classer un robot : cinq critères</h2>
-<p>Un même robot peut être décrit sous plusieurs angles. Le cours retient cinq critères, et un robot peut appartenir à plusieurs catégories selon le critère considéré.</p>
-
-<div id="fig-classes"></div>
-
-<div class="tableau"><table>
-<tr><th>Critère</th><th>Catégories</th></tr>
-<tr><td>Mobilité</td><td>fixes (base immobile), mobiles (roues, chenilles, pattes, aériens, aquatiques), hybrides (manipulateur mobile : base mobile + bras)</td></tr>
-<tr><td>Architecture cinématique</td><td>sériels (chaîne ouverte), parallèles (chaîne fermée), hybrides</td></tr>
-<tr><td>Interaction avec l'humain</td><td>industriels conventionnels (séparés), collaboratifs ou cobots (espace partagé, sécurité intégrée), de service</td></tr>
-<tr><td>Niveau d'autonomie</td><td>téléopéré (1), programmé (2), adaptatif (3), autonome (4)</td></tr>
-<tr><td>Domaine d'application</td><td>industriel, service professionnel, service personnel, médical et d'assistance, militaire, spatial et sous-marin</td></tr>
-</table></div>
-<p>Historique en bref : 1920, le mot « robot » (R.U.R., Karel Čapek) ; 1942, Asimov popularise « robotique » ; 1954, brevet de George Devol ; 1961, Unimate chez General Motors ; 1970–1980, robots articulés et SCARA ; 1990–2000, vision industrielle ; 2000–2010, robots mobiles et cobots ; depuis 2010, robots autonomes, IA, industrie 4.0.</p>
-
-<h2>Exemple</h2>
-<p>Exemple de fonctionnement d'une cellule du cours (figure ci-dessus) : détection (la caméra détecte la pièce entrante), autorisation (l'API autorise le cycle), approche, préhension, déplacement selon la trajectoire programmée, dépose sur le convoyeur de sortie. Chaque étape mobilise la chaîne d'information, la chaîne d'énergie, la chaîne d'action et la sécurité. L'étape de détection relève surtout de « percevoir » et de la chaîne d'information ; la préhension relève d'« agir » et de la chaîne d'action.</p>
-
-<h2>Formules clés</h2>
-<p>Robot = système <strong>programmable</strong> qui exécute des <strong>actions</strong> dans son <strong>environnement</strong> pour une <strong>tâche</strong>. Boucle : percevoir, traiter, décider, agir. Système robotisé = chaîne d'information + chaîne d'énergie + chaîne d'action + sécurité. Cinq critères : mobilité, architecture, interaction, autonomie, domaine.</p>
-
-</main>
-<script src="../assets/vendor/katex/katex.min.js"></script>
-<script src="../assets/vendor/katex/auto-render.min.js"></script>
-<script src="../assets/js/lib.js"></script>
-<script src="../assets/js/nav.js"></script>
-<script src="../assets/js/pages/robot-systeme.js"></script>
-</body>
+<body><p>Cette page a déménagé : <a href="../modules/robotique/cours/robot-systeme.html">../modules/robotique/cours/robot-systeme.html</a>.</p></body>
 </html>

@@ -2,54 +2,10 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<title>Architectures et espace de travail · Robotique médicale</title>
-<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../assets/css/site.css">
-<link rel="stylesheet" href="../assets/css/onglets.css">
+<title>Page déplacée</title>
+<meta http-equiv="refresh" content="0; url=../modules/robotique/cours/architectures.html">
+<link rel="canonical" href="../modules/robotique/cours/architectures.html">
+<script>location.replace("../modules/robotique/cours/architectures.html");</script>
 </head>
-<body>
-<main>
-<p class="etiquette" data-etiquette></p>
-<h1>Architectures et espace de travail</h1>
-<p class="chapeau">La façon dont les articulations sont enchaînées fixe la forme de la zone que l'outil peut atteindre.</p>
-
-<h2>Intuition</h2>
-<p>Un robot cartésien ne fait que des translations : son outil se promène dans une boîte. Un robot qui tourne autour d'une colonne et dont le bras avance et monte balaie un cylindre. Un bras articulé, comme le nôtre, atteint une zone plus complexe. Pour voir cette zone, il suffit d'essayer beaucoup de combinaisons de valeurs articulaires et de marquer chaque position atteinte par l'outil.</p>
-
-<div id="fig-archi"></div>
-
-<h2>Formalisation</h2>
-<p><strong>Architecture cinématique</strong> : structure de la chaîne cinématique du robot (disposition des liaisons et des axes) ; elle détermine le volume de travail, la dextérité et les performances.</p>
-<div class="tableau"><table>
-<tr><th>Robot sériel (chaîne ouverte)</th><th>Mouvements</th><th>Forme de l'espace de travail</th></tr>
-<tr><td>Cartésien (rectiligne), PPP</td><td>déplacements linéaires selon X, Y, Z</td><td>parallélépipède</td></tr>
-<tr><td>Cylindrique</td><td>rotation autour de Z + translations verticale et radiale</td><td>cylindre</td></tr>
-<tr><td>Sphérique (polaire)</td><td>rotations + translation radiale</td><td>sphère</td></tr>
-<tr><td>SCARA</td><td>2 rotations dans le plan horizontal + 1 translation verticale</td><td>anneau extrudé</td></tr>
-<tr><td>Articulé (anthropomorphe)</td><td>articulations en série, comme un bras humain</td><td>forme complexe</td></tr>
-</table></div>
-<p>Robots parallèles (chaîne fermée) : Delta (3 bras), plateforme de Stewart (6 DDL, 6 actionneurs), parallèles planaires.</p>
-<p><strong>Espace de travail</strong> : ensemble des positions que peut atteindre l'effecteur, pour au moins une configuration de ses articulations, dans le respect des limites articulaires. Il dépend de l'architecture cinématique, de la longueur des segments, des limites articulaires, de la présence d'obstacles et de l'orientation imposée à l'effecteur. Il se caractérise par les positions accessibles, la frontière de la zone atteignable et le volume accessible. Les formes du tableau sont idéalisées : les limites articulaires et les obstacles réduisent la zone accessible (curseur « limites articulaires » de la figure).</p>
-<p><strong>Sériels ou parallèles.</strong> Sériels : grande flexibilité et grande enveloppe de travail, excellente dextérité, polyvalence, programmation plus simple, coût souvent inférieur, maintenance aisée. Parallèles : très grande précision et répétabilité, rigidité, vitesse et accélération élevées, bonne capacité de charge par rapport au poids propre, moins d'inertie mobile (actionneurs fixés à la base). Le choix dépend de l'application : précision, charge utile, vitesse, espace de travail, coût.</p>
-<p><strong>Charge utile</strong> : masse maximale que le robot peut transporter avec son effecteur, tout en conservant ses performances spécifiées. Il faut compter la masse totale transportée : effecteur + pièce + accessoires.</p>
-
-<h2>Exemple</h2>
-<p class="complement">Exemple ajouté.</p>
-<p>Une pince de 1,2 kg, une pièce de 2,5 kg et un adaptateur de 0,3 kg font une masse totale de 4,0 kg : un robot de charge utile 3 kg ne convient pas, même si la pièce seule pèse moins de 3 kg.</p>
-<p>Pour le SCARA de la figure (segments de 0,8 et 0,6), l'espace de travail vu de dessus est un anneau entre \(|0{,}8 - 0{,}6| = 0{,}2\) et \(0{,}8 + 0{,}6 = 1{,}4\) quand les pivots tournent librement ; la course verticale de la glissière lui donne son épaisseur.</p>
-
-<h2>Formules clés</h2>
-<p>Cartésien : parallélépipède. Cylindrique : cylindre. Polaire : sphère. Articulé : forme complexe. Masse à porter = effecteur + pièce + accessoires.</p>
-
-</main>
-<script src="../assets/vendor/katex/katex.min.js"></script>
-<script src="../assets/vendor/katex/auto-render.min.js"></script>
-<script src="../assets/js/lib.js"></script>
-<script src="../assets/js/nav.js"></script>
-<script src="../assets/js/pages/architectures.js"></script>
-</body>
+<body><p>Cette page a déménagé : <a href="../modules/robotique/cours/architectures.html">../modules/robotique/cours/architectures.html</a>.</p></body>
 </html>

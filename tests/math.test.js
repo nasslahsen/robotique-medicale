@@ -2,7 +2,7 @@
 // Lancer : node tests/math.test.js
 "use strict";
 const assert = require("assert");
-const { m } = require("../assets/js/lib.js");
+const { m } = require("../commun/js/lib.js");
 const D = m.DEG;
 const proche = (a, b, tol = 1e-9, msg = "") => assert.ok(Math.abs(a - b) <= tol, `${msg} ${a} != ${b}`);
 const procheMat = (A, B, tol = 1e-9) => A.forEach((l, i) => l.forEach((v, j) => proche(v, B[i][j], tol, `[${i}][${j}]`)));

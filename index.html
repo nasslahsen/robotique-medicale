@@ -3,33 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Robotique médicale</title>
+<title>Semestre 5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="jeu/jeu.css">
-<link rel="stylesheet" href="assets/css/onglets.css">
+<link rel="stylesheet" href="commun/css/jeu.css">
+<link rel="stylesheet" href="commun/css/barre.css">
+<link rel="stylesheet" href="commun/css/tableau.css">
+<script src="registre.js"></script>
+<script src="commun/js/plateforme.js"></script>
 </head>
-<body class="carte-jeu">
+<body class="tableau">
 <header class="site-barre"><div class="site-barre-int">
-  <a class="site-marque" href="index.html">Robotique médicale</a>
-  <nav class="onglets" aria-label="Sections"><a href="index.html" aria-current="page">Jeu</a><a href="cours.html">Cours</a></nav>
+  <span class="site-marque" id="semestre"></span>
+  <div class="droite"><span class="total-global" id="total-global"></span></div>
 </div></header>
-<div class="entete">
-  <div>
-    <h1>Le jeu</h1>
-    <p>Le cours en niveaux, des angles et du cosinus jusqu'au bras robotisé 2R. Chaque niveau est une suite de petits défis sur une figure. Pour relire une notion, ouvre l'onglet Cours.</p>
-  </div>
-  <div class="total"><b id="total">0</b><small id="total-sous">étoiles</small></div>
-</div>
-<div class="reprendre" id="reprendre"></div>
-<div id="chapitres"></div>
-<div class="pied">
-  <button type="button" id="tout">Tout débloquer</button>
-  <button type="button" id="effacer">Effacer ma progression</button>
-</div>
-<script src="jeu/outils.js"></script>
-<script src="jeu/catalogue.js"></script>
-<script src="jeu/moteur-carte.js"></script>
+<main class="tableau-int">
+  <div id="reprendre-module"></div>
+  <h2 class="tableau-titre">Modules</h2>
+  <div class="grille-modules" id="modules"></div>
+</main>
+<script src="commun/jeu/outils.js"></script>
+<script src="commun/js/tableau.js"></script>
 </body>
 </html>

@@ -1,8 +1,0 @@
-/* Barre du site, commune à la carte du jeu et aux pages de cours : marque, onglets Jeu et Cours, action à droite. */
-.site-barre { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid #e3e6ee; }
-.site-barre-int { max-width: 1180px; margin: 0 auto; height: 72px; padding: 0 40px; display: flex; align-items: center; gap: 28px; }
-.site-marque { font: 800 20px "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; color: #15171f; text-decoration: none; white-space: nowrap; }
-.onglets { display: flex; gap: 6px; padding: 5px; background: #eef0f5; border-radius: 16px; }
-.onglets a { display: inline-flex; align-items: center; height: 42px; padding: 0 22px; border-radius: 12px; font: 600 16px Inter, sans-serif; color: #5b6172; text-decoration: none; }
-.onglets a[aria-current="page"] { background: #15171f; color: #fff; box-shadow: 3px 3px 0 #ff5a1f; }
-.site-barre .droite { margin-left: auto; display: flex; align-items: center; gap: 12px; }

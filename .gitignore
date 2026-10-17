@@ -1,3 +1,7 @@
 *.pdf
 node_modules/
 .DS_Store
+# Les cours déposés pour construire un module restent sur la machine : jamais dans le dépôt.
+modules/*/sources/*
+!modules/*/sources/LISEZ-MOI.md
+tests/navigateur/captures/
