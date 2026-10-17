@@ -1,0 +1,129 @@
+/* Maquettes, version calme : peu d'éléments, beaucoup d'espace, une action principale par écran. */
+:root {
+  --encre: #15171f; --doux: #5b6172; --pale: #eef0f5; --trait: #e3e6ee;
+  --ok: #12a26b; --ok-pale: #e3f7ee; --ko: #e5484d; --ko-pale: #fdecec;
+}
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html { background: #fff; -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; margin: 0; background: #fff; color: var(--encre); font-family: Inter, system-ui, sans-serif; overflow-y: auto; }
+a { color: inherit; }
+
+/* Barre : un retour à gauche, au plus une chose discrète à droite */
+.barre { max-width: 1180px; height: 76px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; box-sizing: border-box; }
+.marque { font: 800 21px "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; text-decoration: none; }
+.retour { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; font: 500 17px Inter, sans-serif; color: var(--doux); text-decoration: none; }
+.retour::before { content: ""; width: 9px; height: 9px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+.barre .droite { display: flex; align-items: center; gap: 8px; }
+.lien-barre { display: inline-flex; align-items: center; min-height: 48px; padding: 0 6px; font: 500 17px Inter, sans-serif; color: var(--doux); text-decoration: none; background: none; border: 0; cursor: pointer; }
+
+/* Colonnes */
+.page { max-width: 760px; margin: 0 auto; padding: 48px 40px 140px; box-sizing: content-box; }
+.page.large { max-width: 1040px; }
+.page.centre { text-align: center; }
+h1 { font: 800 48px/1.08 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.022em; margin: 0 0 16px; }
+h2 { font: 700 24px/1.2 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; margin: 72px 0 20px; }
+.calme { font-size: 20px; line-height: 1.6; color: var(--doux); margin: 0; }
+.surtitre { font-size: 17px; color: #8a90a0; margin: 0 0 10px; }
+.texte { font-size: 19px; line-height: 1.65; margin: 0 0 14px; }
+
+/* Actions */
+.action { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 68px; padding: 0 36px; margin-top: 36px; border: 0; border-radius: 20px; background: var(--encre); color: #fff; font: 600 20px Inter, sans-serif; text-decoration: none; cursor: pointer; }
+.action.pleine { display: flex; width: 100%; box-sizing: border-box; }
+.second { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 24px; border: 1.5px solid var(--trait); border-radius: 16px; background: #fff; color: var(--encre); font: 500 18px Inter, sans-serif; text-decoration: none; cursor: pointer; }
+.lien-calme { display: inline-flex; align-items: center; min-height: 48px; margin-top: 14px; font: 500 18px Inter, sans-serif; color: var(--doux); text-decoration: none; }
+.lien-calme:hover, .lien-barre:hover, .retour:hover { color: var(--encre); }
+.rangee { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Listes calmes : lignes séparées par un trait fin */
+.lignes { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--trait); }
+.lignes > li, .lignes > a { display: flex; align-items: center; gap: 18px; min-height: 76px; padding: 14px 4px; border-bottom: 1px solid var(--trait); font-size: 20px; text-decoration: none; color: var(--encre); box-sizing: border-box; }
+.lignes .fin { margin-left: auto; color: #8a90a0; font-size: 17px; }
+.lignes a .fin::after, a.lignes-lien .fin::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-left: 14px; border-right: 2px solid #b3b8c4; border-top: 2px solid #b3b8c4; transform: rotate(45deg); vertical-align: 2px; }
+.point { flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--jeu); }
+.point.gris { background: #d5d9e2; }
+.passe { color: #8a90a0; }
+
+/* Ronds d'étape : fait, en cours (seul usage de la couleur du module), à faire */
+.rond { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 2px solid #d5d9e2; display: flex; align-items: center; justify-content: center; font: 500 15px "JetBrains Mono", monospace; color: #8a90a0; background: #fff; box-sizing: border-box; }
+.rond.fait { border-color: #d5d9e2; background: #f2f3f7; color: #8a90a0; }
+.rond.fait svg { width: 16px; height: 16px; }
+.rond.ici { border: 0; background: var(--jeu); color: #fff; }
+
+/* Dépliables : ce qui n'est utile que parfois */
+details.plie { border-top: 1px solid var(--trait); }
+details.plie:last-of-type { border-bottom: 1px solid var(--trait); }
+details.plie > summary { list-style: none; display: flex; align-items: center; gap: 14px; min-height: 68px; cursor: pointer; font-size: 19px; color: var(--doux); }
+details.plie > summary::-webkit-details-marker { display: none; }
+details.plie > summary::after { content: "+"; margin-left: auto; font: 400 26px Inter, sans-serif; color: #b3b8c4; }
+details.plie[open] > summary::after { content: "−"; }
+details.plie > .contenu { padding: 0 0 26px; }
+details.seul { border: 0; }
+details.seul > summary { min-height: 52px; }
+
+/* Source et « Ajouté » : une icône discrète, le détail au toucher */
+.info { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -12px -10px -12px -2px; padding: 0; border: 0; background: none; color: #c3c7d1; cursor: pointer; vertical-align: middle; }
+.info svg { width: 17px; height: 17px; }
+.info.ajout { color: #c9a227; }
+.info[aria-expanded="true"] { color: var(--doux); }
+.info.ajout[aria-expanded="true"] { color: #a07f12; }
+.bulle { display: none; position: absolute; z-index: 40; top: 42px; left: 50%; transform: translateX(-50%); padding: 10px 14px; border-radius: 12px; background: var(--encre); color: #fff; font: 500 15px/1.4 Inter, sans-serif; white-space: nowrap; text-align: left; }
+.info[aria-expanded="true"] .bulle { display: block; }
+.info.droite .bulle { left: auto; right: 0; transform: none; }
+.info.gauche .bulle { left: 0; transform: none; }
+
+/* Formules */
+.formule { margin: 18px 0 4px; font-size: 21px; overflow-x: auto; }
+.formule .katex-display { margin: 0; }
+
+/* Carte mémoire */
+.flip { width: 820px; max-width: 100%; height: 440px; margin: 0 auto; perspective: 1600px; cursor: pointer; }
+.flip-int { position: relative; width: 100%; height: 100%; transition: transform .5s cubic-bezier(.3, .8, .3, 1); transform-style: preserve-3d; }
+.flip.retournee .flip-int { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 48px 56px; border: 1.5px solid var(--trait); border-radius: 30px; background: #fff; box-shadow: 0 10px 40px rgba(21, 23, 31, .06); backface-visibility: hidden; -webkit-backface-visibility: hidden; box-sizing: border-box; }
+.face.dos { transform: rotateY(180deg); }
+.face .q { margin: 0; font: 700 34px/1.25 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.012em; }
+.face .rep { margin: 0; font-size: 23px; line-height: 1.5; }
+.face .coin { position: absolute; right: 30px; bottom: 26px; }
+.aide-carte { margin: 26px 0 0; text-align: center; font-size: 17px; color: #8a90a0; }
+.notes { width: 820px; max-width: 100%; margin: 34px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.notes a { min-height: 68px; font-size: 19px; }
+
+/* Fil de progression : une seule fois, fin */
+.fil { height: 4px; background: var(--pale); }
+.fil i { display: block; height: 100%; background: var(--encre); opacity: .55; }
+
+/* Quiz */
+.choix { display: grid; gap: 12px; margin-top: 34px; }
+.choix button { display: flex; align-items: center; gap: 20px; min-height: 76px; padding: 0 26px; border: 1.5px solid var(--trait); border-radius: 18px; background: #fff; color: var(--encre); font: 500 20px Inter, sans-serif; text-align: left; cursor: pointer; }
+.choix button .l { flex: none; width: 22px; font: 500 17px "JetBrains Mono", monospace; color: #8a90a0; }
+.choix button.bon { border: 2px solid var(--ok); background: var(--ok-pale); }
+.choix button.faux { border: 2px solid var(--ko); }
+.choix.fini button:not(.bon):not(.faux) { opacity: .45; }
+.retour-q { margin-top: 38px; }
+.retour-q .verdict { font: 700 24px "Bricolage Grotesque", Inter, sans-serif; margin: 0 0 12px; }
+.retour-q .verdict.ok { color: #0d7a50; }
+
+/* Réglages */
+.reglage { display: flex; align-items: center; justify-content: space-between; gap: 30px; min-height: 92px; border-bottom: 1px solid var(--trait); font-size: 20px; }
+.reglage:first-of-type { border-top: 1px solid var(--trait); }
+.segm { display: inline-flex; gap: 4px; padding: 4px; border-radius: 16px; background: var(--pale); }
+.segm button { min-width: 76px; height: 52px; border: 0; border-radius: 12px; background: transparent; color: var(--doux); font: 500 18px Inter, sans-serif; cursor: pointer; }
+.segm button.on { background: #fff; color: var(--encre); box-shadow: 0 1px 4px rgba(21, 23, 31, .12); }
+.bascule { display: inline-flex; align-items: center; gap: 14px; min-height: 48px; border: 0; background: none; font: 500 18px Inter, sans-serif; color: var(--doux); cursor: pointer; }
+.bascule i { position: relative; width: 54px; height: 32px; border-radius: 999px; background: #d5d9e2; transition: background .15s; }
+.bascule i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); transition: left .15s; }
+.bascule.on i { background: var(--encre); }
+.bascule.on i::after { left: 25px; }
+.puces { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+.puces button { min-height: 52px; padding: 0 18px; border: 1.5px solid var(--trait); border-radius: 14px; background: #fff; font: 500 17px Inter, sans-serif; color: var(--encre); cursor: pointer; }
+.puces button.off { color: #b3b8c4; }
+
+/* Tableaux */
+.tab { width: 100%; border-collapse: collapse; font-size: 18px; }
+.tab th, .tab td { padding: 16px 12px; text-align: left; border-bottom: 1px solid var(--trait); vertical-align: top; }
+.tab th { font-weight: 600; color: var(--doux); font-size: 16px; }
+
+/* Lien vers le sommaire des maquettes, très discret */
+.vers-sommaire { position: fixed; left: 0; bottom: 40px; z-index: 50; display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; transform-origin: left bottom; transform: rotate(-90deg) translateY(30px); font: 500 14px Inter, sans-serif; color: #b3b8c4; text-decoration: none; }
+@media print { .barre, .vers-sommaire, .info { display: none !important; } .page { padding-top: 0; } }

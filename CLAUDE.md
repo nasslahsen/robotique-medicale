@@ -145,6 +145,25 @@ formules en direct. Sous chaque figure : une ligne « Essaie : … Observe : …
 - Dessins qui remplissent le cadre, traits épais, étiquettes qui ne se chevauchent pas (halo blanc).
 - Pas de barre latérale, pas de table des matières, pas de décoration sans rôle.
 
+### Principe permanent : une interface calme, peu stimulante
+
+Trop d'éléments, de badges et de petits textes surstimulent l'utilisatrice. Chaque écran suit ces règles,
+avant toute autre considération de design :
+- Une seule action principale par écran, nettement la plus visible. Tout le reste est secondaire et discret.
+- Beaucoup d'espace blanc. Moins d'éléments, plus grands et plus calmes.
+- Pas de petit texte inutile. Ce qui ne sert que parfois (sources, dépendances, numéros de diapos,
+  « pourquoi c'est utile ») est caché derrière un toucher (dépliable, icône).
+- Couleur avec parcimonie : l'accent du module seulement là où il a un sens. Le reste est neutre.
+- Aucune animation qui pulse, clignote ou tourne en boucle. Du mouvement seulement en retour bref d'une action
+  (retourner une carte, une bonne réponse).
+- Pas de compteurs, badges ou indicateurs de progression sur chaque élément. La progression est montrée une fois,
+  simplement, là où elle compte.
+- Pas de chronomètre visible par défaut (sessions, mode examen) : il est optionnel.
+- Sources : une petite icône discrète qui affiche « Chapitre 2, diapos 14–16 » au toucher, pas une ligne de texte
+  partout. Même chose pour la marque « Ajouté ».
+
+Les maquettes de référence sont dans `maquette/` (publiées à `/maquette/`).
+
 ## 8. Contenu et écriture
 
 - Tout en français, tutoiement, phrases courtes, comme un bon étudiant ingénieur, pas comme une IA.

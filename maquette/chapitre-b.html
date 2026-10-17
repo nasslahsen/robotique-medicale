@@ -6,65 +6,40 @@
 <title>Chapitre B · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="../commun/css/jeu.css">
-<link rel="stylesheet" href="../commun/css/barre.css">
-<link rel="stylesheet" href="../commun/css/tableau.css">
-<link rel="stylesheet" href="maquette.css">
+<link rel="stylesheet" href="calme.css">
 </head>
-<body class="">
+<body>
 <style>
-.ou { display: flex; align-items: center; gap: 0; margin: 4px 0 26px; padding: 12px 16px; border-radius: 18px; background: #f6f7fa; }
-.ou a { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 11px; font: 600 14px Inter, sans-serif; color: var(--doux); text-decoration: none; background: #fff; border: 1.5px solid var(--trait); }
-.ou a.fait { color: var(--encre); }
-.ou a.fait::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
-.ou a.ici { background: var(--encre); color: #fff; border-color: var(--encre); box-shadow: 3px 3px 0 var(--jeu); }
-.ou i { flex: 1; height: 2px; background: #d9dde6; min-width: 14px; }
-.ou .titre-ou { flex: none; margin-right: 14px; font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--doux); }
-.et { display: inline-flex; gap: 2px; } .et i { width: 16px; height: 16px; } .et svg { width: 16px; height: 16px; }
-.et .p path { fill: var(--jeu); stroke: var(--encre); stroke-width: 1.3; } .et .v path { fill: var(--pale); stroke: #c9cdd8; stroke-width: 1.3; }
-.katex { font-size: 1.05em; }
-
-.affiche { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 26px; align-items: center; padding: 30px 34px 30px 46px; border: 2.5px solid var(--encre); border-radius: 28px; background: var(--jeu-pale); box-shadow: 6px 6px 0 var(--encre); overflow: hidden; }
-.affiche::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--jeu); }
-.affiche h1 { margin: 6px 0 10px; }
-.affiche ul { margin: 16px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
-.affiche li { display: flex; gap: 10px; align-items: flex-start; }
-.affiche li svg { width: 20px; height: 20px; color: var(--ok); flex: none; margin-top: 2px; }
-.affiche .cote-a { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.idee-l { display: grid; grid-template-columns: 64px 1fr 330px; gap: 22px; align-items: center; padding: 22px 0; border-bottom: 1.5px solid var(--trait); }
-.idee-l .n { width: 56px; height: 56px; border-radius: 16px; background: var(--encre); color: #fff; display: flex; align-items: center; justify-content: center; font: 800 26px "Bricolage Grotesque", Inter, sans-serif; }
-.idee-l.encours .n { background: var(--jeu); }
-.idee-l.fait .n { background: var(--ok); }
-.idee-l p { margin: 0 0 8px; font-size: 20px; line-height: 1.35; font-weight: 600; letter-spacing: -0.005em; }
-.idee-l .f { font-size: 16px; color: var(--doux); }
-.idee-l .source { margin-top: 6px; }
-.lien-etape { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid var(--trait); border-radius: 16px; text-decoration: none; color: var(--encre); background: #fff; }
-.lien-etape .t { font: 700 11px "JetBrains Mono", monospace; letter-spacing: .05em; color: var(--doux); display: block; }
-.lien-etape b { font-size: 16px; }
-.lien-etape .d { margin-left: auto; }
-.idee-l.encours .lien-etape { border: 2.5px solid var(--jeu); box-shadow: 4px 4px 0 var(--jeu); }
-.idee-l.fait .lien-etape { border-color: var(--ok); }
-.fin-ch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
-.fin-ch a { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border: 2px dashed #c9cdd8; border-radius: 18px; text-decoration: none; color: var(--encre); background: #fafbfd; }
-.fin-ch a .t { font: 700 12px "JetBrains Mono", monospace; letter-spacing: .05em; color: var(--jeu-texte); }
-.fin-ch a b { font-size: 18px; }
-.fin-ch a span:last-child { font-size: 14px; color: var(--doux); }
+.affiche { padding: 52px 56px; border-radius: 32px; background: #f6f7fa; }
+.grille-idees { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.idee { border: 1.5px solid var(--trait); border-radius: 24px; padding: 0 28px; }
+.idee summary { list-style: none; padding: 28px 0; font-size: 20px; line-height: 1.55; cursor: pointer; }
+.idee summary::-webkit-details-marker { display: none; }
+.idee .contenu { padding: 0 0 24px; display: flex; align-items: center; gap: 10px; }
+.idee .formule { margin: 0; font-size: 18px; }
+.piste { position: relative; display: grid; grid-template-columns: repeat(7, 1fr); margin-top: 10px; }
+.piste::before { content: ""; position: absolute; left: 7%; right: 7%; top: 19px; height: 2px; background: var(--trait); }
+.piste a { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 6px; text-align: center; font-size: 16px; line-height: 1.35; color: var(--encre); text-decoration: none; }
+.piste .rond { width: 40px; height: 40px; }
+.piste .fait span:last-child { color: #8a90a0; }
+.piste .ici span:last-child { font-weight: 600; }
 </style>
-<header class="site-barre"><div class="site-barre-int">
-  <nav class="ariane" aria-label="Fil d'Ariane"><a href="tableau-a.html">Semestre 5</a><span class="sep">›</span><span class="pastille"></span><a href="carte-b.html">Robotique médicale</a><span class="sep">›</span><b>Chapitre 3 · Orientations</b></nav>
-  <div class="droite"><a class="barre-carte" href="carte-b.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg>Carte du module</a></div>
-</div></header>
-<main class="mq"><nav class="ou" aria-label="Position dans le module"><span class="titre-ou">DANS LE MODULE</span><a class="fait" href="carte-b.html">0 · Les bases</a><i></i><a class="" href="carte-b.html">1 · Le robot et sa description</a><i></i><a class="fait" href="carte-b.html">2 · Repères et vecteurs</a><i></i><a class="ici" href="carte-b.html">3 · Orientations</a><i></i><a class="" href="carte-b.html">4 · Transformations</a></nav><section class="affiche"><div><span class="kick">CHAPITRE 3 · ROBOTIQUE BIOMÉDICALE · CHAPITRE 2, DIAPOS 10–45</span><h1>Orientations</h1>
-<p class="sous" style="color:var(--encre)">Savoir où est un instrument ne suffit pas : il faut dire comment il est tourné.</p>
-<ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Écrire \(R_z(\alpha)\) sans formulaire, en lisant les axes sur un dessin.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Vérifier si une matrice donnée est bien une matrice de rotation.</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Passer de trois angles d'Euler à une matrice, et repérer la singularité.</span></li></ul></div>
-<div class="cote-a"><div class="anneau grand"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="21" fill="none" stroke="#eef0f5" stroke-width="6"/><circle cx="27" cy="27" r="21" fill="none" stroke="var(--jeu)" stroke-width="6" stroke-linecap="round" stroke-dasharray="37.7 131.9"/></svg><b>2<small>sur 7 étapes</small></b></div><a class="btn" href="chapitre-b.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>Continuer</a></div></section>
-<h2 class="section-titre">4 idées, une étape chacune<small>touche une étape pour l'ouvrir</small></h2><div class="idee-l fait"><span class="n">1</span><div><p>Une orientation se décrit par les trois axes du repère tourné, rangés en colonnes : la matrice de rotation.</p><div class="f">\(R^{0,1} = \begin{bmatrix} \vec{x}_1 & \vec{y}_1 & \vec{z}_1 \end{bmatrix}_{R_0}\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 12–18</b></span></div></div><a class="lien-etape" href="chapitre-b.html"><span><span class="t">NIVEAU · COURS</span><b>Matrice de rotation</b></span><span class="d"><span class="et"><i class="p"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="p"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="p"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></span></span></a></div><div class="idee-l fait"><span class="n">2</span><div><p>Une matrice de rotation est orthonormée et de déterminant 1 : son inverse est sa transposée.</p><div class="f">\(R^{-1} = R^T, \quad \det R = 1\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 19–24</b></span></div></div><a class="lien-etape" href="chapitre-b.html"><span><span class="t">NIVEAU · COURS</span><b>Le groupe SO(3)</b></span><span class="d"><span class="et"><i class="p"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="p"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i><i class="v"><svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></i></span></span></a></div><div class="idee-l encours"><span class="n">3</span><div><p>Trois rotations élémentaires autour de x, y et z suffisent, et l'ordre compte.</p><div class="f">\(R_z(\alpha)\,R_y(\beta) \neq R_y(\beta)\,R_z(\alpha)\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 25–33</b></span></div></div><a class="lien-etape" href="chapitre-b.html"><span><span class="t">NIVEAU · COURS</span><b>Rotations élémentaires</b></span><span class="d"><span class="puce">En cours</span></span></a></div><div class="idee-l "><span class="n">4</span><div><p>Les angles d'Euler ZYX donnent une orientation avec trois angles, mais ont une singularité.</p><div class="f">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div><div class="source"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg><span>Source : <b>Chapitre 2, diapos 34–45</b></span></div></div><a class="lien-etape" href="chapitre-b.html"><span><span class="t">NIVEAU · COURS</span><b>Angles d'Euler</b></span><span class="d"><span class="puce gris">À faire</span></span></a></div><h2 class="section-titre">Pour finir le chapitre</h2>
-<div class="fin-ch"><a href="chapitre-b.html"><span class="t">RÉVISION</span><b>Les orientations</b><span>Les 4 idées mélangées, sur des cas nouveaux</span></a>
-<a href="chapitre-b.html"><span class="t">BOSS</span><b>Décode la pince</b><span>Plus dur, sans aide au premier essai</span></a>
-<a href="quiz.html"><span class="t">QUIZ</span><b>8 questions</b><span>Le chapitre est validé à 6 / 8</span></a></div>
-</main><a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<header class="barre"><a class="retour" href="carte-b.html">Robotique médicale</a><div class="droite"></div></header>
+<main class="page large">
+<section class="affiche">
+<p class="surtitre">Chapitre 3 sur 5</p>
+<h1>Orientations</h1>
+<p class="calme" style="max-width:640px">Savoir où est un instrument ne suffit pas : il faut dire comment il est tourné.</p>
+<a class="action" href="chapitre-b.html">Continuer : Rotations élémentaires</a>
+</section>
+<h2>Le parcours du chapitre</h2>
+<nav class="piste"><a class="fait" href="chapitre-b.html"><span class="rond fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Matrice de rotation</span></a><a class="fait" href="chapitre-b.html"><span class="rond fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Le groupe SO(3)</span></a><a class="ici" href="chapitre-b.html"><span class="rond ici">3</span><span>Rotations élémentaires</span></a><a class="" href="chapitre-b.html"><span class="rond">4</span><span>Angles d'Euler</span></a><a class="" href="chapitre-b.html"><span class="rond">5</span><span>Révision</span></a><a class="" href="chapitre-b.html"><span class="rond">6</span><span>Défi final</span></a><a class="quiz" href="quiz.html"><span class="rond">7</span><span>Quiz du chapitre</span></a></nav>
+<h2>L'essentiel en 4 idées</h2>
+<div class="grille-idees"><details class="idee"><summary>Une orientation se décrit par les trois axes du repère tourné, rangés en colonnes : la matrice de rotation.</summary><div class="contenu"><div class="formule">\(R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 12–18</span></button></div></details><details class="idee"><summary>Une matrice de rotation est orthonormée et de déterminant 1 : son inverse est sa transposée.</summary><div class="contenu"><div class="formule">\(R^{-1} = R^{T}, \qquad \det R = 1\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 19–24</span></button></div></details><details class="idee"><summary>Trois rotations élémentaires, autour de x, y et z, suffisent. L'ordre compte.</summary><div class="contenu"><div class="formule">\(R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 25–33</span></button></div></details><details class="idee"><summary>Les angles d'Euler ZYX donnent une orientation avec trois angles, mais ont une singularité.</summary><div class="contenu"><div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 34–45</span></button></div></details></div>
+<details class="plie seul" style="margin-top:40px"><summary>Ce que tu sauras faire après ce chapitre</summary><div class="contenu"><ul class="sauras"><li>Écrire une matrice de rotation en lisant les axes sur un dessin.</li><li>Vérifier si une matrice donnée est bien une matrice de rotation.</li><li>Passer de trois angles d'Euler à une matrice, et repérer la singularité.</li></ul></div></details>
+</main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>
 <script>renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],throwOnError:false});</script>

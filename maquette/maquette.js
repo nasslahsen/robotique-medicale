@@ -1,35 +1,54 @@
-/* Maquettes : seulement les gestes d'interface (retourner une carte, répondre au quiz, bascules). Aucune logique réelle. */
+/* Maquettes : seulement les gestes d'interface. Aucune logique réelle, rien n'est enregistré. */
 (function () {
   "use strict";
-  // Carte mémoire : toucher pour retourner, puis les trois boutons apparaissent
-  document.querySelectorAll(".flip").forEach(function (c) {
+  var tous = function (s, f) { document.querySelectorAll(s).forEach(f); };
+
+  // Source et « Ajouté » : toucher l'icône montre le détail, toucher ailleurs le cache
+  tous(".info", function (b) {
+    b.addEventListener("click", function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var ouvrir = b.getAttribute("aria-expanded") !== "true";
+      tous(".info", function (x) { x.setAttribute("aria-expanded", "false"); });
+      b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+    });
+  });
+  document.addEventListener("click", function () { tous(".info:not([data-reste])", function (x) { x.setAttribute("aria-expanded", "false"); }); });
+
+  // Carte mémoire : toucher pour retourner, les réponses n'apparaissent qu'ensuite
+  var apres = document.querySelectorAll("[data-apres-flip]");
+  apres.forEach(function (e) { e.style.visibility = "hidden"; });
+  tous(".flip", function (c) {
     c.addEventListener("click", function () {
       c.classList.toggle("retournee");
-      document.querySelectorAll("[data-apres-flip]").forEach(function (e) { e.style.visibility = c.classList.contains("retournee") ? "visible" : "hidden"; });
+      apres.forEach(function (e) { e.style.visibility = c.classList.contains("retournee") ? "visible" : "hidden"; });
     });
   });
-  document.querySelectorAll("[data-apres-flip]").forEach(function (e) { e.style.visibility = "hidden"; });
-  // Quiz : toucher une réponse montre le retour
-  document.querySelectorAll(".choix-q[data-quiz]").forEach(function (z) {
-    z.querySelectorAll("button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        if (z.dataset.fini) return; z.dataset.fini = "1";
-        z.querySelectorAll("button").forEach(function (x) { if (x.hasAttribute("data-juste")) x.classList.add("bon"); });
-        if (!b.hasAttribute("data-juste")) b.classList.add("faux");
-        var r = document.getElementById(b.hasAttribute("data-juste") ? "retour-bon" : "retour-faux");
-        if (r) { r.hidden = false; setTimeout(function () { r.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 50); }
-        var c = document.getElementById("consigne-q"); if (c) c.hidden = true;
-      });
-    });
+
+  // Quiz : toucher une réponse montre le retour (#juste ou #faux dans l'adresse pour l'ouvrir déjà répondu)
+  tous(".choix[data-quiz]", function (z) {
+    var repondre = function (b) {
+      if (z.classList.contains("fini")) return;
+      z.classList.add("fini");
+      z.querySelectorAll("button").forEach(function (x) { if (x.hasAttribute("data-juste")) x.classList.add("bon"); });
+      var juste = b.hasAttribute("data-juste");
+      if (!juste) b.classList.add("faux");
+      var r = document.getElementById(juste ? "retour-juste" : "retour-faux");
+      if (r) r.hidden = false;
+    };
+    z.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { repondre(b); }); });
+    if (location.hash === "#juste") repondre(z.querySelector("[data-juste]"));
+    if (location.hash === "#faux") repondre(z.querySelector("button:not([data-juste])"));
   });
-  // Contrôles segmentés et bascules
-  document.querySelectorAll(".segm").forEach(function (s) {
+
+  // Contrôles segmentés, bascules, puces de chapitres
+  tous(".segm", function (s) {
     s.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { s.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); }); }); });
   });
-  document.querySelectorAll(".bascule-mq").forEach(function (b) { b.addEventListener("click", function () { b.classList.toggle("on"); }); });
-  // Étiquettes « Ajouté » : toucher affiche l'explication
-  document.querySelectorAll(".ajoute").forEach(function (a) {
-    a.setAttribute("title", "Pas dans les diapositives : à vérifier");
-    a.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); a.textContent = a.textContent.trim() === "Ajouté" ? "Pas dans les diapos, à vérifier" : "Ajouté"; });
+  tous(".bascule", function (b) {
+    b.addEventListener("click", function () {
+      b.classList.toggle("on");
+      var t = b.getAttribute("data-cible"); if (t) document.getElementById(t).hidden = !b.classList.contains("on");
+    });
   });
+  tous(".puces button", function (b) { b.addEventListener("click", function () { b.classList.toggle("off"); }); });
 })();

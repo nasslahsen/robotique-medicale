@@ -6,69 +6,33 @@
 <title>Tableau de bord B · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../commun/css/jeu.css">
-<link rel="stylesheet" href="../commun/css/barre.css">
-<link rel="stylesheet" href="../commun/css/tableau.css">
-<link rel="stylesheet" href="maquette.css">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="calme.css">
 </head>
-<body class="tableau">
+<body>
 <style>
-.auj { display: grid; grid-template-columns: 1.15fr 1fr; gap: 0; border: 2.5px solid var(--encre); border-radius: 28px; overflow: hidden; box-shadow: 6px 6px 0 var(--encre); }
-.auj-g { padding: 30px 34px; background: var(--encre); color: #fff; display: flex; flex-direction: column; gap: 18px; }
-.auj-g .k { font: 700 13px "JetBrains Mono", monospace; letter-spacing: .06em; color: #ffb4ae; }
-.auj-g h1 { margin: 0; font-size: 42px; line-height: 1.02; letter-spacing: -0.025em; color: #fff; }
-.etapes-s { display: flex; gap: 10px; }
-.etapes-s span { flex: 1; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.08); font-size: 14px; color: #c9ccd6; line-height: 1.35; }
-.etapes-s b { display: block; font: 700 22px "JetBrains Mono", monospace; color: #fff; margin-bottom: 2px; }
-.auj-g .go { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; height: 58px; padding: 0 26px; border-radius: 16px; background: #fff; color: var(--encre); font: 700 18px Inter, sans-serif; text-decoration: none; box-shadow: 4px 4px 0 var(--jeu); }
-.auj-g .go svg { width: 20px; height: 20px; color: var(--jeu); }
-.auj-d { padding: 26px 30px; background: #FFE2DD; display: flex; flex-direction: column; gap: 12px; position: relative; }
-.auj-d::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: #D44C47; }
-.auj-d h2 { margin: 4px 0 4px; font-size: 30px; line-height: 1.08; letter-spacing: -0.02em; }
-.auj-d .btn-continuer { align-self: flex-start; --c: #D44C47; }
-.semaine { display: flex; gap: 6px; margin-top: auto; }
-.semaine span { flex: 1; text-align: center; font: 600 12px Inter, sans-serif; color: var(--doux); }
-.semaine i { display: block; height: 34px; margin-bottom: 4px; border-radius: 8px; background: rgba(212,76,71,.18); }
-.semaine i.fort { background: #D44C47; } .semaine i.moyen { background: rgba(212,76,71,.55); } .semaine i.vide { background: rgba(255,255,255,.7); }
-.ligne-mod { display: grid; grid-template-columns: 1fr 260px 190px; align-items: center; gap: 26px; padding: 18px 24px 18px 34px; border: 2px solid var(--encre); border-radius: 20px; background: #fff; box-shadow: 4px 4px 0 var(--encre); position: relative; overflow: hidden; margin-bottom: 14px; }
-.ligne-mod::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: var(--c); }
-.ligne-mod h3 { margin: 0 0 8px; font-size: 21px; line-height: 1.2; }
-.ligne-mod h3 a { text-decoration: none; }
-.ligne-mod .droite-l { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.ligne-mod .cm-dues { font-size: 14px; color: var(--doux); }
-.ligne-mod .cm-dues b { font: 700 15px "JetBrains Mono", monospace; color: var(--ct); }
-.ligne-mod.avenir { border-color: #c9cdd8; box-shadow: none; background: #fafbfd; padding-top: 14px; padding-bottom: 14px; }
-.ligne-mod.avenir::before { opacity: .45; }
-.ligne-mod.avenir h3 { color: #6b7180; font-size: 18px; margin-bottom: 6px; }
-.sauvegarde { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding: 18px 22px; border: 1.5px dashed #c9cdd8; border-radius: 18px; color: var(--doux); font-size: 15px; }
-.sauvegarde b { color: var(--encre); }
-.sauvegarde .droite-s { margin-left: auto; display: flex; gap: 10px; }
+.accueil { padding: 52px 56px; border-radius: 32px; background: #f6f7fa; }
+.tuiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tuile { display: flex; flex-direction: column; justify-content: space-between; min-height: 150px; padding: 26px 28px; border: 1.5px solid var(--trait); border-radius: 24px; text-decoration: none; color: var(--encre); font: 700 23px/1.2 "Bricolage Grotesque", Inter, sans-serif; box-sizing: border-box; }
+.tuile .point { margin-bottom: 18px; }
+.tuile.plus-tard { color: #b3b8c4; border-style: dashed; font-weight: 700; }
 </style>
-<header class="site-barre"><div class="site-barre-int">
-  <a class="site-marque" href="tableau-a.html">Semestre 5</a>
-  <div class="droite"><span class="total-global"><b>29 / 59</b> pages terminées</span></div>
-</div></header>
-<main class="tableau-int">
-<section class="auj">
-  <div class="auj-g">
-    <span class="k">AUJOURD'HUI · SESSION DE 10 MIN</span>
-    <h1>12 cartes, puis une page. Ensuite c'est fini.</h1>
-    <div class="etapes-s"><span><b>12</b>cartes à revoir (2 modules)</span><span><b>1</b>page : Rotations élémentaires</span><span><b>10</b>minutes au plus</span></div>
-    <a class="go" href="session.html"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Lancer la session</a>
-  </div>
-  <div class="auj-d">
-    <span class="rc-kicker" style="color:#CB4844">REPRENDRE · ROBOTIQUE MÉDICALE</span>
-    <h2>Chapitre 3 · Rotations élémentaires</h2>
-    <div class="progres"><div class="piste"><i style="width:61%"></i></div><span><b>25 / 41</b> pages</span></div>
-    <a class="btn-continuer" href="chapitre-b.html">Continuer</a>
-  </div>
+<header class="barre"><a class="marque" href="tableau-a.html">Semestre 5</a><div class="droite"></div></header>
+<main class="page large">
+<section class="accueil">
+<p class="surtitre">Aujourd'hui</p>
+<h1>10 minutes, et c'est fait.</h1>
+<p class="calme">Les cartes à revoir, puis la page suivante. La session s'arrête toute seule.</p>
+<a class="action" href="session.html">Commencer la session</a><br>
+<a class="lien-calme" href="chapitre-b.html">Ou reprendre Rotations élémentaires</a>
 </section>
-<h2 class="tableau-titre">Modules</h2>
-<article class="ligne-mod" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844"><div><span class="cm-num">MODULE 1 · RAISONNEMENT</span><h3><a href="carte-a.html">Robotique médicale</a></h3><div class="cm-sms"><span class="sm">Robotique biomédicale</span><span class="sm sm-vide">Éléments mécaniques en robotique</span></div></div><div><div class="progres"><div class="piste"><i style="width:61%"></i></div><span><b>25 / 41</b> pages</span></div></div><div class="droite-l"><span class="cm-dues"><b>9</b> cartes à revoir</span><a class="btn-continuer" href="carte-a.html">Continuer</a></div></article><article class="ligne-mod avenir" style="--c:#9065B0;--cl:#E8DEEE;--ct:#8D62AC"><div><span class="cm-num">MODULE 2</span><h3>Biomatériaux, biomécanique et prothèses</h3><div class="cm-sms"><span class="sm">Biomécanique et prothèses</span><span class="sm">Biomatériaux et biocompatibilité</span></div></div><div></div><div class="droite-l"><span class="badge-avenir">À venir</span></div></article><article class="ligne-mod avenir" style="--c:#337EA9;--cl:#D3E5EF;--ct:#317BA5"><div><span class="cm-num">MODULE 3</span><h3>Systèmes embarqués et instrumentation biomédicale intelligente</h3><div class="cm-sms"><span class="sm">Systèmes embarqués</span><span class="sm">Instrumentation connectée et intelligence des objets connectés</span></div></div><div></div><div class="droite-l"><span class="badge-avenir">À venir</span></div></article><article class="ligne-mod avenir" style="--c:#CB912F;--cl:#FDECC8;--ct:#9A6E23"><div><span class="cm-num">MODULE 4</span><h3>Informatique médicale</h3><div class="cm-sms"><span class="sm">Systèmes d'informations de santé</span><span class="sm">Sécurité des réseaux informatiques hospitaliers</span></div></div><div></div><div class="droite-l"><span class="badge-avenir">À venir</span></div></article><article class="ligne-mod" style="--c:#448361;--cl:#DBEDDB;--ct:#448361"><div><span class="cm-num">MODULE 5 · CONNAISSANCES</span><h3><a href="connaissances.html">Architecture hospitalière, contraintes d'installation et exigences réglementaires</a></h3><div class="cm-sms"></div></div><div><div class="progres"><div class="piste"><i style="width:22%"></i></div><span><b>4 / 18</b> pages</span></div></div><div class="droite-l"><span class="cm-dues"><b>3</b> cartes à revoir</span><a class="btn-continuer" href="connaissances.html">Continuer</a></div></article><article class="ligne-mod avenir" style="--c:#D9730D;--cl:#FADEC9;--ct:#B6600A"><div><span class="cm-num">MODULE 6</span><h3>Technologies de laboratoire d'analyses médicales</h3><div class="cm-sms"></div></div><div></div><div class="droite-l"><span class="badge-avenir">À venir</span></div></article><article class="ligne-mod avenir" style="--c:#C14C8A;--cl:#F5E0E9;--ct:#BD4A87"><div><span class="cm-num">MODULE 7</span><h3>Langues étrangères 5</h3><div class="cm-sms"><span class="sm">Français</span><span class="sm">Anglais</span></div></div><div></div><div class="droite-l"><span class="badge-avenir">À venir</span></div></article>
-<div class="sauvegarde"><span><b>Sauvegarde.</b> Ta progression et tes cartes sont gardées dans cet iPad. Exporte un fichier de temps en temps pour ne rien perdre.</span><span class="droite-s"><button class="outil" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Exporter</button><button class="outil" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Importer</button></span></div>
-</main>
-<a class="vers-sommaire" href="index.html">Sommaire des maquettes</a>
+<h2>Modules</h2>
+<div class="tuiles">
+<a class="tuile" href="carte-b.html"><span class="point"></span>Robotique médicale</a>
+<a class="tuile" href="connaissances.html"><span class="point" style="background:#448361"></span>Architecture hospitalière</a><div class="tuile plus-tard"><span class="point gris"></span>Biomatériaux</div><div class="tuile plus-tard"><span class="point gris"></span>Systèmes embarqués</div><div class="tuile plus-tard"><span class="point gris"></span>Informatique</div><div class="tuile plus-tard"><span class="point gris"></span>Laboratoire</div><div class="tuile plus-tard"><span class="point gris"></span>Langues</div></div><h2 style="margin-top:96px"></h2>
+<details class="plie seul"><summary>Sauvegarder ou importer ta progression</summary><div class="contenu">
+<p class="calme" style="font-size:17px;margin-bottom:18px">Ta progression reste sur cet iPad. Exporte-la de temps en temps : un fichier que tu pourras réimporter ici ou ailleurs.</p>
+<div class="rangee"><button class="second" type="button">Exporter</button><button class="second" type="button">Importer</button></div></div></details></main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="maquette.js"></script>
 </body>
 </html>
