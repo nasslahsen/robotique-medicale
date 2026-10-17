@@ -180,12 +180,6 @@ th { font-weight: 650; }
 .saisie-matrice { display: inline-grid; grid-template-columns: repeat(3, 5.2em); gap: 6px; margin: 6px 0; }
 .saisie-matrice input { font: inherit; font-size: 16px; width: 100%; padding: 4px 6px; border: 1px solid #c9ced8; border-radius: 4px; text-align: right; }
 
-/* Questions */
-details { border-bottom: 1px solid var(--trait); padding: 6px 0 10px; margin: 0 0 6px; }
-details summary { cursor: pointer; color: var(--lien); font-size: 16px; }
-details[open] summary { margin-bottom: 6px; }
-ol.questions > li { margin-bottom: 18px; }
-
 /* Bas de page */
 .suite {
   display: flex;

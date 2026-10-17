@@ -1,6 +1,6 @@
 # Robotique médicale: interactive study site
 
-Study site for the *Robotique médicale* course (Génie biomédical, UM6SS, Pr. H. El Hansali). The course content is reorganised as one progressive path of concepts, one concept per page, each built around interactive figures. Content is in French and follows the professor's notation (frames `R_0`, rotation matrices `R^{0,1}`, ZYX Euler angles, homogeneous matrices `T^{0,s}`).
+Study site for a *Robotique médicale* course (biomedical engineering). The course content is reorganised as one progressive path of concepts, one concept per page, each built around interactive figures. Content is in French and follows the professor's notation (frames `R_0`, rotation matrices `R^{0,1}`, ZYX Euler angles, homogeneous matrices `T^{0,s}`).
 
 Live site: https://nasslahsen.github.io/robotique-medicale/
 
@@ -48,7 +48,7 @@ Pull requests run the checks without deploying.
 ## Add a page (for example, new content from a fifth lecture)
 
 1. Copy an existing page, e.g. `concepts/matrice-rotation.html`, to `concepts/<new-slug>.html`, and its script `assets/js/pages/matrice-rotation.js` to `assets/js/pages/<new-slug>.js`. Update the `<title>`, the `<h1>` and the last `<script>` tag.
-2. Keep the page structure (the static check enforces it): `Intuition`, at least one figure (`<div id="fig-...">`), `Formalisation`, `Exemple`, `Formules clés`, `Questions` with answers in `<details>`. Put any prerequisite refresher on the same page, under `Rappel : ...`.
+2. Keep the page structure (the static check enforces it): `Intuition`, at least one figure (`<div id="fig-...">`), `Formalisation`, `Exemple`, `Formules clés`. No question section: practice lives in the game (`niveaux/`). Put any prerequisite refresher on the same page, under `Rappel : ...`.
 3. Add the page to the `CONCEPTS` list in `assets/js/nav.js`, at its place in the path, with `pret: true`. Numbering, the menu and the Précédent / Suivant buttons follow automatically.
 4. Build the figure with the helpers of `lib.js`: `RM.figure(id, {...})` creates the drawing and its panels, `RM.curseur`, `RM.bascule`, `RM.bouton`, `RM.etapes` add controls, `RM.plan` (2D) or `RM.vue3D` with `RM.orbite` (3D) draw, `RM.rendre(el, tex)` shows live formulas. Add a line "Essaie / Observe" under each figure. In 3D views, keep `RM.basculeOrbite`, so that on a phone a swipe scrolls the page unless the user turns the view on.
 5. Add any new calculation to `RM.m` in `lib.js` and a test (with the page's worked example) in `tests/math.test.js`.

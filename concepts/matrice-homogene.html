@@ -48,17 +48,6 @@
 <h2>Formules clés</h2>
 \[ T^{0,s} = \begin{pmatrix} R^{0,S} & O_0O_s^0 \\ 0\ 0\ 0 & 1 \end{pmatrix} \qquad \begin{pmatrix} O_0M^0 \\ 1 \end{pmatrix} = T^{0,s} \begin{pmatrix} O_sM^s \\ 1 \end{pmatrix} \qquad (T^{0,s})^{-1} = \begin{pmatrix} R^T & -R^T P \\ 0 & 1 \end{pmatrix} \]
 
-<h2>Questions</h2>
-<ol class="questions">
-<li>Que contient chacun des blocs d'une matrice homogène ?
-<details><summary>Voir la réponse</summary>Bloc \(3 \times 3\) en haut à gauche : la rotation (orientation). Colonne \(3 \times 1\) en haut à droite : la position de l'origine du repère mobile. Dernière ligne : \((0\ 0\ 0\ 1)\).</details></li>
-<li>Écrivez \(T^{0,1}\) pour un repère tourné de 90° autour de \(\vec{z}_0\) et d'origine \((0;\ 0;\ 0{,}5)\).
-<details><summary>Voir la réponse</summary>\(\begin{pmatrix} 0 & -1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0{,}5 \\ 0 & 0 & 0 & 1 \end{pmatrix}\).</details></li>
-<li>Pourquoi ajoute-t-on un 1 comme quatrième coordonnée d'un point ?
-<details><summary>Voir la réponse</summary>Pour que la multiplication applique aussi la translation : le 1 multiplie la quatrième colonne (la position) et l'ajoute au résultat.</details></li>
-<li>Pourquoi l'inverse d'une matrice homogène est-il peu coûteux ?
-<details><summary>Voir la réponse</summary>On transpose le bloc de rotation et on calcule \(-R^T P\) : pas d'inversion de matrice \(4 \times 4\).</details></li>
-</ol>
 </main>
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/vendor/katex/auto-render.min.js"></script>

@@ -42,11 +42,12 @@ for (const p of pages) {
   }
   // structure attendue d'une page de concept
   if (p.startsWith("concepts/")) {
-    for (const t of ["<h2>Intuition</h2>", "<h2>Formalisation</h2>", "<h2>Formules clés</h2>", "<h2>Questions</h2>", "class=\"fig\"", "<details>"]) {
+    for (const t of ["<h2>Intuition</h2>", "<h2>Formalisation</h2>", "<h2>Formules clés</h2>", "class=\"fig\""]) {
       if (t === "class=\"fig\"") { if (!/<div id="fig-/.test(html)) err(`${p} : aucune figure`); continue; }
       if (!html.includes(t)) err(`${p} : section manquante ${t}`);
     }
     if (!/<h2>Exemple/.test(html)) err(`${p} : section Exemple manquante`);
+    if (html.includes("<h2>Questions</h2>")) err(`${p} : les questions sont dans le jeu, pas dans les pages de cours`);
   }
 }
 // règles d'écriture sur les pages et les scripts

@@ -47,17 +47,6 @@
 <h2>Formules clés</h2>
 \[ \mathbf{R}^T\mathbf{R} = \mathbf{I} \qquad \mathbf{R}^{-1} = \mathbf{R}^T \qquad \det\mathbf{R} = +1 \qquad 9 - 6 = 3 \text{ paramètres} \]
 
-<h2>Questions</h2>
-<ol class="questions">
-<li>Vérifiez que \(R = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}\) est une rotation et donnez \(R^{-1}\).
-<details><summary>Voir la réponse</summary>Colonnes unitaires et orthogonales, \(\det R = 1\). \(R^{-1} = R^T = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}\), qui est \(R_z(-90°)\).</details></li>
-<li>Une matrice a des colonnes de norme 1, mais deux d'entre elles ont un produit scalaire de 0,2. Est-ce une rotation ?
-<details><summary>Voir la réponse</summary>Non : ses axes ne sont pas perpendiculaires, donc \(R^T R \neq I\).</details></li>
-<li>Pourquoi l'inverse d'une rotation est-il « économique » à calculer ?
-<details><summary>Voir la réponse</summary>Il suffit de transposer la matrice (échanger lignes et colonnes), sans calcul d'inverse.</details></li>
-<li>Combien de paramètres indépendants contient une matrice de rotation ? Pourquoi ?
-<details><summary>Voir la réponse</summary>3 : 9 coefficients moins 6 contraintes d'orthonormalité.</details></li>
-</ol>
 </main>
 <script src="../assets/vendor/katex/katex.min.js"></script>
 <script src="../assets/vendor/katex/auto-render.min.js"></script>
