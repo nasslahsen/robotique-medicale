@@ -268,4 +268,20 @@ test("chapitre 4 du jeu : réponses attendues dans les niveaux", () => {
   proche(Math.abs(0.4 - 0.3), 0.1, 1e-12); assert.ok(0.8 > 0.4 + 0.3);
 });
 
+test("chapitre 1 du jeu : réponses attendues dans les niveaux", () => {
+  const somme = (l) => l.reduce((a, x) => a + x, 0);
+  // SCARA 0,8 / 0,6 : anneau entre 0,2 et 1,4
+  proche(Math.abs(0.8 - 0.6), 0.2, 1e-12); proche(0.8 + 0.6, 1.4, 1e-12);
+  // charge utile : 4,0 kg > 3 kg ; boss : 2,5 kg <= 3 kg
+  proche(somme([1.2, 2.5, 0.3]), 4, 1e-12); assert.ok(somme([1.2, 2.5, 0.3]) > 3);
+  proche(somme([0.8, 1.5, 0.2]), 2.5, 1e-12); assert.ok(somme([0.8, 1.5, 0.2]) <= 3);
+  // temps de cycle et cadence
+  const T1 = somme([0.30, 0.20, 0.55, 0.15, 0.45, 0.35]); proche(T1, 2, 1e-12); proche(3600 / T1, 1800, 1e-9);
+  const T2 = somme([0.30 / 2, 0.20, 0.55 / 2, 0.15, 0.45 / 2, 0.35]); proche(T2, 1.35, 1e-12); proche(3600 / T2, 2666.67, 0.01);
+  const T3 = somme([0.40, 0.25, 0.60, 0.25, 0.50, 0.40]); proche(T3, 2.4, 1e-12); proche(3600 / T3, 1500, 1e-9);
+  const T4 = somme([0.4, 0.3, 0.5, 0.3]); proche(T4, 1.5, 1e-12); proche(3600 / T4, 2400, 1e-9);
+  // mise à l'échelle 0,3 : 2 cm -> 6 mm, 1,5 cm -> 4,5 mm ; liaison pivot glissant : 2 DDL
+  proche(2 * 0.3 * 10, 6, 1e-12); proche(1.5 * 0.3 * 10, 4.5, 1e-12); proche(6 - 4, 2, 0);
+});
+
 console.log(`${n} tests réussis`);
