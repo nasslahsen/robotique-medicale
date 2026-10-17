@@ -1,0 +1,66 @@
+site_name: Robotique médicale
+site_description: Notes de cours de robotique médicale (Génie biomédical, UM6SS), d'après le cours de Pr. H. El Hansali.
+site_url: https://nasslahsen.github.io/robotique-medicale/
+repo_url: https://github.com/nasslahsen/robotique-medicale
+repo_name: nasslahsen/robotique-medicale
+edit_uri: ""
+copyright: Notes d'étude personnelles d'après le cours de Pr. Hasnaa El Hansali (UM6SS).
+
+theme:
+  name: material
+  language: fr
+  palette:
+    scheme: default
+    primary: white
+    accent: indigo
+  font:
+    text: Source Sans 3
+    code: JetBrains Mono
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.highlight
+    - search.suggest
+
+plugins:
+  - search:
+      lang: fr
+
+markdown_extensions:
+  - toc:
+      permalink: true
+      permalink_title: Lien vers cette section
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - def_list
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences
+  - pymdownx.smartsymbols
+
+extra_css:
+  - assets/css/site.css
+
+extra_javascript:
+  - assets/js/mathjax-config.js
+  - assets/vendor/mathjax/tex-chtml.js
+  - assets/js/widgets.js
+
+nav:
+  - Accueil: index.md
+  - Cours:
+      - 1. Introduction à la robotique: cours/01-introduction.md
+      - 2. Caractéristiques et robotique médicale: cours/02-caracteristiques-robotique-medicale.md
+      - 3. Rappels pour la cinématique: cours/03-rappels-cinematique.md
+      - 4. Description spatiale et transformation:
+          - cours/04-description-spatiale/index.md
+          - 4.1 Bases mécaniques: cours/04-description-spatiale/1-bases-mecaniques.md
+          - 4.2 Repères et orientation: cours/04-description-spatiale/2-reperes-orientation.md
+          - 4.3 Transformations homogènes: cours/04-description-spatiale/3-transformations-homogenes.md
+  - Rappels (prérequis): rappels.md
+  - Glossaire: glossaire.md
