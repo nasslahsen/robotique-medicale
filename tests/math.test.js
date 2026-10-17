@@ -174,4 +174,114 @@ test("partie A : temps de cycle du cours, vitesse doublée, question, charge, SC
   proche(2 * 3, 6); proche(1.5 * 0.3, 0.45, 1e-12);
 });
 
+test("chapitre 0 du jeu : réponses attendues dans les niveaux", () => {
+  // degrés et radians
+  proche(180 / Math.PI, 57.3, 0.01); proche(3 * Math.PI / 4 / D, 135, 1e-9); proche(Math.PI / 6 / D, 30, 1e-9);
+  // cercle : cos 60° = 0,5 ; bras de 2 à 30°
+  proche(Math.cos(60 * D), 0.5, 1e-12); proche(2 * Math.cos(30 * D), 1.732, 1e-3); proche(2 * Math.sin(30 * D), 1, 1e-12);
+  // triangle : 0,5 m à 30°, cible (0,4 ; 0,3), bout (0,6 ; 0,8)
+  proche(0.5 * Math.cos(30 * D), 0.433, 1e-3); proche(0.5 * Math.sin(30 * D), 0.25, 1e-12);
+  proche(Math.hypot(0.4, 0.3), 0.5, 1e-12); proche(Math.atan2(0.3, 0.4) / D, 36.9, 0.05);
+  proche(Math.hypot(0.6, 0.8), 1, 1e-12); proche(Math.atan2(0.8, 0.6) / D, 53.1, 0.05);
+  // signes : quart de tour
+  proche(Math.cos((30 + 90) * D), -Math.sin(30 * D), 1e-12); proche(Math.sin((30 + 90) * D), Math.cos(30 * D), 1e-12);
+  // vecteurs : somme et combinaison
+  assert.deepStrictEqual([2 + 1, 1 + 3], [3, 4]); assert.deepStrictEqual([2 * 1 + 2 * -1, 2 * 1 + 2 * 1], [0, 4]);
+  // norme
+  proche(Math.hypot(3, 4), 5); proche(Math.hypot(1, 2, 2), 3); proche(Math.hypot(0.8, -0.6), 1, 1e-12);
+  // matrice fois vecteur
+  procheVec(m.matVec([[2, 1], [1, 3]], [3, 4]), [10, 15]);
+  procheVec(m.matVec([[0, -1], [1, 0]], [2, 1]), [-1, 2]);
+  procheVec(m.matVec(m.Rz(90 * D), [1, 2, 3]), [-2, 1, 3]);
+  // boss : bras de 0,4 m
+  proche(0.4 * Math.cos(60 * D), 0.2, 1e-12); proche(0.4 * Math.sin(60 * D), 0.3464, 1e-4);
+  proche(0.4 * Math.cos(135 * D), -0.283, 1e-3); proche(0.4 * Math.sin(135 * D), 0.283, 1e-3);
+  proche(0.3 * Math.cos(30 * D) + 0.2 * Math.cos(90 * D), 0.260, 1e-3); proche(0.3 * Math.sin(30 * D) + 0.2, 0.350, 1e-12);
+});
+
+test("chapitre 2 du jeu : réponses attendues dans les niveaux", () => {
+  // repère : distance du cours (exemple ajouté) et glissières
+  proche(Math.hypot(13 - 10, 24 - 20, 5 - 5), 5, 1e-12);
+  // produit scalaire : instrument et os, deux repères à 30°
+  proche(m.dot([1, 0, 1], [0, 0, 1]), 1); proche(Math.acos(1 / Math.SQRT2) / D, 45, 1e-9);
+  const R = m.Rz(30 * D), x2 = m.colonne(R, 0), y2 = m.colonne(R, 1);
+  proche(m.dot([1, 0, 0], x2), 0.866, 1e-3); proche(m.dot([0, 1, 0], x2), 0.5, 1e-12); proche(m.dot([1, 0, 0], y2), -0.5, 1e-12);
+  // produit vectoriel : exemple et deux repères
+  procheVec(m.cross([1, 2, 0], [0, 1, 3]), [6, -3, 1]); procheVec(m.cross([1, 0, 0], [0, 1, 0]), [0, 0, 1]);
+  procheVec(m.cross([1, 0, 0], x2), [0, 0, Math.sin(30 * D)]);
+  // cylindriques
+  proche(5 * Math.cos(45 * D), 3.54, 0.005); proche(Math.hypot(-1, 1), 1.414, 1e-3);
+  proche(Math.atan2(1, -1) / D, 135, 1e-9); proche(Math.atan2(-1, -1) / D, -135, 1e-9); proche(Math.atan(1) / D, 45, 1e-9);
+  // Chasles
+  procheVec(m.add([2, 1, 0], m.matVec(m.Rz(0), [1.5, 0, 0])), [3.5, 1, 0]);
+  procheVec(m.add([2, 1, 0], m.matVec(m.Rz(90 * D), [1.5, 0, 0])), [2, 2.5, 0]);
+  procheVec(m.add([1, 1.5, 0], m.matVec(m.Rz(90 * D), [1.5, 0, 0])), [1, 3, 0]);
+  // boss
+  proche(Math.hypot(3, 4, 0), 5); procheVec(m.cross([2, 0, 0], [0, 3, 0]), [0, 0, 6]);
+  procheVec([2 * Math.cos(-90 * D), 2 * Math.sin(-90 * D), 1], [0, -2, 1]);
+  procheVec(m.add([1, 1, 0], m.matVec(m.Rz(90 * D), [2, 0, 0])), [1, 3, 0]);
+});
+
+test("chapitre 3 du jeu : réponses attendues dans les niveaux", () => {
+  const R30 = m.Rz(30 * D), c1 = m.colonne(R30, 0), c2 = m.colonne(R30, 1);
+  proche(m.dot(c1, c1), 1, 1e-12); proche(m.dot(c1, c2), 0, 1e-12);
+  proche(m.det3([[1, 0, 0], [0, 1, 0], [0, 0, -1]]), -1); proche(m.det3(m.Rx(90 * D)), 1, 1e-12);
+  procheVec(m.transpose(R30)[0], [0.866, 0.5, 0], 1e-3);
+  // ordre des rotations : Rz(90°)Rx(90°) et l'inverse
+  procheVec(m.colonne(m.matMul(m.Rz(90 * D), m.Rx(90 * D)), 0), [0, 1, 0]);
+  procheVec(m.colonne(m.matMul(m.Rx(90 * D), m.Rz(90 * D)), 0), [0, 0, 1]);
+  // Ry(30°) : x descend
+  procheVec(m.colonne(m.Ry(30 * D), 0), [Math.cos(30 * D), 0, -0.5]);
+  // téléphone ZYX et XYZ
+  const R02 = m.matMul(m.Rz(-90 * D), m.Ry(90 * D));
+  procheVec(m.colonne(R02, 0), [0, 0, -1]);
+  const R3 = m.matMul(m.matMul(m.Rx(90 * D), m.Ry(90 * D)), m.Rz(-90 * D));
+  procheVec(m.colonne(R3, 2), [1, 0, 0]); procheVec(m.colonne(R3, 0), [0, 0, -1]); procheVec(m.colonne(R3, 1), [0, 1, 0]);
+  // boss
+  const C = m.Rz(-70 * D); proche(C[0][0], 0.342, 1e-3); proche(C[1][0], -0.940, 1e-3);
+  proche(m.det3([[0, 1, 0], [1, 0, 0], [0, 0, 1]]), -1);
+  procheVec(m.colonne(m.matMul(m.Rz(90 * D), m.Ry(90 * D)), 0), [0, 0, -1]);
+});
+
+test("chapitre 4 du jeu : réponses attendues dans les niveaux", () => {
+  const R = m.Rz(90 * D);
+  procheVec(m.matVec(R, [0.5, 0, 0]), [0, 0.5, 0]);
+  procheVec(m.add([1, 2, 0], m.matVec(R, [0.5, 0, 0])), [1, 2.5, 0]);
+  procheVec(m.matVec(m.transpose(R), [0, 1, 0]), [1, 0, 0]);
+  // matrice homogène, point (1) et vecteur (0), inverse
+  const T = [[0, -1, 0, 1], [1, 0, 0, 2], [0, 0, 1, 0], [0, 0, 0, 1]];
+  procheVec(m.matVec(T, [0.5, 0, 0, 1]), [1, 2.5, 0, 1]); procheVec(m.matVec(T, [0.5, 0, 0, 0]), [0, 0.5, 0, 0]);
+  procheVec(m.scale(m.matVec(m.transpose(R), [1, 2, 0]), -1), [-2, 1, 0]);
+  // composition : Rot·Trans et Trans·Rot
+  const Rot = [[0, -1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], Tr = [[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
+  procheVec(m.colonne(m.matMul(Rot, Tr), 3), [0, 1, 0, 1]); procheVec(m.colonne(m.matMul(Tr, Rot), 3), [1, 0, 0, 1]);
+  // chaîne à trois segments : une solution à 5° près atteint la cible
+  const L = [1, 0.8, 0.5], th = [80, 30, -115]; let p = [0, 0], c = 0;
+  th.forEach((t, i) => { c += t; p = [p[0] + L[i] * Math.cos(c * D), p[1] + L[i] * Math.sin(c * D)]; });
+  assert.ok(Math.hypot(p[0] - 0.4, p[1] - 1.7) < 0.07);
+  // bras 2R : exemple, cible, boss
+  const r = m.bras2R(30 * D, 45 * D, 0.4, 0.3); proche(r.M[0], 0.424, 1e-3); proche(r.M[1], 0.490, 1e-3);
+  proche(r.T02[0][3], 0.346, 1e-3); proche(r.T02[1][3], 0.2, 1e-9);
+  const c2 = m.bras2R(60 * D, 60 * D, 0.4, 0.3); assert.ok(Math.hypot(c2.M[0] - 0.05, c2.M[1] - 0.606) < 0.012);
+  const c3 = m.bras2R(45 * D, 30 * D, 0.4, 0.3); assert.ok(Math.hypot(c3.M[0] - 0.36, c3.M[1] - 0.573) < 0.012);
+  procheVec(m.bras2R(90 * D, -90 * D, 0.5, 0.5).M, [0.5, 0.5, 0]);
+  proche(Math.abs(0.4 - 0.3), 0.1, 1e-12); assert.ok(0.8 > 0.4 + 0.3);
+});
+
+test("chapitre 1 du jeu : réponses attendues dans les niveaux", () => {
+  const somme = (l) => l.reduce((a, x) => a + x, 0);
+  // SCARA 0,8 / 0,6 : anneau entre 0,2 et 1,4
+  proche(Math.abs(0.8 - 0.6), 0.2, 1e-12); proche(0.8 + 0.6, 1.4, 1e-12);
+  // charge utile : 4,0 kg > 3 kg ; boss : 2,5 kg <= 3 kg
+  proche(somme([1.2, 2.5, 0.3]), 4, 1e-12); assert.ok(somme([1.2, 2.5, 0.3]) > 3);
+  proche(somme([0.8, 1.5, 0.2]), 2.5, 1e-12); assert.ok(somme([0.8, 1.5, 0.2]) <= 3);
+  // temps de cycle et cadence
+  const T1 = somme([0.30, 0.20, 0.55, 0.15, 0.45, 0.35]); proche(T1, 2, 1e-12); proche(3600 / T1, 1800, 1e-9);
+  const T2 = somme([0.30 / 2, 0.20, 0.55 / 2, 0.15, 0.45 / 2, 0.35]); proche(T2, 1.35, 1e-12); proche(3600 / T2, 2666.67, 0.01);
+  const T3 = somme([0.40, 0.25, 0.60, 0.25, 0.50, 0.40]); proche(T3, 2.4, 1e-12); proche(3600 / T3, 1500, 1e-9);
+  const T4 = somme([0.4, 0.3, 0.5, 0.3]); proche(T4, 1.5, 1e-12); proche(3600 / T4, 2400, 1e-9);
+  // mise à l'échelle 0,3 : 2 cm -> 6 mm, 1,5 cm -> 4,5 mm ; liaison pivot glissant : 2 DDL
+  proche(2 * 0.3 * 10, 6, 1e-12); proche(1.5 * 0.3 * 10, 4.5, 1e-12); proche(6 - 4, 2, 0);
+});
+
 console.log(`${n} tests réussis`);
