@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cartes mémoire · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="calme.css">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
-<header class="barre"><a class="retour" href="carte-a.html">Robotique médicale</a><div class="droite"><a class="lien-barre" href="carte-a.html">Arrêter</a></div></header>
-<div class="fil"><i style="width:33%"></i></div><main class="page large" style="padding-top:56px">
+<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7" width="13" height="13" rx="2"/><path d="M7.5 4h10.5a2.5 2.5 0 0 1 2.5 2.5V17"/></svg>Cartes mémoire</span><div class="droite"><a class="lien" href="carte-a.html">Arrêter</a></div></header>
+<div class="fil"><i style="width:33%"></i></div><main class="page large" style="padding-top:48px">
 <div class="flip"><div class="flip-int">
-<div class="face"><p class="q">Que contient la première colonne de \(R^{0,1}\) ?</p></div>
-<div class="face dos"><p class="rep">L'axe \(\vec{x}_1\) du repère tourné, exprimé dans le repère fixe \(R_0\).</p><div class="formule">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\]</div><span class="coin"><button class="info droite" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 14–16</span></button></span></div>
+<div class="face"><span class="pill" style="align-self:flex-start">Orientations</span><p class="q">Que contient la première colonne de \(R^{0,1}\) ?</p></div>
+<div class="face dos"><span class="pill" style="align-self:flex-start">Orientations</span><p class="rep">L'axe \(\vec{x}_1\) du repère tourné, exprimé dans le repère fixe \(R_0\).</p><div class="teinte"><div class="formule">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\]</div></div><div class="bas"><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 14–16</div></details></div></div>
 </div></div>
 <p class="aide-carte">Touche la carte pour la retourner.</p>
-<div class="notes" data-apres-flip><a class="second" href="cartes.html">Pas su</a><a class="second" href="cartes.html">Difficile</a><a class="second" href="cartes.html">Facile</a></div>
+<div class="notes" data-apres-flip><a class="n1" href="cartes.html">Pas su</a><a class="n2" href="cartes.html">Difficile</a><a class="n3" href="cartes.html">Facile</a></div>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>

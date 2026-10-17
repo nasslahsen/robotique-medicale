@@ -3,17 +3,6 @@
   "use strict";
   var tous = function (s, f) { document.querySelectorAll(s).forEach(f); };
 
-  // Source et « Ajouté » : toucher l'icône montre le détail, toucher ailleurs le cache
-  tous(".info", function (b) {
-    b.addEventListener("click", function (e) {
-      e.preventDefault(); e.stopPropagation();
-      var ouvrir = b.getAttribute("aria-expanded") !== "true";
-      tous(".info", function (x) { x.setAttribute("aria-expanded", "false"); });
-      b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
-    });
-  });
-  document.addEventListener("click", function () { tous(".info:not([data-reste])", function (x) { x.setAttribute("aria-expanded", "false"); }); });
-
   // Carte mémoire : toucher pour retourner, les réponses n'apparaissent qu'ensuite
   var apres = document.querySelectorAll("[data-apres-flip]");
   apres.forEach(function (e) { e.style.visibility = "hidden"; });
@@ -34,6 +23,7 @@
       if (!juste) b.classList.add("faux");
       var r = document.getElementById(juste ? "retour-juste" : "retour-faux");
       if (r) r.hidden = false;
+      tous("[data-apres-quiz]", function (x) { x.hidden = false; });
     };
     z.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { repondre(b); }); });
     if (location.hash === "#juste") repondre(z.querySelector("[data-juste]"));

@@ -1,41 +1,35 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sources et ajouts · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="calme.css">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
 <style>
-.exemple { margin-top: 18px; padding: 34px 38px; border: 1.5px solid var(--trait); border-radius: 26px; }
-.legende-i { display: flex; align-items: center; gap: 6px; font-size: 19px; min-height: 56px; }
-.legende-i .info { margin: 0; }
-.exemple .bulle { white-space: nowrap; }
-.mini { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.mini .exemple { padding-bottom: 60px; }
+.ex { margin-top: 14px; padding: 24px 28px; border: 1px solid var(--ligne); border-radius: 12px; }
+.ex p { margin: 0 0 4px; font-size: 18px; }
+.deux-ex { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 </style>
-<header class="barre"><a class="retour" href="carte-a.html">Robotique médicale</a><div class="droite"></div></header>
-<main class="page">
-<h1>Sources et ajouts</h1>
-<p class="calme">Pas de ligne de texte partout. Une petite icône en fin de bloc ; touche-la pour voir d'où ça vient.</p>
-<div style="margin-top:36px">
-<div class="legende-i"><button class="info gauche" type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 14–16</span></button><span>Source : le PDF et les diapos.</span></div>
-<div class="legende-i"><button class="info ajout gauche" type="button" aria-label="Ajouté" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3"/><path d="M12 8.5v7M8.5 12h7"/></svg><span class="bulle">Ajouté : pas dans les diapos, à vérifier</span></button><span>Ajouté : ce n'est pas dans les diapos.</span></div>
-</div>
-<h2>Sur une page de cours, icône touchée</h2>
-<div class="exemple" style="padding-bottom:70px"><p class="texte">Une rotation autour d'un seul axe garde cet axe fixe. Autour de \(z\), seules les composantes en \(x\) et \(y\) changent. <button class="info " type="button" aria-label="Source" aria-expanded="true" data-reste><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 25–28</span></button></p></div>
-<div class="exemple" style="padding-bottom:70px"><p class="texte">Exemple : avec \(\alpha = 30^\circ\), le point \((1\,;\,0\,;\,0)\) arrive en \((0{,}87\,;\,0{,}5\,;\,0)\). <button class="info ajout " type="button" aria-label="Ajouté" aria-expanded="true" data-reste><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3 3"/><path d="M12 8.5v7M8.5 12h7"/></svg><span class="bulle">Ajouté : pas dans les diapos, à vérifier</span></button></p></div>
+<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><span class="miette">Sources et ajouts</span><div class="droite"></div></header>
+<main class="page sans-couverture">
+<h1 style="margin-top:0">Sources et ajouts</h1>
+<p class="chapeau">Sous chaque bloc, une bascule grise « Source » ; touche-la pour voir le PDF et les diapos. Ce qui ne vient pas des diapos a une bascule « Ajouté », en jaune.</p>
+<h2>Sur une page de cours</h2>
+<div class="ex"><p>Une rotation autour d'un seul axe garde cet axe fixe. Autour de \(z\), seules les composantes en \(x\) et \(y\) changent.</p><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 25–28</div></details></div>
+<div class="ex"><p>Une rotation autour d'un seul axe garde cet axe fixe.</p><details class="tog source" open><summary>Source</summary><div class="dedans">Chapitre 2, diapos 25–28</div></details></div>
+<div class="ex"><p>Exemple : avec \(\alpha = 30^\circ\), le point \((1\,;\,0\,;\,0)\) arrive en \((0{,}87\,;\,0{,}5\,;\,0)\).</p><details class="tog source ajout" open><summary>Ajouté</summary><div class="dedans">Exemple d'entraînement, pas dans les diapos. Calculé avec la formule des diapos 25–28.</div></details></div>
 <h2>Sur une carte et dans un quiz</h2>
-<div class="mini">
-<div class="exemple"><p class="texte">L'axe \(\vec{x}_1\) du repère tourné, exprimé dans le repère fixe \(R_0\). <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 14–16</span></button></p></div>
-<div class="exemple"><p class="verdict ok" style="font:700 22px 'Bricolage Grotesque',Inter,sans-serif;color:#0d7a50;margin:0 0 10px">Juste.</p><p class="texte">Une matrice de rotation est orthonormée : son inverse est sa transposée. <button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 19–24</span></button></p></div>
+<div class="deux-ex">
+<div class="ex"><p>L'axe \(\vec{x}_1\) du repère tourné, exprimé dans le repère fixe \(R_0\).</p><details class="tog source" open><summary>Source</summary><div class="dedans">Chapitre 2, diapos 14–16</div></details></div>
+<div class="ex teinte ok" style="border:0"><p style="color:var(--ok);font-weight:600">Juste</p><p>Une matrice de rotation est orthonormée : son inverse est sa transposée.</p><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 19–24</div></details></div>
 </div>
-<p class="calme" style="font-size:17px;margin-top:40px">Le chapitre 0, entièrement ajouté, porte une seule icône sur son titre, pas une par ligne.</p>
+<p class="discret" style="margin-top:30px">Le chapitre 0, entièrement ajouté, porte une seule bascule « Ajouté » sous son titre, pas une par bloc.</p>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>

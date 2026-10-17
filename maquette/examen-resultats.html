@@ -1,28 +1,29 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Résultats · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="calme.css">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
-<header class="barre"><a class="retour" href="carte-a.html">Robotique médicale</a><div class="droite"></div></header>
-<main class="page">
-<p class="surtitre">Examen blanc, 20 questions</p>
-<h1 style="font-size:64px">15 sur 20</h1>
-<p class="calme">Les chapitres 0 et 2 sont solides. Les erreurs viennent surtout des chapitres 1 et 3.</p>
-<a class="action" href="cartes.html">Revoir mes 5 erreurs</a>
+<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><a class="miette" href="examen.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Examen blanc</a><span class="sep">/</span><span class="miette">Résultats</span><div class="droite"></div></header>
+<div class="couverture basse"></div><main class="page">
+<div class="icone-page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg></div>
+<h1>15 sur 20</h1>
+<div class="prog"><div class="piste"><i style="width:75%"></i></div>75 %</div>
+<p class="chapeau" style="margin-top:18px">Les chapitres 0 et 2 sont solides. Les erreurs viennent surtout des chapitres 1 et 3.</p>
+<div class="zone-action"><a class="action" href="cartes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7" width="13" height="13" rx="2"/><path d="M7.5 4h10.5a2.5 2.5 0 0 1 2.5 2.5V17"/></svg>Revoir mes 5 erreurs</a></div>
 <h2>Les erreurs</h2>
-<ul class="lignes"><li style="flex-wrap:wrap;gap:4px 18px;padding:20px 4px"><span style="flex:1 1 100%">Quelle est l'inverse de \(R^{0,1}\) ?</span><span class="passe" style="font-size:17px">Réponse : \((R^{0,1})^T\)</span><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 21–22</span></button><a class="lien-calme" style="margin:0 0 0 auto;font-size:17px" href="chapitre-a.html">Revoir la page</a></li><li style="flex-wrap:wrap;gap:4px 18px;padding:20px 4px"><span style="flex:1 1 100%">Combien de degrés de liberté a ce robot ?</span><span class="passe" style="font-size:17px">Réponse : 4</span><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Partie 2 ch. 1, diapo 38</span></button><a class="lien-calme" style="margin:0 0 0 auto;font-size:17px" href="chapitre-a.html">Revoir la page</a></li><li style="flex-wrap:wrap;gap:4px 18px;padding:20px 4px"><span style="flex:1 1 100%">Doubler la vitesse double-t-il la cadence ?</span><span class="passe" style="font-size:17px">Réponse : Non, seuls les temps de mouvement baissent</span><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Semaine 1, diapos 40–41</span></button><a class="lien-calme" style="margin:0 0 0 auto;font-size:17px" href="chapitre-a.html">Revoir la page</a></li></ul>
-<p class="calme" style="font-size:17px;margin-top:14px">Et 2 autres, dans la révision.</p>
-<details class="plie seul" style="margin-top:40px"><summary>Détail par chapitre</summary><div class="contenu">
-<table class="tab"><tbody><tr><td>0 · Les bases</td><td>4 sur 4</td></tr><tr><td>1 · Le robot et sa description</td><td>3 sur 5</td></tr>
-<tr><td>2 · Repères et vecteurs</td><td>5 sur 6</td></tr><tr><td>3 · Orientations</td><td>3 sur 5</td></tr><tr><td>Temps</td><td>17 min 42 s</td></tr></tbody></table></div></details>
+<details class="tog"><summary>Quelle est l'inverse de \(R^{0,1}\) ?</summary><div class="dedans"><p style="margin:0 0 6px">\((R^{0,1})^T\) : une matrice de rotation est orthonormée.</p><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 21–22</div></details><a class="lien-page" href="chapitre-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>Revoir la page</span></a></div></details><details class="tog"><summary>Combien de degrés de liberté a ce robot ?</summary><div class="dedans"><p style="margin:0 0 6px">4 : trois rotoïdes et une prismatique.</p><details class="tog source"><summary>Source</summary><div class="dedans">Partie 2 ch. 1, diapo 38</div></details><a class="lien-page" href="chapitre-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>Revoir la page</span></a></div></details><details class="tog"><summary>Doubler la vitesse double-t-il la cadence ?</summary><div class="dedans"><p style="margin:0 0 6px">Non : seuls les temps de mouvement diminuent.</p><details class="tog source"><summary>Source</summary><div class="dedans">Semaine 1, diapos 40–41</div></details><a class="lien-page" href="chapitre-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>Revoir la page</span></a></div></details>
+<p class="discret" style="margin:10px 0 0">Et 2 autres, ajoutées à tes cartes.</p>
+<h2>Par chapitre</h2>
+<table class="tab"><thead><tr><th>Chapitre</th><th>Score</th></tr></thead><tbody>
+<tr><td>Les bases</td><td>4 sur 4</td></tr><tr><td>Le robot et sa description</td><td>3 sur 5</td></tr><tr><td>Repères et vecteurs</td><td>5 sur 6</td></tr><tr><td>Orientations</td><td>3 sur 5</td></tr></tbody></table>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>

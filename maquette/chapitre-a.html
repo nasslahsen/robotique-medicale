@@ -1,46 +1,40 @@
 <!doctype html>
-<html lang="fr" style="--jeu:#D44C47;--jeu-pale:#FFE2DD;--jeu-texte:#CB4844">
+<html lang="fr" style="--c:#D44C47;--cl:#FFE2DD;--ct:#CB4844">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chapitre A · Maquette</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../commun/vendor/katex/katex.min.css">
-<link rel="stylesheet" href="calme.css">
+<link rel="stylesheet" href="notion.css">
 </head>
 <body>
 <style>
-.idees { margin: 0; padding: 0; list-style: none; counter-reset: i; }
-.idees details { border-bottom: 1px solid var(--trait); }
-.idees li:first-child details { border-top: 1px solid var(--trait); }
-.idees summary { list-style: none; display: flex; gap: 20px; padding: 24px 0; cursor: pointer; font-size: 20px; line-height: 1.55; }
-.idees summary::-webkit-details-marker { display: none; }
-.idees summary::before { counter-increment: i; content: counter(i); flex: none; width: 24px; font: 500 17px/1.9 "JetBrains Mono", monospace; color: #8a90a0; }
-.idees .contenu { padding: 0 0 24px 44px; display: flex; align-items: center; gap: 12px; }
-.idees .contenu .formule { margin: 0; }
-.ou { display: flex; align-items: center; gap: 4px; }
-.etapes-l li.fait { color: #8a90a0; }
-.etapes-l li.ici { font-weight: 600; }
-.etapes-l .rond { width: 30px; height: 30px; }
-.sauras { margin: 0; padding: 0 0 0 24px; font-size: 20px; line-height: 1.6; }
-.sauras li { margin-bottom: 10px; }
+details.tog.idee-l > summary { font-size: 18px; min-height: 56px; align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+details.tog.idee-l > summary::before { margin-top: 3px; }
+.idee-l > .dedans .formule { margin: 4px 0 6px; }
+.coches { margin: 0; padding: 0; list-style: none; }
+.coches li { display: flex; gap: 12px; align-items: flex-start; padding: 6px 0; font-size: 18px; }
+.coches li::before { content: ""; flex: none; width: 20px; height: 20px; margin-top: 4px; border: 1.5px solid #c7c6c2; border-radius: 4px; }
+.cle { margin-top: 28px; }
+.cle .titre-cle { margin: 0 0 6px; color: var(--ct); font-weight: 600; font-size: 15px; }
 </style>
-<header class="barre"><a class="retour" href="carte-a.html">Robotique médicale</a><div class="droite"></div></header>
-<main class="page">
-<details class="plie seul" style="border:0"><summary style="min-height:44px;font-size:17px">Chapitre 3 sur 5</summary><div class="contenu" style="padding-bottom:14px">
-<p class="calme" style="font-size:17px">Il s'appuie sur Repères et vecteurs. Il prépare Transformations.</p></div></details>
+<header class="haut"><a class="miette" href="tableau-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v5"/></svg>Semestre 5</a><span class="sep">/</span><a class="miette" href="carte-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h10"/><path d="M7 21v-3"/><path d="M7 18l4-7"/><circle cx="11.5" cy="10" r="1.8"/><path d="M13 9.5l5-2.5"/><path d="M18 7l2.5-1.5M18 7l1 2.6"/></svg>Robotique médicale</a><span class="sep">/</span><span class="miette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>Orientations</span><div class="droite"></div></header>
+<div class="couverture basse"></div><main class="page">
+<div class="icone-page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></div>
 <h1>Orientations</h1>
-<p class="calme">Savoir où est un instrument ne suffit pas : il faut dire comment il est tourné.</p>
-<a class="action" href="chapitre-a.html">Continuer : Rotations élémentaires</a>
-<h2>L'essentiel</h2>
-<p class="calme" style="font-size:17px;margin:-6px 0 14px">Touche une idée pour voir sa formule.</p>
-<ol class="idees"><li><details><summary>Une orientation se décrit par les trois axes du repère tourné, rangés en colonnes : la matrice de rotation.</summary><div class="contenu"><div class="formule">\(R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 12–18</span></button></div></details></li><li><details><summary>Une matrice de rotation est orthonormée et de déterminant 1 : son inverse est sa transposée.</summary><div class="contenu"><div class="formule">\(R^{-1} = R^{T}, \qquad \det R = 1\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 19–24</span></button></div></details></li><li><details><summary>Trois rotations élémentaires, autour de x, y et z, suffisent. L'ordre compte.</summary><div class="contenu"><div class="formule">\(R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 25–33</span></button></div></details></li><li><details><summary>Les angles d'Euler ZYX donnent une orientation avec trois angles, mais ont une singularité.</summary><div class="contenu"><div class="formule">\(R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\)</div><button class="info " type="button" aria-label="Source" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="bulle">Chapitre 2, diapos 34–45</span></button></div></details></li></ol>
+<p class="chapeau">Savoir où est un instrument ne suffit pas : il faut dire comment il est tourné.</p>
+<div class="zone-action"><a class="action" href="chapitre-a.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>Continuer : Rotations élémentaires</a></div>
+<details class="tog" style="margin-top:20px"><summary>Où se place ce chapitre</summary><div class="dedans"><p class="discret" style="margin:0">Chapitre 3 sur 5. Il s'appuie sur Repères et vecteurs et prépare Transformations.</p></div></details>
+<div class="teinte cle"><p class="titre-cle">La formule du chapitre</p><div class="formule">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\]</div></div>
+<h2>Les idées clés</h2>
+<details class="tog idee-l"><summary>Une orientation se décrit par les trois axes du repère tourné, rangés en colonnes : la matrice de rotation.</summary><div class="dedans"><div class="formule">\[R^{0,1} = \begin{bmatrix} [\vec{x}_1]_{R_0} & [\vec{y}_1]_{R_0} & [\vec{z}_1]_{R_0} \end{bmatrix}\]</div><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 12–18</div></details></div></details><details class="tog idee-l"><summary>Une matrice de rotation est orthonormée et de déterminant 1 : son inverse est sa transposée.</summary><div class="dedans"><div class="formule">\[R^{-1} = R^{T}, \qquad \det R = 1\]</div><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 19–24</div></details></div></details><details class="tog idee-l"><summary>Trois rotations élémentaires, autour de x, y et z, suffisent. L'ordre compte.</summary><div class="dedans"><div class="formule">\[R_z(\alpha) = \begin{bmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{bmatrix}\]</div><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 25–33</div></details></div></details><details class="tog idee-l"><summary>Les angles d'Euler ZYX donnent une orientation avec trois angles, mais ont une singularité.</summary><div class="dedans"><div class="formule">\[R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma)\]</div><details class="tog source"><summary>Source</summary><div class="dedans">Chapitre 2, diapos 34–45</div></details></div></details>
 <h2>Après ce chapitre, tu sauras</h2>
-<ul class="sauras"><li>Écrire une matrice de rotation en lisant les axes sur un dessin.</li><li>Vérifier si une matrice donnée est bien une matrice de rotation.</li><li>Passer de trois angles d'Euler à une matrice, et repérer la singularité.</li></ul>
+<ul class="coches"><li>Écrire une matrice de rotation en lisant les axes sur un dessin.</li><li>Vérifier si une matrice donnée est bien une matrice de rotation.</li><li>Passer de trois angles d'Euler à une matrice, et repérer la singularité.</li></ul>
 <h2>Les étapes</h2>
-<ul class="lignes etapes-l"><li class="fait"><a href="chapitre-a.html" style="display:contents"><span class="rond fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Matrice de rotation</a></li><li class="fait"><a href="chapitre-a.html" style="display:contents"><span class="rond fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Le groupe SO(3)</a></li><li class="ici"><a href="chapitre-a.html" style="display:contents"><span class="rond ici">3</span>Rotations élémentaires</a></li><li class=""><a href="chapitre-a.html" style="display:contents"><span class="rond">4</span>Angles d'Euler</a></li><li class=""><a href="chapitre-a.html" style="display:contents"><span class="rond">5</span>Révision</a></li><li class=""><a href="chapitre-a.html" style="display:contents"><span class="rond">6</span>Défi final</a></li><li class="quiz"><a href="quiz.html" style="display:contents"><span class="rond">7</span>Quiz du chapitre</a></li></ul>
+<div class="liste"><a class="ligne fait" href="chapitre-a.html"><span class="etat fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Matrice de rotation</a><a class="ligne fait" href="chapitre-a.html"><span class="etat fait"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Le groupe SO(3)</a><a class="ligne ici" href="chapitre-a.html"><span class="etat ici">3</span>Rotations élémentaires<span class="fin">En cours</span></a><a class="ligne " href="chapitre-a.html"><span class="etat">4</span>Angles d'Euler</a><a class="ligne " href="chapitre-a.html"><span class="etat">5</span>Révision</a><a class="ligne " href="chapitre-a.html"><span class="etat">6</span>Défi final</a><a class="ligne " href="quiz.html"><span class="etat">7</span>Quiz du chapitre</a></div>
 </main><a class="vers-sommaire" href="index.html">Maquettes</a>
 <script src="../commun/vendor/katex/katex.min.js"></script>
 <script src="../commun/vendor/katex/auto-render.min.js"></script>
