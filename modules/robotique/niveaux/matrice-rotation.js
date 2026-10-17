@@ -110,6 +110,7 @@ NIVEAU({
       j.titre("Le robot doit pointer son instrument vers la tumeur. Fais-le tourner.");
       j.consigne("Fais glisser la pointe ronde de l'instrument jusqu'à la cible.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false;
         n.animer(60, 300, function () {
@@ -166,6 +167,7 @@ NIVEAU({
       j.titre("Trouve α pour que la première colonne vaille \\((0 \\,;\\ 1 \\,;\\ 0)\\).");
       j.consigne("Tourne l'instrument en regardant la matrice sous la figure.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false;
         n.animer(90, 300, function () {
@@ -198,6 +200,7 @@ NIVEAU({
           j.suite();
         });
       });
+      j.reponse(function () { n.pin = E.mv(E.Rz(30 * D.DEG), [2, 1, 0]); n.dessin(); verif.disabled = false; verif.click(); });
     } },
     { nom: "Bilan", jouer: function (j, n) {
       Object.assign(n, { libre: true, grilleR1: false, pin: null, chemin: 0, mat: "matrice" }); n.echelle(170); n.animer(40, 600);
@@ -219,6 +222,7 @@ NIVEAU({
           j.suite();
         } else j.erreur("Cette case relie \\(" + A0[i] + "\\) et \\(" + A1[k] + "\\). Cherche la ligne de \\(\\vec{x}_0\\) et la colonne de \\(\\vec{y}_1\\).");
       };
+      j.reponse(function () { n.surCellule(0, 1); });
     } }
   ]
 });

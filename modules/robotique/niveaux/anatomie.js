@@ -74,6 +74,7 @@ NIVEAU({
           }
         } else { n.choisis[id] = false; n.dessin(); setTimeout(function () { delete n.choisis[id]; n.dessin(); }, 900); j.erreur("Ça, c'est " + (id === "base" ? "la base" : id === "segment" ? "un segment" : id === "articulation" ? "une articulation" : id === "poignet" ? "le poignet" : "l'effecteur") + "."); }
       };
+      j.reponse(function () { for (var g = 0; g < 8 && n.surTouche; g++) n.surTouche(ordre[k][0]); });
     } },
     { nom: "R ou P", jouer: function (j, n) {
       n.mode = "joints"; n.choisis = {};

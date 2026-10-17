@@ -50,6 +50,7 @@ NIVEAU({
           if (expl) j.expliquer(expl);
           j.suite();
         });
+        j.reponse(function () { bts.forEach(function (b, k) { if (n.permis[k] !== attendu[k]) b.click(); }); v.click(); });
       } };
     }
     return [

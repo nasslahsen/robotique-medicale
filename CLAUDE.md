@@ -4,7 +4,7 @@ Lire ce fichier en entier avant toute tâche dans ce dépôt. Il décrit la plat
 et la méthode complète pour construire un module à partir des PDF de cours. La demande type est :
 « construis le module X » après avoir déposé les PDF dans `modules/<id>/sources/`.
 
-Site publié : https://nasslahsen.github.io/robotique-medicale/ (le nom du dépôt reste `robotique-medicale`).
+Site publié : https://nasslahsen.github.io/semestre-5/ (dépôt `nasslahsen/semestre-5`).
 Utilisation : uniquement sur iPad, en paysage, au doigt et parfois à l'Apple Pencil. Pas de version téléphone.
 
 ## 1. Structure
@@ -62,6 +62,9 @@ Ne jamais écrire une couleur d'accent en dur dans un niveau ou une figure.
 
 Une « page » du tableau de bord est un niveau jouable. Elle compte comme terminée quand ses défis sont finis
 (écran de résultats), avec 1 à 3 étoiles (3 sans erreur, 2 avec une ou deux, 1 sinon ; la meilleure est gardée).
+Chaque question a aussi « Voir la réponse » et « Passer » (ajoutés par le moteur). Une question passée ou dont la
+réponse a été vue ne compte pas comme trouvée : le niveau se termine quand même, avec au plus 1 étoile (aucune, et
+non marqué terminé, si rien n'a été trouvé seul), et l'écran de fin liste ces questions avec « Réessayer ».
 Les pages de cours servent à relire : elles ne comptent pas, mais elles sont mémorisées comme dernière page.
 « Continuer » ouvre la dernière page ouverte du module (après un niveau fini : le niveau suivant).
 Tout passe par `PLATEFORME` (`marquer`, `compte`, `continuer`, `noterDernier`, `tout`, `effacer`).
@@ -108,9 +111,15 @@ puis un boss plus dur, sans aide avant le premier essai.
 
 **Aides** : chaque mauvaise option a une `aide` qui pointe ce qu'il faut regarder, jamais la réponse brute.
 
+**Voir la réponse** : le moteur sait répondre seul aux `j.choix`, `j.nombre` et `j.jetons`. Une étape où l'on
+répond par un geste (glisser, tourner, toucher la figure, curseurs, boutons propres au niveau) doit enregistrer la
+fonction qui la réussit : `j.reponse(gagne)`, ou `j.reponse(function () { … })` qui règle la figure sur la bonne
+réponse puis appelle la même vérification. Le message de `j.bravo` devient alors « Réponse : … », sans compter
+d'erreur. `tests/navigateur/reveler.js` vérifie que chaque étape de chaque niveau donne sa réponse.
+
 **API d'un niveau** (`NIVEAU({ id, init(fig) → n, etapes: [{ nom, jouer(j, n) }] })`) :
 - `fig` : `svg` (viewBox 680 × 600), `bande(html)` (bande de nombres sous la figure), `chip(texte)`, `astuce(texte)`, `coin`.
-- `j` : `titre`, `consigne`, `texte`, `zone(classe, html)`, `choix(options, {colonnes, ok})`,
+- `j` : `titre`, `consigne`, `texte`, `zone(classe, html)`, `choix(options, {colonnes, ok})`, `reponse(f)`,
   `nombre({avant, apres, cases: [{attendu, tol}], ligne, colonnes, aide(k), ok})`,
   `jetons({trous, jetons: [{id, html|tex}], aide, ok})`, `curseur({nom, min, max, pas, val, unite, dec, change})`,
   `erreur(html)` (compte une erreur), `info`, `bravo(html, pointSVG)`, `expliquer(html)`, `suite()`, `nettoyer(f)`, `el`.
@@ -145,23 +154,11 @@ formules en direct. Sous chaque figure : une ligne « Essaie : … Observe : …
 - Dessins qui remplissent le cadre, traits épais, étiquettes qui ne se chevauchent pas (halo blanc).
 - Pas de barre latérale, pas de table des matières, pas de décoration sans rôle.
 
-### Principe permanent : une organisation claire, sans encombrement
+### Principe permanent : pas d'encombrement
 
-Le style visuel du site ne change pas (polices, couleurs, contours, ombres, composants ci-dessus). Ce qui compte,
-c'est l'organisation. Trop de petites étiquettes, de badges et de petits textes surstimulent l'utilisatrice :
-
-- Une hiérarchie unique, partout : Tableau de bord › Module › Chapitre › Leçon.
-- Une barre identique sur chaque écran : à gauche, la flèche qui remonte d'un niveau puis le fil d'Ariane
-  (les éléments du milieu se raccourcissent, jamais sur deux lignes) ; au centre, sur un module, les onglets
-  Apprendre | Réviser ; à droite, au plus une action secondaire.
-- Une seule action principale par écran, le bouton noir : sous le titre sur les pages de navigation, en bas à droite
-  dans les activités.
-- Le secondaire (sources, dépendances, détails) derrière une bascule ▸, pas affiché partout.
-- Pas d'étiquettes, badges ou compteurs sur chaque élément. La progression est montrée une fois, là où elle compte ;
-  les étoiles seulement sur l'écran de fin d'une leçon.
-- Pas de chronomètre visible par défaut. Aucune animation qui pulse ou tourne en boucle.
-
-Les maquettes de cette organisation sont dans `maquette/` (publiées à `/maquette/`).
+Trop de petites étiquettes, de badges et de petits textes surstimulent l'utilisatrice. Le style visuel ci-dessus
+ne change pas, mais chaque écran garde une seule action principale bien visible, le secondaire reste discret,
+pas de compteurs ni de badges sur chaque élément, aucune animation qui pulse ou tourne en boucle.
 
 ## 8. Contenu et écriture
 
@@ -182,6 +179,8 @@ node tests/static-check.js
 python3 -m http.server 8765 &                 # à la racine du dépôt
 npm install --no-save playwright-core         # si absent
 node tests/navigateur/jouer.js <id>           # chaque niveau joué jusqu'à 3 étoiles, sans erreur
+node tests/navigateur/reveler.js <id>         # « Voir la réponse » sur chaque étape, bilan et « Réessayer »
+MODE=passer node tests/navigateur/reveler.js <id>   # « Passer » sur chaque étape
 node tests/navigateur/pages.js <id>           # tableau de bord et pages du module sans erreur
 node tests/navigateur/figures.js <id>         # une capture par figure de cours
 python3 tests/navigateur/planche.py tests/navigateur/captures/<id>/figures planche
@@ -196,5 +195,6 @@ sans erreur et que chaque capture a été relue.
 
 - Travailler sur une branche, ouvrir une pull request en brouillon, attendre que l'intégration continue
   (`.github/workflows/deploy.yml`) soit verte, puis fusionner en « merge » (pas « squash ») : le site se déploie.
-- Messages de commit sans ligne `Co-Authored-By`.
+- Messages de commit et pull requests sans ligne `Co-Authored-By` et sans aucune mention de Claude ;
+  auteur : l'utilisatrice seulement. Pas de fichier README.
 - Ne pas changer le contenu ni le style d'un module existant sans demande explicite.

@@ -50,6 +50,7 @@ NIVEAU({
       j.titre("Le bras mesure 0,4 m. Tourne-le pour que son bout touche la cible.");
       j.consigne("Boss : lâcher à plus de 8° de la cible compte comme une erreur.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(60, 200);
         j.bravo("θ = 60° : \\((0{,}4\\cos 60° \\,;\\ 0{,}4\\sin 60°) = (0{,}2 \\,;\\ 0{,}346)\\).", n.pl.P([0.2, 0.346]));

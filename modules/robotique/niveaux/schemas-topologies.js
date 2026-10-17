@@ -77,6 +77,7 @@ NIVEAU({
         j.expliquer("<p>Les quatre topologies du cours : <b>série</b> (chaîne ouverte, chaque solide relié à au plus deux autres, comme un bras 6R ou le ROSA ONE Brain), <b>parallèle</b> (au moins une boucle, comme le robot Delta, la plateforme de Stewart, le SurgiScope), <b>arborescente</b> (embranchements sans boucle, comme un humanoïde) et <b>hybride</b> (série et parallèle mélangés).</p>");
         j.suite();
       };
+      j.reponse(function () { if (n.surGraphe) n.surGraphe(1); });
     } },
     { nom: "Construire", jouer: function (j, n) {
       n.choisi = null; n.dessin();

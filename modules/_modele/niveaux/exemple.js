@@ -33,6 +33,8 @@ NIVEAU({
         j.expliquer("<p>Explication courte, après le défi : ce que la figure vient de montrer, avec la notation du cours.</p>");
         j.suite();
       };
+      // « Voir la réponse » : une étape à geste dit comment la réussir (choix, nombres et jetons le font seuls)
+      j.reponse(function () { if (n.surAngle) n.surAngle(90); });
     } },
     // 2. Choix : chaque mauvaise option a une aide qui dit où regarder.
     { nom: "Choisir", jouer: function (j, n) {

@@ -49,6 +49,8 @@
     var seg = document.getElementById("segments");
     def.etapes.forEach(function () { E.h("span", "", "<i></i>", seg); });
     var panneau = document.getElementById("panneau"), courante = -1, erreurs = 0, nettoyages = [];
+    // État de chaque étape : "resolue" (trouvée seule), "revelee" (réponse vue) ou "passee" ; rejeu : étape rejouée depuis l'écran de fin
+    var etats = [], rejeu = false;
 
     function majSegments() { [].forEach.call(seg.children, function (s, i) { s.className = i < courante ? "fait" : i === courante ? "courant" : ""; }); }
 
@@ -62,12 +64,55 @@
       E.h("span", "kicker" + (info.boss ? " boss" : ""), (info.boss ? "BOSS · " : "") + "ÉTAPE " + (i + 1) + " / " + def.etapes.length, el);
       var j = contexte(el, i);
       def.etapes[i].jouer(j, n);
+      aideQuestion(el, i, j);
       E.rendre(el);
       requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.remove("entree"); }); });
     }
 
+    // « Voir la réponse » et « Passer », sous la question, tant que l'étape n'est pas finie
+    function aideQuestion(el, i, j) {
+      var z = E.h("div", "aide-q", "", el);
+      var bR = E.h("button", "", "Voir la réponse", z); bR.type = "button";
+      var bP = E.h("button", "", "Passer", z); bP.type = "button";
+      bR.addEventListener("click", function () { j.reveler(); });
+      bP.addEventListener("click", function () {
+        if (!etats[i]) etats[i] = "passee";
+        z.remove(); apres(i);
+      });
+      // la ligne reste en dernier ; elle disparaît quand l'étape propose « Continuer »
+      var obs = new MutationObserver(function () {
+        if (el.querySelector(".btn.suite")) { z.remove(); obs.disconnect(); return; }
+        if (el.lastElementChild !== z) el.appendChild(z);
+      });
+      obs.observe(el, { childList: true });
+      nettoyages.push(function () { obs.disconnect(); });
+    }
+
+    // Après une étape : la suivante, ou l'écran de fin si l'étape était rejouée depuis cet écran
+    function apres(i) { if (rejeu) fin(); else aller(i + 1); }
+
     function contexte(el, i) {
-      var msg = null, j = { el: el, fig: fig, n: n, etape: i };
+      var msg = null, j = { el: el, fig: fig, n: n, etape: i }, revelation = false;
+      // Résolveurs : chaque question sait donner sa bonne réponse (choix, nombres, jetons automatiquement ;
+      // un geste sur la figure l'enregistre avec j.reponse(fonction qui réussit l'étape)).
+      var resolveurs = [];
+      j.reponse = function (f) { var r = { faire: f, fait: false }; resolveurs.push(r); return r; };
+      j.reveler = function () {
+        if (revelation) return;
+        etats[i] = "revelee"; revelation = true;
+        var z = el.querySelector(".aide-q"); if (z) z.style.visibility = "hidden";
+        var attente = 0;
+        (function pas() {
+          if (courante !== i || el.querySelector(".btn.suite")) { revelation = false; return; }
+          var r = resolveurs.filter(function (x) { return !x.fait; }).pop();
+          if (r) { r.fait = true; attente = 0; r.faire(); setTimeout(pas, 450); return; }
+          // une question peut apparaître après une petite animation : on attend un peu
+          if ((attente += 250) < 5000) { setTimeout(pas, 250); return; }
+          revelation = false;
+          if (z) z.style.visibility = "";
+          j.info("Cette question n'a pas de réponse toute prête : passe-la.");
+        })();
+      };
       function ligneMsg() { if (!msg || !msg.parentNode) msg = E.h("div", "retour-msg", "", el); return msg; }
       j.titre = function (html) { var h = E.h("h2", "", html, el); E.rendre(h); return h; };
       j.consigne = function (html) { var p = E.h("p", "consigne", html, el); E.rendre(p); return p; };
@@ -76,6 +121,7 @@
       j.rendre = E.rendre;
       j.nettoyer = function (f) { nettoyages.push(f); };
       j.erreur = function (html) {
+        if (revelation) return;
         erreurs++;
         var m = ligneMsg(); m.className = "retour-msg ko"; m.innerHTML = "<span>" + html + "</span>"; E.rendre(m);
         m.classList.remove("secoue"); void m.offsetWidth; m.classList.add("secoue");
@@ -83,6 +129,8 @@
       j.info = function (html) { var m = ligneMsg(); m.className = "retour-msg info"; m.innerHTML = "<span>" + html + "</span>"; E.rendre(m); };
       j.efface = function () { if (msg) { msg.innerHTML = ""; msg.className = "retour-msg"; } };
       j.bravo = function (html, point) {
+        // réponse montrée : on donne la réponse, sans féliciter
+        if (etats[i] === "revelee") { var mr = ligneMsg(); mr.className = "retour-msg info"; mr.innerHTML = "<span>Réponse : " + (html || "") + "</span>"; E.rendre(mr); return; }
         var m = ligneMsg(); m.className = "retour-msg ok"; m.innerHTML = COCHE + "<span>" + (html || "Bravo.") + "</span>"; E.rendre(m);
         var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
         var p = point ? [r.left + point[0] / vb.width * r.width, r.top + point[1] / vb.height * r.height] : [r.left + r.width / 2, r.top + r.height / 2];
@@ -95,8 +143,8 @@
         return x;
       };
       j.suite = function (label, parent) {
-        var b = E.h("button", "btn suite", label || (i + 1 < def.etapes.length ? "Continuer" : "Terminer le niveau"), parent || el); b.type = "button";
-        b.addEventListener("click", function () { b.disabled = true; aller(i + 1); });
+        var b = E.h("button", "btn suite", rejeu ? "Revenir au bilan" : label || (i + 1 < def.etapes.length ? "Continuer" : "Terminer le niveau"), parent || el); b.type = "button";
+        b.addEventListener("click", function () { b.disabled = true; if (!etats[i]) etats[i] = "resolue"; apres(i); });
         setTimeout(function () { b.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 400);
         return b;
       };
@@ -104,11 +152,14 @@
       j.choix = function (opts, cfg) {
         cfg = cfg || {};
         var z = E.h("div", "choix", "", el); z.style.setProperty("--col", cfg.colonnes || Math.min(3, opts.length));
+        var bonne = null, r = j.reponse(function () { if (bonne) bonne.click(); });
         opts.forEach(function (o) {
           var b = E.h("button", "", "", z); b.type = "button";
+          if (o.juste) bonne = b;
           if (o.tex) E.k(b, o.tex); else { b.innerHTML = o.html; E.rendre(b); }
           b.addEventListener("click", function () {
             if (o.juste) {
+              r.fait = true;
               z.querySelectorAll("button").forEach(function (x) { x.disabled = true; });
               b.classList.add("bon");
               if (cfg.ok) cfg.ok(b);
@@ -144,6 +195,10 @@
         var bE = E.h("button", "touche large", "Effacer", clav); bE.type = "button";
         bE.addEventListener("click", function () { val[active] = ""; cases[active].classList.remove("bon", "faux"); maj(); });
         var bV = E.h("button", "touche large ok", "Vérifier", clav); bV.type = "button";
+        var r = j.reponse(function () {
+          cfg.cases.forEach(function (c, k) { val[k] = String(c.attendu).replace(".", ","); });
+          maj(); bV.click();
+        });
         bV.addEventListener("click", function () {
           var faux = [];
           cfg.cases.forEach(function (c, k) {
@@ -152,7 +207,7 @@
             if (!bon) faux.push(k);
           });
           if (faux.length) { j.erreur(cfg.aide ? cfg.aide(faux[0], val) : "Une valeur ne va pas : elle est en rouge."); return; }
-          clav.style.display = "none";
+          r.fait = true; clav.style.display = "none";
           if (cfg.ok) cfg.ok();
         });
         maj();
@@ -163,6 +218,14 @@
         var reserve = E.h("div", "jetons", "", cfg.reserve || el);
         var trous = cfg.trous, place = trous.map(function () { return null; });
         var bVerif = E.h("button", "btn bleu", "Vérifier", el); bVerif.type = "button"; bVerif.disabled = true;
+        var siens = [], r = j.reponse(function () {
+          place.forEach(function (t) { if (t) poser(t, null); });
+          trous.forEach(function (x, k) {
+            var t = siens.filter(function (y) { return y.dataset.id === x.dataset.attendu && place.indexOf(y) < 0; })[0];
+            if (t) poser(t, k);
+          });
+          bVerif.disabled = false; bVerif.click();
+        });
         function poser(t, k) {
           var a = place.indexOf(t); if (a >= 0) place[a] = null;
           if (k === null) reserve.appendChild(t);
@@ -172,6 +235,7 @@
         }
         cfg.jetons.forEach(function (o) {
           var t = E.h("div", "jeton", "", reserve); t.dataset.id = o.id;
+          siens.push(t);
           if (o.tex) E.k(t, o.tex); else { t.innerHTML = o.html; E.rendre(t); }
           t.addEventListener("pointerdown", function (ev) {
             if (t.dataset.bloque) return;
@@ -204,7 +268,7 @@
             j.erreur(cfg.aide || "Les cases en rouge ne sont pas à leur place.");
             return;
           }
-          bVerif.remove(); reserve.remove();
+          r.fait = true; bVerif.remove(); reserve.remove();
           trous.forEach(function (x) { x.classList.add("bon"); x.firstChild.dataset.bloque = 1; });
           if (cfg.ok) cfg.ok();
         });
@@ -227,17 +291,31 @@
     }
 
     function fin() {
-      courante = def.etapes.length; majSegments();
-      var nb = JEU.etoiles(erreurs);
-      P.marquer(MID, def.id, nb);
+      nettoyages.forEach(function (f) { try { f(); } catch (e) { /* rien */ } }); nettoyages = [];
+      var ancien = panneau.querySelector(".etape:not(.sortie)"); if (ancien) ancien.remove();
+      courante = def.etapes.length; majSegments(); rejeu = false;
+      // une question passée ou dont on a vu la réponse ne compte pas : au plus une étoile, aucune si rien n'a été trouvé
+      var restantes = [], trouvees = 0;
+      def.etapes.forEach(function (e, k) { if (etats[k] === "resolue") trouvees++; else restantes.push(k); });
+      var nb = !restantes.length ? JEU.etoiles(erreurs) : trouvees ? 1 : 0;
+      if (nb) P.marquer(MID, def.id, nb);
       var suivant = null;
       for (var k = rang + 1; k < liste.length; k++) if (liste[k].pret) { suivant = liste[k]; break; }
       // « Continuer » reprendra au niveau suivant
       if (suivant) P.noterDernier(MID, suivant.titre, "modules/" + MID + "/jouer.html#" + suivant.id);
       var r = document.getElementById("resultat");
       var et = ""; for (var s = 0; s < 3; s++) et += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";
-      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
-        (erreurs === 0 ? "Aucune erreur. Parfait." : erreurs + (erreurs > 1 ? " erreurs" : " erreur") + ". Rejoue sans erreur pour avoir les trois étoiles.") + '</p><div class="actions"></div></div>';
+      var texte = restantes.length
+        ? (restantes.length > 1 ? restantes.length + " questions passées ou vues : elles ne comptent pas pour les étoiles. Réessaie-les." : "Une question passée ou vue : elle ne compte pas pour les étoiles. Réessaie-la.")
+        : erreurs === 0 ? "Aucune erreur. Parfait." : erreurs + (erreurs > 1 ? " erreurs" : " erreur") + ". Rejoue sans erreur pour avoir les trois étoiles.";
+      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss && !restantes.length ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
+        texte + '</p><div class="a-revoir"></div><div class="actions"></div></div>';
+      var liste2 = r.querySelector(".a-revoir");
+      restantes.forEach(function (k) {
+        var l = E.h("div", "", '<span><b>Étape ' + (k + 1) + "</b> · " + def.etapes[k].nom + "<small>" + (etats[k] === "revelee" ? "réponse vue" : "passée") + "</small></span>", liste2);
+        var b = E.h("button", "btn clair", "Réessayer", l); b.type = "button";
+        b.addEventListener("click", function () { r.classList.remove("on"); rejeu = true; etats[k] = undefined; aller(k); });
+      });
       var act = r.querySelector(".actions");
       if (suivant) { var b1 = E.h("a", "btn", "Niveau suivant", act); b1.href = "jouer.html#" + suivant.id; }
       var b2 = E.h("a", "btn clair", "Rejouer", act); b2.href = "jouer.html#" + def.id; b2.addEventListener("click", function (e) { e.preventDefault(); location.reload(); });

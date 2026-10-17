@@ -56,6 +56,7 @@ NIVEAU({
           j.suite();
         } else if (n.bout[0] === 2 && n.bout[1] === 3) j.info("Tu as échangé : le premier nombre va avec l'axe horizontal.");
       };
+      j.reponse(function () { n.bout = [3, 2, 0]; n.surBouge(); n.dessin(); n.surRelache(); });
     } },
     { nom: "Somme", jouer: function (j, n) {
       n.drapeau = [3, 4, 0]; n.poignee = n.bout = [3, 1, 0];
@@ -76,6 +77,7 @@ NIVEAU({
         j.expliquer("<p>Pour additionner, on additionne composante par composante :</p>\\[ \\vec{u} + \\vec{v} = (2 + 1 \\,;\\ 1 + 3) = (3 \\,;\\ 4) \\]<p>C'est la relation de Chasles du cours : \\(\\overrightarrow{OA} + \\overrightarrow{AM} = \\overrightarrow{OM}\\).</p>");
         j.suite();
       };
+      j.reponse(function () { n.bout = [3, 4, 0]; maj(); n.dessin(); n.surRelache(); });
     } },
     { nom: "Multiplier", jouer: function (j, n) {
       n.drapeau = null; n.poignee = null; n.surBouge = null; n.surRelache = null; n.bande = null;
@@ -112,6 +114,7 @@ NIVEAU({
         if (B[0] === 0 && B[1] === 4 && !fini) gagne();
       }
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         fini = true;
         j.bravo("\\(2\\vec{u} + 2\\vec{w} = (0 \\,;\\ 4)\\).", n.pl.P([0, 4]));

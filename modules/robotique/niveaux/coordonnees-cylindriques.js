@@ -104,6 +104,7 @@ NIVEAU({
       cs.push(j.curseur({ nom: "θ", min: -180, max: 180, pas: 5, val: 60, unite: "°", change: maj }));
       cs.push(j.curseur({ nom: "r", min: 0.3, max: 2, pas: 0.01, val: 0.6, dec: 2, change: maj }));
       cs.push(j.curseur({ nom: "z", min: 0.2, max: 2.5, pas: 0.1, val: 0.8, dec: 1, change: maj }));
+      j.reponse(function () { [135, 1.41, 2].forEach(function (v, i) { cs[i].regler(v); }); maj(); });
     } }
   ]
 });

@@ -64,6 +64,7 @@ NIVEAU({
       j.titre("L'aiguille part de l'axe horizontal. Fais-lui faire un quart de tour.");
       j.consigne("Tourne dans le sens inverse des aiguilles d'une montre.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(90, 250);
         j.bravo("Un quart de tour : 90°.", n.pl.P([0, 1]));
@@ -78,6 +79,7 @@ NIVEAU({
       j.titre("Maintenant, amène l'aiguille à −45°.");
       j.consigne("Un signe moins change le sens de rotation.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(-45, 250);
         j.bravo("−45°, la moitié d'un quart de tour, vers le bas.", n.pl.P([0.7, -0.7]));
@@ -98,6 +100,7 @@ NIVEAU({
       j.titre("Ouvre l'angle jusqu'à ce que l'arc orange soit exactement aussi long que le rayon bleu.");
       j.consigne("Regarde le rapport sous la figure : il doit valoir 1.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(57.3, 250);
         j.bravo("Tu viens de trouver 1 radian, environ 57,3°.", n.pl.P([0.54, 0.84]));
@@ -139,6 +142,7 @@ NIVEAU({
       j.titre("Amène l'aiguille à \\(\\dfrac{3\\pi}{4}\\) rad.");
       j.consigne("Les repères du cercle sont maintenant en radians.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(135, 250);
         j.bravo("135°, soit trois fois \\(\\pi/4\\).", n.pl.P([-0.7, 0.7]));

@@ -51,6 +51,7 @@ NIVEAU({
       n.dessin();
       j.fig.astuce("Tourne la pince avec le cadran.");
       j.titre("Une autre pince a la matrice « Cible ». Tourne la tienne jusqu'à avoir exactement la même.");
+      j.reponse(gagne);
       function gagne() { fini = true; n.cadran.verrouiller(true); j.bravo("α = −70° : \\(\\sin\\) négatif, sens horaire."); j.suite(); }
     } },
     { nom: "L'erreur", jouer: function (j, n) {
@@ -66,6 +67,7 @@ NIVEAU({
         else { n.marques[i + "" + k] = "ok"; n.dessin(); j.erreur("Cette case est juste."); }
       };
       j.nettoyer(function () { n.surCellule = null; n.marques = {}; });
+      j.reponse(function () { if (n.surCellule) n.surCellule(1, 0); });
     } },
     { nom: "Rotation ou miroir", jouer: function (j, n) {
       var M = [[0, 1, 0], [1, 0, 0], [0, 0, 1]];

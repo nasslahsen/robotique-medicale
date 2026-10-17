@@ -90,6 +90,7 @@ NIVEAU({
       j.titre("Amène le bout du bras sur la cible.");
       j.consigne("Ensuite, on lira la longueur du bras et son angle.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.aller(0.4, 0.3, 200);
         n.valeurs = true;

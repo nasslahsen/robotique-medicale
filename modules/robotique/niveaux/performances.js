@@ -67,6 +67,7 @@ NIVEAU({
         j.expliquer("<p>La <b>précision</b> dit si le robot atteint le point demandé : c'est l'écart entre position atteinte et position demandée. La <b>répétabilité</b> dit s'il reproduit le même mouvement, avec des positions peu dispersées. Un robot peut être très répétable sans être précis : il atteint toujours P' au lieu de P, avec un écart constant.</p>");
         j.suite();
       };
+      j.reponse(function () { if (n.surCible) n.surCible("B"); });
     } },
     { nom: "Ce qui manque", jouer: function (j, n) {
       n.choisi = "C"; n.bon = null; n.dessin();

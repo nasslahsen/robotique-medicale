@@ -100,6 +100,7 @@ NIVEAU({
         j.expliquer("<p>Les signes de \\(\\cos\\) et \\(\\sin\\) se lisent sur la figure, quadrant par quadrant. C'est le meilleur moyen de vérifier un calcul : si un bras pointe vers la gauche, sa composante horizontale doit être négative.</p>");
         j.suite();
       };
+      j.reponse(function () { if (n.surQuadrant) n.surQuadrant(1); });
     } },
     { nom: "Symétrie", jouer: function (j, n) {
       n.mode = "symetrie"; n.surQuadrant = null; n.a = 35; n.dessin();

@@ -88,6 +88,7 @@ NIVEAU({
           } });
         }
       };
+      j.reponse(function () { while (!q) n.surFin(false); });
     } },
     { nom: "Le suivi", jouer: function (j, n) {
       n.pique = null;
@@ -105,6 +106,7 @@ NIVEAU({
           j.expliquer("<p>Premier écart avec l'industrie : du <b>produit standardisé</b> au <b>patient variable</b>. Le robot a besoin d'une <b>perception adaptative</b> : imagerie en temps réel, recalage anatomique, suivi des mouvements physiologiques (respiration, battements cardiaques, mouvements involontaires).</p>");
           j.suite();
         };
+        j.reponse(function () { if (n.surFin) n.surFin(true); });
       } });
     } },
     { nom: "Mise à l'échelle", jouer: function (j, n) {

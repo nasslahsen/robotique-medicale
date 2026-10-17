@@ -100,6 +100,7 @@ NIVEAU({
           j.suite();
         });
       });
+      j.reponse(function () { n.pin = [-1, 2]; n.dessin(); verif.disabled = false; verif.click(); });
     } },
     { nom: "En 3 × 3", jouer: function (j, n) {
       j.fig.astuce("");

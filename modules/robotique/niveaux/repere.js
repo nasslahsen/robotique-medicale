@@ -72,6 +72,7 @@ NIVEAU({
       cs.push(j.curseur({ nom: "q₁ = x", min: 0, max: 3, pas: 0.1, val: 0.5, dec: 1, change: maj }));
       cs.push(j.curseur({ nom: "q₂ = y", min: 0, max: 3, pas: 0.1, val: 0.5, dec: 1, change: maj }));
       cs.push(j.curseur({ nom: "q₃ = z", min: 0, max: 2.5, pas: 0.1, val: 0.5, dec: 1, change: maj }));
+      j.reponse(function () { [1, 2, 1.5].forEach(function (v, i) { cs[i].regler(v); }); maj(); });
     } },
     { nom: "Main droite", jouer: function (j, n) {
       n.mode = "mains"; n.ordre = false; n.dessin();

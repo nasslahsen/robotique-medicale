@@ -77,6 +77,7 @@ NIVEAU({
           j.suite();
         }
       } });
+      j.reponse(function () { c.regler(90); c.input.dispatchEvent(new Event("input")); });
     } },
     { nom: "Calculer", jouer: function (j, n) {
       n.mode = "calcul"; n.inverse = false; n.U = [1, 2, 0]; n.V = [0, 1, 3]; n.montreW = false; n.dessin();

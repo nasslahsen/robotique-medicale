@@ -114,6 +114,7 @@ NIVEAU({
       }
       c1 = j.curseur({ nom: "θ₁", min: -180, max: 180, pas: 5, val: 30, unite: "°", change: maj });
       c2 = j.curseur({ nom: "θ₂", min: -180, max: 180, pas: 5, val: 45, unite: "°", change: maj });
+      j.reponse(function () { c1.regler(60); c2.regler(60); maj(); });
     } }
   ]
 });

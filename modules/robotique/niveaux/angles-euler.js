@@ -39,6 +39,7 @@ NIVEAU({
       n.dessin();
       j.titre("Exemple du cours. Lacet : fais tourner le téléphone de 90° vers la droite, à plat.");
       j.consigne("Utilise le cadran : il est vu de dessus, comme la scène. Vers la droite, c'est le sens horaire.");
+      j.reponse(gagne);
       function gagne() {
         fini = true; n.cadran.verrouiller(true);
         j.bravo("\\(\\alpha = -90°\\), autour de \\(\\vec{z}_0\\).");
@@ -56,6 +57,7 @@ NIVEAU({
       j.fig.astuce("Le cadran règle β, autour du nouvel axe y₁.");
       j.titre("Tangage : relève le téléphone de \\(\\beta = +90°\\) autour du nouvel axe \\(\\vec{y}_1\\).");
       j.consigne("Les rotations se font en axes mobiles : autour de l'axe y du téléphone, pas de \\(\\vec{y}_0\\).");
+      j.reponse(gagne);
       function gagne() {
         fini = true; n.cadran.verrouiller(true);
         j.bravo("Le téléphone est vertical.");
@@ -122,6 +124,7 @@ NIVEAU({
           j.suite();
         } });
       }
+      j.reponse(function () { (function f() { if (k >= 3) return; if (!bt.disabled) bt.click(); setTimeout(f, 300); })(); });
     } }
   ]
 });

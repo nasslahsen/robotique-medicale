@@ -114,6 +114,7 @@ NIVEAU({
           j.suite();
         }
       };
+      j.reponse(function () { n.Os = [1, 1.5]; n.dessin(); n.surBouge(); });
     } }
   ]
 });

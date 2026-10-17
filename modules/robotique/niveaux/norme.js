@@ -77,6 +77,7 @@ NIVEAU({
           j.suite();
         }
       } });
+      j.reponse(function () { c.regler(0.2); c.input.dispatchEvent(new Event("input")); });
     } },
     { nom: "En 3D", jouer: function (j, n) {
       n.mode = "espace"; n.cercle = false; n.dessin();

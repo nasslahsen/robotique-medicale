@@ -53,6 +53,7 @@ NIVEAU({
       j.titre("L'ombre de M sur l'axe horizontal s'appelle \\(\\cos\\theta\\). Place M pour que \\(\\cos\\theta = 0{,}5\\).");
       j.consigne("La barre rouge est cette ombre. Regarde sa valeur sous la figure.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false;
         var v = n.t >= 0 ? 60 : -60; n.animer(v, 250);
@@ -72,6 +73,7 @@ NIVEAU({
       j.titre("L'ombre sur l'axe vertical s'appelle \\(\\sin\\theta\\). Fais en sorte que \\(\\sin\\theta = 1\\).");
       j.consigne("La barre verte doit atteindre le haut du cercle.");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.animer(90, 250);
         j.bravo("\\(\\sin 90° = 1\\) et \\(\\cos 90° = 0\\).", n.pl.P([0, 1]));

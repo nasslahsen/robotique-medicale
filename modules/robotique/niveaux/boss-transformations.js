@@ -52,6 +52,7 @@ NIVEAU({
       }
       c1 = j.curseur({ nom: "θ₁", min: -180, max: 180, pas: 5, val: 0, unite: "°", change: maj });
       c2 = j.curseur({ nom: "θ₂", min: -180, max: 180, pas: 5, val: 0, unite: "°", change: maj });
+      j.reponse(function () { c1.regler(45); c2.regler(30); maj(); });
     } },
     { nom: "Accessible ?", jouer: function (j, n) {
       n.cible = [0.8 * Math.cos(50 * D.DEG), 0.8 * Math.sin(50 * D.DEG)]; n.anneau = false;

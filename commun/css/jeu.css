@@ -67,6 +67,10 @@ body.niveau { overflow: hidden; height: 100dvh; }
 .secoue { animation: secoue .4s; }
 @keyframes secoue { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
 
+/* « Voir la réponse » et « Passer » : discrets, sous la question */
+.aide-q { display: flex; gap: 4px; margin: 14px 0 0 -12px; }
+.aide-q button { min-height: 44px; padding: 0 12px; border: 0; border-radius: 12px; background: none; font: 500 15px Inter, sans-serif; color: var(--doux); text-decoration: underline; text-decoration-color: #c9cdd8; text-underline-offset: 4px; cursor: pointer; }
+.aide-q button:active { background: var(--pale); }
 .retour-msg { min-height: 28px; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; margin: 6px 0; }
 .retour-msg:empty { display: none; }
 .retour-msg.ko { color: var(--ko); }
@@ -142,6 +146,13 @@ body.niveau { overflow: hidden; height: 100dvh; }
 .etoiles .pleine:nth-child(2) path { animation-delay: .25s; }
 .etoiles .pleine:nth-child(3) path { animation-delay: .5s; }
 @keyframes etoile { from { transform: scale(0) rotate(-40deg); } }
+.resultat .carte { max-height: 92dvh; overflow-y: auto; }
+.a-revoir { margin: -6px 0 22px; text-align: left; border-top: 1px solid var(--trait); }
+.a-revoir:empty { display: none; }
+.a-revoir > div { display: flex; align-items: center; gap: 14px; min-height: 64px; border-bottom: 1px solid var(--trait); }
+.a-revoir span { flex: 1; min-width: 0; font-size: 16px; line-height: 1.35; }
+.a-revoir small { display: block; color: var(--doux); font-size: 14px; }
+.a-revoir .btn { flex: none; height: 46px; padding: 0 18px; font-size: 16px; border-width: 2px; box-shadow: 3px 3px 0 var(--encre); }
 .resultat .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 /* ---------- Carte des niveaux ---------- */

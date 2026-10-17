@@ -112,6 +112,7 @@ NIVEAU({
         }
       }
       ["θ₁", "θ₂", "θ₃"].forEach(function (nm, i) { cs.push(j.curseur({ nom: nm, min: -150, max: 150, pas: 5, val: 30, unite: "°", change: maj })); });
+      j.reponse(function () { [80, 30, -115].forEach(function (v, i) { cs[i].regler(v); }); maj(); });
     } }
   ]
 });

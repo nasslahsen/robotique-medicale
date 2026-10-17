@@ -47,6 +47,7 @@ NIVEAU({
       j.titre("Tourne \\(\\vec{a}\\) pour que le produit scalaire \\(\\vec{a} \\cdot \\vec{b}\\) devienne nul.");
       j.consigne("Le produit scalaire, c'est la longueur de b fois la projection de a sur b (en orange).");
       var fini = false;
+      j.reponse(gagne);
       function gagne() {
         if (fini) return; fini = true; n.libre = false; n.ta = 90; n.dessin();
         j.bravo("θ = 90° : les vecteurs sont perpendiculaires.", n.pl.P([0, 1.4]));
