@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Engrenages : généralités, familles, types · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Engrenages : généralités, familles, types</h1>
+<p class="chapeau">Dans l'articulation d'un robot chirurgical, le moteur tourne vite alors que l'instrument doit bouger lentement, avec précision et assez de force. Entre les deux, un réducteur à engrenages.</p>
+
+<h2>Intuition</h2>
+<p>Deux roues dentées en prise se poussent dent après dent : aucune ne peut glisser par rapport à l'autre. La petite roue doit donc faire plus de tours que la grande pour faire passer le même nombre de dents. Le rapport entre leurs vitesses est fixé par la géométrie : il reste constant.</p>
+<p>Selon la manière dont les axes sont placés et dont les dents sont taillées, on obtient des familles d'engrenages différentes : axes parallèles, axes qui se coupent, axes qui se croisent sans se toucher.</p>
+
+<div id="fig-vocabulaire"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>engrenage</strong> est un mécanisme composé de deux roues dentées en prise, qui transmet un mouvement de rotation et une puissance entre des arbres, selon un rapport de vitesse constant. Une combinaison d'engrenages est appelée <strong>train d'engrenages</strong>.</p>
+<div class="tableau"><table>
+<tr><th>Terme</th><th>Définition du cours</th></tr>
+<tr><td>Pignon</td><td>petite roue dentée d'un engrenage</td></tr>
+<tr><td>Roue</td><td>roue dentée qui s'engrène avec le pignon ; dans un engrenage pignon-roue extérieur, elle est généralement la plus grande des deux</td></tr>
+<tr><td>Couronne</td><td>roue dentée dont les dents sont situées sur sa face intérieure ; elle engrène avec un pignon placé à l'intérieur</td></tr>
+<tr><td>Crémaillère</td><td>barre droite munie de dents qui s'engrènent avec un pignon ; ce mécanisme transforme la rotation du pignon en déplacement rectiligne de la crémaillère, ou inversement</td></tr>
+</table></div>
+
+<h3>Position relative des axes</h3>
+<p>Suivant la position relative des axes des roues, on distingue :</p>
+<ul>
+<li>les engrenages <strong>parallèles</strong> (axes parallèles) ;</li>
+<li>les engrenages <strong>concourants</strong> (axes concourants) ;</li>
+<li>les engrenages <strong>gauches</strong> (les axes ne sont pas dans un même plan).</li>
+</ul>
+
+<div id="fig-axes"></div>
+
+<h3>Types d'engrenages</h3>
+<div class="tableau"><table>
+<tr><th>Type</th><th>Dents</th><th>Ce qu'il apporte</th></tr>
+<tr><td>Engrenages droits à denture droite</td><td>parallèles à l'axe de rotation</td><td>le cas de base (pignon, roue, couronne, crémaillère)</td></tr>
+<tr><td>Engrenages droits à denture hélicoïdale</td><td>inclinées par rapport à l'axe</td><td>fonctionnement plus progressif et silencieux ; la figure du cours montre aussi la denture chevron et le pignon hélicoïdal avec crémaillère</td></tr>
+<tr><td>Engrenages coniques</td><td>sur des cônes de même sommet S ; denture droite, hélicoïdale ou spirale</td><td>transmettre le mouvement entre des arbres qui se croisent (généralement perpendiculaires)</td></tr>
+<tr><td>Engrenages roues et vis sans fin</td><td>une vis entraîne une roue</td><td>grand rapport de réduction entre deux arbres non concourants et perpendiculaires ; système souvent irréversible. Variantes de la figure : vis sans fin avec roue cylindrique, vis sans fin tangente avec roue creuse, vis globique</td></tr>
+</table></div>
+
+<div id="fig-types"></div>
+
+<h2>Exemples du cours</h2>
+<p><strong>Boîte de vitesses</strong> : elle contient plusieurs couples d'engrenages de tailles différentes. En sélectionnant une combinaison d'engrenages, on change le rapport entre la vitesse du moteur et celle des roues : un rapport faible favorise le couple pour démarrer ou monter une côte, tandis qu'un rapport important favorise une vitesse de déplacement plus élevée. Ici, le rapport s'entend vitesse de sortie sur vitesse d'entrée. Dans le schéma de principe du cours, des baladeurs (vitesses 1-2, 3-4 et 5) solidarisent avec l'arbre l'un des pignons fous montés sur l'arbre secondaire ; un pignon de marche arrière inverse le sens.</p>
+<p><strong>Bras articulé d'un robot chirurgical</strong> : ses articulations orientent les instruments utilisés par le chirurgien. Dans ces articulations, des réducteurs à engrenages adaptent la rotation rapide des moteurs en un mouvement plus lent, précis et suffisamment puissant pour guider les instruments avec finesse.</p>
+
+<h2>Formules clés</h2>
+<p>Engrenage : deux roues dentées en prise, rapport de vitesse constant. Train d'engrenages : une combinaison d'engrenages.</p>
+<p>Axes parallèles, concourants ou gauches. Denture droite, hélicoïdale (progressive, silencieuse), coniques (arbres qui se croisent), roue et vis sans fin (grand rapport, souvent irréversible).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/engrenages.js"></script>
+</body>
+</html>
