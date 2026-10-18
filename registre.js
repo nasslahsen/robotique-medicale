@@ -37,7 +37,7 @@ window.REGISTRE = {
       ]
     },
     {
-      id: "informatique", titre: "Informatique médicale", statut: "a-venir",
+      id: "informatique", titre: "Informatique médicale", statut: "actif",
       couleur: "#CB912F", clair: "#FDECC8", texte: "#9A6E23",
       sousModules: [
         { id: "sis", titre: "Systèmes d'informations de santé" },

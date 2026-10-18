@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le risque · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le risque</h1>
+<p class="chapeau">Deux risques pour un seul budget : la climatisation du local serveur, qui lâche souvent sans gravité, et un rançongiciel sur le PACS, moins fréquent mais majeur. Lequel traiter d'abord ?</p>
+<h2>Intuition</h2>
+<p>Un risque se juge sur deux axes : est-ce que ça risque d'arriver (probabilité), et à quel point ce serait grave (impact). On les combine dans une matrice : en haut à droite, le très probable et grave, à traiter d'abord. On peut faire baisser un risque en jouant sur l'un ou l'autre axe.</p>
+<div id="fig-matrice-risque"></div>
+
+<h2>Formalisation</h2>
+<p><b>Risque</b> : la probabilité qu'une menace exploite une vulnérabilité d'un système d'information, entraînant des conséquences négatives.</p>
+<p>\[ \text{Risque} = \text{Probabilité (ou Menace)} \times \text{Impact (ou Vulnérabilité / Gravité)} \]</p>
+<p>Échelles de la matrice du cours : probabilité très improbable (exceptionnel), improbable (rare), probable (fréquent), très probable (très fréquent) ; impact mineur (faible, peu grave), modéré (moyennement grave), important (grave), majeur (très grave, critique, vital).</p>
+<p>Analogie du cours : <b>vulnérabilité</b> = clés sous le tapis ; elle donne un risque d'exploitation à la <b>menace</b> = intrusion ; qui conduit à l'<b>incident</b> = vol des objets de valeur.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté : notes de 1 à 4 sur chaque axe.</p>
+<p>Rançongiciel sur le PACS : probable (3) × majeur (4) = 12. Climatisation : très probable (4) × modéré (2) = 8. On traite d'abord le rançongiciel. Avec des sauvegardes hors ligne testées, l'impact devient modéré : \(3 \times 2 = 6\).</p>
+
+<h2>Formules clés</h2>
+<p>\[ R = P \times I \]</p>
+<p>Vulnérabilité (clés sous le tapis) → menace (intrusion) → incident (vol).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/risque.js"></script>
+</body>
+</html>

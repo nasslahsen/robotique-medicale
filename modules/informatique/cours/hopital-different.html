@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Ce qui rend un hôpital différent · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Ce qui rend un hôpital différent</h1>
+<p class="chapeau">Un correctif urgent de Windows sort un vendredi. Dans une entreprise, on redémarre le soir même. À l'hôpital, le serveur du DPI ne s'arrête jamais, et l'échographe n'accepte pas qu'on y touche sans son fabricant.</p>
+<h2>Intuition</h2>
+<p>L'hôpital a des contraintes que d'autres organisations n'ont pas : il ne peut pas attendre, il ne s'arrête jamais, ses appareils durent longtemps et appartiennent un peu à leur fabricant, son parc est hétérogène, beaucoup de tiers y sont connectés, et ses données ne se « changent » pas. Chacune de ces contraintes a une conséquence pour la sécurité.</p>
+<div id="fig-specificites"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Caractéristique</th><th>Conséquence pour la sécurité</th></tr>
+<tr><td>Le retard pour une décision informatique n'est pas toléré lorsqu'il s'agit d'une erreur ou une panne informatique</td><td>la disponibilité et l'intégrité des données priment souvent sur leur confidentialité</td></tr>
+<tr><td>Un hôpital fonctionnant 24 h / 24 offre des fenêtres de maintenance trop serrées</td><td>les correctifs sont retardés, les redémarrages difficiles à planifier</td></tr>
+<tr><td>Les DM durables (10 à 15 ans) tournent sur des systèmes d'exploitation qui vieillissent plus vite</td><td>présence d'équipements sous des systèmes non supportés, impossibles à mettre à jour sans le fabricant</td></tr>
+<tr><td>Exigence de qualification des intervenants et responsabilité du fabricant</td><td>on ne peut pas installer un antivirus ou un correctif sur un DM à sa guise</td></tr>
+<tr><td>L'hôpital dispose d'un parc très hétérogène où chaque service achète des références différentes des autres</td><td>inventaire incomplet, protocoles disparates, maintenance par des dizaines de prestataires</td></tr>
+<tr><td>Nombreux tiers connectés (télémaintenance, éditeurs, hébergeurs, groupements sanitaires)</td><td>la surface d'attaque dépasse largement le périmètre de l'établissement</td></tr>
+<tr><td>Les données de santé très recherchées et non modifiables (un dossier médical ne se « révoque » pas comme une carte bancaire)</td><td>un vol de données a des conséquences durables : chantage, usurpation, phishing ciblé</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un échographe de 2014 tourne encore sous un Windows qui ne reçoit plus de correctifs. Le fabricant refuse qu'on installe un antivirus : on le protège autrement, en l'isolant sur un réseau dédié, et on exige du fabricant ses correctifs.</p>
+
+<h2>Formules clés</h2>
+<p>À l'hôpital : disponibilité et intégrité souvent avant confidentialité ; correctifs retardés ; DM vieillissants et dépendants du fabricant ; parc hétérogène ; tiers nombreux ; données irrévocables.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/hopital-different.js"></script>
+</body>
+</html>

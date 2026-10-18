@@ -684,6 +684,44 @@ test("chapitre 8 : trains, rendement en cascade, réducteur du boss", () => {
   proche(Math.cbrt(16 * Cs * 1000 / (Math.PI * 30)), 5.6, 0.03);
 });
 
+// Module Informatique médicale : calculs des niveaux (appariement, risque, temps de traitement, chaîne de passages, taux)
+test("informatique médicale : réponses attendues dans les niveaux", () => {
+  const S = require("../modules/informatique/sis.js").calc;
+  const P = [8, 3, 4, 1, 2, 6];                                   // poids ajoutés : Nom, Prénom, Naissance, Sexe, Téléphone, CIN
+  proche(S.scorePondere([0.85, 1, 1, 1, 1, 1], P), 0.95, 1e-12);  // appariement : exemple du cours, score global 0,95
+  assert.strictEqual(S.decision(0.95), "match");
+  proche(S.scorePondere([0.7, 1, 1, 1, 1, 1], P), 0.90, 1e-12);   // nom à 0,70 : 0,90, plus strictement au-dessus
+  assert.strictEqual(S.decision(0.9 - 1e-12), "revue"); assert.strictEqual(S.decision(0.71 * 8 / 24 + 16 / 24), "match");
+  proche(S.scorePondere([1, 1, 1, 1, 1, 0], P), 0.75, 1e-12); assert.strictEqual(S.decision(0.75), "revue");   // CIN différente
+  proche(S.scorePondere([0.5, 1, 1, 1, 0, 1], P), 0.75, 1e-12);   // révision : nom 0,5, téléphone 0
+  proche(S.scorePondere([1, 0.9, 1, 1, 1, 0], P), 0.7375, 1e-12); proche(Math.round(0.7375 * 100) / 100, 0.74, 1e-12);  // boss
+  assert.strictEqual(S.decision(0.7375), "revue"); assert.strictEqual(S.decision(0.69), "non");
+  // appariement déterministe : faute de frappe et date inversée
+  const a = { nom: "BENJELLOUN", prenom: "AHMED", naissance: "15/03/1978" };
+  assert.ok(S.deterministe(a, { ...a })); assert.ok(!S.deterministe(a, { ...a, nom: "BENJELLOUNE" }));
+  assert.ok(!S.deterministe({ nom: "EL AMRANI", prenom: "SARA", naissance: "02/07/1990" }, { nom: "EL AMRANI", prenom: "SARA", naissance: "07/02/1990" }));
+  // normalisation du pipeline
+  assert.strictEqual(S.normaliser("Benjelloun  éva"), "BENJELLOUN EVA");
+  assert.strictEqual(S.telephone("+212 6 66 66 44 44"), "06 66 66 44 44");
+  // parcours d'une donnée : 6 passages fiables à 99 %
+  proche(S.chaine(0.99, 6) * 100, 94.1, 0.05);   // 94,15 %, réponse 94,1 acceptée à 0,15 près
+  // LIS : répartition 60 / 25 / 15 du TAT
+  const t90 = S.tat(90); proche(t90[0], 54, 1e-9); proche(t90[1], 22.5, 1e-9); proche(t90[2], 13.5, 1e-9);
+  proche(S.tat(120)[0], 72, 1e-9);
+  // identitovigilance : 120 doublons sur 40 000 dossiers
+  proche(120 / 40000 * 100, 0.3, 1e-12);
+  // risque = probabilité × impact (notes de 1 à 4)
+  assert.strictEqual(S.risque(3, 4), 12); assert.strictEqual(S.risque(4, 2), 8); assert.strictEqual(S.risque(3, 2), 6);
+  assert.strictEqual(S.risque(2, 4), 8); assert.ok(S.risque(3, 4) > S.risque(4, 2));
+  assert.strictEqual(S.niveauRisque(12), "élevé"); assert.strictEqual(S.niveauRisque(6), "moyen"); assert.strictEqual(S.niveauRisque(2), "faible");
+  // séparateur : « BENNANI;Salma;37,8 » coupé aux virgules
+  assert.strictEqual("BENNANI;Salma;37,8".split(",").length, 2); assert.strictEqual("A13;M;72,5;135;03/04/2026".split(",").length, 2);
+  // panorama : quatre éditeurs, Enova sur cinq régions
+  const SIS = require("../modules/informatique/sis.js");
+  assert.strictEqual(SIS.EDITEURS.length, 4); assert.strictEqual(SIS.REGIONS.length, 12);
+  assert.deepStrictEqual(SIS.EDITEURS.map((e, k) => SIS.REGIONS.filter(r => r.e === k).length), [5, 4, 2, 1]);
+});
+
 // Module Biomatériaux : un fichier de tests par chapitre (tests/biomateriaux/), mêmes outils.
 const dossierBio = require("path").join(__dirname, "biomateriaux");
 if (require("fs").existsSync(dossierBio)) for (const f of require("fs").readdirSync(dossierBio).filter(f => f.endsWith(".test.js")).sort()) require("./biomateriaux/" + f)({ test, proche, assert });

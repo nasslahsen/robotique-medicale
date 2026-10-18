@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Contexte et enjeux : la défense en profondeur · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Contexte et enjeux : la défense en profondeur</h1>
+<p class="chapeau">« Notre DPI a un mot de passe et un pare-feu : il est sûr. » C'est le mythe de la sécurité. Une seule faille suffit à un attaquant, et aucune protection n'en est exempte.</p>
+<h2>Le chapitre en bref</h2>
+<p>Trois idées fondent la sécurité du cours. D'abord, <b>rien n'est sécurisé à 100 %</b> : on empile donc des couches de défense. Ensuite, ce qu'on protège tient en trois critères, le <b>triangle CID</b> (confidentialité, intégrité, disponibilité) : à l'hôpital, protéger les données des patients, c'est protéger les patients. Enfin, la <b>règle AAA</b> (authentification, autorisation, traçabilité) contrôle qui accède à quoi et garde la trace de ce qui a été fait.</p>
+
+<h2>Intuition</h2>
+<p>Chaque protection a sa faille. Si les données ne sont protégées que par une couche, une faille suffit. Avec plusieurs couches, chacune avec sa faille à un endroit différent, l'attaquant doit toutes les trouver : cela lui prend du temps, et laisse au défenseur le temps de le voir.</p>
+<div id="fig-couches-def"></div>
+
+<h2>Formalisation</h2>
+<p>Contexte et enjeux : le mythe de la sécurité ; rien n'est sécurisé à 100 % ; <b>défense en profondeur</b> :</p>
+<ul>
+<li><b>sécurité en couches</b> ;</li>
+<li><b>durcissement</b> ;</li>
+<li><b>veille et sensibilisation</b>.</li>
+</ul>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Pour des pompes à perfusion connectées : un pare-feu entre Internet et l'hôpital, un réseau séparé réservé aux DM, un contrôle d'accès à leur console (couches) ; le compte « admin / admin » d'usine retiré et les ports inutiles fermés (durcissement) ; les infirmiers formés à repérer un courriel piégé et les alertes du maCERT suivies (veille et sensibilisation).</p>
+
+<h2>Formules clés</h2>
+<p>Rien n'est sécurisé à 100 %. Défense en profondeur = couches + durcissement + veille et sensibilisation.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/defense-profondeur.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le cycle de vie d'une attaque · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le cycle de vie d'une attaque</h1>
+<p class="chapeau">L'équipe sécurité repère un scan du réseau. Ce n'est pas encore une attaque réussie, c'est son tout premier pas. Savoir où en est l'attaquant, c'est savoir quoi couper.</p>
+<h2>Intuition</h2>
+<p>Une attaque se déroule en phases. L'attaquant étudie sa cible, entre, exploite ses failles, gagne des droits, se déplace d'une machine à l'autre, efface ses traces, puis frappe : il rend des services indisponibles ou emporte les données. Chaque phase laisse un signal ; plus on le voit tôt, moins il y a de dégâts.</p>
+<div id="fig-killchain"></div>
+
+<h2>Formalisation</h2>
+<p>Le cours présente la <b>cyber kill chain</b> (schéma Varonis), en huit phases, chacune avec un signal de détection :</p>
+<div class="tableau"><table>
+<tr><th>Phase</th><th>Ce que fait l'attaquant</th><th>Signal</th></tr>
+<tr><td>Reconnaissance</td><td>des outils de reconnaissance scannent le réseau et cherchent des vulnérabilités</td><td>reconnaissance tools detected</td></tr>
+<tr><td>Intrusion</td><td>un rançongiciel, un malware ou un cryptolocker est présent ; le système est attaqué</td><td>crypto intrusion activity</td></tr>
+<tr><td>Exploitation</td><td>des outils d'exploitation abusent des vulnérabilités du système</td><td>exploitation tools detected</td></tr>
+<tr><td>Privilege escalation</td><td>tentatives d'extraire des identifiants et d'élever les permissions</td><td>permission changes on OU</td></tr>
+<tr><td>Lateral movement</td><td>des identifiants compromis servent à passer d'un système à l'autre</td><td>unusual lockout behaviors</td></tr>
+<tr><td>Obfuscation (anti-forensics)</td><td>l'attaquant cache sa présence et masque son activité</td><td>masking activity detected</td></tr>
+<tr><td>Denial of service</td><td>le réseau et l'infrastructure sont ciblés ; les ressources deviennent indisponibles pour les utilisateurs légitimes</td><td>GPO deleted</td></tr>
+<tr><td>Exfiltration</td><td>tentatives non autorisées d'accéder aux données, qui signalent une exfiltration en cours</td><td>suspicious mailbox activity</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec les identifiants volés d'un administrateur, l'attaquant passe du serveur du laboratoire au PACS, puis au DPI : c'est le déplacement latéral. Le cloisonnement du réseau (des couches) le freine, et des verrouillages de comptes inhabituels le trahissent.</p>
+
+<h2>Formules clés</h2>
+<p>Reconnaissance → intrusion → exploitation → élévation de privilèges → déplacement latéral → obfuscation → déni de service → exfiltration.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/kill-chain.js"></script>
+</body>
+</html>
