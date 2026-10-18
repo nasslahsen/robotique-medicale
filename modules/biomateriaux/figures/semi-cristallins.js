@@ -36,10 +36,10 @@
       R.el("circle", { cx: px(t), cy: py(BIO.logModule(t, o(X))), r: 8, fill: C.z, stroke: "#fff", "stroke-width": 3 }, g);
       // échantillon
       var fondu = t > Tf + 3, cristaux = fondu ? 0 : X;
-      T(g, "BIOMATÉRIAUX", [790, 230], { taille: 26, gras: true });
+      T(g, "BIOMATÉRIAUX", [790, 352], { taille: 26, gras: true });
       R.el("rect", { x: 660, y: 70, width: 260, height: 320, rx: 20, fill: "rgba(238,240,245," + (0.15 + 0.8 * Math.min(1, cristaux * 1.6)) + ")", stroke: C.fonce, "stroke-width": 2.5 }, g);
       var r = BIO.hasard(9);
-      for (var k = 0; k < 20; k++) { var lx = 684 + (k % 4) * 58 + r() * 10, ly = 92 + Math.floor(k / 4) * 60 + r() * 10; if (r() < cristaux) lamelle(g, lx, ly, 38, 32, C.acc); }
+      for (var k = 0; k < 16; k++) { var lx = 684 + (k % 4) * 58 + r() * 10, ly = 92 + Math.floor(k / 4) * 60 + r() * 10; if (r() < cristaux) lamelle(g, lx, ly, 38, 32, C.acc); }
       T(g, fondu ? "fondu : transparent" : cristaux > 0 ? "cristaux : translucide ou opaque" : "amorphe : transparent", [790, 420], { taille: 16, gras: true, couleur: C.acc });
       zone.innerHTML = "X = " + R.fmt(X, 1) + ", T = " + t + " °C : " + (t < Tg ? "vitreux." : fondu ? "au-dessus de Tf, la phase cristalline a fondu." : X > 0 ? "phase cristalline dispersée dans une matrice caoutchouteuse." : "plateau caoutchouteux ou écoulement.");
     }
