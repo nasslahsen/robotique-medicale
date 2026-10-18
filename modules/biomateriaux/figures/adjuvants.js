@@ -56,7 +56,7 @@
           .addEventListener("click", function () { choisi = i; dessin(); });
       });
       T(g, "concentration en masse, échelle logarithmique", [560, 404], { taille: 15, couleur: C.doux });
-      zone.innerHTML = "<strong>" + A[choisi][0] + "</strong> : " + A[choisi][2] + ". " + A[choisi][3] + ".";
+      zone.innerHTML = "<strong>" + A[choisi][0] + "</strong> : " + A[choisi][2] + " ; " + A[choisi][3] + ".";
     }
     dessin();
   })();
@@ -84,7 +84,7 @@
         if (germ.checked || rr > 0) R.point(gc, [cx, cy], { r: 3, couleur: C.fonce });
       }
       var reste = ct.v < debut ? "pas encore de cristal : il faut refroidir davantage" : (germ.checked ? "de nombreux petits cristaux" : "quelques gros cristaux");
-      zone.innerHTML = (germ.checked ? "Avec" : "Sans") + " agent de germination : " + reste + ". Les agents de germination facilitent et accélèrent la cristallisation des semi-cristallins, permettent de cristalliser à plus haute température en refroidissant (cadence plus haute) et donnent des cristaux plus petits.";
+      zone.innerHTML = (germ.checked ? "Avec" : "Sans") + " agent de germination : " + reste + ". Les agents de germination facilitent et accélèrent la cristallisation des semi-cristallins, permettent, selon le cours, de diminuer la température de cristallisation afin d'augmenter la cadence de production et donnent des cristaux plus petits.";
     }
     dessin();
   })();

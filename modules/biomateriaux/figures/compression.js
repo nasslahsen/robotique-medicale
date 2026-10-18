@@ -26,15 +26,15 @@
         var hh = Math.min(h, A / w);
         R.el("rect", { x: cx - w / 2, y: 380 - hh, width: w, height: hh, fill: T(0.72), stroke: C.acc, "stroke-width": 2 }, g);
         if (plein && yp >= 309) { bav = 1; R.el("rect", { x: cv[0] - 14, y: 310, width: 14, height: 10, fill: C.acc }, g); R.el("rect", { x: cv[1], y: 310, width: 14, height: 10, fill: C.acc }, g); }
-        [cx - 50, cx + 38].forEach(function (ex) { R.el("rect", { x: ex, y: 380, width: 12, height: 90, fill: "#9aa0ad", stroke: C.fonce, "stroke-width": 2 }, g); });
+        [cx - 50, cx + 38].forEach(function (ex) { R.el("rect", { x: ex, y: 380, width: 12, height: 76, fill: "#9aa0ad", stroke: C.fonce, "stroke-width": 2 }, g); });
       });
       var up = "M150 " + (yp - 120) + " L810 " + (yp - 120) + " L810 " + (yp - 60) + " L" + (CAV[1][1] - 4) + " " + (yp - 60) + " L" + (CAV[1][1] - 4) + " " + yp + " L" + (CAV[1][0] + 4) + " " + yp + " L" + (CAV[1][0] + 4) + " " + (yp - 60) + " L" + (CAV[0][1] - 4) + " " + (yp - 60) + " L" + (CAV[0][1] - 4) + " " + yp + " L" + (CAV[0][0] + 4) + " " + yp + " L" + (CAV[0][0] + 4) + " " + (yp - 60) + " L150 " + (yp - 60) + " Z";
       R.el("path", { d: up, fill: "#dfe3ec", stroke: C.fonce, "stroke-width": 3, "stroke-linejoin": "round" }, g);
       R.fleche(g, [860, yp - 110], [860, yp - 40], { couleur: C.fonce, epaisseur: 5 });
       txt(g, "v, F", [880, yp - 75], { taille: 18, ancre: "start" });
       txt(g, "charge", [205, 290], { taille: 16, couleur: C.acc, ancre: "end" });
-      R.ligne(g, [480, 462], [538, 318], { couleur: C.doux, epaisseur: 1.5 }); R.ligne(g, [480, 462], [422, 318], { couleur: C.doux, epaisseur: 1.5 });
-      txt(g, "rainures de débordement", [480, 470], { taille: 15, couleur: C.doux });
+      if (!bav) CAV.forEach(function (cv) { [cv[0] - 14, cv[1]].forEach(function (x) { R.el("rect", { x: x, y: 310, width: 14, height: 10, fill: "none", stroke: "#3b5bdb", "stroke-width": 2 }, g); }); });
+      txt(g, "rainures de débordement : les encoches au bord des empreintes" + (bav ? "" : " (en bleu)"), [480, 470], { taille: 15, couleur: C.doux });
       txt(g, "éjecteurs", [870, 440], { taille: 16, couleur: C.doux });
       if (bav) { txt(g, "bavure", [870, 300], { taille: 16, couleur: C.acc }); R.ligne(g, [845, 302], [748, 314], { couleur: C.acc, epaisseur: 1.5 }); }
       f.direct.innerHTML = bav ? "Moule fermé : l'empreinte est pleine et l'excès forme la bavure. On maintient chauffe et pression jusqu'à la fin de la cuisson (réticulation)." : plein ? "L'empreinte est presque pleine : encore un peu de pression et l'excès va déborder." : "La charge est pressée : elle s'aplatit et s'élargit (son volume ne change pas).";

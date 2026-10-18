@@ -61,7 +61,7 @@ NIVEAU({
         D.texte(g, "vis-piston", [575, 252], { taille: 15, coul: C.doux });
         D.texte(g, "buse", [310, 196], { taille: 15, coul: C.doux, ancre: "end" });
         D.texte(g, "carotte", [X0 + 16, 300], { taille: 15, coul: C.doux, ancre: "start" });
-        D.texte(g, "canaux", [270, 392], { taille: 15, coul: C.doux });
+        if (ph < 4) D.texte(g, "canaux", [270, 392], { taille: 15, coul: C.doux });
         if (ph < 4) { D.texte(g, "seuil", [205, 336], { taille: 15, coul: C.doux }); D.texte(g, "empreinte", [150, 320], { taille: 15, coul: C.doux }); }
         else D.texte(g, "pièces éjectées", [212, 408], { taille: 15, coul: C.jeu, ancre: "start" });
         D.texte(g, "éjecteurs", [530, 532], { taille: 15, coul: C.doux });

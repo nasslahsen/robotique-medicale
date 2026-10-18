@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Forme des macromolécules et familles de plastiques · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Forme des macromolécules et familles de plastiques</h1>
+<p class="chapeau">Une seringue en polyéthylène se refond et se remoule ; une pièce en résine époxy, jamais ; un gant en caoutchouc s'étire puis revient. Ce sont tous des polymères. Ce qui les sépare, c'est la forme de leurs macromolécules.</p>
+
+<h2>Le chapitre en bref</h2>
+<p>Ce chapitre regarde les polymères de près : leurs chaînes, leur longueur, la façon dont elles s'organisent, et ce que la température leur fait. C'est indispensable en biomédical, où une grande partie des dispositifs (seringues, poches, cathéters, inserts, lentilles) sont en polymère : il faut savoir s'ils seront rigides ou souples à 37 °C, transparents ou non, et comment on peut les mouler.</p>
+<p>Les notions s'enchaînent ainsi :</p>
+<ul>
+<li><strong>Forme des macromolécules</strong> : linéaires, ramifiées ou en réseau ; thermoplastiques, thermodurcissables, élastomères (cette page).</li>
+<li><strong>Masse moléculaire</strong> : plus les chaînes sont longues, plus elles s'enchevêtrent, plus le matériau est résistant.</li>
+<li><strong>États d'un polymère amorphe</strong> : vitreux, transition vitreuse Tg, plateau caoutchouteux, liquide.</li>
+<li><strong>Polymères semi-cristallins</strong> : des cristaux dans une phase amorphe, une deuxième température Tf.</li>
+<li><strong>Taux de cristallinité</strong> : le mesurer par la densité.</li>
+<li><strong>Historique</strong> : du celluloïd au polyéthylène haute densité.</li>
+</ul>
+<div id="fig-carte"></div>
+
+<h2>Intuition</h2>
+<p>Imagine des spaghettis. Des spaghettis libres glissent les uns sur les autres dès qu'on les chauffe : c'est un thermoplastique. Relie-les par quelques ponts : ils peuvent s'étirer mais reviennent, c'est un élastomère. Relie-les par beaucoup de ponts : plus rien ne bouge, c'est un thermodurcissable.</p>
+<div id="fig-structures"></div>
+
+<h2>Formalisation</h2>
+<p>Terminologie à connaître pour la suite : masse moléculaire, état physique (vitreux, caoutchouteux, amorphe, semi-cristallin), température de transition, orientation, additifs, effet des charges et renforts sur la rigidité, loi des mélanges, orientation des fibres.</p>
+<div class="tableau"><table>
+<tr><th>Famille</th><th>Forme des macromolécules</th><th>À la chaleur</th><th>État</th><th>Exemples</th></tr>
+<tr><td><strong>Thermoplastiques</strong></td><td>linéaires ou ramifiées</td><td>se ramollissent ; mis en forme dans des moules à l'état ramolli ; ne peuvent pas atteindre l'état gazeux, ils se dégradent avant</td><td>amorphes ou semi-cristallins</td><td>PE, PC, PS (seringues, tubes)</td></tr>
+<tr><td><strong>Thermodurcissables</strong></td><td>réseau à mailles serrées</td><td>une fois durcis et moulés, ne peuvent plus être reformés : ils se dégradent</td><td>amorphes</td><td>polyester insaturé (UP), époxy, phénolique</td></tr>
+<tr><td><strong>Élastomères</strong></td><td>réseau à mailles larges</td><td>restent élastiques (chapitre 4)</td><td>amorphes</td><td>caoutchouc naturel et synthétique</td></tr>
+</table></div>
+<p>Les thermoplastiques sont livrés en granules, en feuilles ou en poudre. Les thermodurcissables sont moulés sous forme de semi-produits : une résine et un catalyseur. L'image du cours : un thermoplastique est un œuf en chocolat (on le refond et on le remoule), un thermodurcissable est un œuf cuit (impossible de revenir en arrière).</p>
+<p>Historiquement, on distingue deux familles de plastiques, thermoplastiques et thermodurcissables, plus les élastomères.</p>
+
+<h2>Exemple</h2>
+<p>Recyclage à l'hôpital : les seringues et tubes en PE ou PS (thermoplastiques) peuvent être broyés, refondus et remoulés. Une pièce en époxy (thermodurcissable) ne peut pas l'être : chauffée, elle brunit et se dégrade.</p>
+
+<h2>Formules clés</h2>
+<p>Thermoplastique : chaînes linéaires ou ramifiées, se ramollit à chaud, remoulable.</p>
+<p>Élastomère : réseau à mailles larges, élastique.</p>
+<p>Thermodurcissable : réseau à mailles serrées, ne se reforme plus.</p>
+<p>Thermoplastique : amorphe ou semi-cristallin ; thermodurcissables et élastomères : amorphes.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/macromolecules.js"></script>
+</body>
+</html>

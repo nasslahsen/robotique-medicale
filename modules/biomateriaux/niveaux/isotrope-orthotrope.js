@@ -9,7 +9,7 @@ NIVEAU({
     var n = { theta: 60, libre: true, mode: "pli", Etheta: Etheta };
     n.dessin = function () {
       E.vider(g);
-      var cx = n.mode === "pli" ? 300 : 260, cy = 300;
+      var cx = n.mode === "pli" ? 300 : 340, cy = 300;
       if (n.mode === "pli") {
         // pli vu de dessus, fibres horizontales
         E.s("rect", { x: cx - 170, y: cy - 130, width: 340, height: 260, rx: 10, fill: "#f6efe0", stroke: C.encre, "stroke-width": 2.5 }, g);
@@ -28,13 +28,13 @@ NIVEAU({
       } else {
         // monocouche en perspective avec ses axes
         var P = function (x, y, z) { return [cx + x + y * 0.6, cy + 40 - z - y * 0.5]; };
-        var R = 150, W = 220, T = 34;
+        var R = 140, W = 190, T = 34;
         E.s("polygon", { points: [P(-W, -R, 0), P(W, -R, 0), P(W, -R, -T), P(-W, -R, -T)].join(" "), fill: "#e8dcc2", stroke: C.encre, "stroke-width": 2 }, g);
         E.s("polygon", { points: [P(W, -R, 0), P(W, R, 0), P(W, R, -T), P(W, -R, -T)].join(" "), fill: "#ddd0b2", stroke: C.encre, "stroke-width": 2 }, g);
         E.s("polygon", { points: [P(-W, -R, 0), P(W, -R, 0), P(W, R, 0), P(-W, R, 0)].join(" "), fill: "#f6efe0", stroke: C.encre, "stroke-width": 2 }, g);
         for (var i = -R + 20; i < R; i += 25) D.ligne(g, P(-W + 6, i, 0), P(W - 6, i, 0), C.jeu, 3.5);
         for (i = -R + 20; i < R; i += 25) D.rond(g, P(W, i, -T / 2), 6, { fill: PLATEFORME.teinte(0.8), stroke: C.encre, ep: 1 });
-        D.fleche(g, P(0, 0, 0), P(330, 0, 0), C.x, 6); D.texte(g, "a", P(355, 0, 0), { taille: 26, coul: C.x });
+        D.fleche(g, P(0, 0, 0), P(255, 0, 0), C.x, 6); D.texte(g, "a", P(278, 0, 0), { taille: 26, coul: C.x });
         D.fleche(g, P(0, 0, 0), P(0, 250, 0), C.y, 6); D.texte(g, "b", P(0, 275, 0), { taille: 26, coul: C.y });
         D.fleche(g, P(0, 0, 0), P(0, 0, 200), C.z, 6); D.texte(g, "c", P(0, 0, 226), { taille: 26, coul: C.z });
         fig.chip(null);
