@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Géométrie d'une denture et module · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Géométrie d'une denture et module</h1>
+<p class="chapeau">Pour commander une roue dentée, ou vérifier qu'elle engrène avec une autre, il faut savoir la décrire : quels cercles, quelles hauteurs, quel pas. Un seul nombre résume presque tout : le module.</p>
+
+<h2>Intuition</h2>
+<p>Deux roues qui engrènent doivent avoir des dents de même taille : la dent de l'une doit rentrer dans le creux de l'autre. Cette taille se mesure par le pas, la distance d'une dent à la suivante sur le cercle primitif. Le pas contient toujours le nombre π (une circonférence divisée par un nombre de dents), alors on préfère travailler avec le module, \(m = p/\pi\) : toutes les dimensions de la dent deviennent des multiples simples de \(m\).</p>
+
+<div id="fig-denture"></div>
+
+<h2>Formalisation</h2>
+<p>La géométrie des engrenages est décrite par un ensemble de paramètres : cercle primitif, cercle de base, angle de pression \(\alpha\), cercle de tête, cercle de pied, saillie \(h_a\), creux \(h_f\), hauteur \(h\), pas primitif \(p\), module \(m\), etc.</p>
+<div class="tableau"><table>
+<tr><th>Élément</th><th>Signification</th><th>Valeur</th></tr>
+<tr><td>Cercle primitif</td><td>cercle de diamètre \(d\) ; les cercles primitifs de deux roues en prise sont tangents</td><td>\(d = mZ\)</td></tr>
+<tr><td>Cercle de tête</td><td>passe par le sommet des dents</td><td>\(d_a = d + 2m\)</td></tr>
+<tr><td>Cercle de pied</td><td>passe par le fond des dents</td><td>\(d_f = d - 2{,}5\,m\)</td></tr>
+<tr><td>Cercle de base</td><td>cercle d'où part le profil en développante des flancs</td><td>\(d_b = d\cos\alpha\)</td></tr>
+<tr><td>Saillie</td><td>du cercle primitif au cercle de tête</td><td>\(h_a = m\)</td></tr>
+<tr><td>Creux</td><td>du cercle primitif au cercle de pied</td><td>\(h_f = 1{,}25\,m\)</td></tr>
+<tr><td>Hauteur de dent</td><td>\(h = h_a + h_f\)</td><td>\(h = 2{,}25\,m\)</td></tr>
+<tr><td>Pas primitif</td><td>sur le cercle primitif, épaisseur \(s\) d'une dent plus intervalle \(e\)</td><td>\(p = \pi m\)</td></tr>
+</table></div>
+<p class="complement">\(d_b = d\cos\alpha\) est ajouté : le cours montre le cercle de base sans en donner la formule.</p>
+<p>La figure du cours nomme aussi les parties d'une dent : <strong>tête</strong> et <strong>pied</strong>, <strong>flanc</strong> (flanc de saillie au-dessus du cercle primitif, flanc de creux en dessous), <strong>sommet</strong>, <strong>fond</strong>, <strong>arête</strong>, et la <strong>largeur de denture</strong> \(b\) le long de l'axe.</p>
+<p>Pour un engrenage métrique standard de module \(m\) :</p>
+\[ d = mZ \qquad (4.3) \]
+<p>avec \(d\) le diamètre primitif (mm), \(m\) le module (mm) et \(Z\) le nombre de dents.</p>
+
+<div id="fig-roue"></div>
+
+<h3>Le module</h3>
+<p>Le <strong>module</strong> est le quotient du pas exprimé en millimètres par le nombre \(\pi\). On choisit un module dans la série normalisée :</p>
+<div class="tableau"><table>
+<tr><th>Modules normalisés, série principale</th><td>0,3</td><td>0,5</td><td>0,8</td><td>1</td><td>1,25</td><td>1,5</td><td>2</td></tr>
+<tr><th></th><td>2,5</td><td>3</td><td>4</td><td>5</td><td>6</td><td>8</td><td>10</td></tr>
+</table></div>
+<p>En première approximation, le module peut être calculé par la formule :</p>
+\[ m = 2{,}34\sqrt{\frac{F_t}{k \cdot Rp_e}} \]
+<p>avec \(F_t\) la force tangentielle (N), \(k\) le coefficient de largeur de denture, choisi entre 6 et 10, et \(Rp_e\) la résistance pratique à l'extension du matériau de la dent (MPa). On retient ensuite le module normalisé immédiatement supérieur.</p>
+
+<div id="fig-module"></div>
+
+<h3>Nombre minimal de dents</h3>
+<p>Afin d'éviter l'<strong>interférence</strong> entre les dents de la roue et du pignon, un nombre minimal de dents est requis :</p>
+<div class="tableau"><table>
+<tr><th>\(Z_A\) (pignon)</th><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
+<tr><th>\(Z_B\) (roue)</th><td>13 à 16</td><td>13 à 26</td><td>13 à 45</td><td>13 à 101</td><td>13 à ∞</td></tr>
+</table></div>
+<p class="complement">Lecture du tableau : un pignon de \(Z_A\) dents peut engrener avec une roue dont le nombre de dents est dans la plage \(Z_B\) correspondante.</p>
+
+<div id="fig-dents-min"></div>
+
+<h2>Exemple du cours</h2>
+<p>Roue 1 de la figure du cours, module \(m = 2\) mm, \(Z_1 = 17\) :</p>
+\[ d_1 = 2 \times 17 = 34 \text{ mm} \qquad d_{a1} = 34 + 2 \times 2 = 38 \text{ mm} \qquad d_{f1} = 34 - 2{,}5 \times 2 = 29 \text{ mm} \]
+<p class="complement">Les diamètres de tête et de pied sont calculés avec les formules de la figure ; le cours ne donne que \(d_1\).</p>
+<p>Exemple ajouté pour le module : \(F_t = 1000\) N, \(k = 8\), \(Rp_e = 100\) MPa donne \(m = 2{,}34\sqrt{1000/800} \approx 2{,}62\) mm, donc le module normalisé \(m = 3\).</p>
+
+<h2>Formules clés</h2>
+\[ d = mZ \qquad p = \pi m \qquad h_a = m \qquad h_f = 1{,}25\,m \qquad h = 2{,}25\,m \]
+\[ d_a = d + 2m \qquad d_f = d - 2{,}5\,m \qquad m = 2{,}34\sqrt{\frac{F_t}{k \cdot Rp_e}} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/denture.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Repère et coordonnées cartésiennes · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Repère et coordonnées cartésiennes</h1>
+<p class="chapeau">Pour qu'un logiciel sache où se trouve un instrument ou un organe, il doit traduire la position en nombres. Le repère est l'outil qui rend cette traduction possible.</p>
+
+<h2>Intuition</h2>
+<p>Dire « la cible est à 3 cm » n'a de sens que si l'on sait d'où l'on mesure et dans quelle direction. Un repère fixe les deux : un point de départ (l'origine) et trois directions de référence (les axes). Un point de l'espace est alors décrit par trois nombres : de combien il faut avancer selon chaque axe pour l'atteindre depuis l'origine.</p>
+<p>En salle d'opération, il y a plusieurs repères à la fois : le repère monde \(\{M\}\) (la salle), le repère robot \(\{R\}\) (lié à la base du bras), le repère outil \(\{T\}\) (origine à la pointe active de l'instrument) et le repère patient \(\{P\}\) (lié à l'anatomie, aux marqueurs ou à l'imagerie). Relier ces repères permet de localiser et d'orienter l'outil par rapport au patient : c'est le fil conducteur de toute cette partie.</p>
+
+<div id="fig-repere"></div>
+
+<h2>Formalisation</h2>
+<p>Un repère \(R = \{O, \vec{x}, \vec{y}, \vec{z}\}\) est constitué d'une origine \(O\) et de trois vecteurs unitaires orthogonaux, formant une base orthonormée directe, orientée selon la règle de la main droite :</p>
+\[ \vec{z} = \vec{x} \times \vec{y} \]
+<p>L'ordre \(X \to Y\) fixe le sens de \(Z\). Si l'on inverse \(\vec{z}\), le repère devient indirect (main gauche) : cochez « Repère indirect » sur la figure pour le voir.</p>
+<p>Dans ce repère, un point \(P\) est décrit par trois coordonnées \((x, y, z)\). Chacune est la projection orthogonale du vecteur position \(\overrightarrow{OP}\) sur l'axe correspondant :</p>
+\[ x = \overrightarrow{OP} \cdot \vec{x} \qquad y = \overrightarrow{OP} \cdot \vec{y} \qquad z = \overrightarrow{OP} \cdot \vec{z} \]
+\[ \overrightarrow{OP} = x\,\vec{x} + y\,\vec{y} + z\,\vec{z} \qquad \left[\overrightarrow{OP}\right]_R = \begin{bmatrix} x \\ y \\ z \end{bmatrix} \]
+<p>Distance entre \(P_1(x_1, y_1, z_1)\) et \(P_2(x_2, y_2, z_2)\), exprimés dans le même repère :</p>
+\[ d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} \]
+<p><strong>Application : le robot cartésien (PPP).</strong> Trois glissières orthogonales, une translation par articulation, axes alignés sur le repère et décalages nuls : \(x = q_1\), \(y = q_2\), \(z = q_3\). Les trois curseurs de la figure sont exactement les trois variables articulaires de ce robot, et son espace de travail est un parallélépipède rectangle.</p>
+<p>Avantages des coordonnées cartésiennes : intuitives, distances faciles à calculer. Limites : elles ne décrivent pas l'orientation à elles seules, et pour un robot à pivots les angles articulaires sont plus naturels.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté (les diapositives ne donnent pas de valeurs numériques ici).</p>
+<p>La pointe d'une aiguille est en \(P_1(10;\ 20;\ 5)\) mm et la cible en \(P_2(13;\ 24;\ 5)\) mm, dans le même repère patient.</p>
+\[ d(P_1, P_2) = \sqrt{(13 - 10)^2 + (24 - 20)^2 + (5 - 5)^2} = \sqrt{9 + 16 + 0} = 5 \text{ mm} \]
+<p>Pour un robot cartésien qui porte l'aiguille, aller de \(P_1\) à \(P_2\) revient à faire varier \(q_1\) de \(+3\) mm et \(q_2\) de \(+4\) mm, sans toucher à \(q_3\).</p>
+
+<h2>Rappel : vecteurs</h2>
+<p>Un vecteur est une flèche : une direction, un sens et une longueur (norme). Si \(A = (x_A, y_A, z_A)\) et \(B = (x_B, y_B, z_B)\), alors \(\overrightarrow{AB} = (x_B - x_A,\ y_B - y_A,\ z_B - z_A)^T\). Par convention en robotique, on écrit les vecteurs en colonne.</p>
+\[ \vec{v} = \begin{bmatrix} v_x \\ v_y \\ v_z \end{bmatrix} \qquad \|\vec{v}\| = \sqrt{v_x^2 + v_y^2 + v_z^2} \qquad \hat{u} = \frac{\vec{v}}{\|\vec{v}\|} \]
+<p>Le vecteur unitaire \(\hat{u}\) a une longueur 1 : il ne garde que la direction et le sens. C'est avec des vecteurs unitaires que l'on définit les axes d'un repère. Exemple : \(\vec{v} = (2;\ -1;\ 2)^T\) a pour norme \(\sqrt{4 + 1 + 4} = 3\), donc \(\hat{u} = \left(\tfrac{2}{3};\ -\tfrac{1}{3};\ \tfrac{2}{3}\right)^T\).</p>
+
+<h2>Formules clés</h2>
+\[ R = \{O, \vec{x}, \vec{y}, \vec{z}\}, \quad \vec{z} = \vec{x} \times \vec{y} \]
+\[ \overrightarrow{OP} = x\,\vec{x} + y\,\vec{y} + z\,\vec{z}, \quad x = \overrightarrow{OP} \cdot \vec{x} \]
+\[ d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/repere.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Ergonomie et acoustique · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Ergonomie et acoustique</h1>
+<p class="chapeau">Une équipe passe des heures dans la salle. Si elle trébuche sur des câbles, se retourne pour voir l'écran et travaille dans le bruit, la fatigue monte et les erreurs aussi.</p>
+<h2>Intuition</h2>
+<p>L'architecture doit suivre les mouvements réels de l'équipe : le chirurgien face au patient, l'anesthésiste à la tête avec son respirateur, l'instrumentiste à côté avec ses instruments. Chaque équipement se place à côté de celui qui l'utilise, sans que les câbles ou les chariots coupent les trajets. Le bruit, lui, vient de partout : ventilation, alarmes, appareils, portes, chariots, conversations ; il fatigue sans qu'on s'en rende compte.</p>
+
+<div id="fig-ergonomie"></div>
+
+<h2>Formalisation</h2>
+<h3>Ergonomie</h3>
+<p>L'architecture doit prendre en compte les mouvements réels de l'équipe : chirurgien → patient ; patient → anesthésie → respirateur ; patient → table ; patient → instrumentiste → instruments. L'objectif est d'éviter : les croisements inutiles ; les câbles au sol ; les obstacles ; les déplacements excessifs ; la mauvaise visibilité.</p>
+<h3>Acoustique</h3>
+<p>Le bruit peut provenir : de la ventilation ; des alarmes ; des équipements ; des portes ; des chariots ; des conversations. <b>Une mauvaise acoustique augmente la fatigue du personnel.</b> Il faut donc prévoir : une isolation acoustique ; la limitation des vibrations ; des équipements CVC correctement dimensionnés ; des portes adaptées.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un bras plafonnier qui porte les prises, les fluides et les écrans supprime d'un coup les câbles au sol, libère le passage autour de la table et met l'image dans l'axe du regard du chirurgien. C'est une décision d'architecture (charge du plafond, réseaux au-dessus) au service de l'ergonomie.</p>
+
+<h2>Formules clés</h2>
+<p>Ergonomie : éviter croisements inutiles, câbles au sol, obstacles, déplacements excessifs, mauvaise visibilité. Synthèse : circulation adaptée, sinon fatigue / accidents.</p>
+<p>Acoustique : sources (ventilation, alarmes, équipements, portes, chariots, conversations) ; réponses (isolation, limitation des vibrations, CVC bien dimensionnés, portes adaptées).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/ergonomie-acoustique.js"></script>
+</body>
+</html>

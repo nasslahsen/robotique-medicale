@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Matrice de rotation · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Matrice de rotation</h1>
+<p class="chapeau">Pour dire comment un objet est tourné, on donne les directions des axes de son repère, vues depuis le repère fixe. Rangées en colonnes, elles forment la matrice de rotation.</p>
+
+<h2>Intuition</h2>
+<p>Attachez un repère \(R_1\) à un objet. Quand l'objet tourne, ses axes \(\vec{x}_1\), \(\vec{y}_1\), \(\vec{z}_1\) tournent avec lui. Pour décrire son orientation, il suffit de dire où pointent ces trois axes, en coordonnées du repère fixe \(R_0\). Chaque axe donne trois nombres, d'où une matrice \(3 \times 3\).</p>
+<p>Ces nombres, vous les avez déjà calculés : ce sont les produits scalaires de l'exercice des deux repères. La matrice de rotation n'est que leur rangement.</p>
+
+<div id="fig-rot"></div>
+
+<h2>Formalisation</h2>
+<p>Deux repères de même origine \(O\) : \(A\) (repère fixe) et \(B\) (repère de l'objet). La matrice de rotation \(R^{A,B}\) a pour colonnes les coordonnées des axes de \(B\) exprimées dans \(A\) :</p>
+\[ R^{A,B} = \begin{bmatrix} r_{11} & r_{12} & r_{13} \\ r_{21} & r_{22} & r_{23} \\ r_{31} & r_{32} & r_{33} \end{bmatrix} \qquad \text{colonne 1 : } \vec{x}_B,\ \text{colonne 2 : } \vec{y}_B,\ \text{colonne 3 : } \vec{z}_B \]
+<p>Notations équivalentes utilisées dans le cours : \(R^{i,j} = {}^iR_j = R_{ij} = R^i_j\).</p>
+<p>Pour un solide \(S\) et le repère fixe \(R_0\) :</p>
+\[ R^{(0,S)} = \Big[\ [\vec{x}_S]_{R_0} \quad [\vec{y}_S]_{R_0} \quad [\vec{z}_S]_{R_0}\ \Big] \]
+<p>Chaque coefficient est un produit scalaire entre un axe de \(R_0\) et un axe de \(R_S\) : par exemple \(r_{21} = \vec{y}_0 \cdot \vec{x}_S\).</p>
+<p><strong>Rotation d'angle \(\alpha\) autour de \(\vec{z}_0\).</strong> Avec les projections de l'exercice des deux repères, \([\vec{x}_1]_{R_0} = (\cos\alpha;\ \sin\alpha;\ 0)\), \([\vec{y}_1]_{R_0} = (-\sin\alpha;\ \cos\alpha;\ 0)\), \([\vec{z}_1]_{R_0} = (0;\ 0;\ 1)\) :</p>
+\[ R^{0,1} = R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \]
+<p><strong>À quoi elle sert.</strong> Un vecteur fixe dans \(R_1\) (par exemple la direction d'un instrument tenu par le robot) a des composantes connues \(V^1\). Ses composantes dans \(R_0\) s'obtiennent en multipliant par la matrice : \(V^0 = R^{0,1}\,V^1\). C'est la relation (1.2), détaillée dans la page « Changement de repère ».</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\alpha = 30°\) et un vecteur \(V^1 = (2;\ 1;\ 0)^T\), fixe dans \(R_1\).</p>
+\[ R^{0,1} = \begin{pmatrix} 0{,}866 & -0{,}5 & 0 \\ 0{,}5 & 0{,}866 & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad V^0 = \begin{pmatrix} 0{,}866 \times 2 + (-0{,}5) \times 1 \\ 0{,}5 \times 2 + 0{,}866 \times 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 1{,}232 \\ 1{,}866 \\ 0 \end{pmatrix} \]
+<p>Réglez la figure sur \(\alpha = 30°\), \(V^1_x = 2\), \(V^1_y = 1\) pour retrouver ce résultat.</p>
+
+<h2>Rappel : produit d'une matrice par un vecteur</h2>
+<p>Chaque composante du résultat est le produit d'une <strong>ligne</strong> de la matrice par la <strong>colonne</strong> du vecteur : on multiplie terme à terme et on additionne. Une autre lecture, très utile ici : \(R\,V\) est une combinaison des colonnes de \(R\), avec pour coefficients les composantes de \(V\).</p>
+\[ \begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} u \\ v \end{pmatrix} = \begin{pmatrix} a u + b v \\ c u + d v \end{pmatrix} = u \begin{pmatrix} a \\ c \end{pmatrix} + v \begin{pmatrix} b \\ d \end{pmatrix} \]
+<p>Ainsi \(R^{0,1}\,(1;\ 0;\ 0)^T\) est la première colonne : c'est bien \([\vec{x}_1]_{R_0}\). Le bouton « Détailler le produit » de la figure parcourt les lignes une par une.</p>
+
+<h2>Formules clés</h2>
+\[ R^{(0,S)} = \Big[\ [\vec{x}_S]_{R_0}\ \ [\vec{y}_S]_{R_0}\ \ [\vec{z}_S]_{R_0}\ \Big] \qquad R^{i,j} = {}^iR_j = R_{ij} = R^i_j \]
+\[ R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad V^0 = R^{0,1}\,V^1 \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/matrice-rotation.js"></script>
+</body>
+</html>

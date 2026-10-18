@@ -4,7 +4,9 @@
 "use strict";
 const fs = require("fs"), path = require("path"), vm = require("vm");
 const katex = require("../commun/vendor/katex/katex.min.js");
-const racine = path.join(__dirname, "..");
+// racine vérifiée : le dépôt, ou un dossier passé en argument (aperçu : node tests/static-check.js apercu)
+const racine = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, "..");
+const APERCU = !!process.argv[2];
 let erreurs = 0, nbMaths = 0, nbPages = 0, nbNiveaux = 0;
 const err = (m) => { erreurs++; console.error("ERREUR", m); };
 const lire = (p) => fs.readFileSync(path.join(racine, p), "utf8");
@@ -99,7 +101,7 @@ for (const id of modules) {
 }
 
 // Racine : tableau de bord, anciennes adresses, socle commun
-for (const f of ["index.html", "jouer.html", "cours.html"].concat(liste("concepts", /\.html$/))) {
+for (const f of (APERCU ? ["index.html"] : ["index.html", "jouer.html", "cours.html"]).concat(liste("concepts", /\.html$/))) {
   if (!existe(f)) { err(`${f} manquant`); continue; }
   const html = lire(f); nbPages++;
   verifierLiens(f, html); verifierEcriture(f, html);

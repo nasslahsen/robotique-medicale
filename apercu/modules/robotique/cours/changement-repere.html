@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Changement de repère · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Changement de repère</h1>
+<p class="chapeau">La matrice de rotation sert de traducteur : elle convertit les composantes d'un vecteur d'un repère à l'autre. Avec la relation de Chasles, elle donne la position de n'importe quel point du solide dans le repère fixe.</p>
+
+<h2>Intuition</h2>
+<p>Un même vecteur physique (la direction d'un instrument, le déplacement d'une pointe) a des composantes différentes selon le repère dans lequel on le décrit. On connaît souvent un point du solide dans le repère du solide (par construction), mais on en a besoin dans le repère fixe (pour commander le robot ou comparer à l'imagerie). On procède en trois étapes : partir des composantes connues dans \(R_s\), les traduire dans \(R_0\) avec \(R^{0,s}\), puis ajouter la position de l'origine du solide.</p>
+
+<div id="fig-cr"></div>
+
+<h2>Formalisation</h2>
+<p>Changement de repère d'un vecteur : si l'on connaît les coordonnées d'un vecteur dans le repère \(j\), on obtient ses coordonnées dans le repère \(i\) en multipliant par la matrice de rotation \(R^{i,j}\).</p>
+\[ V^i = R^{i,j} \cdot V^j \qquad (1.2) \]
+<p>En projetant la relation de Chasles \((1.1)\) dans \(R_0\) :</p>
+\[ O_0M^0 = O_0O_s^0 + R^{0,s}\,O_sM^s \qquad (1.3) \]
+<p>\(O_sM^s\) est constant (coordonnées de \(M\) dans le repère du solide indéformable) ; \(R^{0,s}\) le traduit dans \(R_0\) ; \(O_0O_s^0\) ajoute la position de l'origine du solide. L'orientation de l'objet \(S\) par rapport à \(R_0\) est ainsi définie par la matrice d'orientation \(R^{0,s}\).</p>
+<p>Dans l'autre sens, grâce à \(R^{-1} = R^T\) : \(V^s = R^{s,0}\,V^0\) avec \(R^{s,0} = (R^{0,s})^T\). Cochez « Sens inverse » sur la figure.</p>
+<p>Ensemble, position et orientation forment la <strong>situation</strong> (ou configuration) du corps rigide, notée \(\{\mathbf{R}, \vec{p}\}\) ou \((\mathbf{R}, \vec{p})\) : 6 paramètres indépendants, 3 pour la position \((P_x, P_y, P_z)\) et 3 pour l'orientation (par exemple les 3 angles d'Euler, ou les 9 éléments de \(R\) avec 6 contraintes d'orthonormalité).</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un instrument fixé au solide \(S\) : origine en \(O_0O_s^0 = (1;\ 2;\ 0)^T\) m, repère tourné de \(\alpha = 90°\) autour de \(\vec{z}_0\), pointe \(M\) à \(O_sM^s = (0{,}5;\ 0;\ 0)^T\) m le long de \(\vec{x}_s\).</p>
+\[ O_0M^0 = \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} + \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}\begin{pmatrix} 0{,}5 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} + \begin{pmatrix} 0 \\ 0{,}5 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 2{,}5 \\ 0 \end{pmatrix} \text{ m} \]
+<p>Cohérent : après la rotation de 90°, l'axe \(\vec{x}_s\) de l'instrument pointe selon \(\vec{y}_0\). Bouton « Exemple de la page » sur la figure.</p>
+
+<h2>Formules clés</h2>
+\[ V^i = R^{i,j}\,V^j \quad (1.2) \qquad O_0M^0 = O_0O_s^0 + R^{0,s}\,O_sM^s \quad (1.3) \qquad R^{s,0} = (R^{0,s})^T \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/changement-repere.js"></script>
+</body>
+</html>

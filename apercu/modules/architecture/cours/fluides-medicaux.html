@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Fluides médicaux, vide et évacuation des gaz · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Fluides médicaux, vide et évacuation des gaz</h1>
+<p class="chapeau">L'oxygène, l'air, le vide : ils arrivent par des réseaux et sortent par des prises. Une prise au mauvais endroit, c'est un tuyau au sol ; un réseau sans secours, c'est une aspiration qui s'arrête pendant un saignement.</p>
+<h2>Intuition</h2>
+<p>Chaque appareil du bloc a besoin de certains fluides : la machine d'anesthésie d'oxygène, d'air et de vide, le chirurgien d'une aspiration, certains instruments d'air comprimé. Ces fluides doivent arriver près de celui qui les utilise, sans traverser la salle, et ne jamais manquer. Et ce que la machine d'anesthésie laisse échapper doit être évacué pour ne pas être respiré par l'équipe.</p>
+
+<div id="fig-fluides"></div>
+
+<h2>Formalisation</h2>
+<p>Un bloc opératoire nécessite généralement : <b>O₂</b> ; <b>air médical</b> ; <b>vide médical</b> ; parfois <b>N₂O</b> selon la politique d'anesthésie ; l'<b>évacuation des gaz anesthésiques</b> ; éventuellement de l'<b>air instrumental</b>. Les prises doivent être positionnées selon : la table opératoire ; la machine d'anesthésie ; le bras plafonnier ; les équipements spécialisés.</p>
+<h3>Vide médical</h3>
+<p>Utilisations : aspiration chirurgicale ; aspiration anesthésique ; certains dispositifs de drainage. À prévoir : réseau ; vannes ; alarmes ; source de secours ; maintenance.</p>
+<h3>Évacuation des gaz anesthésiques</h3>
+<p>L'évacuation des gaz anesthésiques permet de <b>limiter l'exposition professionnelle aux agents anesthésiques</b>. Elle doit être étudiée dès la conception avec : système d'évacuation ; raccordements ; débit ; alarmes ; maintenance.</p>
+<p>Norme citée au cours : ISO 7396-1, systèmes de distribution de gaz médicaux et de vide.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Si les prises d'oxygène, d'air et de vide de la machine d'anesthésie sont placées sur un mur éloigné, les tuyaux traversent la salle au sol : obstacle, risque de chute, risque de débranchement. Placées sur le bras plafonnier à côté de la machine, elles suppriment ces risques. Le cours cite d'ailleurs la « mauvaise connexion des gaz médicaux » parmi les risques pour le patient.</p>
+
+<h2>Formules clés</h2>
+<p>Fluides : O₂, air médical, vide médical, parfois N₂O, évacuation des gaz anesthésiques, éventuellement air instrumental ; prises selon table, machine d'anesthésie, bras plafonnier, équipements spécialisés.</p>
+<p>Vide : aspiration chirurgicale et anesthésique, drainage ; réseau, vannes, alarmes, source de secours, maintenance.</p>
+<p>Évacuation des gaz : limiter l'exposition professionnelle ; système, raccordements, débit, alarmes, maintenance.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/fluides-medicaux.js"></script>
+</body>
+</html>

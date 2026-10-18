@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Module transversal et taux de fibres · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Module transversal et taux de fibres</h1>
+<p class="chapeau">La même plaque à 40 % de fibres de verre fait 29,8 GPa dans le sens des fibres. Et si on la tire en travers ? Les fibres ne sont plus côte à côte avec la résine mais l'une derrière l'autre, et presque tout le travail retombe sur la résine.</p>
+
+<h2>Intuition</h2>
+<p>Chargées perpendiculairement, fibres et matrice sont traversées par la même force, comme deux ressorts en série. Le ressort raide (la fibre) s'allonge à peine ; le souple (la matrice) fait presque tout l'allongement. La rigidité de l'ensemble est donc commandée par le maillon souple : ajouter des fibres n'aide presque pas, sauf quand il n'y a presque plus de matrice.</p>
+
+<div id="fig-serie"></div>
+
+<h2>Formalisation</h2>
+<p>Monocouche unidirectionnelle chargée perpendiculairement aux fibres (direction T). La diapo garde le titre « Module longitudinal » : il s'agit bien du module transversal.</p>
+<ul>
+<li>Même contrainte : \(\sigma_{CT} = \sigma_f = \sigma_m\) : la même force traverse fibre et matrice (la diapo note \(\sigma_{CL}\) à cette ligne et pose aussi \(A_c = A_f = A_m\), la même section pour les deux).</li>
+<li>Les allongements s'ajoutent : \(\varepsilon_{CT} = \varepsilon_f \phi_f + \varepsilon_m \phi_m\).</li>
+<li>On divise par \(\sigma_{CT}\) : \(\dfrac{\varepsilon_{CT}}{\sigma_{CT}} = \dfrac{\varepsilon_f \phi_f}{\sigma_{CT}} + \dfrac{\varepsilon_m \phi_m}{\sigma_{CT}}\), soit \(\dfrac{1}{E_{CT}} = \dfrac{\phi_f}{E_f} + \dfrac{\phi_m}{E_m}\).</li>
+<li>Forme pratique : \(E_{CT} = \dfrac{E_f E_m}{\phi_f E_m + \phi_m E_f}\).</li>
+</ul>
+
+<h2>Influence du taux de fibre</h2>
+<p>Sur la courbe du cours, \(E_{CL}\) monte en ligne droite de \(E_m\) à \(E_f\), alors que \(E_{CT}\) reste près de \(E_m\) puis ne rejoint \(E_f\) qu'à \(\phi_f \to 1\). Trois conclusions :</p>
+<ul>
+<li>le module longitudinal est influencé par les fibres ;</li>
+<li>le module transversal est influencé par la matrice ;</li>
+<li>le module longitudinal est toujours plus grand que le module transversal.</li>
+</ul>
+
+<div id="fig-courbes"></div>
+
+<h2>Exemple</h2>
+<p>Exemple du cours : \(E_f = 70\) GPa, \(E_m = 3\) GPa, \(\phi_f = 0{,}4\).</p>
+<p>\[E_{CT} = \frac{70 \times 3}{0{,}4 \times 3 + 0{,}6 \times 70} = \frac{210}{43{,}2} = 4{,}86\ \text{GPa}\]</p>
+<p>C'est à peine plus que \(E_m / \phi_m = 3 / 0{,}6 = 5\) GPa : la contribution des fibres est presque négligeable. Avec les mêmes données, \(E_{CL} = 29{,}8\) GPa, six fois plus. Pour une prothèse, cela veut dire qu'un pli unidirectionnel est fragile dès qu'il est sollicité en travers : on empile des plis orientés (page suivante).</p>
+
+<h2>Formules clés</h2>
+<p>\[\sigma_{CT} = \sigma_f = \sigma_m \qquad \varepsilon_{CT} = \varepsilon_f\,\phi_f + \varepsilon_m\,\phi_m\]</p>
+<p>\[\frac{1}{E_{CT}} = \frac{\phi_f}{E_f} + \frac{\phi_m}{E_m} \qquad E_{CT} \approx \frac{E_m}{\phi_m}\ \text{si}\ E_f \gg E_m\]</p>
+<p>\(E_{CL}\) : fibres ; \(E_{CT}\) : matrice ; toujours \(E_{CL} > E_{CT}\).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/module-transversal.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Incendie, sécurité du patient et du personnel · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Incendie, sécurité du patient et du personnel</h1>
+<p class="chapeau">Oxygène, appareils électriques, produits inflammables, sources de chaleur : le bloc réunit tout ce qu'il faut pour un incendie, autour d'un patient qui ne peut pas fuir.</p>
+<h2>Intuition</h2>
+<p>La sécurité se pense pour trois publics. Le bâtiment doit détecter un feu tôt, le contenir, permettre d'évacuer et de combattre, en continuant à alimenter ce qui doit l'être. Le patient doit être protégé de tout ce que le bloc peut lui faire subir, de la chute à la mauvaise connexion d'un gaz. Et l'équipe doit être protégée des risques de son métier : rayons X, gaz anesthésiques, germes, charges lourdes, bruit, chaleur.</p>
+
+<div id="fig-securite"></div>
+
+<h2>Formalisation</h2>
+<h3>Contraintes incendie</h3>
+<p>Le bloc doit intégrer : détection incendie ; compartimentage ; évacuation ; signalisation ; matériaux adaptés ; accès pompiers ; alimentation de sécurité. Il faut également tenir compte des risques liés : à l'oxygène ; aux équipements électriques ; aux produits inflammables éventuels ; aux équipements thermiques.</p>
+<h3>Sécurité du patient</h3>
+<p>La conception doit contribuer à prévenir : chute ; erreur d'identification ; infection ; brûlure électrique ; incendie ; interruption de l'alimentation ; mauvaise connexion des gaz médicaux ; défaut de ventilation.</p>
+<h3>Sécurité du personnel</h3>
+<p>Il faut également protéger les professionnels contre : le risque électrique ; les rayonnements ionisants ; les gaz anesthésiques ; les agents biologiques ; la manutention manuelle ; l'exposition au bruit ; une température excessive.</p>
+<div class="tableau"><table>
+<tr><th>Risque pour le personnel</th><th>Réponse vue dans le cours</th></tr>
+<tr><td>Risque électrique</td><td>sécurité électrique : contacts directs / indirects, terre, équipotentialité, différentiels</td></tr>
+<tr><td>Rayonnements ionisants</td><td>protection radiologique calculée par une étude</td></tr>
+<tr><td>Gaz anesthésiques</td><td>évacuation des gaz anesthésiques, ventilation</td></tr>
+<tr><td>Agents biologiques</td><td>zones, séparation des flux, tri des déchets</td></tr>
+<tr><td>Manutention manuelle</td><td>ergonomie, stockage bien placé</td></tr>
+<tr><td>Exposition au bruit</td><td>acoustique</td></tr>
+<tr><td>Température excessive</td><td>ventilation, maîtrise de la température</td></tr>
+</table></div>
+<p>La colonne de droite relie chaque risque aux chapitres du cours (rapprochement ajouté).</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>L'oxygène ne brûle pas lui-même, mais il entretient et accélère la combustion. Près du champ opératoire, un air enrichi en oxygène, un antiseptique alcoolique encore humide et la chaleur d'un bistouri électrique réunissent les éléments que le cours cite parmi les risques incendie propres au bloc.</p>
+
+<h2>Formules clés</h2>
+<p>Incendie : détection, compartimentage, évacuation, signalisation, matériaux adaptés, accès pompiers, alimentation de sécurité ; risques liés à l'oxygène, aux équipements électriques, aux produits inflammables, aux équipements thermiques.</p>
+<p>Patient : chute, identification, infection, brûlure électrique, incendie, interruption de l'alimentation, connexion des gaz, ventilation.</p>
+<p>Personnel : électrique, rayonnements ionisants, gaz anesthésiques, agents biologiques, manutention, bruit, température.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/securite.js"></script>
+</body>
+</html>
