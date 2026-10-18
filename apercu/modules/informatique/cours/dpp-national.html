@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le DPP au sein d'un SIS : portail national · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le DPP au sein d'un SIS : portail national</h1>
+<p class="chapeau">Un compte rendu écrit dans une clinique privée de Rabat doit pouvoir être lu par le patient chez lui, et par le médecin d'un hôpital public de Marrakech.</p>
+<h2>Intuition</h2>
+<p>À l'échelle du pays, le système d'information de santé (SIS) relie tout le monde : hôpitaux publics et privés envoient leurs données par une plateforme d'échange commune, un serveur garantit l'identité du patient, une base consolide le dossier patient partagé, et des portails le rendent accessible au citoyen, aux médecins et au ministère.</p>
+<div id="fig-dpp"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Étage</th><th>Contenu (cas du projet de portail national de santé)</th></tr>
+<tr><td>Établissements de soins publics</td><td>systèmes d'information hospitaliers publics (SI Hosix, SI Enova, SI DxCare, SI Bilmedical)</td></tr>
+<tr><td>Établissements de soins privés</td><td>systèmes d'information du secteur privé</td></tr>
+<tr><td>Plateforme d'échange santé</td><td>HL7, HL7 FHIR, HL7 (CDA, CCD, SPL, CCOW), IHE, XDS, DICOM ISO 12052</td></tr>
+<tr><td>Serveur d'identification du patient</td><td>appuyé sur la carte nationale d'identité électronique</td></tr>
+<tr><td>Base de consolidation santé</td><td>dossier patient partagé</td></tr>
+<tr><td>Portails</td><td>portail patient, portail professionnel, systèmes BI</td></tr>
+<tr><td>Utilisateurs</td><td>citoyen, médecin privé, MSPS (ministère de la Santé et de la Protection sociale)</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Le compte rendu de la clinique part du SI privé, passe par la plateforme d'échange (HL7 FHIR ou CDA), est rattaché au bon patient par le serveur d'identification, consolidé dans le DPP, puis lu par le patient sur le portail patient.</p>
+
+<h2>Formules clés</h2>
+<p>SIH publics et SI privés → plateforme d'échange → identification + base de consolidation (DPP) → portails → citoyen, médecin, MSPS.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/dpp-national.js"></script>
+</body>
+</html>

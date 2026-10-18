@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Filtration de l'air et flux unidirectionnel · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Filtration de l'air et flux unidirectionnel</h1>
+<p class="chapeau">Faut-il un filtre HEPA dans chaque salle ? Un flux laminaire au-dessus de chaque table ? Le cours répond : selon le risque, l'intervention et le référentiel.</p>
+<h2>Intuition</h2>
+<p>L'air soufflé traverse des filtres de plus en plus fins : un préfiltre arrête les grosses particules et protège les suivants, une filtration fine arrête les plus petites, et dans certains cas un filtre à très haute efficacité (HEPA) termine le travail. Plus le risque de l'intervention est élevé, plus on va loin, jusqu'au flux unidirectionnel : un bloc d'air très propre qui descend en continu sur la zone opératoire.</p>
+
+<div id="fig-filtration"></div>
+
+<h2>Formalisation</h2>
+<p>La filtration dépend : du système CVC ; du niveau de risque ; du référentiel ; du type de chirurgie. Il faut prévoir : une <b>préfiltration</b> ; une <b>filtration fine</b> ; <b>éventuellement une filtration HEPA</b> selon l'application.</p>
+<p>Erreur pédagogique fréquente : « Toute salle opératoire doit obligatoirement avoir un HEPA. » Ce n'est pas universellement exact. Les recommandations 2026 de la Healthcare Infection Society indiquent notamment que les filtres HEPA ne sont pas indispensables pour les salles conventionnelles lorsque la qualité d'air requise est obtenue avec une filtration appropriée.</p>
+<h3>Flux unidirectionnel / UCV</h3>
+<p>Pour certaines interventions à haut risque, notamment certaines chirurgies orthopédiques avec implants, des systèmes d'<b>ultraclean ventilation (UCV)</b> peuvent être utilisés : de l'air très propre descend sur la zone du patient et de la chirurgie, avec une extraction basse.</p>
+<p>Il ne faut toutefois pas présenter le flux laminaire comme une solution universelle de prévention des infections du site opératoire : les recommandations internationales ont souligné que les preuves et indications varient selon les types d'interventions.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Dans un même hôpital, une salle de chirurgie viscérale conventionnelle peut obtenir la qualité d'air requise avec préfiltration et filtration fine, tandis qu'une salle dédiée aux prothèses articulaires peut être équipée d'un système UCV. Le choix découle du niveau de risque, du type de chirurgie et du référentiel, pas d'une règle unique.</p>
+
+<h2>Formules clés</h2>
+<p>Préfiltration → filtration fine → éventuellement HEPA, selon le système CVC, le risque, le référentiel et la chirurgie.</p>
+<p>HEPA pas obligatoire partout (HIS 2026, salles conventionnelles avec filtration appropriée). UCV pour certaines interventions à haut risque ; pas une solution universelle.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/filtration-ucv.js"></script>
+</body>
+</html>

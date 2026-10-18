@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Timers · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Timers</h1>
+<p class="chapeau">Lire un ECG 500 fois par seconde, pas une de plus, pas une de moins. Attendre 30 s avant de relancer une pompe. Le programme ne peut pas compter le temps en comptant ses propres instructions : il s'appuie sur des timers, des compteurs qui avancent au rythme d'une horloge.</p>
+
+<h2>Intuition</h2>
+<p>Un timer est un compteur branché sur une horloge. L'horloge de la puce bat très vite, des dizaines de millions de fois par seconde : on la ralentit d'abord avec un diviseur, le prescaler. Le compteur avance alors d'un pas à chaque « tic ». Quand il atteint une valeur fixée, l'alarme, il prévient le programme par une interruption, et peut repartir de zéro tout seul : on obtient un événement parfaitement régulier.</p>
+
+<div id="fig-timer"></div>
+
+<h2>Formalisation</h2>
+<ul>
+<li>L'ESP32 intègre <strong>quatre timers d'usage général</strong>.</li>
+<li>Ce sont tous des timers génériques de <strong>64 bits</strong>, construits sur des prescalers de 16 bits et des compteurs montants/descendants de 64 bits capables de rechargement automatique.</li>
+</ul>
+<p>Les timers offrent :</p>
+<ul>
+<li>un prescaler d'horloge de 16 bits, de 2 à 65536 ;</li>
+<li>un compteur de base de temps de 64 bits ;</li>
+<li>un compteur configurable en incrémentation ou en décrémentation (<i>up/down</i>) ;</li>
+<li>l'arrêt et la reprise du compteur (<i>halt and resume</i>) ;</li>
+<li>le rechargement automatique à l'alarme (<i>auto-reload at alarm</i>) ;</li>
+<li>le rechargement instantané commandé par le logiciel ;</li>
+<li>la génération d'interruptions sur niveau et sur front.</li>
+</ul>
+<p class="complement">Complément pour les calculs : le cours ne donne pas la fréquence de l'horloge des timers. Les exemples prennent 80 MHz, l'horloge APB par défaut de l'ESP32.</p>
+\[ T_{tic} = \frac{\text{prescaler}}{f_{horloge}} \qquad T_{alarme} = \text{alarme} \times T_{tic} \]
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Échantillonner un ECG à 500 Hz demande une interruption toutes les \(1/500 = 2\) ms. Avec \(f = 80\) MHz et un prescaler de 80 :</p>
+\[ T_{tic} = \frac{80}{80 \times 10^6} = 1\ \mu\text{s} \qquad \text{alarme} = \frac{2\ \text{ms}}{1\ \mu\text{s}} = 2000 \]
+<p>Avec le rechargement automatique, le compteur repart de 0 à chaque alarme : une interruption toutes les 2 ms, sans que le programme intervienne. Le prescaler le plus petit, 2, donne la cadence la plus rapide : \(80 / 2 = 40\) MHz, un tic toutes les 25 ns.</p>
+
+<h2>Formules clés</h2>
+\[ T_{tic} = \frac{\text{prescaler}}{f_{horloge}} \quad (2 \le \text{prescaler} \le 65536) \qquad T_{alarme} = \text{alarme} \times T_{tic} \qquad f_{interruption} = \frac{1}{T_{alarme}} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/timer.js"></script>
+</body>
+</html>

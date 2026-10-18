@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Signaux logiques et horloge · Systèmes embarqués et instrumentation biomédicale intelligente</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Signaux logiques et horloge</h1>
+<p class="chapeau">Le patient appuie sur le bouton d'appel : le microcontrôleur doit le voir une fois, et une seule. Pour cela, il faut distinguer le front, l'instant où le signal change, du niveau, l'état qui dure. Et tout le circuit avance au rythme d'une horloge.</p>
+
+<h2>Intuition</h2>
+<p>Un signal logique, c'est une tension qui ne prend que deux valeurs. Quand le bouton est enfoncé, la tension monte ; quand on le relâche, elle redescend. Compter les appuis, c'est compter les montées, pas le temps passé en haut. L'horloge, elle, est un signal qui monte et descend tout seul, régulièrement, et donne la cadence à tout le reste.</p>
+
+<div id="fig-signaux"></div>
+
+<h2>Formalisation</h2>
+<p>Un signal logique a deux niveaux : <strong>haut</strong> (1, ici 3,3 V) et <strong>bas</strong> (0, 0 V). Un <strong>front montant</strong> est le passage de 0 à 1, un <strong>front descendant</strong> le passage de 1 à 0. Un front est un instant (la transition) ; un niveau dure tant que le signal reste à 0 ou à 1. Au chapitre 5, l'ESP32 propose les deux : déclenchement d'une interruption sur front montant, descendant ou les deux, et sur niveau bas ou haut.</p>
+<p>Une <strong>horloge</strong> est un signal carré régulier qui rythme le circuit. Sa <strong>période</strong> \(T\) est la durée d'un motif, sa <strong>fréquence</strong> \(f\) le nombre de motifs par seconde (en Hz, kHz, MHz) :</p>
+\[ f = \frac{1}{T} \]
+<p>Le <strong>débit</strong> d'une liaison se compte en bits par seconde (bps). Chaque bit occupe la ligne pendant \(t_{bit} = 1/\text{débit}\).</p>
+<p>Une liaison <strong>synchrone</strong> partage une horloge entre émetteur et récepteur (SPI, I2C). Une liaison <strong>asynchrone</strong> n'en a pas : les deux côtés conviennent du débit à l'avance (UART).</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<ul>
+<li>Une horloge à 4 MHz : \(T = \dfrac{1}{4 \times 10^{6}} = 250\) ns. À 16 MHz, la période est quatre fois plus courte : 62,5 ns.</li>
+<li>Une liaison à 115 200 bits par seconde : un bit dure \(1/115\,200 \approx 8{,}7\ \mu\)s.</li>
+<li>Une interruption « au niveau bas » se déclenche pendant tout l'intervalle où le signal reste à 0, pas seulement à l'instant où il descend.</li>
+</ul>
+
+<h2>Formules clés</h2>
+\[ f = \frac{1}{T} \qquad t_{bit} = \frac{1}{\text{débit}} \]
+<p>Front montant : 0 vers 1. Front descendant : 1 vers 0. Synchrone : horloge partagée (SPI, I2C). Asynchrone : débit convenu (UART).</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/signaux.js"></script>
+</body>
+</html>

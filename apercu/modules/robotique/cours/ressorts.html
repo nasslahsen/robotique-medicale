@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Ressorts · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Ressorts</h1>
+<p class="chapeau">Une pince de prélèvement se rouvre seule quand on la lâche, un vérin revient en arrière quand on coupe l'air : dans les deux cas, un ressort a stocké de l'énergie et la rend.</p>
+
+<h2>Intuition</h2>
+<p>Comprime un ressort : plus tu appuies loin, plus il pousse fort. Pour un ressort usuel, tant qu'on ne le déforme pas trop, c'est même proportionnel : deux fois plus de compression, deux fois plus d'effort. Le nombre qui relie les deux, c'est la raideur. Un ressort raide demande beaucoup d'effort pour un petit déplacement.</p>
+<p>On choisit donc un ressort par sa raideur, pour obtenir l'effort voulu sur la course voulue.</p>
+
+<div id="fig-raideur"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>ressort</strong> est un élément mécanique déformable qui emmagasine de l'énergie lorsqu'il est sollicité et restitue un effort lorsqu'il reprend sa forme initiale. Il est utilisé notamment pour assurer un rappel, maintenir un contact, appliquer un effort ou absorber des chocs.</p>
+<p>Dans son domaine linéaire, un ressort obéit à :</p>
+\[ F = kx \qquad (2.4) \]
+<p>avec \(F\) la force du ressort (N), \(k\) la raideur (N/m ou N/mm) et \(x\) l'allongement ou la compression. C'est la même idée que la raideur d'un guidage, \(k = F/\delta\), au chapitre suivant.</p>
+<p>Le cours montre des ressorts cylindriques de compression (bases dressées) et de traction (crochets), décrits par le pas \(P\), le diamètre du fil \(d\), le diamètre \(D\) et la longueur \(L\), et deux applications : un vérin dont le piston est ramené par un ressort comprimé, et un ressort de soupape avec son jeu de soupape.</p>
+
+<div id="fig-applications"></div>
+
+<h2>Exemple du cours</h2>
+<p>Pour une variation de force \(\Delta F = 12\) N sur \(\Delta x = 12\) mm, la raideur requise est :</p>
+\[ k = \frac{\Delta F}{\Delta x} = \frac{12}{12} = 1 \text{ N/mm} \]
+
+<h2>Formules clés</h2>
+\[ F = kx \qquad k = \frac{\Delta F}{\Delta x} \]
+<p>Rappel, contact, effort, chocs : les quatre usages d'un ressort.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/ressorts.js"></script>
+</body>
+</html>

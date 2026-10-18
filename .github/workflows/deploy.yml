@@ -23,12 +23,14 @@ jobs:
         run: node tests/math.test.js
       - name: Vérification statique (équations, liens, pages)
         run: node tests/static-check.js
+      - name: Vérification statique de l'aperçu
+        run: node tests/static-check.js apercu
       - name: Assemblage du site
         run: |
           mkdir _site
-          cp -r index.html registre.js jouer.html cours.html concepts commun modules _site/
-          # ni les PDF de cours ni le modèle de module ne sont publiés
-          rm -rf _site/modules/*/sources _site/modules/_modele
+          cp -r index.html registre.js jouer.html cours.html concepts commun modules apercu _site/
+          # l'aperçu (apercu/) est publié à côté du site, sous /apercu/ ; ni les PDF de cours ni le modèle de module ne sont publiés
+          rm -rf _site/modules/*/sources _site/modules/_modele _site/apercu/modules/*/sources
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:

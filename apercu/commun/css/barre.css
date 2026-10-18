@@ -1,0 +1,14 @@
+/* Barre du site, commune à toutes les pages : retour au tableau de bord, module courant, onglets, action à droite. */
+.site-barre { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid #e3e6ee; }
+.site-barre-int { max-width: 1180px; margin: 0 auto; height: 72px; padding: 0 40px; display: flex; align-items: center; gap: 22px; }
+.site-marque { font: 800 20px "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; color: #15171f; text-decoration: none; white-space: nowrap; }
+.site-retour { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px 0 12px; border: 2px solid #15171f; border-radius: 12px; font: 600 15px Inter, sans-serif; color: #15171f; text-decoration: none; white-space: nowrap; }
+.site-retour::before { content: ""; width: 9px; height: 9px; border-left: 2.5px solid #15171f; border-bottom: 2.5px solid #15171f; transform: rotate(45deg); margin-right: 2px; }
+.site-module { display: inline-flex; align-items: center; gap: 10px; min-width: 0; font: 800 19px "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; color: #15171f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+a.site-module { text-decoration: none; }
+.site-module span { overflow: hidden; text-overflow: ellipsis; }
+.site-module i { flex: none; width: 14px; height: 14px; border-radius: 4px; background: var(--jeu, #D44C47); }
+.onglets { display: flex; gap: 6px; padding: 5px; background: #eef0f5; border-radius: 16px; flex: none; }
+.onglets a { display: inline-flex; align-items: center; height: 42px; padding: 0 22px; border-radius: 12px; font: 600 16px Inter, sans-serif; color: #5b6172; text-decoration: none; }
+.onglets a[aria-current="page"] { background: #15171f; color: #fff; box-shadow: 3px 3px 0 var(--jeu, #D44C47); }
+.site-barre .droite { margin-left: auto; display: flex; align-items: center; gap: 12px; }

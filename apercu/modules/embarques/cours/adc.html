@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>ADC (Analog to Digital Converter) · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>ADC (Analog to Digital Converter)</h1>
+<p class="chapeau">Un capteur de température, une électrode d'ECG, un capteur de pression donnent une tension qui varie en continu. Le programme, lui, ne manipule que des nombres. L'ADC fait le passage : il mesure la tension et rend un entier.</p>
+
+<h2>Intuition</h2>
+<p>Pense à une règle graduée posée le long de la plage 0 à 3,3 V. L'ADC regarde où tombe la tension et donne le numéro de la graduation. Avec 12 bits, la règle a 4096 graduations, de 0 à 4095 : chaque marche fait environ 0,8 mV. Avec moins de bits, les marches sont plus grosses, mais la mesure va plus vite.</p>
+<p>Pour trouver la graduation, un ADC SAR procède comme au jeu « plus grand, plus petit » : il compare d'abord la tension au milieu de la plage, garde la bonne moitié, recommence. Douze questions suffisent pour 12 bits.</p>
+
+<div id="fig-adc"></div>
+
+<h2>Formalisation</h2>
+<h3>Les ADC de l'ESP32</h3>
+<ul>
+<li>L'ESP32 intègre <strong>deux ADC SAR 12 bits</strong>. Ils sont gérés par cinq contrôleurs SAR ADC et peuvent mesurer des signaux sur 1 à <strong>18 pads analogiques</strong>.</li>
+<li>Deux ADC SAR, avec échantillonnage et conversion simultanés.</li>
+<li>Jusqu'à 18 pads d'entrée analogique.</li>
+<li>Résolution configurable : 12, 11, 10 ou 9 bits.</li>
+<li>Support du DMA (disponible sur un contrôleur).</li>
+<li>Plusieurs modes de balayage des canaux (disponibles sur deux contrôleurs).</li>
+<li>Fonctionnement pendant le Deep-sleep (disponible sur un contrôleur).</li>
+<li><strong>Note : les broches de l'ADC2 ne peuvent pas être utilisées quand le Wi-Fi est utilisé.</strong></li>
+</ul>
+<h3>La formule de conversion</h3>
+<p>Pour une résolution de 12 bits, plage [0 4095] :</p>
+\[ ADC\_OUT = 4095 \times \frac{ADC\_IN}{3{,}3\ \text{V}} \]
+<p>Plus généralement, avec \(n\) bits les codes vont de 0 à \(2^n - 1\) : 4095 pour 12 bits, 2047 pour 11, 1023 pour 10, 511 pour 9.</p>
+
+<h3>Les canaux</h3>
+<div id="fig-canaux"></div>
+<div class="tableau"><table>
+<tr><th>ADC1</th><th>ADC2</th></tr>
+<tr><td>ADC1_CH0 (GPIO 36), ADC1_CH1 (GPIO 37), ADC1_CH2 (GPIO 38), ADC1_CH3 (GPIO 39), ADC1_CH4 (GPIO 32), ADC1_CH5 (GPIO 33), ADC1_CH6 (GPIO 34), ADC1_CH7 (GPIO 35)</td><td>ADC2_CH0 (GPIO 4), ADC2_CH1 (GPIO 0), ADC2_CH2 (GPIO 2), ADC2_CH3 (GPIO 15), ADC2_CH4 (GPIO 13), ADC2_CH5 (GPIO 12), ADC2_CH6 (GPIO 14), ADC2_CH7 (GPIO 27), ADC2_CH8 (GPIO 25), ADC2_CH9 (GPIO 26)</td></tr>
+</table></div>
+<p>8 + 10 = 18 canaux : ce sont les 18 pads analogiques. GPIO 37 et 38 existent sur la puce mais ne sortent pas sur la carte DEV KIT V1.</p>
+
+<h3>Le principe SAR</h3>
+<p class="complement">Complément, pour comprendre le nom : SAR signifie <i>Successive Approximation Register</i>, registre à approximations successives.</p>
+<div id="fig-sar"></div>
+<p>Le convertisseur cherche les bits du MSB au LSB. À chaque étape, il compare la tension au milieu de l'intervalle encore possible : au-dessus, le bit vaut 1 et on garde la moitié haute ; en dessous, le bit vaut 0 et on garde la moitié basse. Après \(n\) comparaisons, les \(n\) bits sont connus.</p>
+
+<h3>Organisation interne</h3>
+<div id="fig-domaines"></div>
+<p>Les schémas du cours (<i>SAR ADC Depiction</i> et <i>SAR ADC Outline of Function</i>) répartissent l'ADC en trois domaines. Domaine analogique : les entrées, un amplificateur faible bruit (<i>Low Noise Amplifier</i>) devant SAR ADC1, et les deux convertisseurs SAR ADC1 et SAR ADC2. Domaine RTC : les contrôleurs RTC ADC1 et RTC ADC2. Domaine numérique : les contrôleurs DIG ADC1 et DIG ADC2, le DMA, et le contrôleur Power / Peak Detect (PWDET). Des multiplexeurs choisissent qui commande chaque convertisseur : SENS_SAR1_DIG_FORCE pour SAR ADC1 (0 : RTC ADC1 CTRL, 1 : DIG ADC1 CTRL), SENS_SAR2_DIG_FORCE pour SAR ADC2 (sur le schéma, 1 : RTC ADC2 CTRL, 0 : vers le domaine numérique), et APB_SARADC_SAR2_MUX (1 : DIG ADC2 CTRL, 0 : PWDET CTRL). Les entrées de SAR ADC1 sont pad_in[7:0] et le capteur à effet Hall (<i>hall sensor</i>) ; celles de SAR ADC2 sont pad_in[9:0], pa_pkdet1, pa_pkdet2 et vdd33.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un capteur de température donne 1,1 V sur GPIO 34 (ADC1_CH6), ADC en 12 bits :</p>
+\[ ADC\_OUT = 4095 \times \frac{1{,}1}{3{,}3} = 1365 \]
+<p>À l'inverse, si le programme lit 2730 : \(ADC\_IN = 2730 \times 3{,}3 / 4095 = 2{,}2\) V. Si l'appareil envoie ses mesures en Wi-Fi, le capteur doit rester sur l'ADC1 : sur GPIO 4 (ADC2_CH0), la mesure ne serait plus possible.</p>
+
+<h2>Formules clés</h2>
+\[ ADC\_OUT = 4095 \times \frac{ADC\_IN}{3{,}3\ \text{V}} \quad (12 \text{ bits}) \qquad \text{code max} = 2^n - 1 \qquad \text{ADC2 inutilisable avec le Wi-Fi} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/adc.js"></script>
+</body>
+</html>

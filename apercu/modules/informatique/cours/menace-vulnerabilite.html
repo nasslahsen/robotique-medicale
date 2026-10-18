@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Menace, vulnérabilité, attaque · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Menace, vulnérabilité, attaque</h1>
+<p class="chapeau">Un groupe de rançongiciel vise les hôpitaux ; le serveur du PACS tourne sous un Windows non corrigé. Le premier est une menace, le second une vulnérabilité. Quand ils se rencontrent, c'est une attaque.</p>
+<h2>Le chapitre en bref</h2>
+<p>Ce chapitre donne le vocabulaire qui permet de parler de sécurité avec précision : <b>menace</b>, <b>vulnérabilité</b>, <b>attaque</b> ; la <b>surface d'attaque</b> (physique, numérique, humaine) ; le <b>cycle de vie d'une attaque</b> (cyber kill chain) ; le <b>risque</b>, qui combine probabilité et impact ; l'<b>incident</b> de sécurité et ses conséquences ; le <b>SPOF</b>, maillon unique dont la panne arrête tout. Ce sont les mots d'une analyse de risque.</p>
+
+<h2>Intuition</h2>
+<p>La menace vient de l'extérieur du bien : quelqu'un ou quelque chose qui pourrait causer un dommage. La vulnérabilité est dans le bien : une faiblesse. L'attaque, c'est la menace qui passe par la faiblesse. Sur la figure, elle traverse chaque anneau par une de ses ouvertures.</p>
+<div id="fig-attaque"></div>
+
+<h2>Formalisation</h2>
+<p><b>Menace</b> : cause potentielle d'un incident ou origine d'un événement qui pourrait entraîner des dommages sur un bien ou un actif informationnel, si cette menace se concrétisait. Elle peut être <b>délibérée</b> (personnes extérieures malveillantes, stagiaire malintentionné) ou <b>accidentelle</b> (perte de service). Exemples du cours : menace de ransomware ; menace de divulgation non autorisée des informations suite à l'accès à un site web ; sabotage, incendie volontaire, vol des biens supports.</p>
+<p><b>Vulnérabilité</b> : faiblesse au niveau d'un bien (relative à la conception, à la réalisation, à l'installation, à la configuration ou à l'utilisation du bien). Exemples : OS non patché, mot de passe faible.</p>
+<p><b>Attaque</b> : action malveillante destinée à porter atteinte à la sécurité d'un bien. Une attaque représente la concrétisation d'une menace, et nécessite l'exploitation d'une vulnérabilité.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Le micrologiciel d'un échographe n'est pas à jour depuis 2019 : vulnérabilité. Un groupe criminel cherche des appareils de ce modèle sur Internet : menace délibérée. S'il exploite la faille pour entrer : attaque. Sans faille exploitable, la menace reste une menace.</p>
+
+<h2>Formules clés</h2>
+<p>Attaque = menace qui se concrétise + exploitation d'une vulnérabilité.</p>
+<p>Menace : délibérée ou accidentelle. Vulnérabilité : conception, réalisation, installation, configuration, utilisation.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/menace-vulnerabilite.js"></script>
+</body>
+</html>

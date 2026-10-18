@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Masse volumique et mélanges · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Masse volumique et mélanges</h1>
+<p class="chapeau">Une tige de prothèse en titane, une mousse de PVC, un polymère à moitié cristallin : pour comparer leurs masses, le cours se sert de la masse volumique et de sa moyenne pondérée par les volumes.</p>
+
+<h2>Intuition</h2>
+<p>Deux objets de même volume n'ont pas la même masse : le titane est plus lourd que le PVC. La masse volumique dit combien pèse un centimètre cube. Quand un matériau mélange deux phases, chaque centimètre cube est fait en partie de l'une, en partie de l'autre : la phase qui occupe le plus de place pèse le plus dans le résultat.</p>
+
+<div id="fig-melange"></div>
+
+<h2>Formalisation</h2>
+
+<p>La <strong>masse volumique</strong> est \(\rho = m/V\), en g/cm³ ; le cours l'appelle souvent « densité » et la donne dans cette unité. Pour un matériau fait de deux phases qui occupent les fractions de volume \(v_1\) et \(v_2 = 1 - v_1\), la masse volumique est la moyenne pondérée par les volumes : \(\rho = \rho_1 v_1 + \rho_2 v_2\). Ce n'est pas la moyenne simple \((\rho_1 + \rho_2)/2\), sauf si les deux phases occupent autant de volume.</p>
+
+
+<h2>Exemple</h2>
+<p>Mélange : une plaque de 10 cm × 10 cm × 0,1 cm (TD 1.1) a un volume de 10 cm³ ; si elle pèse 11 g, \(\rho = 1{,}1\) g/cm³, ce qui correspond à moitié de phase à 1,0 et moitié de phase à 1,2 g/cm³ : \(0{,}5 \times 1{,}0 + 0{,}5 \times 1{,}2 = 1{,}1\).</p>
+
+
+<p class="complement">Exemple ajouté, avec la valeur du tableau du cours.</p>
+<p>Une plaque d'ostéosynthèse en Ti-6Al-4V (\(\rho = 4{,}43\) g/cm³) occupe 2 cm³ : \(m = \rho V = 4{,}43 \times 2 \approx 8{,}9\) g.</p>
+<p>À masse fixe, \(\rho = M/V\) ne peut baisser que si le volume augmente : c'est le raisonnement du corrigé du TD 1.5 sur le PVC. Pour diviser la masse volumique par 2, il faut un volume deux fois plus grand.</p>
+
+<h2>Formules clés</h2>
+<p>\[\rho = \frac{m}{V} \qquad \rho = \rho_1 v_1 + \rho_2 v_2 \quad (v_1 + v_2 = 1)\]</p>
+<p>Au chapitre 3 : \(\rho = \rho_c X + \rho_a (1 - X)\).</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/masse-volumique.js"></script>
+</body>
+</html>

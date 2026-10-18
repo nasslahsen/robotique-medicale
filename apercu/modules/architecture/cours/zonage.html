@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Gradation des zones · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Gradation des zones</h1>
+<p class="chapeau">Entre la rue et la table d'opération, on ne passe pas d'un coup : on traverse des zones de plus en plus propres, de plus en plus contrôlées.</p>
+<h2>Le chapitre en bref</h2>
+<p>Ce chapitre organise le bloc dans l'espace. D'abord les <b>zones</b>, graduées du public au restreint ; puis les <b>flux</b> qui les traversent (patient, personnel, propre, sale, dispositifs médicaux) ; puis la règle qui les gouverne, la <b>séparation du propre et du sale</b>, appliquée aux déchets et au stockage ; enfin les <b>liens du bloc avec la SSPI, la réanimation et l'imagerie</b>. Zones et flux vont ensemble : un flux maîtrisé passe d'une zone à la suivante sans brûler d'étape et sans croiser ce qu'il ne doit pas croiser.</p>
+
+<h2>Intuition</h2>
+<p>Imagine trois cercles concentriques autour de la table d'opération. Le cercle extérieur est ouvert à tous : accueil, attente, circulation générale. Le cercle du milieu est réservé au personnel en tenue et aux patients pris en charge : circulation du personnel, transfert, préparation, stockage. Le cercle intérieur est réservé à l'intervention : les salles d'opération et ce qui les touche directement. À chaque passage d'un cercle à l'autre, la propreté augmente et l'accès est plus contrôlé.</p>
+
+<div id="fig-zones"></div>
+
+<h2>Formalisation</h2>
+<p>Un principe fondamental est la <strong>gradation des niveaux de propreté et de contrôle des accès</strong>. On peut distinguer :</p>
+<div class="tableau"><table>
+<tr><th>Zone publique</th><th>Zone semi-restreinte</th><th>Zone restreinte</th></tr>
+<tr><td>accueil ; attente ; circulation générale</td><td>circulation du personnel ; transfert des patients ; locaux de préparation ; stockage</td><td>salles d'opération ; certaines zones de préparation stérile ; espaces directement associés à l'intervention</td></tr>
+</table></div>
+<p>Le <b>FGI</b> (Facility Guidelines Institute) classe notamment la salle d'opération comme une zone restreinte <b>accessible depuis une zone semi-restreinte</b>, et exige des surfaces adaptées au nettoyage et à la désinfection.</p>
+
+<h3>Schéma fonctionnel général</h3>
+<p>Les patients passent par la préparation, le personnel par les vestiaires ; les deux rejoignent la zone semi-restreinte puis la zone restreinte, où se trouvent les salles. Après l'intervention : réveil (SSPI), puis hospitalisation ou réanimation. La logistique suit son propre chemin : réception, puis stockage propre.</p>
+
+<div id="fig-schema"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un brancardier vient chercher un patient au service d'hospitalisation. Il pousse le brancard dans la circulation générale (publique), le confie au transfert des patients (semi-restreinte) ; l'équipe du bloc l'amène en salle (restreinte). Le brancardier en tenue de ville ne franchit pas la porte de la salle : le contrôle des accès augmente avec la propreté.</p>
+
+<h2>Formules clés</h2>
+<p>Publique → semi-restreinte → restreinte : la propreté et le contrôle des accès augmentent.</p>
+<p>Salle d'opération = zone restreinte, accessible depuis une zone semi-restreinte (FGI).</p>
+<p>Patients : préparation ; personnel : vestiaires ; puis zone semi-restreinte → zone restreinte → salles → SSPI → hospitalisation ou réanimation. Logistique : réception → stockage propre.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/zonage.js"></script>
+</body>
+</html>

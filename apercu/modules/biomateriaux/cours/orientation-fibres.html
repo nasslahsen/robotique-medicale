@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Orientation des fibres · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Orientation des fibres</h1>
+<p class="chapeau">Dans un tissu ou un mat, toutes les fibres ne sont pas alignées avec la charge. Une fibre à 90° ne porte presque rien, une fibre à 45° en porte un peu. La loi des mélanges doit en tenir compte.</p>
+
+<h2>Intuition</h2>
+<p>Une fibre inclinée d'un angle θ par rapport à la charge travaille moins qu'une fibre alignée : elle est à la fois moins étirée et moins efficace pour reprendre l'effort, et les deux effets se multiplient. Le cours compte la contribution de chaque famille de fibres par \(\cos^4\theta\) : 1 à 0°, 0,25 à 45°, 0 à 90°. On fait la moyenne sur toutes les fibres, et on obtient le coefficient d'orientation \(K_o\), entre 0 et 1.</p>
+
+<div id="fig-ko"></div>
+
+<h2>Formalisation</h2>
+<p>Quand les fibres ne sont pas toutes alignées dans la même direction, on utilise une équation modifiée pour estimer \(E_{CL}\) :</p>
+<p>\[E_{CL} = K_o\,E_f\,\phi_f + E_m\,\phi_m \qquad K_o = \sum a_n\,(\cos\theta_n)^4\]</p>
+<p>où \(K_o\) est le <strong>coefficient d'orientation</strong>, \(a_n\) la part des fibres orientées à l'angle \(\theta_n\) de la charge (\(\sum a_n = 1\)). Valeurs données par le cours :</p>
+<div class="tableau"><table>
+<tr><th>Orientation des fibres</th><th>\(K_o\)</th><th>Calcul</th></tr>
+<tr><td>toutes dans la direction de la charge</td><td>1</td><td>\(1 \times \cos^4 0° = 1\)</td></tr>
+<tr><td>toutes perpendiculaires à la charge</td><td>0</td><td>\(\cos^4 90° = 0\)</td></tr>
+<tr><td>moitié à 0°, moitié à 90°</td><td>0,5</td><td>\(0{,}5 \times 1 + 0{,}5 \times 0\)</td></tr>
+<tr><td>moitié à +45°, moitié à −45°</td><td>0,25</td><td>\(\cos^4 45° = (0{,}5)^2\)</td></tr>
+<tr><td>un quart à 0°, 90°, +45°, −45°</td><td>0,375</td><td>\(0{,}25\,(1 + 0 + 0{,}25 + 0{,}25)\)</td></tr>
+<tr><td>orientation aléatoire dans le plan de la feuille</td><td>0,375</td><td>valeur de la diapo, la même que pour le stratifié à quatre directions</td></tr>
+</table></div>
+<p>Le cas aléatoire est celui d'un mat ; le croisé 0/90 est celui d'un tissu équilibré.</p>
+
+<div id="fig-stratifie-ko"></div>
+
+<h2>Exemple</h2>
+<p>Avec le verre et la résine de l'exemple du cours (\(E_f = 70\) GPa, \(E_m = 3\) GPa, \(\phi_f = 0{,}4\)) :</p>
+<ul>
+<li>fibres alignées, \(K_o = 1\) : \(E_{CL} = 28 + 1{,}8 = 29{,}8\) GPa ;</li>
+<li>tissu 0/90, \(K_o = 0{,}5\) : \(E_{CL} = 14 + 1{,}8 = 15{,}8\) GPa ;</li>
+<li>mat aléatoire, \(K_o = 0{,}375\) : \(E_{CL} = 10{,}5 + 1{,}8 = 12{,}3\) GPa.</li>
+</ul>
+<p>Exemple ajouté : une lame de prothèse de course en carbone-époxy (\(E_f = 230\) GPa, \(E_m = 3{,}5\) GPa, \(\phi_f = 0{,}6\)) avec 70 % de plis à 0°, 10 % à +45°, 10 % à −45° et 10 % à 90° a \(K_o = 0{,}7 + 0{,}1 \times 0{,}25 \times 2 = 0{,}75\) et \(E_{CL} = 0{,}75 \times 230 \times 0{,}6 + 3{,}5 \times 0{,}4 = 104{,}9\) GPa dans sa longueur, presque le module du titane pour une masse volumique trois fois plus faible.</p>
+
+<h2>Formules clés</h2>
+<p>\[E_{CL} = K_o\,E_f\,\phi_f + E_m\,\phi_m \qquad K_o = \sum a_n\,(\cos\theta_n)^4\]</p>
+<p>\(K_o\) : 1 (alignées), 0 (perpendiculaires), 0,5 (0/90), 0,25 (±45), 0,375 (0/90/±45 et aléatoire dans le plan).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/orientation-fibres.js"></script>
+</body>
+</html>

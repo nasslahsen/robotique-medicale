@@ -4,7 +4,9 @@
 "use strict";
 const fs = require("fs"), path = require("path"), vm = require("vm");
 const katex = require("../commun/vendor/katex/katex.min.js");
-const racine = path.join(__dirname, "..");
+// racine vérifiée : le dépôt, ou un dossier passé en argument (aperçu : node tests/static-check.js apercu)
+const racine = process.argv[2] ? path.resolve(process.argv[2]) : path.join(__dirname, "..");
+const APERCU = !!process.argv[2];
 let erreurs = 0, nbMaths = 0, nbPages = 0, nbNiveaux = 0;
 const err = (m) => { erreurs++; console.error("ERREUR", m); };
 const lire = (p) => fs.readFileSync(path.join(racine, p), "utf8");
@@ -95,11 +97,32 @@ for (const id of modules) {
     verifierLiens(f, html); verifierMaths(f, html, false); verifierEcriture(f, html);
     if (!html.includes(`data-module="${id}"`)) err(`${f} : <html data-module="${id}"> manquant`);
   }
+  // liens « Revoir dans le cours » (liens-cours.js) : page existante, section existante (même calcul d'ancre que PLATEFORME.ancre)
+  if (existe(d + "/liens-cours.js")) {
+    const lb = { window: {} }; vm.createContext(lb); vm.runInContext(lire(d + "/liens-cours.js"), lb);
+    const ancre = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "section";
+    const ancres = {};
+    for (const [nid, etapes] of Object.entries(lb.window.LIENS_COURS || {})) {
+      if (!P.niveaux.some(n => n.id === nid)) err(`${d}/liens-cours.js : niveau inconnu ${nid}`);
+      for (const e of etapes) {
+        if (!e) continue;
+        const f = `${d}/cours/${e[0]}.html`;
+        if (!existe(f)) { err(`${d}/liens-cours.js : page absente ${e[0]}`); continue; }
+        if (!ancres[f]) {
+          const vus = {};
+          ancres[f] = [...lire(f).matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)].map(m => {
+            const a = ancre(m[1].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\\\(|\\\)/g, "").trim()); vus[a] = (vus[a] || 0) + 1; return vus[a] > 1 ? a + "-" + vus[a] : a;
+          });
+        }
+        if (e[1] && !ancres[f].includes(e[1].split("~")[0])) err(`${d}/liens-cours.js : ${nid}, section « ${e[1]} » absente de ${e[0]}.html`);
+      }
+    }
+  }
   for (const f of liste(d + "/figures", /\.js$/)) { verifierEcriture(f, lire(f)); verifierMaths(f, lire(f), true); }
 }
 
 // Racine : tableau de bord, anciennes adresses, socle commun
-for (const f of ["index.html", "jouer.html", "cours.html"].concat(liste("concepts", /\.html$/))) {
+for (const f of (APERCU ? ["index.html"] : ["index.html", "jouer.html", "cours.html"]).concat(liste("concepts", /\.html$/))) {
   if (!existe(f)) { err(`${f} manquant`); continue; }
   const html = lire(f); nbPages++;
   verifierLiens(f, html); verifierEcriture(f, html);

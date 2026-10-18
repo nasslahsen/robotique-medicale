@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Algorithmes d'appariement et Golden Record · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Algorithmes d'appariement et Golden Record</h1>
+<p class="chapeau">« BENJELLOUN » et « BENJELLOUNE », même prénom, même date de naissance, même CIN : une règle stricte dit « deux patients », un score dit « presque sûrement le même ».</p>
+<h2>Intuition</h2>
+<p>Une règle stricte compare des champs identiques : une seule faute de frappe et elle échoue. Une méthode probabiliste note la ressemblance de chaque champ, donne plus de poids aux champs importants, et décide selon le score global : match, revue par un humain, ou pas de match.</p>
+<div id="fig-score"></div>
+
+<h2>Formalisation</h2>
+<p><b>Appariement déterministe</b> (règles strictes). Règle : si (NOM + PRÉNOM + DATE_DE_NAISSANCE) sont identiques → même patient. Exemple du cours : A = BENJELLOUN / AHMED / 15/03/1978 et B identique → MATCH (score = 100 %) ; C = BENJELLOUNE / AHMED / 15/03/1978 → PAS DE MATCH (faute de frappe).</p>
+<p><b>Appariement probabiliste</b> (Fellegi-Sunter...) : calcule un score de similarité pour chaque champ et pondère l'importance de chaque correspondance. Dans l'exemple du cours, le nom vaut 0,85, les autres champs (prénom, date de naissance, sexe, téléphone, CIN) 100 % ; score global pondéré : 0,95. (La diapositive écrit « 0,85 % » et « 0,95 % » : il s'agit de 0,85 et 0,95.)</p>
+<p class="complement">Poids ajoutés pour le calcul.</p>
+<p>Le cours ne donne pas les poids. Avec des poids \(w_i\) et des scores partiels \(s_i\) :</p>
+<p>\[ S = \frac{\sum_i w_i\, s_i}{\sum_i w_i} \]</p>
+<p>Avec les poids de la figure (nom 8, prénom 3, naissance 4, sexe 1, téléphone 2, CIN 6), l'exemple du cours redonne bien \(S = (0{,}85 \times 8 + 16) / 24 = 0{,}95\).</p>
+<div class="tableau"><table>
+<tr><th>Seuils de décision (cours)</th><th>Décision</th></tr>
+<tr><td>score &gt; 0,90</td><td>MATCH automatique</td></tr>
+<tr><td>0,70 &lt; score &lt; 0,90</td><td>REVUE MANUELLE (l'agent d'admission vérifie)</td></tr>
+<tr><td>score &lt; 0,70</td><td>PAS DE MATCH</td></tr>
+</table></div>
+<p>Le <b>Golden Record</b> (ou « fiche pivot ») est la version unique et consolidée des données d'un patient, issue de la fusion des doublons détectés.</p>
+<p><b>Pipeline de qualité des données patient</b> : 1. capture (saisie libre à l'admission) → 2. normalisation (majuscules, suppression des accents, format standard du numéro) → 3. contrôle (date de naissance cohérente ? téléphone valide ? CIN valide (clé) ?) → 4. appariement MPI (comparaison avec la base existante, score probabiliste, décision auto / manuelle). Issues : doublon détecté → fusion (Golden Record) ; nouveau patient → création (Golden Record) ; revue manuelle → l'opérateur décide.</p>
+<div id="fig-pipeline"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Tout est identique sauf la CIN (score partiel 0) : \(S = 18 / 24 = 0{,}75\), revue manuelle. Le nom est encore plus mal saisi : dès que son score partiel tombe à 0,70, \(S = 0{,}90\) n'est plus strictement au-dessus du seuil, et l'appariement n'est plus automatique.</p>
+
+<h2>Formules clés</h2>
+<p>Déterministe : NOM + PRÉNOM + DATE_DE_NAISSANCE identiques.</p>
+<p>\[ S = \frac{\sum w_i s_i}{\sum w_i} \quad ; \quad S &gt; 0{,}90 \Rightarrow \text{match},\ 0{,}70 &lt; S &lt; 0{,}90 \Rightarrow \text{revue},\ S &lt; 0{,}70 \Rightarrow \text{pas de match} \]</p>
+<p>Capture → normalisation → contrôle → appariement (MPI) → fusion, création ou revue.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/appariement.js"></script>
+</body>
+</html>

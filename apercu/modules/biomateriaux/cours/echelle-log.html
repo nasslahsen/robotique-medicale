@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Modules et échelle logarithmique · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Modules et échelle logarithmique</h1>
+<p class="chapeau">Un élastomère a un module d'environ 1 MPa, l'acier 207 GPa : cent mille fois plus. Sur un axe ordinaire, le caoutchouc serait collé à zéro. Le cours trace donc \(\log E\).</p>
+
+<h2>Intuition</h2>
+<p>Sur une échelle logarithmique, ce ne sont pas les écarts qui comptent mais les rapports : chaque graduation multiplie la valeur par 10. Monter d'une graduation, c'est être dix fois plus rigide ; de trois graduations, mille fois.</p>
+
+<div id="fig-log"></div>
+
+<h2>Formalisation</h2>
+
+<p>Les modules des matériaux du cours couvrent plusieurs puissances de 10 : environ 1 MPa pour un élastomère, 0,001 à 3 GPa pour les polymères (valeurs extrêmes 0 à 100 GPa), 110 GPa pour le Ti-6Al-4V, 207 GPa pour l'acier, 200 GPa pour la zircone. Sur un axe ordinaire, le caoutchouc serait collé à zéro. On trace donc \(\log E\) : 1 MPa = \(10^6\) Pa donne 6, 1 GPa = \(10^9\) Pa donne 9. Une différence de log est un rapport : \(\log E_1 - \log E_2 = \log(E_1/E_2)\). Une chute de 9 à 6, comme au passage de \(T_g\), divise le module par 1 000.</p>
+
+
+<div class="tableau"><table>
+<tr><th>Module</th><th>En pascals</th><th>\(\log E\)</th></tr>
+<tr><td>1 MPa</td><td>\(10^6\) Pa</td><td>6</td></tr>
+<tr><td>1 GPa</td><td>\(10^9\) Pa</td><td>9</td></tr>
+<tr><td>100 GPa</td><td>\(10^{11}\) Pa</td><td>11</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\log E = 8\) donne \(E = 10^8\) Pa = 100 MPa. \(\log E = 9{,}3\) donne \(E = 10^{9{,}3} \approx 2 \times 10^9\) Pa, soit environ 2 GPa. Si \(\log E\) tombe de 9,5 à 7,5, la différence vaut 2 : le module est divisé par \(10^2 = 100\). C'est ainsi qu'on lit les courbes \(\log E_r(T)\) du cours et le corrigé du TD 1.1.</p>
+
+<h2>Formules clés</h2>
+<p>\[1\ \text{MPa} = 10^6\ \text{Pa} \qquad 1\ \text{GPa} = 10^9\ \text{Pa} \qquad \log E_1 - \log E_2 = \log\frac{E_1}{E_2}\]</p>
+<p>Une unité de \(\log E\) en plus : module multiplié par 10 (une décade).</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/echelle-log.js"></script>
+</body>
+</html>

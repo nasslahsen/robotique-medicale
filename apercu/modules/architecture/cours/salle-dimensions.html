@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Salle d'opération : surface, dimensions, volume · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Salle d'opération : surface, dimensions, volume</h1>
+<p class="chapeau">Une salle calculée autour de la seule table est trop petite dès que l'équipe, les appareils et le technicien arrivent. Et une salle bien calculée au sol peut manquer de place au-dessus du plafond.</p>
+<h2>Le chapitre en bref</h2>
+<p>On entre maintenant dans la salle d'opération elle-même. Sa <b>surface</b> et son <b>volume</b> d'abord, qui dépendent de ce qu'on y fait ; puis ses <b>parois</b> (sols, murs, plafond, portes), qui doivent se nettoyer et tenir ; le <b>bloc hybride</b>, cas extrême où l'imagerie entre en salle avec sa protection radiologique ; enfin l'<b>ergonomie</b> et l'<b>acoustique</b>, qui font qu'une équipe y travaille bien pendant des heures. Le fil rouge : la salle se dimensionne pour ce qui s'y passe vraiment, pas pour la table.</p>
+
+<h2>Intuition</h2>
+<p>Autour du patient, il faut une équipe qui circule, des appareils posés ou suspendus, un accès libre aux équipements de secours, de la place pour le technicien et pour le nettoyage. La table ne représente qu'une petite partie de la surface nécessaire. Et au-dessus du plafond, il faut loger les gaines de ventilation, les câbles, les réseaux médicaux, les supports des bras : c'est le volume caché de la salle.</p>
+
+<div id="fig-surface"></div>
+
+<h2>Formalisation</h2>
+<p>Une salle d'opération doit permettre : l'installation de la table opératoire ; la circulation de l'équipe ; l'installation des équipements ; l'accès du patient ; l'accès aux équipements de secours ; l'utilisation des bras plafonniers ; la maintenance des équipements ; le nettoyage et la désinfection. La surface ne doit donc pas être déterminée uniquement par la taille de la table. Elle doit prendre en compte :</p>
+<p style="font-size:20px;font-weight:600">patient + équipe + équipements + circulation + maintenance + sécurité.</p>
+<h3>Dimensions et surfaces</h3>
+<p>Il n'existe pas une valeur universelle applicable à tous les blocs. La surface dépend notamment : du type de chirurgie ; du nombre d'opérateurs ; du nombre d'équipements ; de la présence d'imagerie ; de l'utilisation d'un microscope ; de la chirurgie robotique ; du type d'anesthésie ; des besoins de transfert.</p>
+<p>Pour une <b>salle hybride</b>, le FGI 2022 indique notamment une <b>surface libre minimale de 55,74 m²</b>, avec une <b>dimension libre minimale de 6,10 m</b>, dans les conditions prévues par son référentiel. Une salle hybride ne doit donc pas être dimensionnée comme une salle opératoire conventionnelle. (55,74 m² et 6,10 m correspondent à 600 pieds carrés et 20 pieds.)</p>
+<h3>Hauteur et volume</h3>
+<p>Le volume disponible est important pour : la ventilation ; les plafonds techniques ; les bras plafonniers ; les scialytiques ; les réseaux médicaux ; les chemins de câbles ; les équipements d'imagerie. Il faut prévoir suffisamment d'espace technique <b>au-dessus du plafond</b>. Erreur fréquente : dimensionner uniquement la salle visible, sans dimensionner le volume technique nécessaire à son fonctionnement.</p>
+
+<div id="fig-volume"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Une salle hybride de 9,20 m × 6,10 m a une surface libre \(S = 9{,}20 \times 6{,}10 = 56{,}12\) m². Elle dépasse 55,74 m² et sa plus petite dimension vaut 6,10 m : elle respecte les deux conditions. Une salle de 5,50 m × 11,00 m fait 60,50 m², mais sa largeur de 5,50 m est sous 6,10 m : elle ne convient pas.</p>
+
+<h2>Formules clés</h2>
+\[ S = L \times \ell \qquad \text{salle hybride (FGI 2022) : } S \ge 55{,}74\ \text{m}^2 \ \text{et} \ \min(L, \ell) \ge 6{,}10\ \text{m} \]
+<p>Surface = patient + équipe + équipements + circulation + maintenance + sécurité ; pas de valeur universelle.</p>
+<p>Volume : salle visible + espace technique au-dessus du plafond.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/salle-dimensions.js"></script>
+</body>
+</html>

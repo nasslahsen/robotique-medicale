@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>ESP32 et nomenclature des puces · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>ESP32 et nomenclature des puces</h1>
+<p class="chapeau">Un thermomètre qui envoie ses mesures en Wi-Fi, un patch ECG relié en Bluetooth à un téléphone : il faut un microcontrôleur qui sache mesurer, calculer et communiquer sans fil. L'ESP32 fait tout cela dans une seule puce. Encore faut-il choisir la bonne version, et pour cela savoir lire son nom.</p>
+
+<h2>Le chapitre en bref</h2>
+<p>La Section III du cours passe de la théorie à une puce réelle. Son plan : caractéristiques, architecture, GPIO et interruptions, conversion de signaux (ADC et DAC), timer et PWM, bus de communication I2C et SPI. Ce chapitre couvre les deux premiers points : ce qu'est l'ESP32 et comment lire sa référence (cette page), la carte de développement DEV KIT V1 et son brochage, l'architecture en blocs et les spécifications, les deux cœurs avec le DMA et le plan d'adressage, puis les domaines d'alimentation. Le chapitre 5 programme ensuite ses périphériques, un par un.</p>
+<p>Tout ce qui a été vu avant se retrouve ici : un système embarqué dédié (chapitre 1), des cœurs d'architecture Harvard avec cache et MMU (chapitre 2), des bus UART, SPI et I2C (chapitre 3).</p>
+
+<h2>Intuition</h2>
+<p>Une même famille de puces se décline en plusieurs versions : un ou deux cœurs, avec ou sans mémoire flash dans le boîtier, avec ou sans PSRAM, boîtier plus ou moins grand. Plutôt que d'inventer un nom par version, le fabricant colle des codes les uns aux autres, comme une plaque d'immatriculation : chaque lettre ou chiffre répond à une question précise. Lire le nom, c'est répondre à ces questions sans ouvrir la fiche technique.</p>
+
+<div id="fig-nomenclature"></div>
+
+<h2>Formalisation</h2>
+<h3>L'ESP32</h3>
+<p><strong>ESP32</strong> : <i>a feature-rich MCU with integrated Wi-Fi and Bluetooth connectivity for a wide-range of applications</i>, conçu par Espressif. Il fonctionne de façon fiable en milieu industriel, avec une température de fonctionnement de −40 °C à +125 °C.</p>
+<p><strong>ESP-IDF</strong> : l'<i>IoT Development Framework</i> officiel d'Espressif, pour les séries de SoC ESP32, ESP32-S, ESP32-C et ESP32-H. La puce est vendue seule ou dans des modules prêts à souder, comme l'ESP32-S2-WROOM et l'ESP32-S2-WROVER (puce, mémoire, quartz et antenne sous un capot métallique).</p>
+
+<div id="fig-plage"></div>
+
+<h3>Nomenclature</h3>
+<p>Exemple de la diapositive : ESP32 D 0 WD R2 H Q6 V3.</p>
+<div class="tableau"><table>
+<tr><th>Champ</th><th>Exemple</th><th>Signification</th></tr>
+<tr><td>Série (<i>Chip Series</i>)</td><td>ESP32</td><td>la famille de la puce</td></tr>
+<tr><td>Cœur (<i>Core</i>)</td><td>D</td><td>D ou U : <i>dual core</i> ; S : <i>single core</i></td></tr>
+<tr><td>Flash intégrée (<i>In-package flash</i>)</td><td>0</td><td>0 : pas de flash dans le boîtier ; 2 : 2 MB ; 4 : 4 MB</td></tr>
+<tr><td>Connexion (<i>Connection</i>)</td><td>WD</td><td>Wi-Fi b/g/n + Bluetooth/Bluetooth LE <i>dual mode</i></td></tr>
+<tr><td>PSRAM intégrée (<i>In-package PSRAM</i>)</td><td>R2</td><td>2 MB de PSRAM</td></tr>
+<tr><td>Température</td><td>H</td><td><i>High temperature</i>, haute température</td></tr>
+<tr><td>Boîtier (<i>Package</i>)</td><td>Q6</td><td>Q6 : QFN 6*6 ; rien : QFN 5*5</td></tr>
+<tr><td>Révision (<i>Chip revision</i>)</td><td>V3</td><td>révision v3.0 ou plus récente</td></tr>
+</table></div>
+<h3>Les références de la série</h3>
+<div class="tableau"><table>
+<tr><th>Part Number</th><th>Core</th><th>Chip Revision</th><th>In-Package Flash/PSRAM</th><th>Package</th><th>VDD_SDIO</th></tr>
+<tr><td>ESP32-D0WD-V3</td><td>Dual core</td><td>v3.0/v3.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WDR2-V3 (EOL), remplacée par ESP32-D0WDRH2-V3</td><td>Dual core</td><td>v3.0/v3.1</td><td>2 MB PSRAM</td><td>QFN 5*5</td><td>3,3 V</td></tr>
+<tr><td>ESP32-U4WDH</td><td>Dual core</td><td>v3.0/v3.1</td><td>4 MB flash</td><td>QFN 5*5</td><td>3,3 V</td></tr>
+<tr><td>ESP32-D0WDQ6-V3 (NRND)</td><td>Dual core</td><td>v3.0/v3.1</td><td>aucune</td><td>QFN 6*6</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WD (NRND)</td><td>Dual core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WDQ6 (NRND)</td><td>Dual core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 6*6</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-S0WD (NRND)</td><td>Single core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+</table></div>
+<p class="complement">Sigles usuels de la fiche : EOL (<i>End Of Life</i>) veut dire que la puce n'est plus fabriquée ; NRND (<i>Not Recommended for New Designs</i>), qu'elle est déconseillée pour un nouveau produit. VDD_SDIO est une des tensions d'alimentation, vue à la page « Power Supply ».</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Un patch ECG Bluetooth doit garder plusieurs secondes de signal en mémoire : il lui faut de la PSRAM dans le boîtier. Dans le tableau, seule la ligne ESP32-D0WDR2-V3 a 2 MB de PSRAM, et elle est en fin de vie : on prend sa remplaçante, l'ESP32-D0WDRH2-V3. Son nom se lit D (deux cœurs), 0 (pas de flash dans le boîtier), WD (Wi-Fi et Bluetooth), R2 (2 MB de PSRAM), H (haute température), pas de Q6 (boîtier QFN 5*5), V3 (révision v3.0 ou plus). Dans ce nom réel, le H est glissé entre le R et le 2.</p>
+<p>À l'inverse, un glucomètre qui doit garder son programme dans le boîtier demande de la flash intégrée : ESP32-U4WDH, U (deux cœurs), 4 (4 MB de flash), WD, H.</p>
+
+<h2>Formules clés</h2>
+<p>ESP32 = MCU + Wi-Fi + Bluetooth, de −40 °C à +125 °C, programmé avec ESP-IDF. Nom : série, cœur (D/U dual, S single), flash (0, 2, 4 MB), connexion (WD), PSRAM (R2), H, boîtier (Q6 = QFN 6*6, sinon QFN 5*5), révision (V3).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/esp32.js"></script>
+</body>
+</html>

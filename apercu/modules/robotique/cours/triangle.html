@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le triangle rectangle · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le triangle rectangle</h1>
+<p class="chapeau">Un bras de 0,5 m monte de 30° : de combien avance-t-il, de combien monte-t-il ? Et dans l'autre sens, connaissant le point à atteindre, quelle longueur et quel angle donner au bras ?</p>
+
+<h2>Intuition</h2>
+<p>Le bras, sa projection au sol et la verticale qui tombe de son bout forment un triangle rectangle. Le bras en est l'hypoténuse. Le côté collé à l'angle dit de combien on avance, le côté d'en face de combien on monte. Ce sont les ombres du cercle, multipliées par la longueur du bras.</p>
+
+<div id="fig-triangle"></div>
+
+<h2>Formalisation</h2>
+<p>Pour un bras de longueur \(L\) incliné de \(\theta\) :</p>
+\[ \text{adjacent} = L\cos\theta \qquad \text{opposé} = L\sin\theta \]
+<p>Moyen de s'en souvenir : le cosinus va avec le côté collé à l'angle, le sinus avec le côté d'en face.</p>
+<p>Dans l'autre sens, on connaît les deux côtés \(x\) et \(y\), et on retrouve le reste : la longueur avec Pythagore, l'angle avec la tangente (opposé sur adjacent) :</p>
+\[ L = \sqrt{x^2 + y^2} \qquad \tan\theta = \frac{y}{x} \]
+<p>Ces deux passages, de \((L, \theta)\) vers \((x, y)\) et retour, reviennent tout le temps en robotique : un bras connaît ses angles, la tâche donne des positions.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<ul>
+<li>Bras de 0,8 m à 60° : il avance de \(0{,}8 \times \cos 60° = 0{,}8 \times 0{,}5 = 0{,}4\) m et monte de \(0{,}8 \times \sin 60° = 0{,}8 \times 0{,}866 \approx 0{,}693\) m.</li>
+<li>Bout en \((0{,}5 \,;\ 1{,}2)\) m : \(L = \sqrt{0{,}25 + 1{,}44} = \sqrt{1{,}69} = 1{,}3\) m et \(\tan\theta = 1{,}2 / 0{,}5 = 2{,}4\), donc \(\theta \approx 67{,}4°\).</li>
+</ul>
+
+<h2>Formules clés</h2>
+\[ x = L\cos\theta \qquad y = L\sin\theta \qquad L = \sqrt{x^2 + y^2} \qquad \tan\theta = \frac{y}{x} \]
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/triangle.js"></script>
+</body>
+</html>

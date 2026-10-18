@@ -4,7 +4,8 @@
 "use strict";
 const fs = require("fs"), path = require("path");
 const BASE = process.env.BASE || "http://127.0.0.1:8765/";
-const RACINE = path.join(__dirname, "..", "..");
+// RACINE : dossier servi sous BASE (aperçu : RACINE=apercu BASE=http://127.0.0.1:8765/apercu/)
+const RACINE = process.env.RACINE ? path.resolve(process.env.RACINE) : path.join(__dirname, "..", "..");
 const CAPTURES = path.join(__dirname, "captures");
 
 async function lancer() {

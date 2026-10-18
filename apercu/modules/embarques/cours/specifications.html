@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Architecture en blocs et spécifications · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Architecture en blocs et spécifications</h1>
+<p class="chapeau">Avant de choisir l'ESP32 pour un glucomètre connecté, il faut vérifier qu'il a tout ce qu'il faut : assez de calcul, assez de mémoire, la bonne radio, assez d'entrées analogiques et de bus. Le schéma en blocs et la liste des spécifications répondent à ces questions.</p>
+
+<h2>Intuition</h2>
+<p>Le schéma en blocs est un plan de la puce, vu de haut. À gauche, les périphériques : tout ce qui parle au monde extérieur (bus, conversion analogique, capteurs). En haut, la partie sans fil : Bluetooth, Wi-Fi et la radio qui les émet. Au centre, le cœur : deux processeurs avec leur ROM et leur SRAM. À côté, un accélérateur de cryptographie, pour chiffrer sans ralentir le programme. En bas, le RTC : un petit domaine qui reste éveillé quand le reste dort, avec son propre coprocesseur basse consommation.</p>
+<p>Pour un dispositif médical sur batterie, ce dernier bloc compte beaucoup : le capteur peut être surveillé pendant que les gros processeurs sont éteints.</p>
+
+<div id="fig-blocs"></div>
+
+<h2>Formalisation</h2>
+<h3>Les blocs (diapositive 7)</h3>
+<div class="tableau"><table>
+<tr><th>Bloc</th><th>Contenu</th></tr>
+<tr><td>Périphériques</td><td>SPI, I2C, I2S, SDIO, UART, CAN, ETH, IR, PWM, Temperature Sensor, Touch Sensor, DAC, ADC</td></tr>
+<tr><td>Bluetooth</td><td>Bluetooth link controller, Bluetooth baseband</td></tr>
+<tr><td>Wi-Fi</td><td>WiFi MAC, WiFi baseband</td></tr>
+<tr><td>Radio</td><td>RF receiver, Clock generator, RF transmitter, Switch, Balun</td></tr>
+<tr><td>Core and memory</td><td>2 × Xtensa 32 bit LX6 Microprocessors, ROM, SRAM</td></tr>
+<tr><td>Cryptographic hardware acceleration</td><td>SHA, RSA, AES, RNG</td></tr>
+<tr><td>RTC</td><td>PMU, ULP coprocessor, Recovery memory</td></tr>
+</table></div>
+<h3>Spécifications (diapositives 8 et 9)</h3>
+<ul>
+<li><strong>Processeurs</strong> : CPU Xtensa <i>dual-core</i> (ou <i>single-core</i>) 32 bits LX6, à 160 ou 240 MHz, jusqu'à 600 DMIPS ; coprocesseur ultra basse consommation (ULP).</li>
+<li><strong>Mémoire</strong> : 520 KiB de SRAM ; 448 KB de ROM ; 16 KB de SRAM dans le RTC.</li>
+<li><strong>Connectivité sans fil</strong> : Wi-Fi 802.11 (2,4 GHz) b/g/n jusqu'à 150 Mbps ; Bluetooth v4.2 BR/EDR et BLE.</li>
+<li><strong>Horloges et timers</strong> : oscillateur interne 8 MHz ; oscillateur RC interne avec calibration ; quartz externe de 2 MHz à 60 MHz (40 MHz seulement pour le Wi-Fi et le Bluetooth) ; quartz externe 32 kHz pour le RTC, avec calibration ; deux groupes de timers, avec 2 timers 64 bits et 1 watchdog principal dans chaque groupe ; un timer RTC ; un watchdog RTC.</li>
+<li><strong>Interfaces périphériques</strong> : 34 GPIO programmables ; ADC SAR 12 bits jusqu'à 18 canaux ; 2 DAC 8 bits ; 10 capteurs tactiles (GPIO à détection capacitive) ; 4 SPI ; 2 interfaces I2S ; 2 interfaces I2C ; 3 UART ; interface Ethernet MAC avec DMA dédié et support IEEE 1588 (<i>Precision Time Protocol</i>) ; CAN bus 2.0 ; télécommande infrarouge (TX/RX, jusqu'à 8 canaux) ; Motor PWM ; LED PWM (jusqu'à 16 canaux) ; capteur à effet Hall.</li>
+</ul>
+<p class="complement">DMIPS : millions d'instructions par seconde, mesurées avec le test de performance Dhrystone. 600 DMIPS à 240 MHz font 2,5 DMIPS par MHz.</p>
+
+<div id="fig-horloges"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Un moniteur de chevet doit lire 3 liaisons série (UART), 2 capteurs I2C sur des bus séparés, une électrode tactile pour l'appel infirmier, et envoyer ses mesures chiffrées en Wi-Fi. La liste des interfaces donne 3 UART et 2 I2C : juste assez. Le capteur tactile existe (10 GPIO capacitifs). Le chiffrement AES est fait par l'accélérateur matériel. Le Wi-Fi impose un quartz de 40 MHz. Combien de timers 64 bits pour cadencer les mesures ? Deux groupes de 2, soit \(2 \times 2 = 4\), et \(2 \times 1 = 2\) watchdogs principaux.</p>
+
+<h2>Formules clés</h2>
+\[ \frac{600 \text{ DMIPS}}{240 \text{ MHz}} = 2{,}5 \text{ DMIPS/MHz} \qquad T = \frac{1}{f} = \frac{1}{240 \text{ MHz}} \approx 4{,}17 \text{ ns} \]
+<p>520 KiB SRAM, 448 KB ROM, 16 KB SRAM RTC. Quartz 2 à 60 MHz, 40 MHz pour Wi-Fi et Bluetooth, 32 kHz pour le RTC. 34 GPIO, ADC 12 bits 18 canaux, 2 DAC 8 bits, 10 touch, 4 SPI, 2 I2S, 2 I2C, 3 UART.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/specifications.js"></script>
+</body>
+</html>
