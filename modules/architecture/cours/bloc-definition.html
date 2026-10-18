@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le bloc opératoire : définition · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le bloc opératoire : définition</h1>
+<p class="chapeau">Patients fragiles, gestes invasifs, gaz, électricité, rayons X, germes : le bloc concentre au même endroit presque tous les risques de l'hôpital. C'est pour cela qu'on ne le conçoit pas comme une autre pièce.</p>
+<h2>Intuition</h2>
+<p>Une chambre d'hospitalisation accueille un patient, un lit, quelques prises. Une salle d'opération accueille un patient anesthésié et ouvert, une équipe nombreuse, des appareils complexes branchés au secteur, des gaz dont l'oxygène, de l'air traité, du matériel stérile. Plus il y a d'éléments concentrés, plus il y a d'interactions, et plus il y a de risques : infectieux, électriques, incendie.</p>
+
+<div id="fig-concentre"></div>
+
+<h2>Formalisation</h2>
+<p>Le <strong>bloc opératoire</strong> est une unité fonctionnelle hautement spécialisée destinée à réaliser des interventions chirurgicales dans un environnement maîtrisé.</p>
+<p>Il constitue une zone particulièrement exigeante parce qu'il concentre : patients à risque ; actes invasifs ; personnel nombreux ; équipements biomédicaux complexes ; médicaments et produits stériles ; gaz médicaux ; dispositifs électriques ; systèmes de ventilation ; risques infectieux ; risques électriques ; risques incendie.</p>
+<p>Conséquence : la conception doit être réalisée à partir d'un <b>programme fonctionnel et technique</b>, et non simplement à partir d'un plan architectural.</p>
+
+<h3>Schéma global à retenir</h3>
+<p>Trois piliers convergent vers le bloc : <b>fonctionnel</b> (flux, zonage), <b>technique</b> (CVC, électricité, gaz médicaux, informatique), <b>sécurité</b> (incendie, évacuation, radioprotection). Dans la salle opératoire se rencontrent le patient, le personnel et le matériel, sous les exigences d'hygiène, de sécurité et de biomédical. Le but : la <b>qualité et la continuité des soins</b>.</p>
+
+<div id="fig-global"></div>
+
+<h2>Exemple</h2>
+<p>L'idée centrale du cours, à savoir redire : « Un bloc opératoire performant n'est pas seulement une salle équipée : c'est un système intégré associant architecture, flux, ventilation, électricité, fluides médicaux, équipements biomédicaux, hygiène, sécurité et maintenance. »</p>
+<p class="complement">Exemple ajouté.</p>
+<p>Un robot chirurgical de dernière génération installé dans une salle sans alimentation secourue, sans accès de maintenance et avec un sol qui ne supporte pas son poids n'en fait pas un bon bloc : l'équipement ne vaut que par le système qui l'entoure.</p>
+
+<h2>Formules clés</h2>
+<p>Bloc opératoire = unité fonctionnelle hautement spécialisée + interventions chirurgicales + environnement maîtrisé.</p>
+<p>Conception = programme fonctionnel et technique, puis plan architectural.</p>
+<p>Fonctionnel + technique + sécurité → bloc → salle (patient, personnel, matériel) → qualité et continuité des soins.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/bloc-definition.js"></script>
+</body>
+</html>
