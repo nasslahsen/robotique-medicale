@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Les cinq composants d'un SI · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Les cinq composants d'un SI</h1>
+<p class="chapeau">Une clinique achète le meilleur logiciel du marché et des serveurs neufs. Six mois plus tard, personne ne s'en sert : il manquait la formation et l'organisation. Un SI tient sur cinq pieds.</p>
+<h2>Le chapitre en bref</h2>
+<p>Le chapitre 1 a défini le SI. Ce chapitre l'ouvre : il en prend les cinq composants un par un. L'<b>organisation</b> (processus, procédures, workflow, maturité, cartographie, schéma directeur), les <b>logiciels</b> (système, métier, progiciel ou spécifique, qualité), les <b>données</b> (base de données, SGBD), le <b>matériel</b> (équipements, réseau) et le <b>personnel</b> (acteurs internes et externes, métiers). Chaque composant a ses choix et ses risques ; un SI ne marche que si les cinq tiennent ensemble.</p>
+
+<h2>Intuition</h2>
+<p>Tout ce qui fait vivre l'information d'un hôpital tombe dans l'une de cinq familles : des personnes, des règles de travail, des programmes, des machines, et l'information elle-même. Oublier une famille, c'est faire boiter tout le système.</p>
+<div id="fig-composants"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Composant</th><th>Ce que le cours y range</th></tr>
+<tr><td>Organisation</td><td>processus, procédures, maturité des processus, workflow, cartographie, schéma directeur</td></tr>
+<tr><td>Logiciels</td><td>logiciels système, applications métiers (ERP, CRM, développement spécifique), qualité logicielle</td></tr>
+<tr><td>Données</td><td>base de données, SGBD, méthodes de modélisation (UML, Merise)</td></tr>
+<tr><td>Matériel</td><td>équipements informatiques (serveurs, ordinateurs, imprimantes...), réseau</td></tr>
+<tr><td>Personnels</td><td>acteurs internes et externes, catégories de métiers du SI</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Service de pédiatrie : l'infirmière et le pédiatre (personnels), le circuit de la prescription (organisation), le DPI et Windows (logiciels), les postes et l'imprimante (matériel), les courbes de poids des enfants (données).</p>
+
+<h2>Formules clés</h2>
+<p>SI = organisation + logiciels + données + matériel + personnels.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/composants-si.js"></script>
+</body>
+</html>

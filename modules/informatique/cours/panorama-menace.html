@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Panorama de la menace cyber · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Panorama de la menace cyber</h1>
+<p class="chapeau">2025 marque un point de bascule : attaques plus sophistiquées, industrialisation des rançongiciels, exploitation massive de l'IA, et un coût économique record. Et le secteur le plus touché est celui de la santé.</p>
+<h2>Intuition</h2>
+<p>Les attaques contre les hôpitaux ne sont pas des hypothèses : le cours en liste une série, du ver WannaCry au NHS en 2017 jusqu'aux incidents de 2026. Chacune a laissé une leçon : corriger ses systèmes, ne pas dépendre d'un seul prestataire, exiger la transparence des fabricants, réagir vite.</p>
+<div id="fig-chronologie"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Chiffre (cours)</th><th>Ce qu'il mesure</th></tr>
+<tr><td>4,4 M$</td><td>coût moyen d'une fuite de données (IBM, 2025)</td></tr>
+<tr><td>12 000 Md$</td><td>coût mondial de la cybercriminalité en 2025</td></tr>
+<tr><td>97 %</td><td>d'organisations ont rapporté un incident de sécurité lié à l'IA ou à son manque de contrôle (IBM, 2025) ; le secteur le plus touché est celui de la santé</td></tr>
+<tr><td>× 2</td><td>nombre d'attaques depuis 2023 ; + 25 % de rançongiciels en un an</td></tr>
+</table></div>
+<p>Tendances : <b>l'IA sur le devant de la scène</b> (évolution des cas d'usage, en particulier l'IA agentique ; détournement de l'IA générative pour le phishing, le code malveillant, les deepfakes ; ablitération, c'est-à-dire suppression des fonctions de sécurité des modèles) ; <b>une année difficile pour les éditeurs de cybersécurité</b> (augmentation des failles zero-day ; vulnérabilités exploitées pendant une longue période, jusqu'à 2 ans ; incidents significatifs comme la panne mondiale CrowdStrike ou Cloudflare) ; <b>le cybercrime résiste et devient politique</b> (riposte de cybercriminels contre des organismes français après l'arrestation de Pavel Durov, fondateur de Telegram ; structures décentralisées, alliances avec d'autres groupes de rançongiciel ou d'hacktivisme ; instrumentalisation à des fins politiques entre États).</p>
+<div class="tableau"><table>
+<tr><th>Date</th><th>Cible</th><th>Nature</th><th>Enseignement</th></tr>
+<tr><td>Mai 2017</td><td>NHS (Royaume-Uni)</td><td>WannaCry, ver exploitant SMBv1 (EternalBlue)</td><td>plus de 80 structures touchées, environ 19 000 rendez-vous annulés selon le National Audit Office ; des équipements d'imagerie sous Windows non corrigé ont été atteints</td></tr>
+<tr><td>Nov. 2019</td><td>CHU de Rouen</td><td>rançongiciel</td><td>retour au papier pendant des semaines : premier cas français très médiatisé</td></tr>
+<tr><td>Août 2022</td><td>CH Sud Francilien (Corbeil-Essonnes)</td><td>rançongiciel LockBit, rançon de 10 M$ demandée</td><td>double extorsion : les données ont été publiées après le refus de payer</td></tr>
+<tr><td>Fév. 2024</td><td>Change Healthcare (États-Unis)</td><td>rançongiciel ALPHV / BlackCat</td><td>un prestataire de paiement unique paralyse des milliers de structures ; environ 190 millions de personnes concernées</td></tr>
+<tr><td>Janv. 2025</td><td>Moniteurs patients Contec CMS8000</td><td>avis de la CISA : backdoor cachée dans le micrologiciel</td><td>le dispositif envoyait des données vers une adresse IP codée en dur (associée à une université chinoise) ; importance des nomenclatures logicielles (SBOM) et des exigences d'achat</td></tr>
+<tr><td>Avr. 2025</td><td>CNSS (Maroc)</td><td>intrusion et fuite de données, revendiquée par le groupe JabaRoot DZ</td><td>environ 2 millions de salariés concernés selon la presse : identité, coordonnées bancaires, salaires ; certaines sources évoquent aussi des données médicales</td></tr>
+<tr><td>Juil. 2026</td><td>CH de Chaumont</td><td>intrusion détectée</td><td>une bonne pratique : alerte, déconnexion immédiate d'Internet et coordination avec le GHT limitent l'impact</td></tr>
+<tr><td>Août 2026</td><td>prestataire de Santé publique France</td><td>piratage d'une plateforme externe</td><td>environ 80 000 données de contact exposées : la chaîne de sous-traitance reste le maillon faible</td></tr>
+</table></div>
+<p>Le cours montre aussi une revue de presse SecurityWeek du 23 février 2026 : un système hospitalier du Mississippi ferme toutes ses cliniques après un rançongiciel ; une entreprise américaine de diagnostic annonce 140 000 personnes touchées par une fuite de données.</p>
+
+<h2>Exemple</h2>
+<p>Change Healthcare et le prestataire de Santé publique France racontent la même chose : l'attaque a visé un tiers, et c'est toute la chaîne qui a été touchée. La sous-traitance reste le maillon faible.</p>
+
+<h2>Formules clés</h2>
+<p>2025 : point de bascule (IA, rançongiciels industrialisés, coût record). Santé : secteur le plus touché.</p>
+<p>Leçons : corriger, isoler, exiger des fabricants (SBOM), surveiller les tiers, réagir vite.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/panorama-menace.js"></script>
+</body>
+</html>

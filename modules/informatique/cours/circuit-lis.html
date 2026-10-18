@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>LIS : circuit d'un examen biologique · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>LIS : circuit d'un examen biologique</h1>
+<p class="chapeau">Une troponine est demandée aux urgences. Entre la prescription et le résultat, où passe le temps, et où naissent les erreurs ?</p>
+<h2>Intuition</h2>
+<p>Un examen de biologie traverse trois phases : avant l'automate (pré-analytique), dans l'automate (analytique), après (post-analytique). La phase avant l'automate prend le plus de temps et produit le plus d'erreurs : c'est là qu'on prélève, étiquette, transporte et prépare le tube.</p>
+<div id="fig-phases"></div>
+<div id="fig-tat"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Phase</th><th>Part du TAT</th><th>Étapes</th></tr>
+<tr><td>Pré-analytique</td><td>60 %</td><td>prescription médicale ; prélèvement de l'échantillon ; acheminement et tri ; préparation (centrifugation)</td></tr>
+<tr><td>Analytique</td><td>25 %</td><td>chargement des automates ; exécution des analyses ; contrôle qualité (CQI) ; interfaçage bidirectionnel</td></tr>
+<tr><td>Post-analytique</td><td>15 %</td><td>validation technique ; validation biologique ; diffusion des résultats (HL7) ; archivage légal</td></tr>
+</table></div>
+<p>La phase <b>pré-analytique</b> est le principal gisement d'erreurs. Points de risque du module LIS : prélèvement mal identifié ; valeur critique non communiquée ; résultat rendu sur le mauvais dossier ; panne du LIS : mode dégradé papier.</p>
+<p>Cas d'étude du cours, le délai de rendu de la troponine : quelles étapes le font varier ? Qu'apporte la biologie délocalisée ? Quels nouveaux risques de validation et de traçabilité ?</p>
+<p class="complement">Réponse proposée.</p>
+<p>Le délai varie surtout avec le prélèvement, l'acheminement et la validation. La biologie délocalisée (analyse faite près du patient) supprime l'acheminement et raccourcit le pré-analytique ; en contrepartie, la validation du résultat et sa traçabilité (bon patient, remontée dans le LIS et le DPI) deviennent plus difficiles.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec un TAT de 90 minutes : \(0{,}60 \times 90 = 54\) min de pré-analytique, \(0{,}25 \times 90 = 22{,}5\) min d'analytique, \(0{,}15 \times 90 = 13{,}5\) min de post-analytique.</p>
+
+<h2>Formules clés</h2>
+<p>TAT = pré-analytique (60 %) + analytique (25 %) + post-analytique (15 %).</p>
+<p>Le pré-analytique est le principal gisement d'erreurs.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/circuit-lis.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le DPI et les modules du SIH · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le DPI et les modules du SIH</h1>
+<p class="chapeau">Un compte rendu d'imagerie, une ordonnance validée par le pharmacien, une adresse, un courrier scanné : tout finit dans le DPI, mais pas au même endroit, et pas par le même chemin.</p>
+<h2>Intuition</h2>
+<p>Le DPI s'organise en volets autour d'une synthèse : administratif, médical, paramédical, pharmaceutique, social, GED. Il échange avec les modules médico-techniques (RIS, PACS, LIS) et avec les modules administratifs (admission, cotation et facturation, RDV), chacun avec ses standards.</p>
+<div id="fig-volets"></div>
+
+<h2>Formalisation</h2>
+<p>Volets du DPI (schéma du cours) : <b>synthèse</b> au centre ; volets <b>administratif</b>, <b>médical</b>, <b>paramédical</b>, <b>pharmaceutique</b>, <b>social</b>, <b>GED</b>.</p>
+<div class="tableau"><table>
+<tr><th>Côté</th><th>Modules</th><th>Standards et nomenclatures</th></tr>
+<tr><td>Médico-technique</td><td>RIS, PACS, LIS...</td><td>HL7, DICOM, SNOMED</td></tr>
+<tr><td>Administratif</td><td>admission, cotation des prestations et facturation, RDV...</td><td>NGAP, NABM, CIM-10</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Les images d'un scanner arrivent du PACS en DICOM ; le compte rendu opératoire va dans le volet médical, les transmissions infirmières dans le volet paramédical, le courrier scanné du médecin traitant dans la GED, et l'aide à domicile à organiser dans le volet social.</p>
+
+<h2>Formules clés</h2>
+<p>Volets : administratif, médical, paramédical, pharmaceutique, social, GED, autour de la synthèse.</p>
+<p>Médico-technique : HL7, DICOM, SNOMED. Administratif : NGAP, NABM, CIM-10.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/dpi-modules.js"></script>
+</body>
+</html>

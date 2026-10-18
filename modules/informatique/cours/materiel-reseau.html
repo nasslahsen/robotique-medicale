@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Matériel informatique et réseau · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Matériel informatique et réseau</h1>
+<p class="chapeau">Les images d'un scanner pèsent lourd, une tablette suit l'infirmière au lit, un moniteur roule avec le brancard. Le choix du matériel et du réseau décide de ce que le SI peut faire.</p>
+<h2>Intuition</h2>
+<p>Le matériel, ce sont les machines qui calculent, gardent et affichent l'information. Le réseau les relie. Choisir un serveur, une tablette ou une liaison sans fil, c'est choisir la capacité, la facilité d'usage, le débit et la fiabilité de tout le SI.</p>
+<div id="fig-reseau"></div>
+
+<h2>Formalisation</h2>
+<p><b>Équipements informatiques</b> : serveurs (locaux, cloud : SaaS, PaaS, IaaS), ordinateurs, imprimantes, équipements spécifiques pour le traitement de l'information (texte, image, voix). Impact du choix du matériel : capacité de traitement et stockage ; aisance de manipulation ; automatisation des processus.</p>
+<p><b>Réseau informatique</b> : il se compose des équipements réseau <b>actifs</b> et <b>passifs</b>. Types de liaisons : <b>filaire</b> (Ethernet, fibre optique...), <b>sans fil</b> (Bluetooth, wifi...). Le cours insiste : architecture réseau sécurisée. Impact du choix du réseau : débit de communication ; fiabilité des liens.</p>
+<div class="tableau"><table>
+<tr><th>Offre cloud (définitions usuelles, ajoutées)</th><th>Ce que l'hôpital gère</th><th>Exemple</th></tr>
+<tr><td>SaaS : le logiciel comme service</td><td>seulement son usage</td><td>un DPI loué, ouvert dans le navigateur</td></tr>
+<tr><td>PaaS : la plateforme comme service</td><td>son application</td><td>déposer son application sur une plateforme qui gère système et base</td></tr>
+<tr><td>IaaS : l'infrastructure comme service</td><td>système, base, applications</td><td>louer des machines virtuelles et y installer son SGBD</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un moniteur de transport qui suit le patient du service à l'imagerie ne peut pas être filaire : il passe en wifi, et il faut surveiller la fiabilité du lien pendant le trajet.</p>
+
+<h2>Formules clés</h2>
+<p>Matériel : capacité, aisance, automatisation. Réseau : débit, fiabilité.</p>
+<p>Actif (alimenté, traite le signal : switch, routeur, borne wifi) / passif (transporte : câbles, fibre, prises).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/materiel-reseau.js"></script>
+</body>
+</html>

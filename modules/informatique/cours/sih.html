@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le SIH : définition et apports · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le SIH : définition et apports</h1>
+<p class="chapeau">Dans un hôpital, la pharmacie, le laboratoire, l'imagerie et l'admission ont chacun leur logiciel. Tant qu'ils ne se parlent pas, ce ne sont que des îles. Le SIH les relie.</p>
+<h2>Le chapitre en bref</h2>
+<p>On applique maintenant les notions générales à l'hôpital. Le <b>système d'information hospitalier</b> (SIH) est un SI particulier : on voit sa définition et ce qu'il apporte, puis ses grands composants et leurs rôles, son architecture fonctionnelle en couches avec l'exemple du SIH déployé dans les centres hospitaliers publics, et enfin qui équipe les régions du Maroc. Le DPI, au centre du SIH, aura son propre chapitre.</p>
+
+<h2>Intuition</h2>
+<p>Un SIH, ce n'est pas un gros logiciel, c'est un ensemble de modules (admission et facturation, DPI, imagerie, laboratoires, pharmacie, bloc opératoire...) qui échangent. L'interaction est le cœur de la définition : sans échange, l'information ne peut pas être rassemblée.</p>
+<div id="fig-modules"></div>
+
+<h2>Formalisation</h2>
+<p>Un <b>système d'information hospitalier</b> est un système d'information destiné à faciliter la gestion de l'ensemble des informations médicales et administratives d'un hôpital. Son architecture logicielle se compose d'un <b>ensemble de modules et solutions en interaction</b> ayant pour objectif de <b>rassembler</b>, <b>traiter</b> et <b>fournir</b> les informations nécessaires à son activité.</p>
+<div class="tableau"><table>
+<tr><th>Apports de la mise en œuvre d'un SIH</th></tr>
+<tr><td>1. Pilotage des indicateurs de l'hôpital</td></tr>
+<tr><td>2. Satisfaction des patients</td></tr>
+<tr><td>3. Amélioration de la qualité des soins ; respect de la sécurité des soins ; respect des réglementations</td></tr>
+<tr><td>4. Optimisation des coûts ; maîtrise des dépenses</td></tr>
+<tr><td>5. Satisfaction des professionnels ; satisfaction des partenaires et réseaux de soins</td></tr>
+<tr><td>6. Échange informatisé des données entre services ; partage de l'information</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un an après la mise en place : le directeur suit chaque matin le taux d'occupation des lits (pilotage) ; une alerte d'allergie bloque une prescription dangereuse (sécurité des soins) ; moins d'examens sont refaits en double (coûts) ; le labo envoie ses résultats directement au service (échange entre services).</p>
+
+<h2>Formules clés</h2>
+<p>SIH = SI des informations médicales et administratives de l'hôpital = modules en interaction pour rassembler, traiter, fournir.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/sih.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" data-module="informatique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Création et vérification d'une identité · Informatique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Création et vérification d'une identité</h1>
+<p class="chapeau">Sans CIN, la recherche affiche trois « Fatima Idrissi ». Laquelle est la patiente devant le guichet ? Se tromper, c'est soigner la mauvaise personne.</p>
+<h2>Intuition</h2>
+<p>Avant de créer un dossier, l'agent d'admission cherche toujours s'il existe déjà. Ensuite tout dépend de ce qu'il trouve : une fiche avec la même CIN, aucune fiche, ou plusieurs fiches sans CIN. Chaque cas a sa règle, et quand le doute reste, on passe la main à l'identitovigilance.</p>
+<div id="fig-bpmn"></div>
+
+<h2>Formalisation</h2>
+<p>Processus de création / vérification d'une identité (cours, en BPMN) : le patient se présente au guichet correspondant à sa catégorie (AC/1) ; l'agent d'admission recherche l'identité du patient (AC/2), puis :</p>
+<ul>
+<li>si la recherche affiche des résultats avec CIN : contrôler la cohérence de l'identité à travers la CIN ; si cohérence, sélectionner l'identité ; si aucune cohérence, créer une nouvelle identité ;</li>
+<li>si la recherche n'affiche aucun résultat : créer une nouvelle identité (enregistrée dans le SI) ;</li>
+<li>si la recherche affiche plusieurs résultats sans CIN : contrôler la cohérence avec la date de naissance ; si cohérence, sélectionner l'identité ; si la date de naissance n'est pas renseignée, identitovigilance ; sinon, créer une nouvelle identité.</li>
+</ul>
+<p>L'<b>identitovigilance</b> est un système de surveillance et de gestion des risques visant à garantir la fiabilité de l'identification des patients et des usagers tout au long de leur parcours de santé. Objectifs principaux : assurer le bon soin au bon patient, au bon moment ; sécuriser les données de santé et les échanges entre professionnels ; éviter les doublons de dossiers et les confusions d'identité.</p>
+<div class="tableau"><table>
+<tr><th>Terme</th><th>Définition du cours</th></tr>
+<tr><td>Doublon</td><td>un même individu possède plusieurs dossiers dans le système</td></tr>
+<tr><td>Collision de DPI</td><td>erreur grave qui consiste à mélanger les données de santé de deux patients différents dans un seul et même dossier numérique</td></tr>
+<tr><td>MPI (Master Patient Index)</td><td>base de données centrale qui attribue un identifiant unique à chaque patient et détecte les doublons</td></tr>
+<tr><td>Appariement (record linkage)</td><td>processus algorithmique qui détermine si deux enregistrements correspondent à la même personne</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Trois « Fatima Idrissi », pas de CIN, et la patiente confuse ne donne pas sa date de naissance : on ne choisit pas au hasard, on passe à l'identitovigilance. Choisir la mauvaise fiche créerait une collision : ses résultats iraient dans le dossier d'une autre.</p>
+
+<h2>Formules clés</h2>
+<p>Rechercher avant de créer. Avec CIN : contrôle par la CIN. Aucun résultat : création. Plusieurs sans CIN : contrôle par la date de naissance, sinon identitovigilance.</p>
+<p>Doublon = une personne, plusieurs dossiers. Collision = plusieurs personnes, un dossier.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../sis.js"></script>
+<script src="../figures/identite.js"></script>
+</body>
+</html>
