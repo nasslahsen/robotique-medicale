@@ -37,8 +37,8 @@ NIVEAU(SIS.rejouable({
       ], { colonnes: 1, ok: function () { j.bravo("C'est elle qui fait passer le message du LIS au DPI."); j.suite(); } });
     } },
     { nom: "Analyser sans ralentir", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["base", "ecran"], titre: "Cinq ans de séjours à analyser", sous: "sans ralentir le DPI des soignants" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["base", "ecran"], titre: "Cinq ans de séjours à analyser", sous: "sans ralentir le DPI des soignants" });
       j.titre("La direction veut analyser cinq ans de séjours, sans ralentir le DPI que les soignants utilisent. Où faire cette analyse ?");
       j.choix([
         { html: "Directement dans la base de production du DPI", aide: "Les requêtes lourdes ralentiraient l'outil des soignants." },

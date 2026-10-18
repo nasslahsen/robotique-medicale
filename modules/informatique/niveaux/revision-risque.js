@@ -7,8 +7,8 @@ NIVEAU(SIS.rejouable({
   },
   etapes: [
     { nom: "Le micrologiciel ancien", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["moniteur", "horloge"], titre: "Un micrologiciel de 2019" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["moniteur", "horloge"], titre: "Un micrologiciel de 2019" });
       j.titre("Le micrologiciel d'un échographe n'a pas été mis à jour depuis 2019. Menace, vulnérabilité ou incident ?");
       j.choix([{ html: "Menace", aide: "Rien ne cherche à nuire ici : c'est un défaut du bien." }, { html: "Vulnérabilité", juste: true }, { html: "Incident", aide: "Rien ne s'est encore produit." }], { colonnes: 3, ok: function () { j.bravo("Une faiblesse du bien : vulnérabilité."); j.suite(); } });
     } },

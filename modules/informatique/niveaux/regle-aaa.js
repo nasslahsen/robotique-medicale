@@ -48,8 +48,8 @@ NIVEAU(SIS.rejouable({
       } });
     } },
     { nom: "Rigide ou ouvert ?", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["cadenas", "tube"], titre: "Bloquer toutes les clés USB ?", sous: "l'automate du labo en a besoin" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["cadenas", "tube"], titre: "Bloquer toutes les clés USB ?", sous: "l'automate du labo en a besoin" });
       j.titre("Le RSSI veut bloquer toutes les clés USB. Le labo répond qu'un automate ne livre ses données que par clé USB. Que montre ce conflit ?");
       j.choix([
         { html: "L'arbitrage difficile entre une sécurité rigide et l'ouverture du SI : il faut une solution qui protège sans bloquer le soin", juste: true },

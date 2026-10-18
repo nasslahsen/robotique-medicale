@@ -38,8 +38,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La plus difficile à fermer", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un courriel imite la DSI", sous: "il demande les mots de passe" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un courriel imite la DSI", sous: "il demande les mots de passe" });
       j.titre("Un courriel imite parfaitement la DSI et demande aux soignants de « confirmer leur mot de passe ». Quelle surface est visée, et quelle mesure du cours la protège ?");
       j.choix([{ html: "La surface humaine, protégée par la sensibilisation", juste: true }, { html: "La surface physique, protégée par des badges", aide: "Personne n'entre dans les locaux." }, { html: "La surface numérique, protégée par un pare-feu", aide: "Le courriel passe le pare-feu : c'est la personne qui est trompée." }], { colonnes: 1, ok: function () { j.bravo("Humaine : veille et sensibilisation."); j.suite(); } });
     } }

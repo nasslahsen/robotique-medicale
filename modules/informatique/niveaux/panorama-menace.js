@@ -50,8 +50,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Le maillon faible", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["reseau", "alerte"], titre: "Change Healthcare (2024), Santé publique France (2026)", sous: "deux attaques de prestataires" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["reseau", "alerte"], titre: "Change Healthcare (2024), Santé publique France (2026)", sous: "deux attaques de prestataires" });
       j.titre("Change Healthcare (2024) et le prestataire de Santé publique France (2026) racontent la même chose. Laquelle ?");
       j.choix([
         { html: "La chaîne de prestataires et de sous-traitants est un maillon faible : un tiers touché atteint de nombreux établissements", juste: true },

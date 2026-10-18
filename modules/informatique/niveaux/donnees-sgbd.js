@@ -60,8 +60,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Avant de créer la base", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "base"], titre: "Patients, séjours, examens et leurs liens", sous: "avant le premier CREATE TABLE" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "base"], titre: "Patients, séjours, examens et leurs liens", sous: "avant le premier CREATE TABLE" });
       j.titre("Avant d'écrire le moindre CREATE TABLE, l'équipe dessine les patients, séjours et examens et leurs liens. Quelles méthodes de modélisation cite le cours ?");
       j.choix([
         { html: "UML et Merise", juste: true },

@@ -24,8 +24,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Le volet", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["personne", "lit"], titre: "Mme Benali vit seule", sous: "une aide à domicile à prévoir" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["personne", "lit"], titre: "Mme Benali vit seule", sous: "une aide à domicile à prévoir" });
       j.titre("Pendant l'hospitalisation, l'assistante sociale note que Mme Benali vit seule et aura besoin d'une aide à domicile. Dans quel volet du DPI ?");
       j.choix([{ html: "Volet social", juste: true }, { html: "Volet paramédical", aide: "Ce n'est pas un soin infirmier : c'est sa situation de vie." }, { html: "Volet GED", aide: "La GED gère des documents numérisés." }], { colonnes: 3, ok: function () { j.bravo("Volet social."); j.suite(); } });
     } },

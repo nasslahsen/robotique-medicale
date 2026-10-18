@@ -45,8 +45,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Facturer l'analyse", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["tube", "facture"], titre: "Facturer la troponine" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["tube", "facture"], titre: "Facturer la troponine" });
       j.titre("Il faut maintenant facturer la troponine. Quelle nomenclature, dans quel composant ?");
       j.choix([
         { html: "La NABM, dans la gestion médico-administrative", juste: true },

@@ -37,8 +37,8 @@ NIVEAU(SIS.rejouable({
       } });
     } },
     { nom: "La facture rejetée", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["facture", "alerte"], titre: "Facture rejetée par la CNSS", sous: "droits jamais vérifiés" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["facture", "alerte"], titre: "Facture rejetée par la CNSS", sous: "droits jamais vérifiés" });
       j.titre("À la sortie, la CNSS rejette la facture : ses droits n'avaient jamais été vérifiés. Quelle étape du circuit a été sautée ?");
       j.choix([{ html: "Couverture sociale et droits", juste: true }, { html: "Production des actes", aide: "Les actes sont bien saisis. Le payeur n'a pas été vérifié." }, { html: "Sortie et clôture", aide: "La sortie a eu lieu. Le problème date de l'admission." }], { colonnes: 1, ok: function () { j.bravo("Vérification de l'AMO à l'admission : droits erronés, rejet du dossier."); j.suite(); } });
     } }

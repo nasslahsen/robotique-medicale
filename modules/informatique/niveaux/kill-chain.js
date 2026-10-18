@@ -36,8 +36,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "Couper tôt", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["reseau", "pirate"], titre: "Un scan du réseau repéré" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["reseau", "pirate"], titre: "Un scan du réseau repéré" });
       j.titre("L'équipe sécurité de l'hôpital repère un scan de son réseau. À quelle phase est l'attaquant, et pourquoi est-ce une bonne nouvelle ?");
       j.choix([{ html: "Reconnaissance : l'attaque n'a encore rien abîmé, on peut la couper au tout début", juste: true }, { html: "Exfiltration : les données sont déjà parties", aide: "Un scan, c'est le tout début du cycle." }, { html: "Denial of service : tout est arrêté", aide: "Rien n'est encore arrêté : il cherche des failles." }], { colonnes: 1, ok: function () { j.bravo("Plus on coupe tôt dans la chaîne, moins il y a de dégâts."); j.suite(); } });
     } }

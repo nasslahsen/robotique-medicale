@@ -65,8 +65,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "Le plus grave", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "personne", "personne"], titre: "Doublon ou collision ?" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "personne", "personne"], titre: "Doublon ou collision ?" });
       j.titre("Doublon ou collision : lequel le cours qualifie-t-il d'erreur grave, et pourquoi ?");
       j.choix([
         { html: "La collision : un médecin décide sur des données qui appartiennent à un autre patient", juste: true },

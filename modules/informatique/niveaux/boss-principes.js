@@ -20,8 +20,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { tr.resoudre(); });
     } },
     { nom: "Le PACS chiffré", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["serveur", "cadenas"], titre: "PACS chiffré par un rançongiciel", sous: "images intactes mais illisibles" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["serveur", "cadenas"], titre: "PACS chiffré par un rançongiciel", sous: "images intactes mais illisibles" });
       j.titre("Le PACS est chiffré par un rançongiciel. Les images existent encore, intactes, chiffrées sur le disque. Quel critère est d'abord touché ?");
       j.choix([{ html: "Disponibilité", juste: true }, { html: "Intégrité", aide: "Les images ne sont pas faussées : elles sont illisibles sans la clé." }, { html: "Confidentialité", aide: "Elle peut l'être aussi si les données ont été volées, mais le premier effet est autre." }], { colonnes: 3, ok: function () { j.bravo("Disponibilité : retard de prise en charge. Et en cas de double extorsion, la confidentialité aussi."); j.suite(); } });
     } },

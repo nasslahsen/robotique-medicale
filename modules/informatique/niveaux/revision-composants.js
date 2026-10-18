@@ -23,8 +23,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La check-list du bloc", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "personne"], titre: "La check-list du bloc", sous: "une procédure commune, rien n'est mesuré" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "personne"], titre: "La check-list du bloc", sous: "une procédure commune, rien n'est mesuré" });
       j.titre("Au bloc, tout le monde applique la check-list selon une procédure écrite commune. Mais personne ne mesure combien de fois elle est vraiment remplie. Quel niveau de maturité ?");
       j.choix([
         { html: "1 Initial", aide: "Il y a une procédure commune : ce n'est plus aléatoire." },

@@ -42,8 +42,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "La plus sournoise", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["tube", "alerte"], titre: "Une donnée fausse mais plausible" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["tube", "alerte"], titre: "Une donnée fausse mais plausible" });
       j.titre("Le cours note que l'erreur de soins par atteinte à l'intégrité est « souvent non détectable ». Pourquoi est-ce si dangereux ?");
       j.choix([
         { html: "Une donnée fausse mais plausible ressemble à une vraie : on soigne sur une erreur sans le savoir", juste: true },

@@ -47,8 +47,8 @@ NIVEAU(SIS.rejouable({
       j.choix([{ html: "DICOM ISO 12052", juste: true }, { html: "HL7 FHIR", aide: "FHIR transporte des ressources (observations, patients...), pas les images elles-mêmes." }, { html: "XDS", aide: "XDS sert au partage de documents. Le standard des images est un autre." }], { colonnes: 3, ok: function () { j.bravo("DICOM (ISO 12052) pour l'imagerie."); j.suite(); } });
     } },
     { nom: "Pourquoi au centre ?", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["base", "ecran", "personne"], titre: "Le DPP dans le portail national" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["base", "ecran", "personne"], titre: "Le DPP dans le portail national" });
       j.titre("Pourquoi le cours parle-t-il de la position centrale du DPP au sein d'un SIS ?");
       j.choix([
         { html: "Il rassemble les données des établissements publics et privés, et les rend accessibles au citoyen, aux médecins et au ministère", juste: true },

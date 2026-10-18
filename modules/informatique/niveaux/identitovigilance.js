@@ -46,8 +46,8 @@ NIVEAU(SIS.rejouable({
       } });
     } },
     { nom: "48 heures", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["carte", "horloge"], titre: "Une identité provisoire", sous: "deux jours plus tard" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["carte", "horloge"], titre: "Une identité provisoire", sous: "deux jours plus tard" });
       j.titre("Second indicateur du cours : les identités provisoires non régularisées à 48 h. Que mesure-t-il ?");
       j.choix([
         { html: "Les patients admis sous identité provisoire (urgence) dont la vraie identité n'a pas été retrouvée deux jours après", juste: true },

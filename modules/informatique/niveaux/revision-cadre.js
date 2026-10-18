@@ -7,8 +7,8 @@ NIVEAU(SIS.rejouable({
   },
   etapes: [
     { nom: "L'hôpital public", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["lit", "document"], titre: "Centre hospitalier régional public", sous: "et la loi 05-20" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["lit", "document"], titre: "Centre hospitalier régional public", sous: "et la loi 05-20" });
       j.titre("Un centre hospitalier régional public est-il concerné par la loi 05-20 ?");
       j.choix([{ html: "Oui : c'est un établissement public qui détient des SIS, et la santé figure parmi les secteurs d'importance vitale", juste: true }, { html: "Non : la loi ne vise que les banques", aide: "Le cours dit le contraire : hôpitaux publics, CHU et groupements sanitaires sont concernés." }], { colonnes: 1, ok: function () { j.bravo("Hôpitaux publics, CHU et groupements sanitaires : concernés."); j.suite(); } });
     } },

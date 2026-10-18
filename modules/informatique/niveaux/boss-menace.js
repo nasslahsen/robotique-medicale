@@ -40,8 +40,8 @@ NIVEAU(SIS.rejouable({
       ], { colonnes: 1, ok: function () { A.vider(n.g); n.reseau(n.g, 2); j.bravo("La surveillance continue, la fuite est coupée."); j.suite(); } });
     } },
     { nom: "Les prochains achats", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["moniteur", "document"], titre: "Prochain appel d'offres de moniteurs" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["moniteur", "document"], titre: "Prochain appel d'offres de moniteurs" });
       j.titre("Quel enseignement le cours tire-t-il de ce cas pour les prochains achats de DM ?");
       j.choix([
         { html: "Exiger la nomenclature logicielle (SBOM) et des exigences de cybersécurité dans le cahier des charges", juste: true },

@@ -62,8 +62,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La sixième", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Adresse et téléphone de 2019", sous: "dernière modification inconnue" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Adresse et téléphone de 2019", sous: "dernière modification inconnue" });
       j.titre("Dernière dimension, que le tableau ne montrait pas : l'adresse et le téléphone de Mme Kettani datent de 2019, et on ne sait pas qui les a modifiés en dernier. Laquelle ?");
       j.choix([
         { html: "L'actualité", juste: true },

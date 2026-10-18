@@ -37,8 +37,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "Une erreur au départ", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["carte", "personne", "personne"], titre: "Deux « Mohamed Alaoui » dans la base", sous: "l'agent choisit le mauvais" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["carte", "personne", "personne"], titre: "Deux « Mohamed Alaoui » dans la base", sous: "l'agent choisit le mauvais" });
       j.titre("À l'admission, l'agent choisit le mauvais « Mohamed Alaoui ». Jusqu'où l'erreur se paie-t-elle ?");
       j.choix([
         { html: "Seulement à l'admission : on corrige à la sortie", aide: "Pendant tout le séjour, les actes s'écrivent dans le mauvais dossier." },

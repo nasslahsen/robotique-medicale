@@ -31,8 +31,8 @@ NIVEAU(SIS.rejouable({
       j.nombre({ cases: [{ attendu: 12 }, { attendu: 6 }], ligne: true, avant: "R_{\\text{avant}},\\ R_{\\text{après}} :", aide: function (k) { return k === 0 ? "3 × 4." : "3 × 2."; }, ok: function () { j.bravo("De 12 à 6 : on a réduit l'impact, en supprimant le SPOF."); j.suite(); } });
     } },
     { nom: "Où couper ?", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["ecran", "pirate"], titre: "Droits d'administrateur obtenus", sous: "sur un poste de radiologie" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["ecran", "pirate"], titre: "Droits d'administrateur obtenus", sous: "sur un poste de radiologie" });
       j.titre("L'attaquant vient d'obtenir des droits d'administrateur sur un poste de radiologie. Quelle sera sa prochaine phase, celle qu'il faut empêcher maintenant ?");
       j.choix([{ html: "Lateral movement, vers le serveur PACS", juste: true }, { html: "Reconnaissance", aide: "Elle est déjà passée : il est dans le réseau, avec des droits." }, { html: "Intrusion", aide: "Il est déjà entré." }], { colonnes: 1, ok: function () { j.bravo("Après l'élévation de privilèges vient le déplacement latéral : segmenter le réseau le freine."); j.suite(); } });
     } },

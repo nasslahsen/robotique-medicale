@@ -70,8 +70,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { r.resoudre(); });
     } },
     { nom: "La perfusion arrêtée", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["pompe", "horloge"], titre: "Perfusion interrompue", sous: "le temps d'un examen" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["pompe", "horloge"], titre: "Perfusion interrompue", sous: "le temps d'un examen" });
       j.titre("Le médecin interrompt la perfusion le temps d'un examen. Que devient la tâche correspondante dans le plan de soins ?");
       j.choix([{ html: "Elle est suspendue", juste: true }, { html: "Elle est retirée du plan", aide: "Retirer, c'est pour une prescription annulée. Ici, on reprendra." }, { html: "Rien ne change", aide: "Le plan de soins découle directement des prescriptions : il suit leurs changements." }], { colonnes: 3, ok: function () { j.bravo("Interrompue : suspension."); j.suite(); } });
     } }

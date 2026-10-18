@@ -29,8 +29,8 @@ NIVEAU(SIS.rejouable({
       } });
     } },
     { nom: "Le tube hémolysé", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["tube", "horloge"], titre: "Un tube oublié dans un couloir" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["tube", "horloge"], titre: "Un tube oublié dans un couloir" });
       j.titre("Un tube arrive hémolysé au labo parce qu'il a attendu trop longtemps dans un couloir. Dans quelle phase est née l'erreur ?");
       j.choix([{ html: "Pré-analytique", juste: true }, { html: "Analytique", aide: "L'automate n'y est pour rien : le tube était abîmé avant." }, { html: "Post-analytique", aide: "Le résultat n'existe pas encore." }], { colonnes: 3, ok: function () { j.bravo("Acheminement : pré-analytique, le principal gisement d'erreurs."); j.suite(); } });
     } },

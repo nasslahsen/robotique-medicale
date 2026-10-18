@@ -39,8 +39,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "Le cloud du fabricant", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["moniteur", "nuage"], titre: "Données des moniteurs vers un cloud en Europe", sous: "pour la maintenance" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["moniteur", "nuage"], titre: "Données des moniteurs vers un cloud en Europe", sous: "pour la maintenance" });
       j.titre("Un fabricant de moniteurs veut copier les données des patients sur son cloud en Europe, pour la maintenance. Que dit le cours ?");
       j.choix([
         { html: "C'est un transfert interdit sauf sous des conditions qui demandent une qualification et une autorisation de la CNDP (loi 09-08)", juste: true },

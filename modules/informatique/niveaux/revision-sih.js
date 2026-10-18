@@ -7,8 +7,8 @@ NIVEAU(SIS.rejouable({
   },
   etapes: [
     { nom: "Trois verbes", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["engrenage", "serveur"], titre: "L'architecture logicielle d'un SIH" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["engrenage", "serveur"], titre: "L'architecture logicielle d'un SIH" });
       j.titre("Complète l'objectif de l'architecture logicielle d'un SIH, d'après le cours.");
       var z = j.zone("", '<p style="font-size:19px;line-height:2.4">Un ensemble de modules et solutions en interaction ayant pour objectif de <span class="trou" data-attendu="r"></span>, <span class="trou" data-attendu="t"></span> et <span class="trou" data-attendu="f"></span> les informations nécessaires à son activité.</p>');
       j.jetons({
@@ -33,8 +33,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "L'inspection", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Traçabilité des transfusions de l'année", sous: "sortie en deux minutes" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Traçabilité des transfusions de l'année", sous: "sortie en deux minutes" });
       j.titre("Lors d'une inspection, l'hôpital sort en deux minutes la traçabilité de toutes les transfusions de l'année. Quel apport du SIH est-ce ?");
       j.choix([
         { html: "Qualité et sécurité des soins, respect des réglementations", juste: true },

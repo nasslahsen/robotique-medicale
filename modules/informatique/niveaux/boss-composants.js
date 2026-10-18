@@ -22,8 +22,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Refaire tout le SIH", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["serveur", "engrenage"], titre: "Remplacer tout le SIH", sous: "cœur de la stratégie, plusieurs années de budget DSI" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["serveur", "engrenage"], titre: "Remplacer tout le SIH", sous: "cœur de la stratégie, plusieurs années de budget DSI" });
       j.titre("Le comité veut remplacer tout le SIH. C'est le cœur de la stratégie, et cela coûtera plusieurs années de budget DSI. Que conseille le tableau du cours ?");
       j.choix([
         { html: "Développement spécifique, pour tout maîtriser", aide: "Pour un sujet stratégique mais énorme, le cours conseille autre chose que tout développer soi-même." },

@@ -75,8 +75,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Dessiner le processus", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "engrenage"], titre: "Modéliser le processus d'admission" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "engrenage"], titre: "Modéliser le processus d'admission" });
       j.titre("Pour l'analyse de l'existant, tu dois dessiner le processus d'admission. Lequel de ces outils cite le cours pour modéliser un processus ?");
       j.choix([
         { html: "BIZAGI", juste: true },

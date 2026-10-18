@@ -36,8 +36,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Le bon interlocuteur", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un courriel demande le mot de passe du DPI" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un courriel demande le mot de passe du DPI" });
       j.titre("Une infirmière reçoit un courriel suspect qui demande son mot de passe du DPI. Dans la direction SI, qui est responsable de la sécurité du SI ?");
       j.choix([
         { html: "Le RSSI", juste: true },

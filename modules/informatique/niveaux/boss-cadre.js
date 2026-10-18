@@ -22,8 +22,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La surface d'attaque", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["serveur", "nuage", "cle"], titre: "Télémaintenance du scanner depuis l'Europe", sous: "un accès de plus depuis l'extérieur" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["serveur", "nuage", "cle"], titre: "Télémaintenance du scanner depuis l'Europe", sous: "un accès de plus depuis l'extérieur" });
       j.titre("Cette télémaintenance ajoute un accès depuis l'extérieur. Que fait-elle à la surface d'attaque du CHU ?");
       j.choix([{ html: "Elle l'agrandit au-delà du périmètre de l'établissement", juste: true }, { html: "Elle la réduit, puisque le fabricant connaît son scanner", aide: "Chaque tiers connecté est un point d'entrée de plus." }], { colonnes: 1, ok: function () { j.bravo("Nombreux tiers connectés : la surface dépasse l'établissement."); j.suite(); } });
     } },

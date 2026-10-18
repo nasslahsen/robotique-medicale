@@ -20,8 +20,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Le PACS en panne", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["serveur", "alerte"], titre: "PACS en panne avant une opération" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["serveur", "alerte"], titre: "PACS en panne avant une opération" });
       j.titre("Le PACS est en panne : le neurochirurgien ne peut pas voir le scanner cérébral de son patient avant d'opérer. Quel critère est touché ?");
       j.choix([{ html: "Confidentialité", aide: "Personne n'a vu ce qu'il ne devait pas voir." }, { html: "Intégrité", aide: "Les images ne sont pas fausses : elles sont inaccessibles." }, { html: "Disponibilité", juste: true }], { colonnes: 3, ok: function () { j.bravo("Disponibilité : la donnée existe mais n'est pas accessible quand il le faut."); j.suite(); } });
     } },
@@ -48,8 +48,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Quel type ?", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "base"], titre: "Une échelle de douleur de 0 à 10", sous: "cochée, puis stockée dans une colonne" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "base"], titre: "Une échelle de douleur de 0 à 10", sous: "cochée, puis stockée dans une colonne" });
       j.titre("Une échelle de douleur est cochée de 0 à 10 dans un formulaire, puis stockée dans une colonne « douleur » de la base. Quel type de donnée ?");
       j.choix([{ html: "Structurée", juste: true }, { html: "Semi-structurée", aide: "Ce n'est pas un message d'échange : c'est une colonne fixe d'une base." }, { html: "Non structurée", aide: "La valeur a sa case dans une table : elle n'est pas noyée dans du texte libre." }], { colonnes: 3, ok: function () { j.bravo("Une colonne fixe dans une base : structurée."); j.suite(); } });
     } }

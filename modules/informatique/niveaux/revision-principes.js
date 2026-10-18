@@ -22,8 +22,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Le pousse-seringue", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["pompe", "pirate"], titre: "Un débit modifié à distance", sous: "sans aucune alarme" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["pompe", "pirate"], titre: "Un débit modifié à distance", sous: "sans aucune alarme" });
       j.titre("Un pirate modifie à distance le débit d'un pousse-seringue connecté, sans alarme. Quel critère, et pourquoi est-ce le pire scénario ?");
       j.choix([{ html: "L'intégrité : une erreur de soins souvent non détectable", juste: true }, { html: "La confidentialité : le débit est un secret", aide: "Personne ne lit une donnée secrète : on la change." }, { html: "La disponibilité : la pompe s'arrête", aide: "La pompe continue, mais avec une mauvaise valeur." }], { colonnes: 1, ok: function () { j.bravo("Intégrité, et rien ne le signale."); j.suite(); } });
     } },

@@ -67,8 +67,8 @@ NIVEAU(SIS.rejouable({
       ], { colonnes: 1, ok: function () { j.bravo("Une donnée fausse mais plausible mène à une mauvaise décision."); j.suite(); } });
     } },
     { nom: "Les autres critères", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Une prescription modifiée la nuit", sous: "qui, et quand ?" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "horloge"], titre: "Une prescription modifiée la nuit", sous: "qui, et quand ?" });
       j.titre("Une prescription a été modifiée la nuit. Le médecin veut savoir qui l'a changée, et quand. Quel critère du cours répond à ce besoin ?");
       j.choix([
         { html: "La maintenabilité", aide: "La maintenabilité concerne la facilité à faire évoluer et corriger le système." },

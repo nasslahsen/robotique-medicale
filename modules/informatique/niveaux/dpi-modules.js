@@ -41,8 +41,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "Le bon standard", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["serveur", "ecran"], titre: "Du PACS vers le DPI", sous: "les images d'un scanner" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["serveur", "ecran"], titre: "Du PACS vers le DPI", sous: "les images d'un scanner" });
       j.titre("Le PACS doit envoyer les images d'un scanner vers le DPI. Lequel des standards cités sur le schéma est fait pour les images médicales ?");
       j.choix([{ html: "DICOM", juste: true }, { html: "NGAP", aide: "La NGAP sert à coter des actes, côté facturation." }, { html: "CIM-10", aide: "La CIM-10 code les diagnostics." }], { colonnes: 3, ok: function () { j.bravo("DICOM : le standard des images médicales."); j.suite(); } });
     } }

@@ -32,8 +32,8 @@ NIVEAU(SIS.rejouable({
       ], { colonnes: 3, ok: function () { j.bravo("Connaissance : des informations interprétées par l'intelligence du radiologue."); j.suite(); } });
     } },
     { nom: "Pas un système", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "engrenage"], titre: "Système ou pas ?" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "engrenage"], titre: "Système ou pas ?" });
       j.titre("Lequel de ces exemples n'est pas un système au sens du cours ?");
       j.choix([
         { html: "Le circuit du médicament : prescription, dispensation, administration", aide: "Des éléments reliés, organisés, avec un but : soigner. C'est un système." },

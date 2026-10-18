@@ -36,8 +36,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La norme du biomédical", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["reseau", "moniteur"], titre: "IEC 80001-1", sous: "un réseau qui incorpore des DM" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["reseau", "moniteur"], titre: "IEC 80001-1", sous: "un réseau qui incorpore des DM" });
       j.titre("Pourquoi le cours présente-t-il IEC 80001-1 comme la norme métier de l'ingénieur biomédical au Maroc ?");
       j.choix([{ html: "Elle gère les risques des réseaux qui incorporent des DM, et compense l'absence de texte national spécifique", juste: true }, { html: "Elle est obligatoire par la loi 09-08", aide: "La loi 09-08 porte sur les données personnelles." }, { html: "Elle remplace le marquage CE", aide: "Elle ne certifie pas un dispositif ; elle organise la gestion du réseau." }], { colonnes: 1, ok: function () { j.bravo("Pas de texte national spécifique : IEC 80001-1 le compense."); j.suite(); } });
     } },

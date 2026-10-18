@@ -35,8 +35,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { p.resoudre(); });
     } },
     { nom: "L'antivirus refusé", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["moniteur", "bouclier"], titre: "Un antivirus sur l'échographe ?", sous: "le fabricant refuse" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["moniteur", "bouclier"], titre: "Un antivirus sur l'échographe ?", sous: "le fabricant refuse" });
       j.titre("Le service veut installer un antivirus sur un échographe. Le fabricant refuse. A-t-il raison ?");
       j.choix([
         { html: "Oui : le DM est qualifié par le fabricant, qui en porte la responsabilité ; le modifier sans lui peut le dérégler", juste: true },

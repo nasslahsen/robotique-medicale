@@ -71,8 +71,8 @@ NIVEAU(SIS.rejouable({
       });
     } },
     { nom: "Sans faille", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["bouclier", "pirate"], titre: "Une menace, aucune faille exploitable" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["bouclier", "pirate"], titre: "Une menace, aucune faille exploitable" });
       j.titre("Une menace existe (un groupe de rançongiciel vise les hôpitaux), mais elle ne trouve aucune vulnérabilité exploitable. Y a-t-il attaque réussie ?");
       j.choix([{ html: "Non : une attaque nécessite l'exploitation d'une vulnérabilité", juste: true }, { html: "Oui : la menace suffit", aide: "Relis la définition : il faut une menace ET une vulnérabilité." }], { colonnes: 1, ok: function () { j.bravo("Sans vulnérabilité, la menace reste une menace. Mais rien n'est sûr à 100 %."); j.suite(); } });
     } }

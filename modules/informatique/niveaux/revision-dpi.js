@@ -22,8 +22,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "Glycémie à 8 h", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["tube", "document"], titre: "Glycémie capillaire : 1,40 g/L à 8 h" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["tube", "document"], titre: "Glycémie capillaire : 1,40 g/L à 8 h" });
       j.titre("Une glycémie capillaire est relevée à 8 h : 1,40 g/L. Où l'infirmier la note-t-il dans le DPI ?");
       j.choix([{ html: "Sur la pancarte (feuille de surveillance)", juste: true }, { html: "Dans le plan de soins", aide: "Le plan de soins liste ce qu'il faut faire. Une valeur mesurée va ailleurs." }, { html: "Dans le volet administratif", aide: "Une constante n'est pas une donnée administrative." }], { colonnes: 1, ok: function () { j.bravo("Une constante relevée : la pancarte."); j.suite(); } });
     } },

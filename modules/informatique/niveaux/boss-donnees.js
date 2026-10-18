@@ -64,8 +64,8 @@ NIVEAU(SIS.rejouable({
       j.reponse(function () { t.resoudre(); });
     } },
     { nom: "La décision du comité", jouer: function (j, n) {
-      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un export avec cinq anomalies", sous: "le comité décide demain" });
       SIS.vider(n.g);
+      SIS.scene(n.g, { icones: ["document", "alerte"], titre: "Un export avec cinq anomalies", sous: "le comité décide demain" });
       j.titre("Le comité doit décider demain d'un nouveau protocole pour l'hypertension. Que fais-tu de ce fichier ?");
       j.choix([
         { html: "Je supprime les lignes douteuses et je présente les moyennes sans rien dire", aide: "Supprimer en silence change l'étude : le comité doit savoir sur quoi il décide." },
