@@ -246,10 +246,11 @@
           s("circle", { cx: nd.x + 4, cy: nd.y + 4, r: 13, fill: cfg.coul }, g);
           texte(g, String(k + 1), [nd.x + 4, nd.y + 4], { taille: 14, coul: "#fff", halo: false, gras: 800 });
         }
-        cible(g, nd.x, nd.y, nd.w, nd.h, function () { p.toucher(i); });
       });
       for (var k = 1; k < pris.length; k++) relier(g, cfg.noeuds[pris[k - 1]], cfg.noeuds[pris[k]], { coul: cfg.coul, ep: 5 });
       if (fini && cfg.boucle) relier(g, cfg.noeuds[pris[pris.length - 1]], cfg.noeuds[pris[0]], { coul: cfg.coul, ep: 5, tirets: "10 7" });
+      // zones de toucher en dernier : une flèche qui traverse une étape ne doit pas bloquer le doigt
+      cfg.noeuds.forEach(function (nd, i) { cible(g, nd.x, nd.y, nd.w, nd.h, function () { p.toucher(i); }); });
     };
     p.toucher = function (i) {
       if (fini || pris.indexOf(i) >= 0) return;
