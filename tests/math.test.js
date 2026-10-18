@@ -510,4 +510,8 @@ test("embarqués, chapitre 5 du jeu : périphériques de l'ESP32, réponses atte
   proche(3 * 2, 6, 0);
 });
 
+// Module Biomatériaux : un fichier de tests par chapitre (tests/biomateriaux/), mêmes outils.
+const dossierBio = require("path").join(__dirname, "biomateriaux");
+if (require("fs").existsSync(dossierBio)) for (const f of require("fs").readdirSync(dossierBio).filter(f => f.endsWith(".test.js")).sort()) require("./biomateriaux/" + f)({ test, proche, assert });
+
 console.log(`${n} tests réussis`);
