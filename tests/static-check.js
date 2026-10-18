@@ -97,6 +97,27 @@ for (const id of modules) {
     verifierLiens(f, html); verifierMaths(f, html, false); verifierEcriture(f, html);
     if (!html.includes(`data-module="${id}"`)) err(`${f} : <html data-module="${id}"> manquant`);
   }
+  // liens « Revoir dans le cours » (liens-cours.js) : page existante, section existante (même calcul d'ancre que PLATEFORME.ancre)
+  if (existe(d + "/liens-cours.js")) {
+    const lb = { window: {} }; vm.createContext(lb); vm.runInContext(lire(d + "/liens-cours.js"), lb);
+    const ancre = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "section";
+    const ancres = {};
+    for (const [nid, etapes] of Object.entries(lb.window.LIENS_COURS || {})) {
+      if (!P.niveaux.some(n => n.id === nid)) err(`${d}/liens-cours.js : niveau inconnu ${nid}`);
+      for (const e of etapes) {
+        if (!e) continue;
+        const f = `${d}/cours/${e[0]}.html`;
+        if (!existe(f)) { err(`${d}/liens-cours.js : page absente ${e[0]}`); continue; }
+        if (!ancres[f]) {
+          const vus = {};
+          ancres[f] = [...lire(f).matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)].map(m => {
+            const a = ancre(m[1].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/\\\(|\\\)/g, "").trim()); vus[a] = (vus[a] || 0) + 1; return vus[a] > 1 ? a + "-" + vus[a] : a;
+          });
+        }
+        if (e[1] && !ancres[f].includes(e[1].split("~")[0])) err(`${d}/liens-cours.js : ${nid}, section « ${e[1]} » absente de ${e[0]}.html`);
+      }
+    }
+  }
   for (const f of liste(d + "/figures", /\.js$/)) { verifierEcriture(f, lire(f)); verifierMaths(f, lire(f), true); }
 }
 
