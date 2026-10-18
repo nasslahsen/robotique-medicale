@@ -17,7 +17,7 @@ window.REGISTRE = {
       couleur: "#D44C47", clair: "#FFE2DD", texte: "#CB4844",
       sousModules: [
         { id: "bio", titre: "Robotique biomédicale" },
-        { id: "meca", titre: "Éléments mécaniques en robotique", statut: "a-venir" }
+        { id: "meca", titre: "Éléments mécaniques en robotique" }
       ]
     },
     {

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>La vulcanisation · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>La vulcanisation</h1>
+<p class="chapeau">Un caoutchouc brut coule lentement dès qu'il fait chaud : un joint en caoutchouc brut finirait en flaque dans un stérilisateur. Pour en faire un matériau, il faut empêcher les chaînes de glisser.</p>
+
+<h2>Intuition</h2>
+<p>Au-dessus de \(T_g\), des chaînes linéaires se comportent comme un liquide extrêmement visqueux : rien ne les empêche de glisser. Si on les relie par quelques ponts chimiques, elles forment un réseau. Le réseau peut se déformer beaucoup (les chaînes se déroulent entre deux ponts), mais il ne peut plus couler : il revient à sa forme. Plus il y a de ponts, plus le réseau est serré, plus il est rigide.</p>
+<div id="fig-ponts"></div>
+
+<h2>Formalisation</h2>
+<p>Les élastomères bruts ne sont pas des matériaux prêts à l'emploi. La <strong>vulcanisation</strong> consiste à réaliser une <strong>réticulation chimique</strong> (établissement de liaisons covalentes) entre les chaînes du polymère. On utilise le soufre ou un peroxyde organique pour former les ponts. Le principal système de vulcanisation des caoutchoucs est le système au soufre. Le nom vient de Vulcain, dieu du feu de la religion de la Rome antique.</p>
+<div class="tableau"><table>
+<tr><th>Système</th><th>Pont formé</th><th>Pour quel élastomère</th></tr>
+<tr><td>Soufre</td><td>ponts disulfure (S–S)</td><td>élastomère insaturé (avec doubles liaisons)</td></tr>
+<tr><td>Peroxyde organique</td><td>ponts C–C</td><td>pratiquement tous les élastomères</td></tr>
+<tr><td>Oxydes métalliques MgO/ZnO</td><td>ponts éther (C–O–C)</td><td>élastomère halogéné</td></tr>
+</table></div>
+
+<h2>Effet du soufre sur la courbe du module</h2>
+<p>Les agents de réticulation augmentent \(T_g\) sans faire disparaître le plateau caoutchouteux : \(E\) et \(T_g\) augmentent. Pour une température donnée au-dessus de \(T_g\), le module augmente avec le pourcentage de soufre. Le cours montre les courbes \(G(T)\) pour 0, 2, 10 et 30 % de soufre : sans soufre, la courbe finit par chuter (le caoutchouc s'écoule) ; avec 30 %, \(T_g\) est passée au-dessus de 0 °C.</p>
+<p>Trois familles d'additifs agissent différemment sur cette courbe : les <strong>agents de réticulation</strong> (\(E\) et \(T_g\) augmentent), les <strong>renforts</strong> comme le noir de carbone (\(E\) augmente, \(T_g\) constant) et les <strong>stabilisants</strong> comme les antioxydants.</p>
+<div id="fig-soufre"></div>
+
+<h2>Temps de vulcanisation et réversion</h2>
+<p>Pendant la cuisson, on suit le module du mélange. Le <strong>temps de vulcanisation</strong> est le temps entre le début de l'augmentation du module et le moment où il atteint son maximum. Le <strong>temps de plateau</strong> est la durée pendant laquelle le module reste presque constant à son maximum. Une diminution éventuelle du module ensuite s'appelle la <strong>réversion</strong> ; elle est sensible avec les mélanges à base de caoutchouc naturel.</p>
+<div id="fig-cuisson"></div>
+
+<h2>Exemple</h2>
+<p>Exemple ajouté. On veut un joint de seringue en caoutchouc naturel (\(T_g \approx -60\) °C), caoutchouteux et le plus rigide possible à 20 °C. Avec 0 % de soufre, il coulera à chaud. Avec 30 %, sa \(T_g\) est trop haute : à 20 °C il n'a pas encore quitté l'état vitreux. Un taux intermédiaire (ici 10 % dans le modèle des courbes) garde le plateau caoutchouteux à 20 °C avec un module plus élevé qu'à 2 %. On arrête la cuisson pendant le temps de plateau, avant la réversion.</p>
+
+<h2>Formules clés</h2>
+<p>Vulcanisation = réticulation chimique (liaisons covalentes) entre les chaînes. Soufre : ponts disulfure, élastomère insaturé. Peroxyde : ponts C–C. MgO/ZnO : ponts éther, élastomère halogéné.</p>
+<p>Plus de soufre : \(T_g\) et \(E\) augmentent, le plateau reste. Noir de carbone : \(E\) augmente, \(T_g\) constant.</p>
+<p>Cuisson : temps de vulcanisation, puis temps de plateau, puis réversion éventuelle.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/vulcanisation.js"></script>
+</body>
+</html>

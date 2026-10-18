@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Matériau isotrope, monocouche orthotrope · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<p class="etiquette" data-etiquette></p>
+<h1>Matériau isotrope, monocouche orthotrope</h1>
+<p class="chapeau">Une tige de titane se déforme pareil dans tous les sens. Une lame de prothèse en carbone, non : très raide dans le sens des fibres, souple en travers. Pour la calculer, il faut décrire cette différence avec plus de constantes élastiques.</p>
+
+<h2>Intuition</h2>
+<p>Dans un pli de fibres toutes parallèles, tirer le long des fibres revient à tirer sur les fibres, très raides. Tirer en travers revient à tirer surtout sur la résine, souple. Entre les deux, la rigidité passe progressivement de l'une à l'autre. Un métal, lui, a la même rigidité dans toutes les directions : il est isotrope.</p>
+
+<div id="fig-pli"></div>
+
+<h2>Formalisation</h2>
+<p>Dans le domaine des matériaux composites, la <strong>monocouche unidirectionnelle</strong> est le <strong>pli</strong> de base à partir duquel sont construits les composites stratifiés, qui ont de très bonnes propriétés mécaniques comparativement aux matériaux isotropes. Les propriétés des stratifiés se calculent donc à partir de celles de la monocouche unidirectionnelle. On repère le pli par trois directions : <strong>longitudinale</strong> L ou 1 (le long des fibres), <strong>transverse</strong> T ou 2 (perpendiculaire aux fibres, dans le plan), et 3 (l'épaisseur). Un stratifié empile des plis orientés, par exemple à 90°, −θ, 0°, +θ.</p>
+<p>Du point de vue mécanique, un matériau <strong>orthotrope</strong> se comporte très différemment d'un matériau <strong>isotrope</strong> :</p>
+<ul>
+<li>isotrope (alliages métalliques, céramiques, polymères) : deux constantes élastiques indépendantes suffisent parmi le module d'Young \(E\), le coefficient de Poisson \(\nu\) et le module de cisaillement \(G\), avec \(G = \dfrac{E}{2(1+\nu)}\) ;</li>
+<li>monocouche orthotrope dans ses axes (1, 2, 3) : neuf constantes élastiques indépendantes ;</li>
+<li>stratifié mince : l'épaisseur est très faible devant les autres dimensions, le calcul se ramène à deux dimensions (1, 2) et il faut encore quatre constantes indépendantes.</li>
+</ul>
+<div class="tableau"><table>
+<tr><th>Constante (plaque mince)</th><th>Notation</th></tr>
+<tr><td>module longitudinal, parallèle aux fibres (direction L ou 1)</td><td>\(E_L\) ou \(E_{11}\)</td></tr>
+<tr><td>module transversal, perpendiculaire aux fibres (direction T ou 2)</td><td>\(E_T\) ou \(E_{22}\)</td></tr>
+<tr><td>module de cisaillement dans le plan L-T (ou 1-2)</td><td>\(G_{LT}\) ou \(G_{12}\)</td></tr>
+<tr><td>coefficient de Poisson majeur</td><td>\(\nu_{LT}\) ou \(\nu_{12}\)</td></tr>
+</table></div>
+<p>La diapo écrit « direction L ou 1 » sur la ligne du module transversal : c'est une coquille recopiée de la ligne du dessus ; le module transversal se mesure dans la direction T ou 2.</p>
+
+<div id="fig-stratifie"></div>
+
+<h2>Hypothèses de la micromécanique</h2>
+<p>Pour calculer les modules de la monocouche à partir de ceux des fibres et de la matrice (pages suivantes), le cours pose :</p>
+<ul>
+<li>distribution uniforme des fibres à travers la matrice ;</li>
+<li>collage parfait entre les fibres et la matrice ;</li>
+<li>charge appliquée parallèle ou normale à la direction des fibres ;</li>
+<li>absence de contraintes résiduelles ;</li>
+<li>fibres et matrice ont chacune un comportement élastique.</li>
+</ul>
+
+<h2>Exemple</h2>
+<p>Isotrope : un alliage avec \(E = 200\) GPa et \(G = 80\) GPa a \(1 + \nu = E/(2G) = 1{,}25\), donc \(\nu = 0{,}25\) ; pas besoin de le mesurer. Orthotrope (exemple ajouté) : un pli carbone-époxy a typiquement \(E_L = 140\) GPa, \(E_T = 10\) GPa, \(G_{LT} = 5\) GPa, \(\nu_{LT} = 0{,}3\). Ces quatre valeurs sont indépendantes : connaître \(E_L\) et \(\nu_{LT}\) ne donne ni \(E_T\) ni \(G_{LT}\). Dans la figure du haut, la rigidité dans une direction θ se déduit de ces quatre constantes : 140 GPa à 0°, environ 13 GPa à 45°, 10 GPa à 90°.</p>
+
+<h2>Formules clés</h2>
+<p>Directions : L ou 1 (fibres), T ou 2 (en travers, dans le plan), 3 (épaisseur).</p>
+<p>\[\text{isotrope : } G = \frac{E}{2(1+\nu)} \quad (2\ \text{constantes})\]</p>
+<p>Monocouche orthotrope (1, 2, 3) : 9 constantes ; plaque mince (1, 2) : 4 constantes \(E_L, E_T, G_{LT}, \nu_{LT}\).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/isotrope-orthotrope.js"></script>
+</body>
+</html>

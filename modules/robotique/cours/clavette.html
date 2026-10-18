@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Clavettes · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Clavettes</h1>
+<p class="chapeau">Le moteur d'une articulation fait tourner son arbre ; la poulie ou la roue montée dessus doit tourner avec lui. Une petite pièce d'acier, logée entre les deux, fait passer tout le couple : la clavette. Est-elle assez solide ?</p>
+
+<h2>Intuition</h2>
+<p>Un moyeu simplement enfilé sur un arbre lisse pourrait patiner. On creuse une rainure dans l'arbre, une autre dans le moyeu, et on place une clavette à cheval dans les deux. Quand l'arbre tourne, il pousse la clavette, qui pousse le moyeu.</p>
+<p>Si le couple est trop grand, la clavette se coupe au niveau où l'arbre et le moyeu glissent l'un sur l'autre : le plan de joint. Plus l'arbre est gros, plus la force sur la clavette est faible pour un même couple (le bras de levier est plus long). Plus la clavette est longue et large, plus cette force se répartit sur une grande surface.</p>
+
+<div id="fig-clavette"></div>
+
+<h2>Formalisation</h2>
+<p>Les <strong>clavettes</strong> ont pour rôle de transmettre un couple entre deux pièces mises en position par une liaison cylindre-cylindre. Le cours montre des clavettes parallèles à bouts ronds et une clavette disque. La clavette se loge dans une rainure de l'arbre et dans une rainure débouchante du moyeu.</p>
+
+<div id="fig-montage"></div>
+
+<p>Pour un arbre de diamètre \(d\) transmettant un couple \(C\), la force tangentielle équivalente au rayon \(d/2\) vaut :</p>
+\[ F_t = \frac{2C}{d} \qquad (2.2) \]
+<p>Une estimation simple de la contrainte moyenne de cisaillement d'une clavette de largeur \(b\) et de longueur utile \(L\) est :</p>
+\[ \tau \simeq \frac{F_t}{bL} \qquad (2.3) \]
+<p>avec \(\tau\) la contrainte moyenne de cisaillement (Pa ou MPa) et \(F_t\) la force tangentielle (N). Le calcul complet doit aussi vérifier le matage, les dimensions normalisées, les concentrations de contraintes et le cycle de charge.</p>
+<p>Bouts d'arbres cylindriques (série longue, usuelle, ou série courte), liaison en rotation par clavette parallèle ou par manchon de blocage : tolérance j6 pour \(d \le 30\) mm, k6 pour \(d \ge 32\) mm.</p>
+
+<h2>Rappel : contrainte et unités</h2>
+<p>Une contrainte est une force divisée par la surface qui la supporte. Avec une force en newtons et une surface en mm², on obtient des N/mm², et 1 N/mm² = 1 MPa. C'est pour cela qu'on garde \(b\) et \(L\) en millimètres dans \(\tau \simeq F_t / (bL)\). Dans \(F_t = 2C/d\), en revanche, \(C\) est en N·m et \(d\) doit être en mètres pour obtenir des newtons.</p>
+
+<h2>Exemple du cours : ordre de grandeur</h2>
+<p>Avec \(C = 8\) N·m, \(d = 12\) mm, \(b = 4\) mm et \(L = 20\) mm :</p>
+\[ F_t = \frac{2 \times 8}{0{,}012} = 1{,}33 \text{ kN} \qquad \tau \simeq \frac{1333}{4 \times 20} = 16{,}7 \text{ MPa} \]
+<p>Pour un acier de type C45, très utilisé pour la fabrication des clavettes, la limite élastique en cisaillement est d'environ 200 MPa.</p>
+
+<h2>Formules clés</h2>
+\[ F_t = \frac{2C}{d} \qquad \tau \simeq \frac{F_t}{bL} \]
+<p>Cisaillement dans le plan de joint arbre / moyeu. À compléter par le matage, les dimensions normalisées, les concentrations de contraintes et le cycle de charge.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/clavette.js"></script>
+</body>
+</html>

@@ -25,7 +25,10 @@ NIVEAU({
           var cx = x + 135, cy = y + 105;
           if (i === 0) for (var a = 0; a < 4; a++) for (var b = 0; b < 2; b++) D.rond(g, [cx - 60 + a * 40, cy - 20 + b * 40], 13, { fill: "#d5d9e2", stroke: C.encre, ep: 2 });
           if (i === 1) for (a = 0; a < 5; a++) for (b = 0; b < 2; b++) D.rond(g, [cx - 80 + a * 40, cy - 20 + b * 40], (a + b) % 2 ? 9 : 15, { fill: (a + b) % 2 ? "#c9a96e" : "#efe3cc", stroke: C.encre, ep: 2 });
-          if (i === 2) [0, 1, 2].forEach(function (k) { E.s("path", { d: BIO.cheminLisse(BIO.chaine(30 + k, 14, [cx - 100, cy - 36, 200, 72], 15, 1.05)), fill: "none", stroke: C.encre, "stroke-width": 2.5, "stroke-linecap": "round" }, g); });
+          if (i === 2) [0, 1, 2].forEach(function (k) {
+            var pts = []; for (var t = 0; t <= 40; t++) pts.push([cx - 95 + t * 4.75, cy - 24 + k * 24 + 13 * Math.sin(t * 0.42 + k * 2.1) + 6 * Math.sin(t * 0.17 + k)]);
+            E.s("path", { d: BIO.cheminLisse(pts), fill: "none", stroke: C.encre, "stroke-width": 3, "stroke-linecap": "round" }, g);
+          });
           if (i === 3) { E.s("rect", { x: cx - 90, y: cy - 38, width: 180, height: 76, rx: 10, fill: PLATEFORME.teinte(0.25) }, g); for (a = 0; a < 4; a++) D.ligne(g, [cx - 80, cy - 26 + a * 17], [cx + 80, cy - 26 + a * 17], C.encre, 3); }
         });
       } else if (n.mode === "frise") {

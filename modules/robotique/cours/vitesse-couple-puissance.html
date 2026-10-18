@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Vitesse de rotation, couple et puissance · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Vitesse de rotation, couple et puissance</h1>
+<p class="chapeau">Le moteur d'un axe tourne à 3000 tr/min avec un petit couple ; l'épaule du bras doit tourner lentement avec un gros couple. Trois grandeurs décrivent cet échange : la vitesse, le couple et la puissance.</p>
+
+<h2>Intuition</h2>
+<p>Un axe rotatif se décrit par trois grandeurs : sa vitesse de rotation \(\omega\), son couple \(C\) et sa puissance \(P\). La vitesse dit à quelle allure il tourne, le couple avec quelle force il fait tourner, la puissance combine les deux : c'est le travail fourni chaque seconde.</p>
+<p>Un constructeur donne la vitesse en tours par minute, les calculs la veulent en radians par seconde. La conversion se voit sur un disque : à 60 tr/min, il fait un tour par seconde, soit \(2\pi\) rad.</p>
+
+<div id="fig-vitesse"></div>
+
+<p>Un réducteur échange de la vitesse contre du couple. Il ne fabrique pas de puissance : il en perd un peu, à cause des frottements.</p>
+
+<div id="fig-reducteur"></div>
+
+<h2>Formalisation</h2>
+<p>Principales caractéristiques d'un axe rotatif : \(\omega\), vitesse de rotation (rad/s) ; \(C\), couple (N·m) ; \(P\), puissance (W).</p>
+<p>Pour une <strong>vitesse de rotation</strong> \(n\) exprimée en tours par minute :</p>
+\[ \omega = \frac{2\pi n}{60} \qquad (1.1) \]
+<p>avec \(\omega\) la vitesse angulaire (rad/s), \(n\) la vitesse de rotation (tr/min), \(\pi \approx 3{,}1416\).</p>
+<p>La <strong>puissance mécanique de rotation</strong> vaut :</p>
+\[ P = C\,\omega \qquad (1.2) \]
+<p>avec \(P\) la puissance mécanique (W), \(C\) le couple (N·m), \(\omega\) la vitesse angulaire (rad/s).</p>
+<p>Pour une transmission de <strong>rapport</strong> \(i = \omega_e / \omega_s\) et de rendement \(\eta\) :</p>
+\[ C_s \simeq \eta\, i\, C_e \qquad (1.3) \]
+<p>avec \(C_s\) le couple de sortie (N·m), \(C_e\) le couple d'entrée (N·m), \(i\) le rapport de réduction, \(\eta\) le rendement global. Avec cette convention, un réducteur a \(i > 1\) : la sortie tourne \(i\) fois moins vite et donne environ \(\eta\, i\) fois plus de couple. La puissance de sortie vaut alors \(P_s = C_s\,\omega_s \simeq \eta\, P_e\).</p>
+<p class="complement">Attention : au chapitre 8, le rapport d'un engrenage est écrit \(i_{12} = \omega_2 / \omega_1\), sortie sur entrée. Vérifie toujours quelle convention est utilisée.</p>
+
+<h2>Rappel : couple et bras de levier</h2>
+<p>Un couple naît d'une force qui agit à distance d'un axe. Une force \(F\) appliquée perpendiculairement à une distance \(r\) de l'axe donne un couple \(C = F\,r\), en N·m. C'est pour cela qu'une clé longue serre plus facilement. On retrouvera cette relation pour la clavette (\(F_t = 2C/d\), la force au rayon \(d/2\)) et pour le couple gravitaire \(C_g = mgL\).</p>
+
+<div id="fig-couple"></div>
+
+<h2>Exemple ajouté</h2>
+<p>Un moteur tourne à \(n = 3000\) tr/min et fournit \(C = 0{,}32\) N·m. Il entraîne un réducteur de rapport \(i = 50\) et de rendement \(\eta = 0{,}8\).</p>
+\[ \omega_e = \frac{2\pi \times 3000}{60} \approx 314{,}16 \ \text{rad/s} \qquad P_e = 0{,}32 \times 314{,}16 \approx 100{,}5 \ \text{W} \]
+\[ \omega_s = \frac{314{,}16}{50} \approx 6{,}28 \ \text{rad/s} \qquad C_s \simeq 0{,}8 \times 50 \times 0{,}32 = 12{,}8 \ \text{N}\cdot\text{m} \qquad P_s \approx 80{,}4 \ \text{W} \]
+<p>La sortie tourne à un tour par seconde, avec 40 fois le couple du moteur ; 20 % de la puissance part en pertes.</p>
+
+<h2>Formules clés</h2>
+\[ \omega = \frac{2\pi n}{60} \qquad P = C\,\omega \qquad i = \frac{\omega_e}{\omega_s} \qquad C_s \simeq \eta\, i\, C_e \qquad C = F\,r \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/vitesse-couple-puissance.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Loi des mélanges et module longitudinal · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<p class="etiquette" data-etiquette></p>
+<h1>Loi des mélanges et module longitudinal</h1>
+<p class="chapeau">On sait le module de la fibre de verre (70 GPa) et celui de la résine (3 GPa). Quelle rigidité aura une plaque qui contient 40 % de fibres, tirée dans le sens des fibres ? Pas la moyenne simple : il faut savoir comment fibres et matrice se partagent la charge.</p>
+
+<h2>Intuition</h2>
+<p>Tirée dans le sens des fibres, la plaque s'allonge d'un bloc : fibres et matrice, collées l'une à l'autre, ont le même allongement. C'est comme deux ressorts côte à côte entre deux plaques : ils s'allongent pareil et leurs forces s'ajoutent. Le ressort raide (la fibre) porte presque toute la force.</p>
+
+<div id="fig-parallele"></div>
+
+<h2>Formalisation</h2>
+<p>Monocouche unidirectionnelle chargée parallèlement aux fibres (direction L). Matrice : \(E_m, \sigma_m, \varepsilon_m\) ; fibre : \(E_f, \sigma_f, \varepsilon_f\). Sections : \(A_c = A_f + A_m\). Fractions volumiques : \(\phi_f = A_f/A_c\) et \(\phi_m = A_m/A_c = 1 - \phi_f\).</p>
+<ul>
+<li>Même déformation : \(\varepsilon_{CL} = \varepsilon_f = \varepsilon_m\).</li>
+<li>Les forces s'ajoutent : \(F_{CL} = F_f + F_m = \sigma_f A_f + \sigma_m A_m = \sigma_{CL} A_c\).</li>
+<li>On divise par \(A_c\) : \(\sigma_{CL} = \sigma_f \dfrac{A_f}{A_c} + \sigma_m \dfrac{A_m}{A_c} = \sigma_f \phi_f + \sigma_m \phi_m\) : <strong>loi des mélanges</strong>.</li>
+<li>Avec \(\sigma = E\,\varepsilon\) et la même déformation : \(E_{CL}\,\varepsilon_{CL} = E_f\,\varepsilon_f\,\phi_f + E_m\,\varepsilon_m\,\phi_m\), donc \(E_{CL} = E_f \phi_f + E_m \phi_m\).</li>
+</ul>
+<p>Le module longitudinal varie en ligne droite de \(E_m\) (sans fibres) à \(E_f\) (que des fibres) : il est influencé par les fibres.</p>
+
+<h2>Résistance longitudinale</h2>
+<p>Fibre, matrice et composite suivent chacun leur courbe contrainte-déformation, avec la même déformation. La fibre, raide et peu déformable, atteint sa déformation de rupture \(\varepsilon_{fu}\) avant la matrice (\(\varepsilon_{mu}\)) : sa contrainte vaut alors \(\sigma_{fu}\) et le composite atteint sa résistance longitudinale \(\sigma_{Ltu}\). La matrice seule casserait à \(\sigma_{mu}\), bien plus bas. En pratique, il est difficile de prévoir le mode de rupture (le cours montre des éprouvettes rompues en balai de fibres) : les équations de rupture servent d'approximation.</p>
+
+<div id="fig-rupture"></div>
+
+<h2>Exemple</h2>
+<p>Exemple du cours : \(E_f = 70\) GPa, \(E_m = 3\) GPa, \(\phi_f = 0{,}4\), \(\varepsilon = 0{,}01\).</p>
+<ul>
+<li>\(\sigma_f = 70\,000 \times 0{,}01 = 700\) MPa et \(\sigma_m = 3\,000 \times 0{,}01 = 30\) MPa.</li>
+<li>\(\sigma_c = 700 \times 0{,}4 + 30 \times 0{,}6 = 280 + 18 = 298\) MPa : les fibres en portent 280 (94 %), la matrice 18 (6 %). La diapo écrit « 8 » sous le second terme : c'est \(30 \times 0{,}6 = 18\).</li>
+<li>\(E_{CL} = 70 \times 0{,}4 + 3 \times 0{,}6 = 29{,}8\) GPa \(\approx E_f\,\phi_f = 28\) GPa : la contribution de la matrice est presque négligeable.</li>
+</ul>
+
+<h2>Formules clés</h2>
+<p>\[\varepsilon_{CL} = \varepsilon_f = \varepsilon_m \qquad \phi_m = 1 - \phi_f\]</p>
+<p>\[\sigma_{CL} = \sigma_f\,\phi_f + \sigma_m\,\phi_m \qquad E_{CL} = E_f\,\phi_f + E_m\,\phi_m\]</p>
+<p>La fibre rompt la première (\(\varepsilon_{fu} < \varepsilon_{mu}\)) ; le mode de rupture reste difficile à prévoir.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/loi-melanges.js"></script>
+</body>
+</html>

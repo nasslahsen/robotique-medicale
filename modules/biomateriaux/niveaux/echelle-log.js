@@ -16,7 +16,7 @@ NIVEAU({
       E.vider(g); E.vider(gh);
       D.fleche(g, pl.P([0, 4.7]), pl.P([0, 12.3]), C.encre, 4);
       D.texte(g, "module E (Pa)", [X0 + 22, 118], { taille: 18, ancre: "start" });
-      var noms = { 6: "1 MPa", 9: "1 GPa", 12: "1 TPa" };
+      var noms = { 6: "1 MPa", 9: "1 GPa" };
       for (var k = 5; k <= 12; k++) {
         var p = pl.P([0, k]);
         D.ligne(g, [p[0] - 14, p[1]], [p[0] + 14, p[1]], C.encre, 3);
@@ -35,8 +35,8 @@ NIVEAU({
       });
       if (n.chute) {
         var a = pl.P([0, 9]), b = pl.P([0, 6]);
-        D.fleche(g, [a[0] + 300, a[1]], [b[0] + 300, b[1]], C.jeu, 5);
-        D.texte(g, "passage de Tg", [a[0] + 312, (a[1] + b[1]) / 2], { taille: 17, coul: C.jeu, ancre: "start" });
+        D.fleche(g, [a[0] + 230, a[1]], [b[0] + 230, b[1]], C.jeu, 5);
+        D.texte(g, "passage de Tg", [a[0] + 242, (a[1] + b[1]) / 2], { taille: 17, coul: C.jeu, ancre: "start" });
       }
       if (n.curseurVis) {
         var c = pl.P([0, n.lv]);

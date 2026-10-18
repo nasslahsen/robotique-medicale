@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Les plastifiants · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Les plastifiants</h1>
+<p class="chapeau">Le PVC est rigide à l'ambiante : sa \(T_v\) est de 90 °C. Pourtant les tubulures et les poches de perfusion en PVC se plient sans effort. On a glissé quelque chose entre ses chaînes.</p>
+
+<h2>Intuition</h2>
+<p>La cohésion d'un polymère rigide vient des interactions entre ses chaînes. Un plastifiant est fait de petites molécules qui se glissent entre les chaînes, les écartent et coupent une partie de ces interactions. Les chaînes bougent plus facilement : le polymère devient souple, et il le devient à plus basse température.</p>
+<div id="fig-plastifiant"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>plastifiant</strong> est un solvant lourd qui, incorporé aux polymères, détruit partiellement les interactions entre chaînes responsables de la cohésion mécanique et transforme un matériau initialement rigide en matériau souple, flexible.</p>
+<p>La rigidité diminue avec la concentration en plastifiant, de même que la température de transition vitreuse et la limite conventionnelle de flexibilité. Ce dernier critère est caractéristique de l'effet plastifiant.</p>
+<div class="tableau"><table>
+<tr><th>Exemple : le PVC</th><th>Température de fragilité</th></tr>
+<tr><td>PVC rigide non plastifié</td><td>0 °C</td></tr>
+<tr><td>PVC plastifié</td><td>−5 à −60 °C selon la nature et la concentration du plastifiant</td></tr>
+</table></div>
+<div id="fig-fragilite"></div>
+
+<h2>Exemple</h2>
+<p>TD 1.5 c : le PVC a une \(T_g\) de 90 °C ; pour diminuer sa \(T_g\), on ajoute un matériau plastifiant. Le plastifiant peut abaisser la température de fragilité du PVC de 0 °C jusqu'à −60 °C, soit 60 °C de moins au plus. Une poche qui doit passer à −18 °C (exemple ajouté) demande un PVC plastifié dont la température de fragilité est sous −18 °C : tous les PVC plastifiés ne conviennent pas, puisque la plage commence à −5 °C.</p>
+
+<h2>Formules clés</h2>
+<p>Plastifiant = solvant lourd qui détruit partiellement les interactions entre chaînes : rigide → souple.</p>
+<p>Concentration en plastifiant ↑ : rigidité ↓, \(T_v\) ↓, limite conventionnelle de flexibilité ↓ (critère caractéristique).</p>
+<p>PVC : fragilité à 0 °C (rigide), −5 à −60 °C (plastifié).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/plastifiants.js"></script>
+</body>
+</html>
