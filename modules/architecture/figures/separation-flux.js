@@ -29,7 +29,7 @@
     if (mode === "physique") A.chemin(g, [[840, 202], [840, 260], [680, 260], [680, 355], [738, 380]], { coul: C.sale, ep: 6 });
     else if (saleDansCouloir) A.chemin(g, [[738, 180], [560, 200], [560, 290], [738, 360]], { coul: C.sale, ep: 6, tirets: mode === "orga" ? null : "12 7" });
     if (mode === "orga") { A.s("rect", { x: 540, y: 225, width: 44, height: 30, rx: 5, fill: "#fff", stroke: C.sale, "stroke-width": 3 }, g); A.texte(g, "bac fermé", [606, 240], { taille: 14, coul: C.sale, ancre: "start" }); }
-    if (mode === "aucune") { A.s("circle", { cx: 560, cy: 170, r: 34, fill: "none", stroke: C.ko, "stroke-width": 5 }, g); A.texte(g, "croisement sans contrôle", [560, 120], { taille: 16, coul: C.ko }); }
+    if (mode === "aucune") { A.s("circle", { cx: 560, cy: 170, r: 34, fill: "none", stroke: C.ko, "stroke-width": 5 }, g); A.texte(g, "croisement sans contrôle", [560, 76], { taille: 16, coul: C.ko }); }
     if (mode === "temporelle") {
       A.texte(g, propreActif ? "programme opératoire : le sale attend" : "fin de programme : le sale sort", [480, 470], { taille: 18, coul: propreActif ? C.propre : C.sale });
       A.s("rect", { x: 240, y: 500, width: 480, height: 14, rx: 7, fill: C.pale }, g);
