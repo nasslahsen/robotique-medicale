@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>CISC et RISC · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>CISC et RISC</h1>
+<p class="chapeau">Deux processeurs font la même multiplication. L'un le fait avec une seule instruction compliquée, l'autre avec quatre instructions toutes simples. Lequel choisir pour un appareil embarqué, et qu'est-ce que cela change à la puce ?</p>
+
+<h2>Intuition</h2>
+<p>Le jeu d'instructions, c'est le vocabulaire que comprend le processeur. Un vocabulaire riche (CISC) permet de dire beaucoup en peu de mots : une seule instruction va chercher deux nombres en mémoire, les multiplie et range le résultat. Mais chaque mot est long à exécuter, et le processeur doit contenir de quoi comprendre tous ces mots compliqués.</p>
+<p>Un vocabulaire réduit (RISC) n'a que des mots courts : charger, calculer, ranger. Il faut plus de mots pour la même phrase, mais chacun s'exécute en un cycle, et la puce peut consacrer ses transistors à des registres. Les AVR et les ARM des pages suivantes sont des processeurs RISC.</p>
+
+<div id="fig-mult"></div>
+
+<h2>Formalisation</h2>
+<p><strong>CISC</strong> : <i>Complex Instruction Set Computer</i>. <strong>RISC</strong> : <i>Reduced Instruction Set Computer</i>. Le tableau du cours (diapositive 10) :</p>
+<div class="tableau"><table>
+<tr><th>CISC</th><th>RISC</th></tr>
+<tr><td><i>Emphasis on hardware</i></td><td><i>Emphasis on software</i></td></tr>
+<tr><td><i>Includes multi-clock complex instructions</i></td><td><i>Single-clock, reduced instruction only</i></td></tr>
+<tr><td><i>Memory-to-memory : "LOAD" and "STORE" incorporated in instructions</i></td><td><i>Register to register : "LOAD" and "STORE" are independent instructions</i></td></tr>
+<tr><td><i>Small code sizes, high cycles per second</i></td><td><i>Low cycles per second, large code sizes</i></td></tr>
+<tr><td><i>Transistors used for storing complex instructions</i></td><td><i>Spends more transistors on memory registers</i></td></tr>
+</table></div>
+<p>En français : le CISC met la complexité dans le matériel, avec des instructions qui durent plusieurs cycles et vont d'une case mémoire à une autre ; son code est court. Le RISC met la complexité dans le logiciel (le compilateur), avec des instructions d'un cycle qui travaillent de registre à registre, LOAD et STORE étant des instructions à part ; son code est plus long.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Multiplier le nombre de la case mémoire 2:3 par celui de la case 5:2 et ranger le résultat en 2:3.</p>
+<div class="tableau"><table>
+<tr><th>CISC</th><th>RISC</th></tr>
+<tr><td><code>MULT 2:3, 5:2</code> (une instruction, plusieurs cycles)</td><td><code>LOAD A, 2:3</code><br><code>LOAD B, 5:2</code><br><code>PROD A, B</code><br><code>STORE 2:3, A</code><br>(quatre instructions d'un cycle)</td></tr>
+</table></div>
+<p>Le CISC a le code le plus court (1 instruction contre 4) ; le RISC ne touche la mémoire qu'avec LOAD et STORE, et PROD ne travaille que sur les registres A et B.</p>
+
+<h2>Formules clés</h2>
+<p>CISC : complexité dans le matériel, instructions multi-cycles, mémoire à mémoire, code court. RISC : complexité dans le logiciel, instructions d'un cycle, registre à registre (LOAD et STORE séparés), code long, plus de registres.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/cisc-risc.js"></script>
+</body>
+</html>

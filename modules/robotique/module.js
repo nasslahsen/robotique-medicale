@@ -11,7 +11,11 @@ PLATEFORME.parcours("robotique", {
     { id: 1, titre: "Le robot et sa description", sous: "Anatomie, liaisons, architectures, performances", sousModule: "bio" },
     { id: 2, titre: "Repères et vecteurs dans l'espace", sous: "Coordonnées, produits, position d'un solide", sousModule: "bio" },
     { id: 3, titre: "Orientations", sous: "Matrices de rotation et angles d'Euler", sousModule: "bio" },
-    { id: 4, titre: "Transformations", sous: "Changement de repère, matrices homogènes, bras 2R", sousModule: "bio" }
+    { id: 4, titre: "Transformations", sous: "Changement de repère, matrices homogènes, bras 2R", sousModule: "bio" },
+    { id: 5, titre: "Architecture mécanique d'un axe", sous: "Chaîne fonctionnelle, vitesse, couple, puissance, rigidité et jeu", sousModule: "meca" },
+    { id: 6, titre: "Assemblages et fixations", sous: "Serrer, positionner, transmettre : vis, clavettes, goupilles, anneaux, ressorts", sousModule: "meca" },
+    { id: 7, titre: "Guidages rotatifs et linéaires", sous: "Raideur, roulements, durée de vie, montage fixe-libre, précharge", sousModule: "meca" },
+    { id: 8, titre: "Transmissions de puissance", sous: "Arbres, engrenages, module, rapports et trains", sousModule: "meca" }
   ],
   niveaux: [
     { id: "angles", chapitre: 0, titre: "Degrés et radians", pret: true },
@@ -56,7 +60,42 @@ PLATEFORME.parcours("robotique", {
     { id: "composition", chapitre: 4, titre: "Composition des transformations", cours: true, pret: true },
     { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", cours: true, pret: true },
     { id: "revision-transformations", chapitre: 4, titre: "Révision : les transformations", revision: true, pret: true },
-    { id: "boss-transformations", chapitre: 4, titre: "Le bras 2R atteint la cible", boss: true, pret: true }
+    { id: "boss-transformations", chapitre: 4, titre: "Le bras 2R atteint la cible", boss: true, pret: true },
+
+    { id: "chaine-fonctionnelle", chapitre: 5, titre: "La chaîne fonctionnelle", cours: true, pret: true },
+    { id: "nomenclature", chapitre: 5, titre: "Symboles et unités", cours: true, pret: true },
+    { id: "vitesse-couple-puissance", chapitre: 5, titre: "Vitesse, couple, puissance", cours: true, pret: true },
+    { id: "rigidite-jeu", chapitre: 5, titre: "Rigidité et jeu angulaire", cours: true, pret: true },
+    { id: "contraintes-biomedicales", chapitre: 5, titre: "Contraintes biomédicales", pret: true },
+    { id: "revision-axe", chapitre: 5, titre: "Révision : l'axe robotique", revision: true, pret: true },
+    { id: "boss-axe", chapitre: 5, titre: "L'axe du bras chirurgical", boss: true, pret: true },
+
+    { id: "fonctions-liaison", chapitre: 6, titre: "Serrer, positionner, transmettre", cours: true, pret: true },
+    { id: "assemblage-visse", chapitre: 6, titre: "Précharge d'un assemblage vissé", cours: true, pret: true },
+    { id: "clavette", chapitre: 6, titre: "La clavette", cours: true, pret: true },
+    { id: "anneaux-goupilles", chapitre: 6, titre: "Anneaux élastiques et goupilles", cours: true, pret: true },
+    { id: "ressorts", chapitre: 6, titre: "Les ressorts", cours: true, pret: true },
+    { id: "revision-assemblages", chapitre: 6, titre: "Révision : les assemblages", revision: true, pret: true },
+    { id: "boss-assemblages", chapitre: 6, titre: "Monte la roue sur l'arbre", boss: true, pret: true },
+
+    { id: "criteres-guidage", chapitre: 7, titre: "Critères d'un guidage et raideur", cours: true, pret: true },
+    { id: "roulements", chapitre: 7, titre: "Le roulement", cours: true, pret: true },
+    { id: "radiaux-butees", chapitre: 7, titre: "Roulements radiaux et butées", cours: true, pret: true },
+    { id: "types-roulements", chapitre: 7, titre: "Choisir un type de roulement", cours: true, pret: true },
+    { id: "duree-l10", chapitre: 7, titre: "Durée nominale L10", cours: true, pret: true },
+    { id: "fixe-libre", chapitre: 7, titre: "Montage fixe-libre", cours: true, pret: true },
+    { id: "precharge-roulements", chapitre: 7, titre: "Jeu, précharge et frottement", cours: true, pret: true },
+    { id: "revision-guidages", chapitre: 7, titre: "Révision : les guidages", revision: true, pret: true },
+    { id: "boss-guidages", chapitre: 7, titre: "Le palier du poignet", boss: true, pret: true },
+
+    { id: "arbre-couple", chapitre: 8, titre: "Arbres : couple et puissance", cours: true, pret: true },
+    { id: "arbre-torsion", chapitre: 8, titre: "L'arbre en torsion", cours: true, pret: true },
+    { id: "engrenages", chapitre: 8, titre: "Engrenages : familles et vocabulaire", cours: true, pret: true },
+    { id: "denture", chapitre: 8, titre: "Géométrie d'une denture", cours: true, pret: true },
+    { id: "rapport-engrenage", chapitre: 8, titre: "Rapport et entraxe", cours: true, pret: true },
+    { id: "trains-engrenages", chapitre: 8, titre: "Trains et rendement en cascade", cours: true, pret: true },
+    { id: "revision-transmissions", chapitre: 8, titre: "Révision : les transmissions", revision: true, pret: true },
+    { id: "boss-transmissions", chapitre: 8, titre: "Le réducteur de l'articulation", boss: true, pret: true }
   ],
   cours: [
     { chapitre: 1, id: "robot-systeme", titre: "Le robot et le système robotisé" },
@@ -79,6 +118,28 @@ PLATEFORME.parcours("robotique", {
     { chapitre: 4, id: "changement-repere", titre: "Changement de repère" },
     { chapitre: 4, id: "matrice-homogene", titre: "Matrice homogène" },
     { chapitre: 4, id: "composition", titre: "Composition des transformations" },
-    { chapitre: 4, id: "bras-2r", titre: "Modèle géométrique direct du bras 2R" }
+    { chapitre: 4, id: "bras-2r", titre: "Modèle géométrique direct du bras 2R" },
+    { chapitre: 5, id: "chaine-fonctionnelle", titre: "Chaîne fonctionnelle d'un axe et contraintes biomédicales" },
+    { chapitre: 5, id: "nomenclature", titre: "Nomenclature : symboles, unités, indices" },
+    { chapitre: 5, id: "vitesse-couple-puissance", titre: "Vitesse de rotation, couple et puissance" },
+    { chapitre: 5, id: "rigidite-jeu", titre: "Rigidité torsionnelle et jeu angulaire" },
+    { chapitre: 6, id: "fonctions-liaison", titre: "Fonctions d'une liaison et exemples complets" },
+    { chapitre: 6, id: "assemblage-visse", titre: "Assemblage vissé et précharge" },
+    { chapitre: 6, id: "clavette", titre: "Clavettes" },
+    { chapitre: 6, id: "anneaux-goupilles", titre: "Anneaux élastiques et goupilles" },
+    { chapitre: 6, id: "ressorts", titre: "Ressorts" },
+    { chapitre: 7, id: "criteres-guidage", titre: "Critères fonctionnels d'un guidage et raideur" },
+    { chapitre: 7, id: "roulements", titre: "Roulements : principe, éléments roulants, constitution" },
+    { chapitre: 7, id: "radiaux-butees", titre: "Roulements radiaux et butées" },
+    { chapitre: 7, id: "types-roulements", titre: "Les types de roulements et leur choix" },
+    { chapitre: 7, id: "duree-l10", titre: "Durée nominale de base L10" },
+    { chapitre: 7, id: "fixe-libre", titre: "Montage fixe-libre et dilatation" },
+    { chapitre: 7, id: "precharge-roulements", titre: "Jeu, précharge et frottement" },
+    { chapitre: 8, id: "arbre-couple", titre: "Arbres : couple et puissance" },
+    { chapitre: 8, id: "arbre-torsion", titre: "Résistance d'un arbre en torsion" },
+    { chapitre: 8, id: "engrenages", titre: "Engrenages : généralités, familles, types" },
+    { chapitre: 8, id: "denture", titre: "Géométrie d'une denture et module" },
+    { chapitre: 8, id: "rapport-engrenage", titre: "Engrenage cylindrique : rapport et entraxe" },
+    { chapitre: 8, id: "trains-engrenages", titre: "Engrenages en cascade et trains" }
   ]
 });

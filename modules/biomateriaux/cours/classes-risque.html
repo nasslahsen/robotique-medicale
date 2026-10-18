@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Classes de dispositifs médicaux · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Classes de dispositifs médicaux</h1>
+<p class="chapeau">Un bas de contention et un stent coronaire sont tous deux des dispositifs médicaux. Mais une erreur sur le stent peut tuer, pas sur le bas. La réglementation classe donc les DM selon le risque qu'ils font courir au patient, et demande d'autant plus de preuves que ce risque est grand.</p>
+
+<h2>Intuition</h2>
+<p>Trois questions suffisent à situer un dispositif : entre-t-il dans le corps (caractère invasif) ? Combien de temps y reste-t-il (durée du contact) ? Quelle partie du corps touche-t-il ? Plus le dispositif va loin, longtemps et près des organes vitaux, plus il monte dans l'escalier du risque, et plus le nombre de tests à passer avant l'approbation est élevé.</p>
+<div id="fig-classes"></div>
+
+<h2>Formalisation</h2>
+<p>Reprenons la définition des experts : un biomatériau est « tout matériau, naturel ou non, incluant tout ou partie d'une structure vivante ou d'un dispositif biomédical qui exécute ou remplace une fonction corporelle ». Les biomatériaux dédiés à l'implantation (implants, prothèses, supports d'ingénierie tissulaire) sont donc des <strong>dispositifs médicaux implantables</strong>. Comme tous les DM, ils sont répartis en quatre classes selon le risque encouru par le patient : classe I, classe IIa, classe IIb et classe III (article R5211-7 du Code de la santé publique), plus la classe des dispositifs médicaux actifs.</p>
+<p>La classification prend en compte le caractère invasif du dispositif, la durée de son contact avec le patient et la partie du corps affectée. En Europe, tous les détails sont dans la Directive 93/42/CEE ; aux États-Unis, les critères sont définis par la FDA. Quel que soit le pays : plus la classe est élevée, plus le risque potentiel pour le patient est grand, et plus le nombre de tests avant l'approbation est élevé.</p>
+<div class="tableau"><table>
+<tr><th>Classe</th><th>Risque</th><th>Ce qu'elle regroupe</th><th>Exemples du cours</th></tr>
+<tr><td><strong>I</strong></td><td>faible</td><td>DM non invasifs, ou invasifs à usage de courte durée en contact avec la peau</td><td>fauteuils roulants, bas de contention, bandages utilisés comme barrières mécaniques ou pour comprimer ou absorber les exsudats, pansements chirurgicaux réutilisables, instruments, scalpels</td></tr>
+<tr><td><strong>IIa</strong></td><td>moyen</td><td>DM invasifs à usage de courte durée</td><td>lentilles de contact, échographes, agrafes cutanées, couronnes dentaires, dispositifs de conservation cellulaire ou tissulaire à long terme, poches de sang</td></tr>
+<tr><td><strong>IIb</strong></td><td>élevé</td><td>DM invasifs à usage prolongé</td><td>implants chirurgicaux, matériel d'hémodialyse, pompes à perfusion</td></tr>
+<tr><td><strong>III</strong></td><td>le plus élevé</td><td>DM invasifs à court ou long terme en contact avec le cœur, le système circulatoire central (SCC) ou nerveux (SNC) ; DM ayant un effet biologique ; DM subissant des modifications chimiques dans le corps</td><td>stent, prothèse de hanche, administrateur de médicaments, dispositif biodégradable</td></tr>
+</table></div>
+<p>Les dispositifs de classe III nécessitent une approbation préalable à la commercialisation et des évaluations précliniques et cliniques. En complément de la classification, dix-huit règles aident les fabricants à déterminer le degré de risque de leurs dispositifs. En Europe, la sécurité des DM est assurée par le <strong>marquage CE</strong> de la Communauté européenne, sous le contrôle des agences nationales.</p>
+<p>La figure applique une version simplifiée de ces critères ; la classe réelle d'un produit se détermine avec les dix-huit règles.</p>
+
+<h2>Exemple</h2>
+<p>Une lentille de contact est invasive (posée sur l'œil) pour une courte durée : classe IIa. Une pompe à perfusion est invasive à usage prolongé : classe IIb. Une vis qui se résorbe dans l'os ne touche pas le cœur, mais elle subit des modifications chimiques dans le corps : classe III, avec approbation préalable et évaluations précliniques et cliniques.</p>
+
+<h2>Formules clés</h2>
+<p>Critères : caractère invasif, durée du contact, partie du corps concernée.</p>
+<p>I : non invasif (ou court au contact de la peau). IIa : invasif de courte durée. IIb : invasif prolongé. III : cœur, SCC, SNC, effet biologique ou biodégradable.</p>
+<p>Plus la classe monte, plus il y a de tests. Europe : Directive 93/42/CEE, marquage CE, 18 règles. États-Unis : FDA.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/classes-risque.js"></script>
+</body>
+</html>

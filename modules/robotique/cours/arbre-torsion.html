@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Résistance d'un arbre en torsion · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Résistance d'un arbre en torsion</h1>
+<p class="chapeau">L'arbre de sortie d'un réducteur transmet un couple important. S'il est trop fin, il se tord puis casse, comme l'arbre rompu en torsion de la photo du cours. Quel diamètre minimal lui donner ?</p>
+
+<h2>Intuition</h2>
+<p>Trace un quadrillage sur un arbre (lignes le long de l'arbre, cercles autour), bloque un bout et tords l'autre. Les cercles restent des cercles et les rayons d'une section restent droits : chaque section tourne d'un petit angle, en bloc, par rapport à sa voisine. Seules les lignes longitudinales se tordent et deviennent des hélices.</p>
+<p>Ce glissement entre sections voisines est nul sur l'axe et maximal à la surface : c'est là que la matière est la plus sollicitée, et c'est là que la rupture commence.</p>
+
+<div id="fig-torsion"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Condition de résistance en torsion d'un arbre cylindrique</strong> : la contrainte tangentielle maximale \(\tau_{max}\), induite par le moment (couple) de torsion \(M_t\), ne doit pas dépasser la résistance pratique au glissement \(R_{pg}\) du matériau.</p>
+\[ \tau_{max} \le R_{pg} \]
+<p>Pour dimensionner un arbre plein en torsion, on utilise la condition :</p>
+\[ d > \sqrt[3]{\frac{16\,M_t}{\pi\,R_{pg}}} \]
+<div class="tableau"><table>
+<tr><th>Symbole</th><th>Grandeur</th><th>Unité</th></tr>
+<tr><td>\(d\)</td><td>diamètre de l'arbre</td><td>mm</td></tr>
+<tr><td>\(M_t\)</td><td>moment de torsion</td><td>N·mm</td></tr>
+<tr><td>\(R_{pg}\)</td><td>résistance pratique au glissement du matériau</td><td>N/mm²</td></tr>
+</table></div>
+<p>Attention aux unités : \(M_t\) est en N·mm, pas en N·m (1 N·m = 1000 N·mm). Le diamètre varie comme la racine cubique du moment : doubler \(M_t\) ne multiplie \(d\) que par \(\sqrt[3]{2} \approx 1{,}26\).</p>
+
+<div id="fig-diametre"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté : le cours ne donne pas de valeur de \(R_{pg}\) ; 40 N/mm² est supposé ici.</p>
+<p>Arbre plein, \(M_t = 20\) N·m \(= 20\,000\) N·mm, \(R_{pg} = 40\) N/mm² :</p>
+\[ d > \sqrt[3]{\frac{16 \times 20\,000}{\pi \times 40}} = \sqrt[3]{2546} \approx 13{,}66 \text{ mm} \]
+<p>On choisit ensuite un diamètre normalisé au-dessus de cette valeur.</p>
+
+<h2>Formules clés</h2>
+\[ \tau_{max} \le R_{pg} \qquad d > \sqrt[3]{\frac{16\,M_t}{\pi\,R_{pg}}} \quad (d \text{ en mm},\ M_t \text{ en N}\cdot\text{mm},\ R_{pg} \text{ en N/mm}^2) \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/arbre-torsion.js"></script>
+</body>
+</html>

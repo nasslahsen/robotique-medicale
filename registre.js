@@ -17,23 +17,23 @@ window.REGISTRE = {
       couleur: "#D44C47", clair: "#FFE2DD", texte: "#CB4844",
       sousModules: [
         { id: "bio", titre: "Robotique biomédicale" },
-        { id: "meca", titre: "Éléments mécaniques en robotique", statut: "a-venir" }
+        { id: "meca", titre: "Éléments mécaniques en robotique" }
       ]
     },
     {
-      id: "biomateriaux", titre: "Biomatériaux, biomécanique et prothèses", statut: "a-venir",
+      id: "biomateriaux", titre: "Biomatériaux, biomécanique et prothèses", statut: "actif",
       couleur: "#9065B0", clair: "#E8DEEE", texte: "#8D62AC",
       sousModules: [
-        { id: "biomecanique", titre: "Biomécanique et prothèses" },
+        { id: "biomecanique", titre: "Biomécanique et prothèses", statut: "a-venir" },
         { id: "biomateriaux", titre: "Biomatériaux et biocompatibilité" }
       ]
     },
     {
-      id: "embarques", titre: "Systèmes embarqués et instrumentation biomédicale intelligente", statut: "a-venir",
+      id: "embarques", titre: "Systèmes embarqués et instrumentation biomédicale intelligente", statut: "actif",
       couleur: "#337EA9", clair: "#D3E5EF", texte: "#317BA5",
       sousModules: [
         { id: "embarques", titre: "Systèmes embarqués" },
-        { id: "instrumentation", titre: "Instrumentation connectée et intelligence des objets connectés" }
+        { id: "instrumentation", titre: "Instrumentation connectée et intelligence des objets connectés", statut: "a-venir" }
       ]
     },
     {
