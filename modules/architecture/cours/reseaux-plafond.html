@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Réseaux informatiques et plafond technique · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Réseaux informatiques et plafond technique</h1>
+<p class="chapeau">Le bloc moderne est connecté : dossier patient, images, traçabilité, vidéo. Et tous ses réseaux, avec l'air, l'électricité et les gaz, se croisent dans le même espace au-dessus de la salle.</p>
+<h2>Intuition</h2>
+<p>Pendant une intervention, l'équipe consulte le dossier du patient, affiche des images d'imagerie, trace les dispositifs utilisés, enregistre la vidéo de l'endoscopie. Tout cela passe par des réseaux qui doivent être disponibles, protégés et maintenus. Physiquement, ces câbles rejoignent les gaines d'air, les câbles électriques, les tuyaux de gaz et les supports des bras dans le plafond technique : sans coordination, ils se disputent la place.</p>
+
+<div id="fig-plafond"></div>
+
+<h2>Formalisation</h2>
+<h3>Réseaux informatiques</h3>
+<p>Le bloc opératoire moderne nécessite également : un réseau informatique ; le dossier patient informatisé ; le <b>PACS</b> ; le <b>RIS</b> ; un système de traçabilité ; la vidéo ; la téléconsultation ; l'intégration des équipements biomédicaux. Il faut prévoir : <b>données + cybersécurité + disponibilité + maintenance</b>.</p>
+<p>PACS : système d'archivage et de transmission des images médicales ; RIS : système d'information de radiologie (définitions ajoutées).</p>
+<h3>Plafond technique</h3>
+<p>Le plafond technique doit intégrer : ventilation ; gaines ; réseaux électriques ; réseaux informatiques ; gaz médicaux ; évacuation ; éclairage ; supports des équipements. Il faut réaliser une coordination : <b>architecture + CVC + électricité + fluides médicaux + biomédical</b>.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Le TD 1 (cas 3) décrit un projet de salle hybride où le plan initial ne prévoit pas la validation de la charge du plafond. Or le plafond doit porter les bras plafonniers et parfois une partie du système d'imagerie : sans coordination entre architecture, structure, CVC, électricité, fluides et biomédical, un bras peut ne pas pouvoir être posé, ou entrer en collision avec l'arceau.</p>
+
+<h2>Formules clés</h2>
+<p>Réseaux : dossier patient, PACS, RIS, traçabilité, vidéo, téléconsultation, intégration biomédicale ; données + cybersécurité + disponibilité + maintenance.</p>
+<p>Plafond technique : ventilation, gaines, réseaux électriques et informatiques, gaz médicaux, évacuation, éclairage, supports ; coordination architecture + CVC + électricité + fluides médicaux + biomédical.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/reseaux-plafond.js"></script>
+</body>
+</html>

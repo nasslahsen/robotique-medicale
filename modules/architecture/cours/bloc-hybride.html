@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Bloc hybride et protection radiologique · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Bloc hybride et protection radiologique</h1>
+<p class="chapeau">Quand l'angiographe entre au bloc, la salle doit accueillir à la fois une chirurgie ouverte et une imagerie interventionnelle, avec ses rayons X.</p>
+<h2>Intuition</h2>
+<p>Un bloc hybride, c'est une salle d'opération dans laquelle on a installé une imagerie interventionnelle. On peut ainsi poser une endoprothèse sous angiographie et, si besoin, ouvrir aussitôt. Mais l'arceau tourne autour du patient, le système d'angiographie occupe de la place, l'anesthésie et les équipements chirurgicaux restent là : il faut une salle plus grande. Et les rayons X traversent ce qu'on ne protège pas : murs, portes, vitres, parfois le plafond et le plancher.</p>
+
+<div id="fig-hybride"></div>
+
+<h2>Formalisation</h2>
+<p>Le <strong>bloc hybride</strong> combine : <b>chirurgie + imagerie interventionnelle</b>. Exemples : angiographie, chirurgie vasculaire, chirurgie cardiaque, interventions complexes.</p>
+<p>Il nécessite davantage d'espace pour : l'arceau ; le système d'angiographie ; la table ; l'anesthésie ; les équipements chirurgicaux ; la protection radiologique. Le FGI prévoit pour les salles hybrides des exigences spécifiques d'espace, notamment les dégagements autour de la table et les besoins d'installation et de maintenance (surface libre minimale de 55,74 m² et dimension libre minimale de 6,10 m, page précédente).</p>
+<h3>Protection radiologique</h3>
+<p>Lorsqu'un appareil RX ou un système d'angiographie est installé dans le bloc, il faut étudier : le blindage des parois ; les portes ; les vitrages ; le plafond / plancher si nécessaire ; le positionnement de la source ; les zones adjacentes ; la signalisation ; le contrôle réglementaire.</p>
+<p>La protection doit être <b>calculée par une étude radiophysique / radioprotection</b>, et non par une épaisseur standard appliquée systématiquement.</p>
+
+<div id="fig-radio"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Deux salles hybrides identiques : l'une a pour voisin un local technique rarement occupé, l'autre un bureau occupé toute la journée. L'étude de radioprotection ne donnera pas la même protection pour la paroi commune : c'est pour cela que le cours refuse une épaisseur standard.</p>
+
+<h2>Formules clés</h2>
+<p>Bloc hybride = chirurgie + imagerie interventionnelle ; plus d'espace (arceau, angiographie, table, anesthésie, équipements chirurgicaux, protection radiologique).</p>
+<p>Radioprotection : parois, portes, vitrages, plafond / plancher, source, zones adjacentes, signalisation, contrôle réglementaire ; protection calculée par une étude, pas une épaisseur standard.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/bloc-hybride.js"></script>
+</body>
+</html>

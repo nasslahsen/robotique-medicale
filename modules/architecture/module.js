@@ -1,7 +1,7 @@
 /*
  * Module Architecture hospitalière : ordre des pages. Couleurs et statut : registre.js.
  * Le registre ne donne pas de sous-module pour ce module : les chapitres s'affichent directement.
- * Source : cours « Architecture hospitalière et contraintes d'installation d'un bloc opératoire ».
+ * Sources : cours « Architecture hospitalière et contraintes d'installation d'un bloc opératoire » et TD 1 « Bloc opératoire ».
  * niveaux : pages du jeu, dans l'ordre (cours : true quand cours/<id>.html existe ;
  *           revision, boss : niveaux de fin de chapitre ; pret : niveau jouable).
  * cours : pages de cours, dans l'ordre du menu « Tous les concepts ».
@@ -13,7 +13,8 @@ PLATEFORME.parcours("architecture", {
     { id: 3, titre: "La salle d'opération", sous: "Surface et volume, sols, murs, plafond, portes, bloc hybride, ergonomie et acoustique" },
     { id: 4, titre: "L'air du bloc", sous: "Objectifs de la ventilation, pression, renouvellement, distribution, filtration" },
     { id: 5, titre: "Énergie, lumière, fluides et réseaux", sous: "Électricité, éclairage, fluides médicaux, réseaux, plafond technique" },
-    { id: 6, titre: "Équipements, sécurité et méthode", sous: "Intégration biomédicale, sécurité, normes, méthode en dix étapes, erreurs à éviter" }
+    { id: 6, titre: "Équipements, sécurité et méthode", sous: "Intégration biomédicale, sécurité, normes, méthode en dix étapes, erreurs à éviter" },
+    { id: 7, titre: "TD 1 : bloc opératoire", sous: "QCM, calcul de renouvellement d'air et quatre études de cas du TD" }
   ],
   niveaux: [
     { id: "architecture-hospitaliere", chapitre: 1, titre: "Ce que l'architecture organise", cours: true, pret: true },
@@ -57,7 +58,18 @@ PLATEFORME.parcours("architecture", {
     { id: "methode-conception", chapitre: 6, titre: "Concevoir un bloc en dix étapes", cours: true, pret: true },
     { id: "ingenieur-erreurs", chapitre: 6, titre: "L'ingénieur biomédical et les erreurs à éviter", cours: true, pret: true },
     { id: "revision-conception", chapitre: 6, titre: "Révision : équipements, sécurité, méthode", revision: true, pret: true },
-    { id: "boss-conception", chapitre: 6, titre: "Le dossier du nouveau bloc", boss: true, pret: true }
+    { id: "boss-conception", chapitre: 6, titre: "Le dossier du nouveau bloc", boss: true, pret: true },
+
+    { id: "td1", chapitre: 7, titre: "TD 1 : questions de cours", cours: true, pret: true },
+    { id: "td-qcm-1", chapitre: 7, titre: "TD 1 : QCM, questions 1 à 5", pret: true },
+    { id: "td-qcm-2", chapitre: 7, titre: "TD 1 : QCM, questions 6 à 10", pret: true },
+    { id: "td-calcul", chapitre: 7, titre: "TD 1 : débit et renouvellement d'air", pret: true },
+    { id: "td-cas-flux", chapitre: 7, titre: "Cas 1 : réorganiser un bloc", pret: true },
+    { id: "td-cas-air", chapitre: 7, titre: "Cas 2 : température et humidité", pret: true },
+    { id: "td-cas-hybride", chapitre: 7, titre: "Cas 3 : projet de salle hybride", pret: true },
+    { id: "td-cas-equipement", chapitre: 7, titre: "Cas 4 : équipement critique indisponible", pret: true },
+    { id: "revision-td", chapitre: 7, titre: "Révision : le TD en situations nouvelles", revision: true, pret: true },
+    { id: "boss-td", chapitre: 7, titre: "Le schéma fonctionnel du groupe", boss: true, pret: true }
   ],
   cours: [
     { chapitre: 1, id: "architecture-hospitaliere", titre: "Ce que l'architecture hospitalière organise" },
@@ -84,6 +96,7 @@ PLATEFORME.parcours("architecture", {
     { chapitre: 6, id: "securite", titre: "Incendie, sécurité du patient et du personnel" },
     { chapitre: 6, id: "normes", titre: "Normes et référentiels à connaître" },
     { chapitre: 6, id: "methode-conception", titre: "Méthode de conception et validation" },
-    { chapitre: 6, id: "ingenieur-erreurs", titre: "Rôle de l'ingénieur biomédical et erreurs fréquentes" }
+    { chapitre: 6, id: "ingenieur-erreurs", titre: "Rôle de l'ingénieur biomédical et erreurs fréquentes" },
+    { chapitre: 7, id: "td1", titre: "TD 1 : questions, calcul et synthèse" }
   ]
 });

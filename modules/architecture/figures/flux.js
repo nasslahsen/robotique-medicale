@@ -12,7 +12,7 @@
     hosp: { t: "Hospitalisation", x: 20, y: 20, w: 180, h: 70 }, vest: { t: "Vestiaires", x: 220, y: 20, w: 170, h: 70 },
     rec: { t: "Réception", x: 760, y: 20, w: 180, h: 70 }, ster: { t: "Stérilisation centrale", x: 540, y: 20, w: 200, h: 70 },
     prep: { t: "Préparation patient", x: 20, y: 140, w: 180, h: 80 }, couloir: { t: "Circulation du personnel (semi-restreinte)", x: 220, y: 140, w: 300, h: 80, z: "semi" },
-    stock: { t: "Stockage propre / stérile", x: 760, y: 140, w: 180, h: 80, z: "semi" }, prepst: { t: "Préparation stérile", x: 540, y: 140, w: 200, h: 80, z: "restreinte" },
+    stock: { t: "Stockage propre / stérile", x: 540, y: 140, w: 200, h: 80, z: "semi" }, prepst: { t: "Préparation stérile", x: 760, y: 140, w: 180, h: 80, z: "restreinte" },
     salle: { t: "Salle d'opération", x: 300, y: 260, w: 360, h: 140, z: "restreinte" },
     sspi: { t: "SSPI", x: 20, y: 300, w: 180, h: 100 }, rea: { t: "Réanimation", x: 20, y: 440, w: 180, h: 80 },
     sale: { t: "Circuit sale, évacuation", x: 300, y: 450, w: 640, h: 70 }
@@ -21,9 +21,9 @@
   var FL = {
     patient: { coul: C.patient, nom: "Patient", pts: [c("hosp"), c("prep"), [110, 250], [300, 300]], suite: [[300, 360], c("sspi", 90, 10)], fin: [c("sspi", 0, 50), c("rea", 0, -40)], txt: "Hospitalisation → préparation → transfert → salle d'opération → SSPI → réanimation / hospitalisation." },
     personnel: { coul: C.personnel, nom: "Personnel", pts: [c("vest"), c("couloir", -60, -40), c("couloir", -60, 0), [420, 258]], txt: "Vestiaires → zone semi-restreinte → zone restreinte ; l'accès est contrôlé." },
-    propre: { coul: C.propre, nom: "Propre", pts: [c("rec"), c("stock", 30, -40), c("stock", 0, 30), c("prepst", 40, 30), [600, 258]], txt: "Réception → stockage propre → préparation → salle d'opération." },
+    propre: { coul: C.propre, nom: "Propre", pts: [[850, 92], [850, 112], [700, 112], [700, 138]], suite: [[742, 190], [758, 190]], fin: [[850, 222], [850, 240], [620, 240], [620, 258]], txt: "Réception → stockage propre → préparation → salle d'opération." },
     sale: { coul: C.sale, nom: "Sale", pts: [[560, 402], [560, 448]], txt: "Salle d'opération → évacuation des déchets et instruments souillés → circuit sale, sans traverser les zones propres." },
-    dm: { coul: C.dm, nom: "Dispositifs médicaux", pts: [c("ster", -40, 0), c("stock", -40, -40)], retour: [[880, 448], [880, 240], [940, 240], [940, 100], [700, 92]], txt: "Stérilisation centrale → stockage stérile → bloc → utilisation → instruments souillés → retour en stérilisation (boucle)." }
+    dm: { coul: C.dm, nom: "Dispositifs médicaux", pts: [[600, 92], [600, 138]], suite: [[580, 222], [580, 258]], retour: [[940, 470], [952, 470], [952, 8], [620, 8], [620, 18]], txt: "Stérilisation centrale → stockage stérile → bloc → utilisation → instruments souillés → retour en stérilisation (boucle)." }
   };
   var b = R.boutons(f.reglages), bts = {};
   ["tous", "patient", "personnel", "propre", "sale", "dm"].forEach(function (k) { bts[k] = R.bouton(b, k === "tous" ? "Tous" : FL[k].nom, function () { choix = k; dessiner(); }); });

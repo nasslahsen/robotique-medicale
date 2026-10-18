@@ -56,7 +56,8 @@ NIVEAU({
           var t = n.trouves[p.id];
           var f = n.faux === i;
           A.s("circle", { cx: p.c[0], cy: p.c[1], r: 21, fill: t ? C.ok : f ? C.koPale : "rgba(59,91,219,.12)", stroke: t ? "#fff" : f ? C.ko : C.acc, "stroke-width": 3 }, g);
-          A.texte(g, t ? "✓" : "?", p.c, { taille: 18, coul: t ? "#fff" : f ? C.ko : C.acc, halo: false, gras: 800 });
+          if (t) A.s("path", { d: "M" + (p.c[0] - 9) + " " + p.c[1] + " l6 7 l12 -14", fill: "none", stroke: "#fff", "stroke-width": 4, "stroke-linecap": "round" }, g);
+          else A.texte(g, "?", p.c, { taille: 18, coul: f ? C.ko : C.acc, halo: false, gras: 800 });
           A.texte(g, p.nom, [p.c[0] + (p.c[0] > 560 ? -8 : p.c[0] < 100 ? 8 : 0), p.c[1] + 36], { taille: 14, coul: t ? C.ok : C.doux, ancre: p.c[0] > 560 ? "end" : p.c[0] < 100 ? "start" : "middle" });
           A.cible(g, p.c[0] - 32, p.c[1] - 32, 64, 64, function () { if (n.surRx) n.surRx(i); });
         });

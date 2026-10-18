@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Pression positive et cascade de pression · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Pression positive et cascade de pression</h1>
+<p class="chapeau">Une porte s'ouvre plusieurs dizaines de fois pendant une intervention. À chaque ouverture, l'air passe d'une pièce à l'autre : il faut décider dans quel sens.</p>
+<h2>Intuition</h2>
+<p>L'air va toujours de la zone où la pression est la plus haute vers celle où elle est la plus basse. Si la salle est en légère surpression par rapport au couloir, l'air sort de la salle à chaque ouverture de porte, et l'air moins propre du couloir n'entre pas. En enchaînant plusieurs paliers (salle, puis zone intermédiaire, puis circulation), on obtient une cascade : l'air descend toujours du plus propre vers le moins propre.</p>
+
+<div id="fig-cascade"></div>
+
+<h2>Formalisation</h2>
+<p>Une salle opératoire conventionnelle doit généralement être maintenue en <strong>pression positive par rapport aux espaces adjacents</strong>. Principe : zone plus propre → salle opératoire → zone moins propre. Ainsi, lorsque la porte s'ouvre, l'air tend à sortir de la salle plutôt qu'à y entrer. Le CDC indique que les salles d'opération doivent être maintenues en pression positive par rapport aux couloirs et espaces adjacents.</p>
+<p><strong>Cascade de pression</strong>, exemple conceptuel du cours : salle opératoire (pression la plus forte) → préparation / zone intermédiaire → circulation (0). <b>La cascade exacte doit être définie par le référentiel et le programme de ventilation du projet.</b></p>
+<p>Les portes à fermeture automatique entre les zones servent à préserver la cascade (recommandations de la Healthcare Infection Society).</p>
+<p>Rappel : dans un modèle simple, un local est en surpression quand on y souffle plus d'air qu'on n'en extrait ; l'excédent s'échappe par les portes et les fuites.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Si, dans un bloc, la zone de préparation est réglée à une pression plus forte que la salle, la cascade est cassée : à l'ouverture de la porte, l'air de la préparation entre dans la salle. La pression positive de la salle doit être vérifiée par rapport à <b>tous</b> ses espaces adjacents, et pas seulement par rapport au couloir.</p>
+
+<h2>Formules clés</h2>
+<p>L'air va de la pression la plus haute vers la plus basse.</p>
+<p>Salle en pression positive par rapport aux espaces adjacents ; cascade : salle → zone intermédiaire → circulation ; valeurs exactes fixées par le référentiel et le programme de ventilation.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/pression-cascade.js"></script>
+</body>
+</html>

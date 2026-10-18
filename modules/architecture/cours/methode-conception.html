@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Méthode de conception et validation · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Méthode de conception et validation</h1>
+<p class="chapeau">Concevoir un bloc, c'est enchaîner dix étapes dans le bon ordre, puis tout vérifier avant le premier patient : la fin des travaux n'est pas la fin du projet.</p>
+<h2>Intuition</h2>
+<p>L'ordre des étapes suit la logique du cours. On part du besoin (combien de salles, pour quelles chirurgies), on en tire la liste des locaux, on organise les flux, on en déduit les zones, et alors seulement on dessine. Viennent ensuite les réseaux (air, électricité, fluides), puis les équipements. Enfin, on vérifie que tout fonctionne réellement, avec des mesures et des essais, avant d'accueillir un patient.</p>
+
+<div id="fig-methode"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Étape</th><th>Contenu</th></tr>
+<tr><td>1. Analyse des besoins</td><td>nombre de salles, spécialités, nombre d'interventions, horaires, types de chirurgie</td></tr>
+<tr><td>2. Programme fonctionnel</td><td>définir tous les locaux (salles d'opération, SSPI, stérilisation, locaux du personnel)</td></tr>
+<tr><td>3. Analyse des flux</td><td>patients, personnel, propre, sale, déchets, matériel</td></tr>
+<tr><td>4. Zonage</td><td>public, semi-restreint, restreint</td></tr>
+<tr><td>5. Architecture</td><td>surfaces, dimensions, portes, circulations, matériaux</td></tr>
+<tr><td>6. CVC</td><td>débit, filtration, pression, température, humidité, renouvellement</td></tr>
+<tr><td>7. Électricité</td><td>puissance, alimentation normale, secours, UPS, sécurité</td></tr>
+<tr><td>8. Fluides médicaux</td><td>O₂, air, vide, évacuation des gaz</td></tr>
+<tr><td>9. Implantation biomédicale</td><td>définir les équipements et leurs contraintes</td></tr>
+<tr><td>10. Validation</td><td>avant mise en service : architecture, CVC, électricité, gaz, biomédical, hygiène, sécurité, validation fonctionnelle</td></tr>
+</table></div>
+<p>Les recommandations professionnelles récentes insistent particulièrement sur l'<b>implication de l'équipe de prévention des infections dès la conception</b> et sur la <b>validation avant la première utilisation</b>.</p>
+<h3>Validation technique avant ouverture</h3>
+<p>Un bloc opératoire ne doit pas être considéré comme prêt simplement parce que les travaux sont terminés. Il faut vérifier notamment :</p>
+<div class="tableau"><table>
+<tr><th>CVC</th><th>Électricité</th><th>Gaz médicaux</th><th>Biomédical</th><th>Hygiène</th></tr>
+<tr><td>température, humidité, débits, renouvellement d'air, pression différentielle, filtration, alarmes</td><td>continuité, terre, équipotentialité, alimentation de secours, essais des circuits</td><td>pression, qualité, identification, alarmes, étanchéité</td><td>réception, conformité, essais de sécurité, intégration, formation</td><td>surfaces, nettoyage, flux, procédures, validation</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p>Cas 2 du TD 1 : la température et l'humidité d'une salle fluctuent ; le service technique répond que « la climatisation fonctionne », sans relevés ni rapport de qualification. Les vérifications de la colonne CVC donnent la démarche : relevés de température et d'humidité, débits et ACH comparés au référentiel, pression différentielle, état des filtres, alarmes et historique de maintenance, avant d'autoriser la reprise d'activité.</p>
+
+<h2>Formules clés</h2>
+<p>Besoins → programme → flux → zonage → architecture → CVC → électricité → fluides → implantation biomédicale → validation.</p>
+<p>Avant ouverture : CVC, électricité, gaz médicaux, biomédical, hygiène ; équipe de prévention des infections dès la conception.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/methode-conception.js"></script>
+</body>
+</html>
