@@ -1,5 +1,5 @@
 /* Révision du chapitre 5 : électricité, éclairage, fluides médicaux, réseaux, plafond technique, dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-technique",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -66,4 +66,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Sans coordination, les réseaux se disputent le plafond."); j.suite(); } });
     } }
   ]
-});
+}));

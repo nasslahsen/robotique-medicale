@@ -1,5 +1,5 @@
 /* Niveau : acoustique (diapo 59) et ergonomie (diapo 60). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "ergonomie-acoustique",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -116,4 +116,4 @@ NIVEAU({
       j.reponse(function () { pa.resoudre(); });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : rôle de l'ingénieur biomédical (diapos 71 et 72), erreurs fréquentes à éviter (diapos 73 et 74). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "ingenieur-erreurs",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -76,4 +76,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

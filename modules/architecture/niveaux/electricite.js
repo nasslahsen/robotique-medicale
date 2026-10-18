@@ -1,5 +1,5 @@
 /* Niveau : électricité du bloc opératoire (diapo 36) et sécurité électrique (diapo 37). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "electricite",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -98,4 +98,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Erreurs 7 et 8 de la liste du cours."); j.suite(); } });
     } }
   ]
-});
+}));

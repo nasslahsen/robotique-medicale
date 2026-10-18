@@ -1,5 +1,5 @@
 /* Niveau : filtration de l'air (diapos 32 et 33), flux unidirectionnel / UCV (diapo 34). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "filtration-ucv",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg), ga = A.s("g", null, fig.svg);
@@ -108,4 +108,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

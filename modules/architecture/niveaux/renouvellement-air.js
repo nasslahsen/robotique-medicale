@@ -1,5 +1,5 @@
 /* Niveau : renouvellement d'air (diapo 30) et distribution de l'air (diapo 31). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "renouvellement-air",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg), ga = A.s("g", null, fig.svg);
@@ -144,4 +144,4 @@ NIVEAU({
       j.reponse(function () { if (n.surConfig) n.surConfig(0); });
     } }
   ]
-});
+}));

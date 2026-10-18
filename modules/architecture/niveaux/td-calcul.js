@@ -1,5 +1,5 @@
 /* Niveau : TD 1, partie IV. Salle de 180 m³, 20 renouvellements par heure retenus par l'exercice, débit mesuré 3 060 m³/h. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-calcul",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -71,4 +71,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

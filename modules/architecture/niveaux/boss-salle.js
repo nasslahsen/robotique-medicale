@@ -1,5 +1,5 @@
 /* Boss du chapitre 3 : concevoir une salle hybride pour l'angiographie (surface, volume, portes, radioprotection, ergonomie). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-salle",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -91,4 +91,4 @@ NIVEAU({
       j.reponse(function () { choisir("a"); });
     } }
   ]
-});
+}));

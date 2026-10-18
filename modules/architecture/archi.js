@@ -316,7 +316,27 @@
     piVersM: function (x) { return x * 0.3048; }
   };
 
-  var A = { C: C, ZONES: ZONES, s: s, vider: vider, couper: couper, texte: texte, boite: boite, fleche: fleche, chemin: chemin, toucher: toucher, cible: cible, icone: icone, paires: paires, trace: trace, relier: relier, bord: bord, animer: animer, souffle: souffle, calc: calc };
+
+  /* ---------- Rejouer une étape depuis l'écran de fin ----------
+     Le moteur garde le même état n pour tout le niveau. Quand on rejoue la première étape, le niveau a déjà
+     été mené à son état final : on relance init sur un dessin effacé pour que l'étape reparte de zéro.
+     Usage dans un niveau : NIVEAU(ARCHI.rejouable({ id, init, etapes })). */
+  function rejouable(def) {
+    var fig, base = 0, vue = false, h = { cur: null, pl: { P: function (v) { return v; } } };
+    function lancer() { h.cur = def.init(fig) || {}; if (h.cur.pl) h.pl = h.cur.pl; }
+    return Object.assign({}, def, {
+      init: function (f) { fig = f; base = f.svg.childNodes.length; lancer(); return h; },
+      etapes: def.etapes.map(function (e, k) {
+        return { nom: e.nom, jouer: function (j) {
+          if (k === 0 && vue) { while (fig.svg.childNodes.length > base) fig.svg.removeChild(fig.svg.lastChild); lancer(); }
+          if (k === 0) vue = true;
+          e.jouer(j, h.cur);
+        } };
+      })
+    });
+  }
+
+  var A = { rejouable: rejouable, C: C, ZONES: ZONES, s: s, vider: vider, couper: couper, texte: texte, boite: boite, fleche: fleche, chemin: chemin, toucher: toucher, cible: cible, icone: icone, paires: paires, trace: trace, relier: relier, bord: bord, animer: animer, souffle: souffle, calc: calc };
   if (typeof module !== "undefined" && module.exports) module.exports = A;
   global.ARCHI = A;
 })(typeof window !== "undefined" ? window : globalThis);

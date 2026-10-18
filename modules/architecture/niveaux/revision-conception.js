@@ -1,5 +1,5 @@
 /* Révision du chapitre 6 : équipements, sécurité, normes, méthode, erreurs, dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-conception",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -61,4 +61,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Mal intégré architecturalement."); j.suite(); } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : TD 1, partie II (QCU), questions 6 à 10. Questions et propositions du sujet ; aides et explications écrites à partir du cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-qcm-2",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -41,4 +41,4 @@ NIVEAU({
       j.choix([{ html: "se limiter à vérifier l'aspect des locaux", aide: "Un bloc n'est pas prêt parce que les travaux sont finis." }, { html: "valider les installations, alarmes, équipements, flux, procédures et formation", juste: true }, { html: "reporter les contrôles après la première intervention", aide: "La validation se fait avant la première utilisation." }, { html: "vérifier uniquement la table opératoire", aide: "Il faut vérifier CVC, électricité, gaz, biomédical, hygiène." }], { colonnes: 1, ok: function () { n.fait(4); j.bravo("CVC, électricité, gaz médicaux, biomédical, hygiène : tout est validé avant ouverture."); j.suite(); } });
     } }
   ]
-});
+}));

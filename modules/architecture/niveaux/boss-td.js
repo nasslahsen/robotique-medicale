@@ -1,5 +1,5 @@
 /* Boss du chapitre 7 : TD 1, partie V. Construire le schéma fonctionnel d'un bloc de taille moyenne et justifier ses choix. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-td",
   init: function (fig) {
     var A = ARCHI, C = A.C, Z = A.ZONES, g = A.s("g", null, fig.svg);
@@ -74,4 +74,4 @@ NIVEAU({
       });
     } }
   ]
-});
+}));

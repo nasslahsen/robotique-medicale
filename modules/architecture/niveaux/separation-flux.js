@@ -1,5 +1,5 @@
 /* Niveau : séparation des flux (diapos 17 et 18). Schéma idéal, croisement à éviter, séparation physique, temporelle, organisationnelle. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "separation-flux",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -127,4 +127,4 @@ NIVEAU({
       });
     } }
   ]
-});
+}));

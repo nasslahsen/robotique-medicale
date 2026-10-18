@@ -1,5 +1,5 @@
 /* Niveau : le bloc opératoire, définition et exigences (diapo 9), schéma global et idée centrale (diapos 75 et 76). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "bloc-definition",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -153,4 +153,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Boss du chapitre 6 et du cours : monter le dossier d'un nouveau bloc, de la première étape à l'idée centrale. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-conception",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -69,4 +69,4 @@ NIVEAU({
       });
     } }
   ]
-});
+}));

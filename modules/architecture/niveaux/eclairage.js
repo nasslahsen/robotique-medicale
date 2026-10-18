@@ -1,5 +1,5 @@
 /* Niveau : éclairage (diapo 38) et scialytique (diapo 39). Deux catégories d'éclairage, ombre portée, coordination. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "eclairage",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -116,4 +116,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

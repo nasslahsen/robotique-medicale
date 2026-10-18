@@ -1,5 +1,5 @@
 /* Niveau : SSPI (diapo 53), relation bloc – réanimation (diapo 54), relation bloc – imagerie (diapo 55). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "bloc-et-services",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -115,4 +115,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

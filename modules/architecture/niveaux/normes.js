@@ -1,5 +1,5 @@
 /* Niveau : principales normes et référentiels à connaître (diapos 63 à 65), présentés par domaine. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "normes",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -65,4 +65,4 @@ NIVEAU({
       j.reponse(function () { pa.resoudre(); });
     } }
   ]
-});
+}));

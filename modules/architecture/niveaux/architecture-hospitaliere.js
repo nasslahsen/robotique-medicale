@@ -1,5 +1,5 @@
 /* Niveau : ce que l'architecture hospitalière organise (diapos 2 à 7). Douze éléments, objectif général, équipe de conception, place du bloc. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "architecture-hospitaliere",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -165,4 +165,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : les huit familles de contraintes (diapo 8) et le tableau de synthèse (diapo 66). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "familles-contraintes",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -136,4 +136,4 @@ NIVEAU({
       j.reponse(function () { if (n.surLigne) n.surLigne(2); });
     } }
   ]
-});
+}));

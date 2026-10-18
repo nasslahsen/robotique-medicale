@@ -1,5 +1,5 @@
 /* Révision du chapitre 4 : ventilation, pression, renouvellement, distribution, filtration, dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-air",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -92,4 +92,4 @@ NIVEAU({
       ], { colonnes: 2, ok: function () { j.bravo("Système CVC, niveau de risque, référentiel, type de chirurgie."); j.suite(); } });
     } }
   ]
-});
+}));

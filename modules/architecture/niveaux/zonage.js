@@ -1,5 +1,5 @@
 /* Niveau : gradation des niveaux de propreté et de contrôle des accès (diapo 10), schéma fonctionnel général (diapo 11). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "zonage",
   init: function (fig) {
     var A = ARCHI, C = A.C, Z = A.ZONES, g = A.s("g", null, fig.svg);
@@ -132,4 +132,4 @@ NIVEAU({
       });
     } }
   ]
-});
+}));

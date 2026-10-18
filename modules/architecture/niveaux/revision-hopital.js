@@ -1,5 +1,5 @@
 /* Révision du chapitre 1 : architecture hospitalière, familles de contraintes, définition du bloc, dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-hopital",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -94,4 +94,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

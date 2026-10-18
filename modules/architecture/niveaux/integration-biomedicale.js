@@ -1,5 +1,5 @@
 /* Niveau : intégration biomédicale (diapos 44 et 45), problème des équipements (diapos 46 et 47), maintenance et accessibilité (diapo 48). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "integration-biomedicale",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -97,4 +97,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Et donc le démontage de l'équipement, lui aussi à prévoir."); j.suite(); } });
     } }
   ]
-});
+}));

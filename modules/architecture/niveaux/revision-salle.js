@@ -1,5 +1,5 @@
 /* Révision du chapitre 3 : la salle d'opération, dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-salle",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -99,4 +99,4 @@ NIVEAU({
       });
     } }
   ]
-});
+}));

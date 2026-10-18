@@ -1,5 +1,5 @@
 /* Niveau : fluides médicaux (diapo 40), vide médical (diapo 41), évacuation des gaz anesthésiques (diapo 42). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "fluides-medicaux",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -106,4 +106,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

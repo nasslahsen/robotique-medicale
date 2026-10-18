@@ -1,5 +1,5 @@
 /* Niveau : bloc hybride (diapos 56 et 57) et protection radiologique (diapo 58). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "bloc-hybride",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -138,4 +138,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : gestion des déchets (diapo 51) et local de stockage (diapo 52). Tri à la source, circuit, capacités, problèmes à éviter. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "dechets-stockage",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -131,4 +131,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : contraintes incendie (diapo 50), sécurité du patient (diapo 61), sécurité du personnel (diapo 62). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "securite",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -94,4 +94,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

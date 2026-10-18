@@ -1,5 +1,5 @@
 /* Niveau : TD 1, partie II (QCU), questions 1 à 5. Questions et propositions du sujet ; aides et explications écrites à partir du cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-qcm-1",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -41,4 +41,4 @@ NIVEAU({
       j.choix([{ html: "l'implantation et les interfaces des équipements", juste: true }, { html: "seulement la réparation après panne", aide: "Il intervient bien avant : dès la conception." }, { html: "uniquement la commande de consommables", aide: "Ses responsabilités vont de la conception au cycle de vie." }, { html: "aucun rôle avant réception", aide: "Le cours dit l'inverse : avant la construction." }], { colonnes: 1, ok: function () { n.fait(4); j.bravo("Implantation des équipements et définition des interfaces font partie de ses responsabilités."); j.suite(); } });
     } }
   ]
-});
+}));

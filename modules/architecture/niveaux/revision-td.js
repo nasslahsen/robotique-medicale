@@ -1,5 +1,5 @@
 /* Révision du chapitre 7 : les idées du TD 1 dans des situations nouvelles. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "revision-td",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -51,4 +51,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Le circuit sale ne doit pas traverser inutilement les zones propres."); j.suite(); } });
     } }
   ]
-});
+}));

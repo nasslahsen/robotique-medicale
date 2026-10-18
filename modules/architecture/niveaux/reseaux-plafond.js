@@ -1,5 +1,5 @@
 /* Niveau : réseaux informatiques (diapo 43) et plafond technique (diapo 49). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "reseaux-plafond",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -101,4 +101,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Cinq métiers autour d'un même plafond."); j.suite(); } });
     } }
   ]
-});
+}));

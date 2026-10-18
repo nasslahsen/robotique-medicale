@@ -1,5 +1,5 @@
 /* Boss du chapitre 4 : une salle en dépression aspire l'air du couloir. Diagnostiquer, régler soufflage et extraction, justifier. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-air",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg), ga = A.s("g", null, fig.svg);
@@ -90,4 +90,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Un chiffre, toujours avec son référentiel."); j.suite(); } });
     } }
   ]
-});
+}));

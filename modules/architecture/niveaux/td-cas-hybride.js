@@ -1,5 +1,5 @@
 /* Niveau : TD 1, cas 3. Projet de salle hybride sans étude de radioprotection, sans accès de maintenance, sans validation de la charge du plafond. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-cas-hybride",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -89,4 +89,4 @@ NIVEAU({
       ], { colonnes: 2, ok: function () { j.bravo("La couleur du sol n'est pas un critère de réception technique."); j.suite(); } });
     } }
   ]
-});
+}));

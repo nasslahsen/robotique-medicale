@@ -1,5 +1,5 @@
 /* Niveau : TD 1, cas 1. Réorganisation d'un bloc conventionnel (3 salles, SSPI, stockage) ; réponses proposées à partir du cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-cas-flux",
   init: function (fig) {
     var A = ARCHI, C = A.C, Z = A.ZONES, g = A.s("g", null, fig.svg);
@@ -106,4 +106,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

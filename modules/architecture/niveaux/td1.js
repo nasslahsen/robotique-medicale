@@ -1,5 +1,5 @@
 /* Niveau : TD 1, partie I (questions de connaissances), en défis courts. Réponses tirées du cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td1",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -70,4 +70,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Fin des travaux ≠ bloc prêt : on valide avant la première utilisation."); j.suite(); } });
     } }
   ]
-});
+}));

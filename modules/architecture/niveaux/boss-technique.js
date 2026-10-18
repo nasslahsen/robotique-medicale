@@ -1,5 +1,5 @@
 /* Boss du chapitre 5 : une coupure de courant pendant une intervention. Rejouer la séquence, trouver ce qui a manqué. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-technique",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -70,4 +70,4 @@ NIVEAU({
       j.reponse(function () { pa.resoudre(); });
     } }
   ]
-});
+}));

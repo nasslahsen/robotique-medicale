@@ -1,5 +1,5 @@
 /* Niveau : TD 1, cas 2. Température et humidité non maîtrisées ; démarche de diagnostic proposée à partir du cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-cas-air",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -70,4 +70,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Une reprise se valide sur des mesures conformes au référentiel."); j.suite(); } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : objectifs de la ventilation du bloc (diapo 27), température et humidité (diapo 35). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "ventilation-objectifs",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -103,4 +103,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

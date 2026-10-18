@@ -1,5 +1,5 @@
 /* Niveau : TD 1, cas 4. Respirateur d'anesthésie indisponible ; mesures proposées à partir du cours (le TD ne donne pas de corrigé). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "td-cas-equipement",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -60,4 +60,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

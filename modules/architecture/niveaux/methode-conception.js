@@ -1,5 +1,5 @@
 /* Niveau : méthode de conception en dix étapes (diapos 67 à 69), validation technique avant ouverture (diapo 70). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "methode-conception",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -85,4 +85,4 @@ NIVEAU({
       ], { colonnes: 1, ok: function () { j.bravo("Dès la conception, et validation avant la première utilisation."); j.suite(); } });
     } }
   ]
-});
+}));

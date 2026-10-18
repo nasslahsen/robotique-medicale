@@ -1,5 +1,5 @@
 /* Niveau : architecture d'une salle d'opération (diapo 19), dimensions et surfaces (diapo 20), hauteur et volume (diapo 21). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "salle-dimensions",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -167,4 +167,4 @@ NIVEAU({
       j.reponse(function () { c.regler(14); n.plenum = 0.14; n.dessin(); if (n.toutTient) fini(); });
     } }
   ]
-});
+}));

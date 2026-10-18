@@ -1,5 +1,5 @@
 /* Niveau : pression positive (diapo 28) et cascade de pression (diapo 29). L'air va de la pression la plus haute vers la plus basse. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "pression-cascade",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg), ga = A.s("g", null, fig.svg);
@@ -112,4 +112,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

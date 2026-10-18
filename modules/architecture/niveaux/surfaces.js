@@ -1,5 +1,5 @@
 /* Niveau : sols (diapo 22), murs (diapos 23 et 24), plafond (diapo 25), portes (diapo 26). */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "surfaces",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -150,4 +150,4 @@ NIVEAU({
       j.reponse(function () { if (!vu) { vu = true; n.porte = 0.6; n.dessin(); poser(); } });
     } }
   ]
-});
+}));

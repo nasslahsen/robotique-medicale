@@ -1,5 +1,5 @@
 /* Boss du chapitre 1 : un projet d'hôpital où le bloc est mal placé. Trouver les défauts, les rattacher au cours. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-hopital",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -86,4 +86,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

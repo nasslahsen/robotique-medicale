@@ -1,5 +1,5 @@
 /* Boss du chapitre 2 : tracer le circuit sale sur un plan, puis corriger les défauts de flux d'un bloc. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "boss-flux",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -67,4 +67,4 @@ NIVEAU({
       } });
     } }
   ]
-});
+}));

@@ -1,5 +1,5 @@
 /* Niveau : maîtrise des flux (diapos 12 à 16). Patient, personnel, propre, sale, dispositifs médicaux. */
-NIVEAU({
+NIVEAU(ARCHI.rejouable({
   id: "flux",
   init: function (fig) {
     var A = ARCHI, C = A.C, g = A.s("g", null, fig.svg);
@@ -99,4 +99,4 @@ NIVEAU({
       j.reponse(function () { t.resoudre(); });
     } }
   ]
-});
+}));
