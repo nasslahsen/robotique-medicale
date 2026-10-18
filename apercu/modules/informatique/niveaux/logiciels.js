@@ -25,7 +25,7 @@ NIVEAU(SIS.rejouable({
         if (ok) A.s("rect", { x: n.X[k] + 4, y: n.Y[i] + 4, width: n.X[k + 1] - n.X[k] - 8, height: n.Y[i + 1] - n.Y[i] - 8, fill: "none", stroke: C.ok, "stroke-width": 6, rx: 6 }, g2);
       }); });
       // textes des régions, une fois par région, sur leur case principale
-      [[0, 0, 0, 1], [1, 0, 1, 2], [2, 1, 0, 2], [3, 2, 1, 2]].forEach(function (q) {
+      [[0, 0, 0, 0], [1, 0, 1, 2], [2, 1, 0, 2], [3, 2, 1, 2]].forEach(function (q) {
         var z = n.ZONES_REG[q[0]], i = q[1], k0 = q[2], k1 = q[3];
         A.texte(g2, z.t, [(n.X[k0] + n.X[k1 + 1]) / 2, (n.Y[i] + n.Y[i + 1]) / 2], { taille: q[0] === 0 ? 14 : 17, gras: 700, coul: z.coul, halo: false, largeur: n.X[k1 + 1] - n.X[k0] - 16 });
       });

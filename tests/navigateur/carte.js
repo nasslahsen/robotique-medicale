@@ -77,14 +77,16 @@ if (!mid) { console.error("usage : node tests/navigateur/carte.js <module>"); pr
     verifier(!avant && apres, `cours ${c.id} : marqué lu en arrivant en bas`);
     // exercices : une erreur, puis le lien vers le cours ; fin du niveau → étape suivante
     await pg.goto(BASE + `modules/${mid}/jouer.html#${c.id}`, { waitUntil: "networkidle" }); await pg.waitForTimeout(900);
-    const faux = await pg.$(".etape:not(.sortie) .choix button:not(.bon)");
     let revoir = "";
     for (const bt of await pg.$$(".etape:not(.sortie) .choix button")) {
+      if (!(await bt.isEnabled())) break;
       await bt.click(); await pg.waitForTimeout(300);
       revoir = await pg.$eval(".etape:not(.sortie) .revoir", a => a.getAttribute("href")).catch(() => "");
       if (revoir) break;
     }
-    if (!faux && !revoir) {
+    if (!revoir) {
+      // bonne réponse du premier coup : on passe à l'étape suivante et on y montre la réponse
+      if (await pg.$(".etape:not(.sortie) .btn.suite")) { await pg.click(".etape:not(.sortie) .btn.suite"); await pg.waitForTimeout(800); }
       await pg.click('.etape:not(.sortie) .aide-q button >> text="Voir la réponse"');
       await pg.waitForTimeout(1500);
       revoir = await pg.$eval(".etape:not(.sortie) .revoir", a => a.getAttribute("href")).catch(() => "");

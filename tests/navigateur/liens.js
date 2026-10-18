@@ -21,6 +21,10 @@ vm.runInContext(fs.readFileSync(path.join(RACINE, "modules", mid, "module.js"), 
 const MOD = bac.parcours[mid], REG = bac.window.REGISTRE.modules.find(m => m.id === mid);
 const smDe = ch => { const c = MOD.chapitres.find(x => x.id === ch); return REG.sousModules.length ? (c && c.sousModule) || REG.sousModules[0].id : ""; };
 
+// Corrections relues à la main : niveau → { numéro d'étape (à partir de 1) : [page, ancre, section] }
+const CORRECTIONS = {
+  robotique: { "boss-transformations": { 3: ["bras-2r", "calcul~11", "Calcul"], 4: ["bras-2r", "calcul~11", "Calcul"] } } // espace de travail du bras 2R
+};
 const VIDES = new Set(("les des une un le la de du et en est sur pour par que qui dans au aux ce cette ces son sa ses il elle on se ne pas plus "
   + "avec sans mais ou donc car tout tous toute toutes leur leurs lui sont etre fait faire peut comme quand quel quelle quels quelles ici "
   + "deux trois entre cela ceci alors ainsi aussi tres bien deja encore chaque meme autre autres quoi dont vers chez avant apres sous "
@@ -97,7 +101,8 @@ function mots(t) {
     // révision, boss : les pages du chapitre d'abord, celles des chapitres précédents du sous-module un peu moins
     const smCours = (MOD.cours || []).filter(c => smDe(c.chapitre) === smDe(n.chapitre) && c.chapitre <= n.chapitre).map(c => c.id);
     const cand = n.cours ? { [n.id]: 1 } : {};
-    if (!n.cours) smCours.forEach(id => { cand[id] = chapitreCours.includes(id) || !chapitreCours.length ? 1 : 0.85; });
+    // (pages d'autres chapitres seulement si le chapitre a moins de deux pages, comme le chapitre de TD)
+    if (!n.cours) smCours.forEach(id => { if (chapitreCours.includes(id) || chapitreCours.length < 2) cand[id] = chapitreCours.includes(id) || !chapitreCours.length ? 1 : 0.85; });
     liens[n.id] = textes.map((t, k) => {
       const v = vecteur(mots(t));
       let best = null;
@@ -107,6 +112,7 @@ function mots(t) {
       // correspondance trop faible : le haut de la page plutôt qu'une section au hasard
       return best.s < 0.07 ? [best.d.page, "", ""] : [best.d.page, best.d.ancre, best.d.section];
     });
+    Object.entries((CORRECTIONS[mid] || {})[n.id] || {}).forEach(([k, v]) => { liens[n.id][k - 1] = v; });
     console.log(n.id, liens[n.id].map(x => x ? x[0] + "#" + x[1] : "-").join("  "));
   }
   await b.close();

@@ -91,7 +91,8 @@
     if (bloc >= 0 && blocs[bloc]) { cibles = [blocs[bloc]]; k = 1; } else cibles = cibles.concat(blocs);
     document.querySelectorAll(".repere").forEach(function (x) { x.classList.remove("repere"); });
     cibles.forEach(function (x) { x.classList.add("repere"); });
-    (k ? cibles[0] : t).scrollIntoView({ block: "start" });
+    // un passage précis : au milieu de l'écran ; une section : son titre en haut
+    if (k) cibles[0].scrollIntoView({ block: "center" }); else t.scrollIntoView({ block: "start" });
   }
   // après KaTeX et les figures : la mise en page est stable
   window.addEventListener("load", function () { setTimeout(viser, 60); });
