@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Normes et référentiels à connaître · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Normes et référentiels à connaître</h1>
+<p class="chapeau">Il n'existe pas « la norme du bloc opératoire ». Chaque domaine a ses référentiels, et un bon dossier cite le bon texte pour chaque exigence.</p>
+<h2>Intuition</h2>
+<p>Le cours insiste : pour un ingénieur biomédical, il vaut mieux présenter les normes par domaine que citer une seule norme « bloc opératoire ». Une salle mobilise en même temps des textes sur la conception des bâtiments, la ventilation, l'électricité, l'éclairage, les gaz, les appareils et la stérilisation. Le TD le rappelle aussi : distinguer les exigences réglementaires locales, les normes applicables et les recommandations professionnelles.</p>
+
+<div id="fig-normes"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Domaine</th><th>Référentiels cités au cours</th></tr>
+<tr><td>Architecture / conception</td><td>FGI Guidelines (conception des établissements de santé) ; référentiels nationaux de construction hospitalière ; exigences locales de sécurité incendie</td></tr>
+<tr><td>Ventilation</td><td>ASHRAE 170 (ventilation des établissements de santé) ; HTM 03-01 (ventilation dans les établissements de santé au Royaume-Uni) ; recommandations OMS ; recommandations professionnelles de prévention des infections</td></tr>
+<tr><td>Électricité</td><td>IEC 60364-7-710 (installations électriques des locaux médicaux) ; normes nationales associées</td></tr>
+<tr><td>Éclairage</td><td>EN 12464-1 (éclairage des lieux de travail intérieurs, exigences applicables selon les espaces)</td></tr>
+<tr><td>Fluides médicaux</td><td>ISO 7396-1 (systèmes de distribution de gaz médicaux et de vide)</td></tr>
+<tr><td>Équipements électriques médicaux</td><td>IEC 60601-1 (sécurité de base et performances essentielles des équipements électromédicaux)</td></tr>
+<tr><td>Stérilisation</td><td>série ISO 17665 (chaleur humide) ; série ISO 11135 (oxyde d'éthylène) ; série ISO 11140 (indicateurs chimiques) ; série ISO 11607 (emballages des dispositifs médicaux stérilisés terminalement)</td></tr>
+</table></div>
+<p>Le FGI renvoie notamment à <b>ANSI/ASHRAE/ASHE 170</b> pour les exigences de ventilation des espaces de soins.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Pour la même prise électrique d'un respirateur, deux textes répondent à deux questions différentes : l'IEC 60364-7-710 encadre l'installation électrique du local médical (la prise, le circuit, les protections) ; l'IEC 60601-1 encadre l'appareil lui-même (sa sécurité de base et ses performances essentielles).</p>
+
+<h2>Formules clés</h2>
+<p>Conception : FGI. Ventilation : ASHRAE 170, HTM 03-01. Électricité : IEC 60364-7-710. Éclairage : EN 12464-1. Fluides : ISO 7396-1. Appareils : IEC 60601-1. Stérilisation : ISO 17665, 11135, 11140, 11607.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/normes.js"></script>
+</body>
+</html>

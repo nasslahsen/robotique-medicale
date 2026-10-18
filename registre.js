@@ -45,7 +45,7 @@ window.REGISTRE = {
       ]
     },
     {
-      id: "architecture", titre: "Architecture hospitalière, contraintes d'installation et exigences réglementaires", statut: "a-venir",
+      id: "architecture", titre: "Architecture hospitalière, contraintes d'installation et exigences réglementaires", statut: "actif",
       couleur: "#448361", clair: "#DBEDDB", texte: "#448361",
       sousModules: []
     },

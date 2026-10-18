@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Rôle de l'ingénieur biomédical et erreurs fréquentes · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Rôle de l'ingénieur biomédical et erreurs fréquentes</h1>
+<p class="chapeau">L'ingénieur biomédical qui arrive à la réception constate ; celui qui arrive à la conception décide. Et les dix erreurs du cours viennent presque toutes d'une arrivée trop tardive.</p>
+<h2>Intuition</h2>
+<p>Presque toutes les erreurs fréquentes du cours ont la même cause : une décision prise sans les informations d'un autre métier. On construit la salle avant de connaître l'équipement, on ferme le plafond sans accès pour la maintenance, on oublie le secours électrique. L'ingénieur biomédical, présent dès la conception, apporte justement ces informations : ce que les équipements demandent, et ce qu'il faudra pour les maintenir pendant des années.</p>
+
+<div id="fig-role"></div>
+
+<h2>Formalisation</h2>
+<p>L'ingénieur biomédical doit intervenir <b>avant la construction</b>, et non seulement lors de la réception des équipements. Ses responsabilités comprennent : définition des besoins biomédicaux ; rédaction des spécifications techniques ; implantation des équipements ; définition des interfaces ; vérification des alimentations ; vérification des gaz médicaux ; analyse des contraintes CVC ; accessibilité pour maintenance ; réception technique ; sécurité électrique ; formation ; maintenance ; <b>GMAO</b> (gestion de la maintenance assistée par ordinateur) ; gestion du cycle de vie.</p>
+<h3>Erreurs fréquentes à éviter</h3>
+<ol>
+<li>Construire la salle avant de connaître les équipements.</li>
+<li>Prévoir uniquement la surface de la salle et oublier le volume technique.</li>
+<li>Ne pas prévoir les accès de maintenance.</li>
+<li>Mélanger les flux propres et sales.</li>
+<li>Positionner les équipements sans tenir compte des flux du personnel.</li>
+<li>Installer un équipement d'imagerie sans étude radiologique.</li>
+<li>Sous-dimensionner l'électricité.</li>
+<li>Oublier l'alimentation de secours.</li>
+<li>Ne pas intégrer les fluides médicaux dès la conception.</li>
+<li>Considérer la ventilation comme un simple problème de climatisation.</li>
+</ol>
+
+<h2>Exemple</h2>
+<p>Cas 4 du TD 1 : le respirateur d'anesthésie d'une salle est indisponible, avec un délai de remise en service inconnu. Réponse proposée à partir du cours (le TD n'en donne pas le corrigé) : traiter le respirateur comme un équipement critique, réorganiser le programme en priorisant les urgences vers une salle équipée, tracer la demande dans la GMAO ; avant toute remise en service, recueillir le rapport d'intervention, refaire les essais de sécurité et de conformité, vérifier les alimentations et les gaz médicaux.</p>
+
+<h2>Formules clés</h2>
+<p>L'ingénieur biomédical : avant la construction, puis réception, puis toute la vie des équipements (maintenance, GMAO, cycle de vie).</p>
+<p>Idée centrale : un bloc opératoire performant n'est pas seulement une salle équipée ; c'est un système intégré associant architecture, flux, ventilation, électricité, fluides médicaux, équipements biomédicaux, hygiène, sécurité et maintenance.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/ingenieur-erreurs.js"></script>
+</body>
+</html>

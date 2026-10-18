@@ -317,6 +317,36 @@ test("produit de matrices et révisions : réponses attendues", () => {
   proche(6 - 3, 3, 0);
 });
 
+test("architecture hospitalière : réponses attendues dans les niveaux", () => {
+  const A = require("../modules/architecture/archi.js").calc;
+  // renouvellement-air : salle de 7 m × 6 m × 3 m, 1 890 m³/h
+  const V = A.volume(7, 6, 3);
+  proche(V, 126); proche(A.ach(1890, V), 15);
+  proche(A.debitPour(22, V), 2772);
+  // revision-air : 8 m × 7 m × 3 m, 3 360 m³/h
+  proche(A.volume(8, 7, 3), 168); proche(A.ach(3360, 168), 20);
+  // td-calcul : 180 m³, 20 ACH retenus, 3 060 m³/h mesurés
+  proche(A.debitPour(20, 180), 3600); proche(A.ach(3060, 180), 17); proche(A.debitPour(20, 180) - 3060, 540);
+  // revision-td : 150 m³, 24 ACH, 3 900 m³/h
+  proche(A.debitPour(24, 150), 3600); proche(A.ach(3900, 150), 26);
+  // salle hybride : FGI 2022 (600 ft², 20 ft)
+  proche(A.pi2VersM2(600), 55.74, 0.005); proche(A.piVersM(20), 6.10, 0.005);
+  proche(9.2 * 6.1, 56.12, 1e-9); assert.ok(A.hybrideOk(9.2, 6.1));
+  proche(7.2 * 6, 43.2, 1e-9); assert.ok(!A.hybrideOk(7.2, 6));
+  // boss-salle : longueur 8,40 m -> largeur minimale 6,64 m (arrondi au cm supérieur)
+  const lmin = (L) => Math.ceil(55.74 / L * 100 - 1e-9) / 100;
+  proche(lmin(8.4), 6.64, 1e-9); assert.ok(A.hybrideOk(8.4, 6.64) && !A.hybrideOk(8.4, 6.63));
+  // boss-conception : longueur 9,00 m -> 6,20 m
+  proche(lmin(9), 6.20, 1e-9); assert.ok(A.hybrideOk(9, 6.2) && !A.hybrideOk(9, 6.19));
+  // pression : l'air va du plus haut vers le plus bas
+  assert.strictEqual(A.sensAir(15, 5), 1); assert.strictEqual(A.sensAir(0, 10), -1); assert.strictEqual(A.sensAir(3, 3), 0);
+  // eclairage : un foyer est masqué par la tête, trois foyers écartés de 200 éclairent la plaie à 60 % au moins
+  const G = { yS: 130, yO: 360, yF: 470, o1: 300, o2: 380 };
+  const minPlaie = (k, e) => { let m = 1; for (let x = 320; x <= 360; x += 2) m = Math.min(m, A.lumiere(A.foyers(k, e, 340), x, G)); return m; };
+  proche(minPlaie(1, 0), 0); assert.ok(minPlaie(3, 200) >= 0.6);
+  procheVec(A.foyers(3, 200, 340), [140, 340, 540]);
+});
+
 // Module Systèmes embarqués
 test("embarqués, chapitre 0 du jeu : réponses attendues (binaire, hexadécimal, signaux, révision, boss)", () => {
   const bin = (s) => parseInt(s, 2), bits = (v, nb) => v.toString(2).padStart(nb, "0");

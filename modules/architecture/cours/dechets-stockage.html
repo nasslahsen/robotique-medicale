@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr" data-module="architecture">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Gestion des déchets et local de stockage · Architecture hospitalière</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Gestion des déchets et local de stockage</h1>
+<p class="chapeau">Un bloc consomme beaucoup et produit beaucoup de déchets, dont certains contaminés. Il faut les trier là où ils naissent, les sortir sans croiser le propre, et stocker sans encombrer.</p>
+<h2>Intuition</h2>
+<p>Le tri se fait à la source : au moment où la compresse, l'aiguille ou l'emballage devient un déchet, il va dans le bon contenant. Un déchet mal trié coûte cher à rattraper et peut blesser ou contaminer. Ensuite, chaque filière suit un circuit qui ne croise pas les flux propres. En face, le stockage fait le chemin inverse : il doit tenir assez de matériel pour ne jamais manquer, sans déborder dans les couloirs.</p>
+
+<div id="fig-dechets"></div>
+
+<h2>Formalisation</h2>
+<p>Les déchets doivent être <strong>triés à la source</strong> :</p>
+<div class="tableau"><table>
+<tr><th>Filière</th><th>Exemple (ajouté)</th></tr>
+<tr><td>DASRI (déchets d'activités de soins à risques infectieux)</td><td>compresse imbibée de sang</td></tr>
+<tr><td>Déchets assimilables aux déchets ménagers</td><td>emballage papier non souillé</td></tr>
+<tr><td>Objets piquants / coupants</td><td>aiguille, lame de bistouri</td></tr>
+<tr><td>Déchets anatomiques, selon la réglementation</td><td>pièce opératoire d'amputation</td></tr>
+<tr><td>Déchets chimiques éventuels</td><td>reste de produit chimique, comme un fixateur</td></tr>
+</table></div>
+<p>Le circuit doit être organisé afin d'éviter que les déchets contaminés ne croisent les flux propres.</p>
+
+<h3>Local de stockage</h3>
+<p>Le bloc doit disposer de capacités suffisantes pour : dispositifs médicaux stériles ; consommables ; champs opératoires ; médicaments ; produits d'anesthésie ; équipements de secours. Le stockage doit être organisé pour éviter : <b>surcharge</b> ; <b>obstruction des circulations</b> ; <b>contamination</b> ; <b>rupture de stock</b>.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un local de stockage trop petit : les cartons s'accumulent dans le couloir de transfert (obstruction des circulations), certains sont posés ouverts sur les étagères stériles (contamination), et faute de place on commande moins, jusqu'au jour où les champs manquent (rupture de stock). Un seul défaut de surface crée trois problèmes.</p>
+
+<h2>Formules clés</h2>
+<p>Tri à la source : DASRI, assimilables aux déchets ménagers, piquants / coupants, anatomiques (selon réglementation), chimiques éventuels.</p>
+<p>Circuit des déchets : les déchets contaminés ne croisent pas les flux propres.</p>
+<p>Stockage suffisant pour DM stériles, consommables, champs, médicaments, produits d'anesthésie, équipements de secours ; éviter surcharge, obstruction, contamination, rupture de stock.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../archi.js"></script>
+<script src="../figures/dechets-stockage.js"></script>
+</body>
+</html>
