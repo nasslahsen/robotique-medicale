@@ -59,7 +59,7 @@
         EMB.el("rect", { x: 90 + i * 170, y: 400, width: 18, height: 18, rx: 4, fill: l[1], opacity: 0.5 }, g);
         EMB.texte(g, l[0], [116 + i * 170, 410], { taille: 15, ancre: "start", gras: false });
       });
-      R.rendre(zone, "\\text{adresse} = " + a + "_2 = " + ca.v + "\\qquad R/\\overline{W} = " + rw + "\\qquad \\text{premier octet : } " + a + rw + "\\qquad N_{SCL} = 2 \\times 9 = 18");
+      R.rendre(zone, "\\text{adresse} = " + a + "_2 = " + ca.v + "\\qquad R/\\overline{W} = " + rw + "\\\\[4pt] \\text{premier octet : } " + a + rw + "\\qquad N_{SCL} = 2 \\times 9 = 18");
     }
     dessiner();
   })();

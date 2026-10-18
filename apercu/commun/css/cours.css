@@ -68,12 +68,12 @@ th { font-weight: 600; background: var(--fond-doux); }
 /* ---------- Figures interactives : un écran ----------
    Comme l'écran de niveau : le dessin à gauche, le texte « Essaie / Observe » et les commandes à droite.
    Le bloc prend toute la largeur de l'écran et tient dans la hauteur visible sous la barre (72 px). */
-:root { --barre: 73px; --h-fig: calc(100vh - var(--barre) - 64px); }
-@supports (height: 100dvh) { :root { --h-fig: calc(100dvh - var(--barre) - 64px); } }
+:root { --barre: 73px; --h-fig: calc(100vh - var(--barre) - 44px); }
+@supports (height: 100dvh) { :root { --h-fig: calc(100dvh - var(--barre) - 44px); } }
 .fig {
   display: grid; grid-template-columns: minmax(0, 1fr) clamp(330px, 33%, 440px); gap: 22px; align-items: start;
   width: calc(100vw - 48px); margin: 28px 0 36px calc(50% - 50vw + 24px);
-  max-height: calc(var(--h-fig) + 30px); padding: 14px; background: var(--fond-doux); border: 1.5px solid var(--trait); border-radius: 28px;
+  max-height: calc(var(--h-fig) + 30px); padding: 12px 14px; background: var(--fond-doux); border: 1.5px solid var(--trait); border-radius: 28px;
   scroll-margin-top: calc(var(--barre) + 10px);
 }
 .fig.seule { grid-template-columns: minmax(0, 1fr); }
@@ -86,7 +86,7 @@ th { font-weight: 600; background: var(--fond-doux); }
 .fig svg text { font-family: Inter, system-ui, sans-serif; }
 .fig .poignee { cursor: grab; touch-action: none; }
 .fig .poignee:active { cursor: grabbing; }
-.fig-cote { min-width: 0; max-height: var(--h-fig); overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 4px 4px 0; }
+.fig-cote { min-width: 0; max-height: var(--h-fig); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 4px 4px 4px 0; }
 .fig .reglages { margin: 0; }
 .fig .reglages:empty { display: none; }
 @media (max-width: 900px) {
@@ -99,6 +99,7 @@ th { font-weight: 600; background: var(--fond-doux); }
 .curseur > span { grid-area: nom; }
 .curseur output { grid-area: val; }
 .curseur input[type="range"] { grid-area: piste; }
+.curseur.court { grid-template-columns: minmax(3.2em, auto) minmax(0, 1fr) auto; grid-template-areas: "nom piste val"; }
 .curseur output { text-align: right; font: 600 16px "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
 .curseur input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; min-width: 0; height: 44px; margin: 0; background: transparent; cursor: pointer; }
 .curseur input[type="range"]::-webkit-slider-runnable-track { height: 10px; border-radius: 999px; background: var(--trait); }
@@ -108,7 +109,7 @@ th { font-weight: 600; background: var(--fond-doux); }
 .curseur input[type="range"]:active::-webkit-slider-thumb { background: var(--jeu); }
 
 /* Boutons et listes déroulantes */
-.boutons { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 4px; align-items: center; }
+.boutons { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 2px; align-items: center; }
 .boutons button, .boutons select {
   font: 600 16px Inter, sans-serif; height: 46px; padding: 0 18px;
   border: 2px solid var(--encre); border-radius: 14px; background: #fff; color: var(--encre);

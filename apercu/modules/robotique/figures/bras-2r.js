@@ -86,12 +86,13 @@
     var xm = L1 * Math.cos(t1) + L2 * Math.cos(t1 + t2), ym = L1 * Math.sin(t1) + L2 * Math.sin(t1 + t2);
     var lignes = [];
     if (k === 0) lignes.push("q = (\\theta_1, \\theta_2) = (" + R.tn(c1.v, 0) + "°,\\ " + R.tn(c2.v, 0) + "°)\\qquad l_1 = " + R.tc(L1, 2) + "\\text{ m},\\ l_2 = " + R.tc(L2, 2) + "\\text{ m}");
-    if (k >= 1) lignes.push("T^{0,1} = " + R.texMat(r.T01, 3, { cellule: col4 }) + "\\quad \\text{rotation } \\theta_1,\\ O_0 = O_1");
-    if (k >= 2) lignes.push("T^{1,2} = " + R.texMat(r.T12, 3, { cellule: col4 }) + "\\quad \\text{rotation } \\theta_2,\\ O_2 \\text{ à } l_1 \\text{ sur } x_1");
-    if (k >= 3) lignes.push("T^{0,2} = T^{0,1}\\,T^{1,2} = " + R.texMat(r.T02, 3, { cellule: col4 }) + "\\quad \\theta_1 + \\theta_2 = " + R.tn(c1.v + c2.v, 0) + "°");
-    if (k >= 4) lignes.push("T^{0,2}" + R.texVec([L2, 0, 0, 1], 2) + " = " + R.texVec(r.M.concat([1]), 3, C.acc) +
-      "\\\\[6pt] x_M = " + R.tc(L1, 2) + "\\cos " + R.tc(c1.v, 0) + "° + " + R.tc(L2, 2) + "\\cos " + R.tc(c1.v + c2.v, 0) + "° = " + R.tn(xm, 3) +
-      ",\\quad y_M = " + R.tn(ym, 3) + "\\\\[4pt] O_0M = " + R.tn(Math.hypot(xm, ym), 3) + "\\text{ m}");
+    // une étape à la fois dans la bande, pour que la figure tienne sur l'écran
+    if (k === 1) lignes.push("T^{0,1} = " + R.texMat(r.T01, 3, { cellule: col4 }) + "\\quad \\text{rotation } \\theta_1,\\ O_0 = O_1");
+    if (k === 2) lignes.push("T^{1,2} = " + R.texMat(r.T12, 3, { cellule: col4 }) + "\\quad \\text{rotation } \\theta_2,\\ O_2 \\text{ à } l_1 \\text{ sur } x_1");
+    if (k === 3) lignes.push("T^{0,2} = T^{0,1}\\,T^{1,2} = " + R.texMat(r.T02, 3, { cellule: col4 }) + "\\quad \\theta_1 + \\theta_2 = " + R.tn(c1.v + c2.v, 0) + "°");
+    if (k === 4) lignes.push("T^{0,2}" + R.texVec([L2, 0, 0, 1], 2) + " = " + R.texVec(r.M.concat([1]), 3, C.acc) +
+      "\\qquad O_0M = " + R.tn(Math.hypot(xm, ym), 3) + "\\text{ m}\\\\[6pt] x_M = " + R.tc(L1, 2) + "\\cos " + R.tc(c1.v, 0) + "° + " + R.tc(L2, 2) + "\\cos " + R.tc(c1.v + c2.v, 0) + "° = " + R.tn(xm, 3) +
+      ",\\quad y_M = " + R.tn(ym, 3));
     R.rendre(zone, lignes.join("\\\\[8pt]"));
   }
   et.aller(4);
