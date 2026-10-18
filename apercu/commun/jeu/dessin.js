@@ -201,7 +201,9 @@ window.D = (function () {
         if (graduer) for (var d = -150; d <= 180; d += 30) {
           var a = sc.P([(R - 0.15) * Math.cos(d * DEG), (R - 0.15) * Math.sin(d * DEG), 0]), b = sc.P([R * Math.cos(d * DEG), R * Math.sin(d * DEG), 0]), t = sc.P([(R + 0.25) * Math.cos(d * DEG), (R + 0.25) * Math.sin(d * DEG), 0]);
           ligne(g, a, b, "#c3cad9", 2);
-          texte(g, String(d).replace("-", "−") + "°", t, { coul: "#9aa3b8", taille: 13, mono: true, gras: false });
+          // graduation trop près du bord du dessin : on ne l'écrit pas (elle serait coupée)
+          // 0° et 90° : directions des axes x et y, déjà nommées
+          if (d !== 0 && d !== 90 && t[0] > 22 && t[0] < 658 && t[1] > 12 && t[1] < 588) texte(g, String(d).replace("-", "−") + "°", t, { coul: "#9aa3b8", taille: 13, mono: true, gras: false });
         }
       } });
     };

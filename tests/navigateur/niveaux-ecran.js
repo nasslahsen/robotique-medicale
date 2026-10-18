@@ -24,7 +24,7 @@ const prets = [...src.matchAll(/\{ id: "([^"]+)"[^}]*pret: true/g)].map(m => m[1
     for (let k = 0; k < nb; k++) {
       await pg.waitForTimeout(500);
       const v = await pg.evaluate(() => {
-        const svg = document.getElementById("fig"), fr = svg.getBoundingClientRect();
+        const svg = document.getElementById("fig"), fr = document.getElementById("figure").getBoundingClientRect();
         const ts = [...svg.querySelectorAll("text")].filter(t => t.textContent.trim() && t.getBoundingClientRect().width > 1 && getComputedStyle(t).visibility !== "hidden" && +getComputedStyle(t).opacity > 0.05)
           .map(t => ({ t: t.textContent.trim(), b: t.getBoundingClientRect() }));
         const chev = [];
