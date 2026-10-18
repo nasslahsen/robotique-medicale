@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Quadrants, signes et angles remarquables · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Quadrants, signes et angles remarquables</h1>
+<p class="chapeau">Un calcul de matrice de rotation donne un sinus négatif : est-ce normal ? Sur le cercle, les signes du cosinus et du sinus se lisent d'un coup d'œil, et quelques valeurs reviennent sans cesse.</p>
+
+<h2>Intuition</h2>
+<p>Les deux axes coupent le plan en quatre quadrants. Si le bras pointe vers la gauche, son avancée horizontale est négative ; s'il pointe vers le bas, sa hauteur est négative. Pas besoin de calculer : la figure donne les signes. C'est le meilleur moyen de vérifier un calcul.</p>
+
+<div id="fig-signes"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Quadrant</th><th>Position de M</th><th>\(\cos\theta\)</th><th>\(\sin\theta\)</th></tr>
+<tr><td>1</td><td>en haut à droite</td><td>+</td><td>+</td></tr>
+<tr><td>2</td><td>en haut à gauche</td><td>−</td><td>+</td></tr>
+<tr><td>3</td><td>en bas à gauche</td><td>−</td><td>−</td></tr>
+<tr><td>4</td><td>en bas à droite</td><td>+</td><td>−</td></tr>
+</table></div>
+<p>Angles remarquables : plus l'angle est petit, plus l'ombre sur l'axe horizontal est longue ; le sinus prend les mêmes valeurs dans l'ordre inverse.</p>
+\[ \begin{array}{c|ccc} & 30° & 45° & 60° \\ \hline \cos & \tfrac{\sqrt{3}}{2} \approx 0{,}866 & \tfrac{\sqrt{2}}{2} \approx 0{,}707 & \tfrac{1}{2} \\ \sin & \tfrac{1}{2} & \tfrac{\sqrt{2}}{2} & \tfrac{\sqrt{3}}{2} \end{array} \]
+<p>Changer le signe de l'angle donne le reflet de \(M\) dans l'axe horizontal ; tourner d'un quart de tour échange les coordonnées et en change une de signe :</p>
+\[ \cos(-\alpha) = \cos\alpha \qquad \sin(-\alpha) = -\sin\alpha \qquad \cos(\alpha + 90°) = -\sin\alpha \qquad \sin(\alpha + 90°) = \cos\alpha \]
+
+<h2>Exemple</h2>
+<p>Le 0,866 du cours, c'est \(\cos 30°\). Dans une matrice de rotation, passer de \(+\alpha\) à \(-\alpha\) ne change que le signe des sinus. Et quand un repère tourne de \(\alpha\), son deuxième axe est le premier tourné d'un quart de tour : ses coordonnées sont \((-\sin\alpha \,;\ \cos\alpha)\), la deuxième colonne de la matrice de rotation.</p>
+
+<h2>Formules clés</h2>
+\[ \cos 30° = \tfrac{\sqrt{3}}{2},\ \cos 45° = \tfrac{\sqrt{2}}{2},\ \cos 60° = \tfrac{1}{2} \qquad \sin(-\alpha) = -\sin\alpha \qquad (\cos(\alpha + 90°) \,;\ \sin(\alpha + 90°)) = (-\sin\alpha \,;\ \cos\alpha) \]
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/signes.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>La courbe de traction · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>La courbe de traction</h1>
+<p class="chapeau">Tirer une éprouvette jusqu'à la rupture et tracer \(\sigma\) en fonction de \(\varepsilon\) : une seule courbe donne la rigidité, les seuils de résistance et l'énergie qu'un matériau absorbe avant de casser.</p>
+
+<h2>Intuition</h2>
+<p>Au début, l'éprouvette se comporte comme un ressort : on relâche, elle revient. Passé un seuil, elle garde un allongement : le métal s'est déformé pour de bon. La contrainte monte encore jusqu'à un maximum, puis l'éprouvette s'amincit et casse. Un matériau fragile, lui, casse presque au bout de sa partie droite.</p>
+
+<div id="fig-traction"></div>
+
+<h2>Formalisation</h2>
+<p>La courbe de traction du cours (caractéristiques générales des métaux) se lit ainsi :</p>
+<div class="tableau"><table>
+<tr><th>Repère</th><th>Nom</th><th>Ce qu'on lit</th></tr>
+<tr><td>O à A</td><td>droite de Hooke</td><td>domaine de déformation élastique : on relâche, l'éprouvette revient</td></tr>
+<tr><td>A</td><td>résistance élastique \(R_e = F_e / S_0\)</td><td>fin du domaine élastique, début de la déformation permanente</td></tr>
+<tr><td>C</td><td>\(R_{max}\)</td><td>contrainte la plus élevée supportée</td></tr>
+<tr><td>D</td><td>résistance à la rupture \(R_r\)</td><td>contrainte au moment de la rupture</td></tr>
+<tr><td>après A</td><td>domaine de déformation permanente</td><td>en relâchant, il reste un allongement (décharge parallèle à la droite de Hooke)</td></tr>
+</table></div>
+<p>Un matériau <strong>ductile</strong> peut être allongé, étendu, étiré sans se rompre ; un matériau <strong>dur</strong> résiste à la pression (pénétration). Un matériau fragile casse presque au bout de sa droite de Hooke. L'aire sous la courbe est l'énergie absorbée : la <strong>ténacité</strong> est la capacité d'un matériau à absorber de l'énergie et à se déformer plastiquement sans se fracturer. L'énergie est l'aire sous la courbe force-allongement, que la diapo des élastomères note \(W = F\,\Delta l\) (zone hachurée). Pour une droite qui part de zéro, cette aire est un triangle : elle vaut exactement \(\tfrac{1}{2} F\,\Delta l\).</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté (valeurs illustratives, celles de la figure).</p>
+<p>Une éprouvette de section \(S_0 = 10\) mm² quitte la droite de Hooke sous \(F_e = 8\,800\) N. Sa résistance élastique est \(R_e = F_e / S_0 = 8\,800 / 10 = 880\) MPa : c'est le point A de la courbe. Sur la même courbe, le sommet C donne \(R_{max} = 1\,000\) MPa.</p>
+<p>Si l'on tire jusqu'entre A et C puis qu'on relâche, la décharge suit une droite parallèle à celle de Hooke : il reste un allongement permanent.</p>
+
+<h2>Formules clés</h2>
+<p>\[\sigma = E\,\varepsilon \ \text{(droite de Hooke, O à A)} \qquad R_e = \frac{F_e}{S_0}\]</p>
+<p>A : \(R_e\), fin du domaine élastique. C : \(R_{max}\), contrainte la plus haute. D : \(R_r\), rupture. Ténacité = aire sous la courbe (énergie absorbée avant rupture).</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/courbe-traction.js"></script>
+</body>
+</html>

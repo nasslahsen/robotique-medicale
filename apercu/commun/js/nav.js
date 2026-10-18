@@ -34,7 +34,7 @@
       droite: etape ? boutonSuite("btn-barre") : "" });
     document.body.insertBefore(barre, document.body.firstChild);
   }
-  if (etape && !integre) P.noterDernier(MID, "Cours : " + etape.titre, "modules/" + MID + "/cours/" + slug + ".html");
+  if (etape && !integre) P.noterDernier(MID, "Cours : " + etape.titre, "modules/" + MID + "/cours/" + slug + ".html");
 
   // Chapitre en tête de page
   var etiquette = document.querySelector("[data-etiquette]");
@@ -66,7 +66,7 @@
     bas.setAttribute("aria-label", "Suite du parcours");
     var ex = exos ? '<small>Exercices · ' + esc(exos.titre) + "</small>Passer aux exercices" : apres ? "<small>" + P.genre(apres) + " · " + esc(apres.titre) + "</small>Étape suivante" : "";
     bas.innerHTML = '<a class="retour" href="' + P.urlCarte(MID, etape.sm, etape.chapitre) + '"><small>Carte</small>Retour à la carte</a>' +
-      (ex ? '<a class="aller" href="' + (exos ? "../jouer.html#" + encodeURIComponent(slug) : P.urlEtape(apres)) + '">' + ex + "</a>" : "");
+      (ex ? '<a class="aller" href="' + (exos ? "../jouer.html#" + encodeURIComponent(slug) : P.urlEtape(apres)) + '">' + ex + "</a>" : "");
     main.appendChild(bas);
     // Page lue : quand le bas de page apparaît à l'écran
     if ("IntersectionObserver" in window) {

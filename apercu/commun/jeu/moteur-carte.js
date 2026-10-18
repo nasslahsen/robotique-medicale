@@ -30,11 +30,11 @@
     }).join("") + "</nav>";
   }
   h += '<div class="entete-ligne"><div class="entete-titre"><h1>' + esc(sm.titre || MOD.titre) + "</h1>" +
-    "<p>Lis le cours, puis fais les exercices de la même notion. À la fin de chaque chapitre : une révision, puis le boss. L'ordre est conseillé, rien n'est bloqué.</p></div>" +
+    "<p>Lis le cours, puis fais les exercices de la même notion. À la fin de chaque chapitre : une révision, puis le boss. L'ordre est conseillé, rien n'est bloqué.</p></div>" +
     '<div class="total"><b>' + cpt.faits + " / " + cpt.total + "</b><small>étapes faites</small></div></div>" +
     '<div class="entete-actions">' +
     (cible ? '<a class="btn" id="continuer" href="' + suite.url + '">' + (cpt.faits ? "Continuer" : "Commencer") + " : " + esc(suite.phrase) + "</a>" : '<span class="tout-fait">Toutes les étapes sont faites.</span>') +
-    '<a class="lien-cours" href="cours/index.html' + (sm.id ? "?sm=" + encodeURIComponent(sm.id) : "") + '">Tous les cours</a></div>';
+    '<a class="lien-cours" href="cours/index.html' + (sm.id ? "?sm=" + encodeURIComponent(sm.id) : "") + '">Tous les cours</a></div>';
   ent.innerHTML = h;
 
   // Chapitres : la carte se dessine en rangées de trois unités (une notion = cours + exercices)
@@ -69,7 +69,7 @@
       var ex = u.etapes.filter(function (x) { return x.type === "exos"; })[0];
       if (ex && ex.fait) {
         var hs = "";
-        for (var s = 0; s < 3; s++) hs += '<span class="' + (s < ex.etoiles ? "pleine" : "vide") + '">' + ETOILE + "</span>";
+        for (var s = 0; s < 3; s++) hs += '<span class="' + (s < ex.etoiles ? "pleine" : "vide") + '">' + ETOILE + "</span>";
         E.h("div", "mini", hs, el);
       }
     });
@@ -87,19 +87,19 @@
     a.dataset.etape = x.type + ":" + x.id;
     if (x.type === "cours") {
       a.className = "noeud-cours" + etat;
-      a.setAttribute("aria-label", "Cours : " + x.titre + (x.fait ? " (lu)" : ""));
+      a.setAttribute("aria-label", "Cours : " + x.titre + (x.fait ? " (lu)" : ""));
       a.innerHTML = '<span class="forme">' + LIVRE + "</span>";
     } else if (x.boss) {
       a.className = "noeud-exos boss" + etat;
-      a.setAttribute("aria-label", "Boss : " + x.titre);
+      a.setAttribute("aria-label", "Boss : " + x.titre);
       a.innerHTML = '<span class="forme"><span>BOSS</span></span>';
     } else if (x.revision) {
       a.className = "noeud-exos revision" + etat;
-      a.setAttribute("aria-label", "Révision du chapitre : " + x.titre);
+      a.setAttribute("aria-label", "Révision du chapitre : " + x.titre);
       a.innerHTML = '<span class="forme"><span>RÉV</span></span>';
     } else {
       a.className = "noeud-exos" + etat;
-      a.setAttribute("aria-label", "Exercices : " + x.titre);
+      a.setAttribute("aria-label", "Exercices : " + x.titre);
       a.innerHTML = '<span class="forme">' + num + "</span>";
     }
     return a;
@@ -142,7 +142,7 @@
   }
 
   document.getElementById("effacer").addEventListener("click", function () {
-    if (!confirm("Effacer toutes tes étoiles et ta progression dans ce module ?")) return;
+    if (!confirm("Effacer toutes tes étoiles et ta progression dans ce module ?")) return;
     P.effacer(MID);
     location.reload();
   });

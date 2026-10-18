@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Norme et vecteur unitaire · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Norme et vecteur unitaire</h1>
+<p class="chapeau">Quelle distance entre la pointe de l'aiguille et la cible ? C'est la longueur d'un vecteur, sa norme. Et les axes d'un repère sont des vecteurs de longueur 1 : ils ne donnent qu'une direction.</p>
+
+<h2>Intuition</h2>
+<p>Un vecteur et ses deux composantes forment un triangle rectangle : le vecteur en est l'hypoténuse. Sa longueur se calcule donc avec Pythagore. Si l'on ne garde que la direction, on ramène le vecteur à une longueur 1, en le divisant par sa longueur.</p>
+
+<div id="fig-norme"></div>
+
+<h2>Formalisation</h2>
+<p>La longueur d'un vecteur s'appelle sa <strong>norme</strong>, notée \(\|\vec{u}\|\). C'est Pythagore :</p>
+\[ \|\vec{u}\| = \sqrt{u_x^2 + u_y^2} \qquad \text{dans l'espace : } \|\vec{V}\| = \sqrt{V_x^2 + V_y^2 + V_z^2} \]
+<p>Dans l'espace, on applique Pythagore deux fois : d'abord dans le plan du sol, puis dans le plan vertical qui contient \(\vec{V}\). Le signe ne change rien à la longueur : on élève au carré.</p>
+<p>Diviser un vecteur par sa norme donne un vecteur de longueur 1, dans la même direction : un <strong>vecteur unitaire</strong>.</p>
+\[ \hat{u} = \frac{\vec{u}}{\|\vec{u}\|} \]
+<p>Un vecteur est unitaire quand la somme des carrés de ses composantes vaut 1. C'est ce que dit \(\cos^2\theta + \sin^2\theta = 1\) : le vecteur \((\cos\theta \,;\ \sin\theta)\) est toujours unitaire.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<ul>
+<li>\(\vec{u} = (5 \,;\ 12)\) : \(\|\vec{u}\| = \sqrt{25 + 144} = \sqrt{169} = 13\), et \(\dfrac{\vec{u}}{\|\vec{u}\|} = \left(\dfrac{5}{13} \,;\ \dfrac{12}{13}\right) \approx (0{,}385 \,;\ 0{,}923)\) : on a multiplié par \(k = 1/13\).</li>
+<li>\(\vec{V} = (2 \,;\ 3 \,;\ 6)\) : \(\|\vec{V}\| = \sqrt{4 + 9 + 36} = \sqrt{49} = 7\).</li>
+<li>\((-0{,}6 \,;\ 0{,}8)\) est unitaire : \(0{,}36 + 0{,}64 = 1\).</li>
+</ul>
+
+<h2>Formules clés</h2>
+\[ \|\vec{u}\| = \sqrt{u_x^2 + u_y^2} \qquad \|\vec{V}\| = \sqrt{V_x^2 + V_y^2 + V_z^2} \qquad \hat{u} = \frac{\vec{u}}{\|\vec{u}\|} \]
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../figures/norme.js"></script>
+</body>
+</html>

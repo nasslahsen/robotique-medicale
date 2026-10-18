@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Bits et binaire · Systèmes embarqués et instrumentation biomédicale intelligente</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Bits et binaire</h1>
+<p class="chapeau">Un thermomètre connecté envoie la température au microcontrôleur sous forme de bits. Pour lire ce qu'il envoie, ou ce qu'un convertisseur 12 bits peut mesurer, il faut savoir compter en binaire.</p>
+
+<h2>Intuition</h2>
+<p>Un fil ne transporte que deux états : tension haute ou tension basse, 1 ou 0. Pour écrire un nombre plus grand, on aligne plusieurs fils, plusieurs bits. Comme en décimal où chaque chiffre vaut dix fois celui de sa droite, en binaire chaque bit vaut deux fois celui de sa droite : 1, 2, 4, 8, 16…</p>
+
+<div id="fig-octet"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>bit</strong> vaut 0 ou 1. Huit bits forment un <strong>octet</strong>. Le bit de rang \(k\) (compté depuis la droite, en partant de 0) pèse \(2^k\) : la valeur d'un mot binaire est la somme des poids des bits à 1.</p>
+\[ 00010011_2 = 2^4 + 2^1 + 2^0 = 16 + 2 + 1 = 19 \]
+<p>Le <strong>MSB</strong> (<em>most significant bit</em>) est le bit de poids fort, à gauche ; dans un octet, il pèse \(2^7 = 128\). Le <strong>LSB</strong> (<em>least significant bit</em>) est le bit de poids faible, à droite, qui pèse 1. Le cours écrit aussi MSb et LSb sur les registres.</p>
+<p>Avec \(n\) bits, on écrit \(2^n\) valeurs, de 0 à \(2^n - 1\). Chaque bit en plus double le nombre de valeurs.</p>
+<div class="tableau"><table>
+<tr><th>Taille</th><th>Nombre de valeurs</th><th>Plus grande valeur</th><th>Où on la retrouve</th></tr>
+<tr><td>8 bits</td><td>256</td><td>255</td><td>DAC 8 bits de l'ESP32</td></tr>
+<tr><td>10 bits</td><td>1 024</td><td>1 023</td><td>convertisseur 10 bits (ATmega par exemple)</td></tr>
+<tr><td>12 bits</td><td>4 096</td><td>4 095</td><td>ADC 12 bits de l'ESP32</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Un capteur doit envoyer 42 sur un octet : \(42 = 32 + 8 + 2\), on allume les bits de rang 5, 3 et 1, soit 00101010. Dans l'autre sens, un capteur renvoie 10010110 : les bits à 1 sont ceux de rang 7, 4, 2 et 1, donc \(128 + 16 + 4 + 2 = 150\).</p>
+
+<h2>Formules clés</h2>
+\[ \text{valeur} = \sum_k b_k\, 2^k \qquad v_{max} = 2^n - 1 \]
+<p>Octet : 8 bits, MSB à gauche (\(2^7 = 128\)), LSB à droite (1). 8 bits : 255 ; 10 bits : 1 023 ; 12 bits : 4 095.</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/binaire.js"></script>
+</body>
+</html>

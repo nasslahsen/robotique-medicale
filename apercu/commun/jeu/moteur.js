@@ -112,7 +112,7 @@
           if ((attente += 250) < 5000) { setTimeout(pas, 250); return; }
           revelation = false;
           if (z) z.style.visibility = "";
-          j.info("Cette question n'a pas de réponse toute prête : passe-la.");
+          j.info("Cette question n'a pas de réponse toute prête : passe-la.");
         })();
       };
       function ligneMsg() { if (!msg || !msg.parentNode) msg = E.h("div", "retour-msg", "", el); return msg; }
@@ -133,7 +133,7 @@
       j.efface = function () { if (msg) { msg.innerHTML = ""; msg.className = "retour-msg"; } };
       j.bravo = function (html, point) {
         // réponse montrée : on donne la réponse, sans féliciter
-        if (etats[i] === "revelee") { var mr = ligneMsg(); mr.className = "retour-msg info"; mr.innerHTML = "<span>Réponse : " + (html || "") + "</span>"; E.rendre(mr); lienCours(el, i, mr); return; }
+        if (etats[i] === "revelee") { var mr = ligneMsg(); mr.className = "retour-msg info"; mr.innerHTML = "<span>Réponse : " + (html || "") + "</span>"; E.rendre(mr); lienCours(el, i, mr); return; }
         var m = ligneMsg(); m.className = "retour-msg ok"; m.innerHTML = COCHE + "<span>" + (html || "Bravo.") + "</span>"; E.rendre(m);
         var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
         var p = point ? [r.left + point[0] / vb.width * r.width, r.top + point[1] / vb.height * r.height] : [r.left + r.width / 2, r.top + r.height / 2];
@@ -209,7 +209,7 @@
             cases[k].classList.toggle("bon", bon); cases[k].classList.toggle("faux", !bon);
             if (!bon) faux.push(k);
           });
-          if (faux.length) { j.erreur(cfg.aide ? cfg.aide(faux[0], val) : "Une valeur ne va pas : elle est en rouge."); return; }
+          if (faux.length) { j.erreur(cfg.aide ? cfg.aide(faux[0], val) : "Une valeur ne va pas : elle est en rouge."); return; }
           r.fait = true; clav.style.display = "none";
           if (cfg.ok) cfg.ok();
         });
@@ -308,9 +308,9 @@
       var r = document.getElementById("resultat");
       var et = ""; for (var s = 0; s < 3; s++) et += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";
       var texte = restantes.length
-        ? (restantes.length > 1 ? restantes.length + " questions passées ou vues : elles ne comptent pas pour les étoiles. Réessaie-les." : "Une question passée ou vue : elle ne compte pas pour les étoiles. Réessaie-la.")
+        ? (restantes.length > 1 ? restantes.length + " questions passées ou vues : elles ne comptent pas pour les étoiles. Réessaie-les." : "Une question passée ou vue : elle ne compte pas pour les étoiles. Réessaie-la.")
         : erreurs === 0 ? "Aucune erreur. Parfait." : erreurs + (erreurs > 1 ? " erreurs" : " erreur") + ". Rejoue sans erreur pour avoir les trois étoiles.";
-      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss && !restantes.length ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
+      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss && !restantes.length ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
         texte + '</p><div class="a-revoir"></div><div class="actions"></div></div>';
       var liste2 = r.querySelector(".a-revoir");
       restantes.forEach(function (k) {

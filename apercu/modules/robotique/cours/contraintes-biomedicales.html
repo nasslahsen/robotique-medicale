@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Contraintes biomédicales · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Contraintes biomédicales</h1>
+<p class="chapeau">Un bras de rééducation tient le bras d'un patient, un bras chirurgical travaille au-dessus d'un champ opératoire. Un axe robotique y doit tenir les critères de toute machine, et d'autres encore, propres au soin.</p>
+
+<h2>Intuition</h2>
+<p>Pour une machine d'atelier, on regarde ce qu'elle porte, sa raideur, sa durée de vie et son prix. Près d'un patient, d'autres questions arrivent : que se passe-t-il si un doigt se glisse entre deux pièces ? si de la graisse s'échappe sur le champ opératoire ? si le bras est lourd et bruyant ? Chaque contrainte vise un endroit précis de la machine.</p>
+
+<div id="fig-biomedical"></div>
+
+<h2>Formalisation</h2>
+
+<p>Un système biomédical doit respecter les critères classiques de charge, rigidité, durée de vie et coût. Il doit aussi limiter la masse mobile, le bruit, les vibrations et les points de pincement. Il doit être facile à nettoyer et à maintenir, et les lubrifiants doivent rester confinés. Le choix final dépend de l'importance de chaque critère.</p>
+
+
+<div class="tableau"><table>
+<tr><th>Critères classiques</th><th>Critères liés au contexte biomédical</th></tr>
+<tr><td>Charge<br>Rigidité<br>Durée de vie<br>Coût</td><td>Masse mobile limitée<br>Bruit et vibrations limités<br>Pas de points de pincement<br>Facile à nettoyer et à maintenir<br>Lubrifiants confinés</td></tr>
+</table></div>
+
+
+<p>Partout où deux pièces se rapprochent pendant le mouvement, un doigt ou un tissu peut être coincé : c'est un point de pincement, à supprimer dès la conception. Un lubrifiant qui s'échappe salit et contamine la zone de soin : d'où des carters étanches, des joints, et des surfaces faciles à nettoyer.</p>
+
+<h2>Exemple</h2>
+<p>Exemple ajouté : on motorise le coude d'un bras de rééducation. Solution A, le moteur est au coude : la chaîne est courte, mais le moteur fait partie de la masse mobile. Solution B, le moteur reste sur la base et le mouvement monte par une transmission : moins de masse mobile, mais un maillon de plus, avec son jeu et sa souplesse. Aucune n'est meilleure en soi : le choix final dépend de l'importance donnée à chaque critère pour cette application.</p>
+
+<h2>Formules clés</h2>
+<p>Critères classiques : charge, rigidité, durée de vie, coût. Critères liés au contexte biomédical : masse mobile limitée, bruit et vibrations limités, pas de points de pincement, facile à nettoyer et à maintenir, lubrifiants confinés. Le choix final pèse l'importance de chaque critère.</p>
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/contraintes-biomedicales.js"></script>
+</body>
+</html>

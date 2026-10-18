@@ -18,9 +18,9 @@ PLATEFORME.parcours("biomateriaux", {
   ],
   niveaux: [
     { id: "contrainte-deformation", chapitre: 0, titre: "Contrainte et déformation", cours: true, pret: true },
-    { id: "courbe-traction", chapitre: 0, titre: "La courbe de traction", pret: true },
-    { id: "echelle-log", chapitre: 0, titre: "Modules et échelle logarithmique", pret: true },
-    { id: "masse-volumique", chapitre: 0, titre: "Masse volumique et mélanges", pret: true },
+    { id: "courbe-traction", chapitre: 0, titre: "La courbe de traction", cours: true, pret: true },
+    { id: "echelle-log", chapitre: 0, titre: "Modules et échelle logarithmique", cours: true, pret: true },
+    { id: "masse-volumique", chapitre: 0, titre: "Masse volumique et mélanges", cours: true, pret: true },
     { id: "revision-bases", chapitre: 0, titre: "Révision : les bases", revision: true, pret: true },
     { id: "boss-bases", chapitre: 0, titre: "L'éprouvette de la prothèse", boss: true, pret: true },
 
@@ -85,6 +85,9 @@ PLATEFORME.parcours("biomateriaux", {
   ],
   cours: [
     { chapitre: 0, id: "contrainte-deformation", titre: "Contrainte, déformation et module" },
+    { chapitre: 0, id: "courbe-traction", titre: "La courbe de traction" },
+    { chapitre: 0, id: "echelle-log", titre: "Modules et échelle logarithmique" },
+    { chapitre: 0, id: "masse-volumique", titre: "Masse volumique et mélanges" },
     { chapitre: 1, id: "definitions-biomateriau", titre: "Définitions d'un biomatériau" },
     { chapitre: 1, id: "generations", titre: "Les générations de biomatériaux" },
     { chapitre: 1, id: "dispositif-medical", titre: "Le dispositif médical" },
