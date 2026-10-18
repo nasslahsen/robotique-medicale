@@ -28,8 +28,8 @@ NIVEAU({
   },
   etapes: [
     { nom: "Statut", jouer: function (j, n) {
-      j.fig.astuce("Un stent en polymère qui maintient l'artère ouverte puis se résorbe en quelques années.");
-      j.titre("Tu montes le dossier de ce stent biorésorbable (sans médicament). D'abord : est-ce un dispositif médical ?");
+      j.fig.astuce("");
+      j.titre("Tu montes le dossier d'un stent biorésorbable en polymère, sans médicament : il maintient l'artère ouverte puis se résorbe en quelques années. D'abord : est-ce un dispositif médical ?");
       j.consigne("Boss : chaque erreur compte.");
       j.choix([
         { html: "Oui : il agit mécaniquement, en soutenant la paroi", juste: true },

@@ -111,7 +111,7 @@ NIVEAU({
       ], { colonnes: 1, ok: function () {
         n.aires = true; n.dessin();
         j.bravo("Le ductile : son aire est bien plus grande.");
-        j.expliquer("<p>L'aire sous la courbe est l'énergie absorbée. La <b>ténacité</b> est la capacité d'un matériau à absorber de l'énergie et à se déformer plastiquement sans se fracturer. Pour une force qui croît avec l'allongement, le travail est \\(W = F\\,\\Delta l\\) en aire sous la courbe force-allongement.</p>");
+        j.expliquer("<p>L'aire sous la courbe est l'énergie absorbée. La <b>ténacité</b> est la capacité d'un matériau à absorber de l'énergie et à se déformer plastiquement sans se fracturer. Sur la courbe force-allongement, cette aire est l'énergie notée \\(W\\) dans le cours.</p>");
         j.suite();
       } });
     } },

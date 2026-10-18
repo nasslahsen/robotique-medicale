@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le dispositif médical · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le dispositif médical</h1>
+<p class="chapeau">Une seringue et l'insuline qu'elle contient soignent le même patient. Pourtant, l'une est un dispositif médical et l'autre un médicament, avec des règles différentes. Qu'est-ce qui les sépare ?</p>
+
+<h2>Intuition</h2>
+<p>Qu'est-ce qui différencie un biomatériau d'un dispositif médical ? Dans les applications médicales, les biomatériaux sont rarement utilisés seuls : ils sont intégrés dans des dispositifs plus ou moins complexes, les dispositifs médicaux (DM). Le rôle des DM est donc étroitement lié à celui des biomatériaux.</p>
+<p>Pour savoir si un produit de santé est un DM, on ne regarde ni sa taille, ni sa matière, ni son prix : on regarde comment il agit. La seringue agit mécaniquement (elle pousse un liquide) ; l'insuline agit sur le métabolisme. Le critère, c'est le mode d'action principal voulu.</p>
+<div id="fig-arbre"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Dispositifs médicaux</strong> : produits de santé, y compris les logiciels, revendiquant un usage à des fins médicales et dont le mode d'action principal délibéré n'est obtenu ni par des voies pharmacologiques, ni immunologiques, ni par métabolisme, à défaut de quoi le produit est qualifié de médicament (article R5211-2 du Code de la santé publique).</p>
+<p>Les DM ont des finalités bien identifiées :</p>
+<div class="tableau"><table>
+<tr><th>Ce qui est visé</th><th>Finalités</th><th>Exemple</th></tr>
+<tr><td>une maladie</td><td>diagnostic, prévention, contrôle, traitement</td><td>matériel de diagnostic, équipement lourd d'imagerie médicale</td></tr>
+<tr><td>une blessure ou un handicap</td><td>diagnostic, contrôle, traitement, réparation</td><td>fauteuil roulant, compensation du handicap</td></tr>
+<tr><td>l'anatomie ou un processus physiologique</td><td>étude, remplacement, modification</td><td>prothèse de hanche, valve cardiaque</td></tr>
+</table></div>
+<p>Avec une telle définition, les DM couvrent un domaine très large de l'ingénierie de la santé : diagnostic, thérapeutique, suivi de maladies, compensation du handicap. L'identification du secteur est compliquée : il est vaste et hétérogène, et c'est une des raisons pour lesquelles l'industrie des DM est souvent rangée à tort dans l'industrie médicale (pharmaceutique).</p>
+
+<h2>Un secteur très divers</h2>
+<ul>
+<li>Une très grande diversité de produits : du simple patch à la valve cardiaque la plus sophistiquée, du fauteuil roulant aux prothèses de hanche, de la seringue ou du cathéter à la prothèse vasculaire, de tout le matériel de diagnostic aux équipements lourds d'imagerie médicale.</li>
+<li>Un nombre élevé de produits référencés : environ 1 à 2 millions en France (rapport IGAS 2010), développés pour les besoins ciblés de nombreux petits groupes de patients (par exemple, les endoprothèses aortiques ne concernent que quelques milliers de patients en France).</li>
+<li>Un marché croissant au niveau mondial et européen, de plusieurs centaines de milliards d'euros. La France y occupe la 4e ou 5e place, avec 10 % du marché mondial.</li>
+<li>Un tissu industriel composé à 94 % de petites et moyennes entreprises (moins de 250 personnes), dont 45 % de très petites entreprises (moins de 20 personnes), et de nombreux marchés « de niche » (rapport PIPAME 2011).</li>
+</ul>
+
+<h2>Exemple</h2>
+<p>Un pansement, un logiciel d'aide au diagnostic et une prothèse de hanche sont des DM : leur action principale n'est ni pharmacologique, ni immunologique, ni métabolique. Un comprimé d'antibiotique (voie pharmacologique), un vaccin (voie immunologique) et l'insuline (métabolisme) sont des médicaments. Fais-les passer dans l'arbre ci-dessus.</p>
+
+<h2>Formules clés</h2>
+<p>DM = produit de santé (logiciels compris) à usage médical dont l'action principale voulue n'est ni pharmacologique, ni immunologique, ni métabolique ; sinon, médicament (art. R5211-2 du CSP).</p>
+<p>Finalités : maladie (diagnostic, prévention, contrôle, traitement) ; blessure ou handicap (diagnostic, contrôle, traitement, réparation) ; anatomie ou processus physiologique (étude, remplacement, modification).</p>
+<p>France : 1 à 2 millions de produits, 4e ou 5e marché (10 %), 94 % de PME.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/dispositif-medical.js"></script>
+</body>
+</html>

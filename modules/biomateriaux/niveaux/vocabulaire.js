@@ -24,7 +24,7 @@ NIVEAU({
         E.s("path", { d: "M380 360 C520 380 520 160 362 200", fill: "none", stroke: C.jeu, "stroke-width": 5 }, g);
         D.fleche(g, [372, 196], [356, 204], C.jeu, 5);
         D.rond(g, [372, 352], 10, { fill: C.jeu }); D.rond(g, [346, 202], 10, { fill: C.jeu });
-        D.texte(g, "os prélevé sur la hanche", [470, 420], { taille: 16, coul: C.doux, gras: false });
+        D.texte(g, "os prélevé sur la hanche", [470, 470], { taille: 16, coul: C.doux, gras: false });
         D.texte(g, "greffé dans la mâchoire", [470, 150], { taille: 16, coul: C.doux, gras: false });
       } else if (c === "allo") {
         humain(170, 330, peau, "donneur"); humain(510, 330, autre, "receveur");
@@ -40,7 +40,7 @@ NIVEAU({
         // vue d'ensemble : un corps avec ses dispositifs
         humain(340, 380, peau, null);
         var pts = [[340, 255, "lentille intra-oculaire"], [322, 330, "implant contraceptif"], [365, 345, "valve cardiaque"]];
-        pts.forEach(function (p, k) { D.rond(g, [p[0], p[1]], 9, { fill: C.jeu, stroke: "#fff", ep: 2 }); D.ligne(g, [p[0], p[1]], [k === 1 ? 160 : 520, 120 + k * 80], C.gris, 2); D.texte(g, p[2], [k === 1 ? 150 : 530, 120 + k * 80], { taille: 16, ancre: k === 1 ? "end" : "start" }); });
+        pts.forEach(function (p, k) { D.rond(g, [p[0], p[1]], 9, { fill: C.jeu, stroke: "#fff", ep: 2 }); D.ligne(g, [p[0], p[1]], [k === 1 ? 210 : 470, 120 + k * 80], C.gris, 2); D.texte(g, p[2], [k === 1 ? 200 : 480, 120 + k * 80], { taille: 16, ancre: k === 1 ? "end" : "start" }); });
       }
       if (n.nom) D.texte(g, n.nom, [340, 60], { taille: 26, coul: C.jeu });
     };

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Polymères semi-cristallins · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Polymères semi-cristallins</h1>
+<p class="chapeau">Une poche en polyéthylène est laiteuse, un flacon en polystyrène est transparent. Le polyéthylène reste souple et résistant bien au-dessus de sa transition vitreuse (−120 °C). La raison : il contient des cristaux.</p>
+
+<h2>Intuition</h2>
+<p>En refroidissant, certaines portions de chaînes s'alignent et se replient pour former des petits cristaux, au milieu de zones restées désordonnées. Ces cristaux sont des points durs qui tiennent le matériau même quand la partie amorphe devient caoutchouteuse. Et ils diffusent la lumière : le polymère devient translucide ou opaque.</p>
+<div id="fig-x"></div>
+
+<h2>Formalisation</h2>
+<p>Un polymère cristallin ne cristallise jamais à 100 % : il y a peu de chance que toutes les chaînes s'alignent lors du refroidissement ; les chaînes doivent se replier pour former un cristal, et des parties de chaînes ne participent pas à la cristallisation. Un polymère dit cristallin est donc une <strong>fraction cristalline dispersée dans un polymère amorphe</strong> :</p>
+<ul>
+<li>phase cristalline : densité \(\rho_c\), température de fusion \(T_f\) ;</li>
+<li>phase amorphe : densité \(\rho_a\), température de transition vitreuse \(T_g\).</li>
+</ul>
+<p>Sur la courbe du module de relaxation : entre Tg et Tf (zone 2-3), le module diminue lentement, car la phase cristalline est dispersée dans une matrice caoutchouteuse ; après Tf (3-4), le polymère est entièrement liquide (ou caoutchouteux si sa masse est très grande). L'influence du taux de cristallinité : forte cristallinité, petite chute à Tg ; faible cristallinité, grande chute ; 0 %, chute totale.</p>
+<p>Les <strong>ramifications nuisent à la cristallisation</strong> : le taux de cristallinité X passe d'environ 0,9 avec environ 5 ramifications pour 1000 atomes de carbone à environ 0,05 avec environ 70.</p>
+<div id="fig-ramif"></div>
+
+<h2>Transparence et vitesse de cristallisation</h2>
+<p>D'après les solutions du TD : un semi-cristallin est translucide ou opaque ; au-dessus de Tf, la phase cristalline a fondu et il devient transparent. En refroidissant depuis l'état fondu, la vitesse de cristallisation est la plus élevée vers \(T = (T_f + T_g)/2\) : trop chaud, les cristaux se défont ; trop froid, les chaînes ne bougent plus.</p>
+
+<h2>Exemple</h2>
+<p>TD, application 1.2 : Tg = −10 °C, Tf = 150 °C, X = 0,5 à 25 °C.</p>
+<ul>
+<li>À 50 °C, translucide ou opaque : vrai (cristaux présents).</li>
+<li>À 30 °C, transparent : faux.</li>
+<li>À 160 °C, transparent : vrai (au-dessus de Tf).</li>
+<li>De −20 à 20 °C, le module diminue légèrement parce que X a baissé : faux (c'est la phase amorphe qui passe Tg).</li>
+<li>De 20 à 160 °C, le module passe de 1 GPa à 1 MPa parce que X est passé à 0 : vrai.</li>
+<li>Vitesse de cristallisation maximale : \(T = (150 - 10)/2 = 70\) °C.</li>
+</ul>
+
+<h2>Formules clés</h2>
+<p>Semi-cristallin = phase cristalline (\(\rho_c\), \(T_f\)) dispersée dans une phase amorphe (\(\rho_a\), \(T_g\)).</p>
+<p>Entre Tg et Tf : module qui diminue lentement ; X grand, petite chute à Tg.</p>
+<p>Ramifications ↑ ⇒ X ↓ (≈ 0,9 à 5 pour 1000 C ; ≈ 0,05 à 70).</p>
+<p>\[T_{\text{cristallisation max}} \approx \frac{T_f + T_g}{2}\]</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/semi-cristallins.js"></script>
+</body>
+</html>

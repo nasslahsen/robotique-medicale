@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>États d'un polymère amorphe · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>États d'un polymère amorphe</h1>
+<p class="chapeau">Une lentille en PMMA est dure et cassante à 20 °C ; un tube en caoutchouc naturel est souple. Les deux sont des polymères amorphes. Ce qui change, c'est où se trouve la température d'usage sur la courbe du module : avant ou après la transition vitreuse.</p>
+
+<h2>Intuition</h2>
+<p>À froid, les chaînes sont figées : on ne peut que tirer un peu sur les distances entre atomes, le matériau est rigide comme du verre. En chauffant, à la transition vitreuse Tg, de longues sections de chaînes se mettent à bouger : le module s'effondre d'un facteur mille environ, le matériau devient caoutchouteux. Plus chaud encore, les chaînes se désenchevêtrent et le polymère coule.</p>
+<div id="fig-courbe"></div>
+
+<h2>Formalisation</h2>
+<p>Courbe du module de relaxation \(E_r\) (en échelle logarithmique) d'un polymère amorphe en fonction de la température :</p>
+<div class="tableau"><table>
+<tr><th>Zone</th><th>Nom</th><th>Ce qui se passe</th></tr>
+<tr><td>0-1</td><td>état vitreux</td><td>module élevé (environ 10⁹ Pa) ; une déformation = augmentation de la distance entre atomes</td></tr>
+<tr><td>1-2</td><td>transition vitreuse</td><td>réduction importante du module de relaxation, autour de Tg</td></tr>
+<tr><td>2-3</td><td>plateau caoutchouteux</td><td>le mouvement de longues sections de chaînes devient possible ; module d'environ 10⁶ Pa ; pour un polymère non réticulé, le plateau est dû à l'enchevêtrement physique</td></tr>
+<tr><td>3-4</td><td>transition caoutchouc-liquide</td><td>les chaînes se désenchevêtrent</td></tr>
+<tr><td>5</td><td>état liquide</td><td>le polymère s'écoule</td></tr>
+</table></div>
+<p><strong>Relaxation</strong> : après une déformation, les chaînes veulent retourner à leur équilibre. Elles le font par désenchevêtrement et réenchevêtrement. À déformation maintenue, la contrainte σ décroît donc avec le temps. Le temps nécessaire varie avec la longueur des chaînes.</p>
+<div id="fig-relaxation"></div>
+
+<h2>Exemple</h2>
+<p>Courbe du cours : polystyrène (Tv ≈ 100 °C) et caoutchouc naturel (Tv ≈ −60 °C à −70 °C). À 20 °C, le polystyrène est dans sa zone 0-1, vitreux ; le caoutchouc naturel est sur son plateau, caoutchouteux. La même courbe décalée en température donne deux usages opposés.</p>
+
+<h2>Formules clés</h2>
+<p>0-1 vitreux, 1-2 transition vitreuse (Tg), 2-3 plateau caoutchouteux, 3-4 transition caoutchouc-liquide, 5 liquide.</p>
+<p>Vitreux ≈ 10⁹ Pa ; caoutchouteux ≈ 10⁶ Pa.</p>
+<p>Relaxation : σ(t) décroît à déformation constante (désenchevêtrement, réenchevêtrement) ; plus les chaînes sont longues, plus c'est lent.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/etats-amorphe.js"></script>
+</body>
+</html>

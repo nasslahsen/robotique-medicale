@@ -21,7 +21,7 @@ NIVEAU({
           }
         }
         var r = BIO.hasard(5), nb = Math.round(n.c * 0.9);
-        for (var i = 0; i < nb; i++) D.rond(g, [80 + 520 * r(), 300 + (r() - 0.5) * 3.2 * ecart], 11, { fill: C.jeu, stroke: "#fff", ep: 2 });
+        for (var i = 0; i < nb; i++) D.rond(g, [80 + 520 * r(), 300 + (r() - 0.5) * 2.9 * ecart], 11, { fill: C.jeu, stroke: "#fff", ep: 2 });
         fig.chip("plastifiant : " + n.c + " %");
       } else {
         fig.chip(null);
