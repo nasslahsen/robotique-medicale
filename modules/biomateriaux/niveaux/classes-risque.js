@@ -19,7 +19,7 @@ NIVEAU({
       }
       if (n.tests) D.texte(g, "pastilles vertes : nombre de tests avant approbation", [340, 520], { taille: 15, coul: C.ok, gras: false });
       if (n.objet) {
-        var p = n.pose !== null ? marche(n.pose) : null, cx = p ? p.x + p.l / 2 - 3 : 340, cy = p ? p.y - 34 : 110;
+        var p = n.pose !== null ? marche(n.pose) : null, cx = Math.min(550, p ? p.x + p.l / 2 - 3 : 340), cy = p ? p.y - 34 : 110;
         E.s("rect", { x: cx - 120, y: cy - 22, width: 240, height: 44, rx: 22, fill: "#fff", stroke: C.encre, "stroke-width": 2.5 }, g);
         D.texte(g, n.objet, [cx, cy], { taille: 17 });
       }

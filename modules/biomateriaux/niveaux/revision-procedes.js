@@ -8,10 +8,10 @@ NIVEAU({
     var POSTES = [["e", "extrusion", "profilé continu"], ["i", "injection", "petit point"], ["s", "soufflage", "fond du contenant"], ["r", "rotomoulage", "creux, sans soudure"], ["t", "thermoformage", "découpe au pourtour"], ["c", "compression", "bavure"]];
     n.dessin = function () {
       E.vider(g);
-      D.texte(g, "Les six procédés et leur indice", [340, 92], { taille: 20 });
+      D.texte(g, "Les six procédés et leur indice", [340, 100], { taille: 20 });
       POSTES.forEach(function (p, k) {
-        var x = 130 + (k % 2) * 290, y = 170 + Math.floor(k / 2) * 130, on = n.surligne === p[0];
-        E.s("rect", { x: x - 105, y: y - 44, width: 250, height: 96, rx: 16, fill: on ? PLATEFORME.teinte(0.16) : "#fff", stroke: on ? C.jeu : "#d9dde6", "stroke-width": 3 }, g);
+        var x = 130 + (k % 2) * 290, y = 180 + Math.floor(k / 2) * 150, on = n.surligne === p[0];
+        E.s("rect", { x: x - 110, y: y - 52, width: 262, height: 112, rx: 16, fill: on ? PLATEFORME.teinte(0.16) : "#fff", stroke: on ? C.jeu : "#d9dde6", "stroke-width": 3 }, g);
         D.rond(g, [x - 66, y + 4], 26, { fill: on ? C.jeu : "#eef0f5", stroke: C.encre, ep: 2.5 });
         D.texte(g, String(k + 1), [x - 66, y + 5], { taille: 19, coul: on ? "#fff" : C.encre, fond: false });
         D.texte(g, p[1], [x - 26, y - 10], { taille: 19, ancre: "start" });
@@ -29,7 +29,7 @@ NIVEAU({
         { html: "Extrusion-gonflage", juste: true },
         { html: "Rotomoulage", aide: "Le rotomoulage donne des pièces creuses rigides, une à une, avec un cycle long : pas un film sur bobine." },
         { html: "Injection", aide: "L'injection donne des pièces finies dans un moule fermé, une à la fois, pas un film continu." }
-      ], { ok: function () {
+      ], { colonnes: 1, ok: function () {
         n.surligne = "e"; n.dessin();
         j.bravo("Une bulle de pellicule aplatie et enroulée.");
         j.expliquer("<p>L'extrusion-gonflage est une variante de l'extrusion : le tube sortant de la filière est gonflé d'air, refroidi, aplati et enroulé sur des bobines.</p>");

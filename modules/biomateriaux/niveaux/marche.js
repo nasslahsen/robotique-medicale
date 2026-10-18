@@ -48,8 +48,9 @@ NIVEAU({
   etapes: [
     { nom: "Taux de croissance", jouer: function (j, n) {
       n.mode = "deux"; n.dessin();
-      j.fig.astuce("Taux annuel moyen t : la valeur est multipliée par (1 + t) chaque année.");
+      j.fig.astuce("");
       j.titre("Le marché passe de 43,50 milliards de dollars en 2023 à 69,86 en 2030. Quel taux de croissance annuel moyen, en % ?");
+      j.consigne("Taux annuel moyen \\(t\\) : la valeur est multipliée par \\(1 + t\\) chaque année.");
       j.nombre({ avant: "t \\approx", apres: "\\%", cases: [{ attendu: Math.round(BIO.croissanceAnnuelle(43.5, 69.86, 7) * 1000) / 10, tol: 0.3 }], ligne: true,
         aide: function () { return "Sept années : \\(69{,}86 = 43{,}50\\,(1+t)^7\\). Calcule \\((69{,}86/43{,}50)^{1/7} - 1\\)."; },
         ok: function () {
@@ -61,7 +62,7 @@ NIVEAU({
     } },
     { nom: "Viser 2021", jouer: function (j, n) {
       n.mode = "barres"; n.taux = 10; n.dessin();
-      j.fig.astuce("Le trait bleu est la valeur 2021 calculée à partir de 2015 (62,07) avec ton taux.");
+      j.fig.astuce("");
       j.titre("Le cours annonce un taux de croissance annuel moyen pour 2016–2021. Retrouve-le : règle le taux pour que la projection depuis 2015 tombe sur 149,17.");
       var fait = false;
       function verifier(v) {
@@ -72,6 +73,7 @@ NIVEAU({
         j.expliquer("<p>Le marché mondial des biomatériaux valait 48 milliards de dollars en 2013 et 62 en 2015, soit environ 14 % par an. De 2016 à 2021, il devait croître de 16 % par an pour dépasser 149 milliards. Ce marché qui « explose » dynamise celui de l'ingénierie tissulaire.</p>");
         j.suite();
       }
+      j.consigne("Le trait bleu est la valeur 2021 calculée à partir de 2015 (62,07) avec ton taux.");
       var c = j.curseur({ nom: "taux", min: 5, max: 25, pas: 0.5, val: 10, unite: " %", dec: 1, change: verifier });
       j.reponse(function () { c.regler(16); verifier(16); });
     } },

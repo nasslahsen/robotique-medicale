@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Compression et compression-transfert · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Compression et compression-transfert</h1>
+<p class="chapeau">Une résine thermodurcissable durcit pour toujours en chauffant : impossible de la fondre dans une vis puis de la pousser comme un thermoplastique. On la place directement dans un moule chaud, on presse, et on la laisse cuire sur place.</p>
+
+<h2>Intuition</h2>
+<p>Pense à un gaufrier : on verse la pâte, on ferme, on presse ; ce qui déborde sort sur les côtés, et on attend que la gaufre cuise avant d'ouvrir. Le moulage par compression suit la même logique. La compression-transfert ajoute une étape : la matière est d'abord ramollie à part, dans un pot, puis poussée par un poinçon dans le moule déjà fermé, à travers un canal.</p>
+
+<div id="fig-compression"></div>
+
+<h2>Formalisation</h2>
+<p>Procédé et mode opératoire du <strong>moulage par compression</strong>. Les matières premières se présentent généralement sous forme de poudres, de granulés, de semi-solides ou de préformés. Les étapes suivantes constituent le moulage :</p>
+<ol>
+<li>chauffage du moule ;</li>
+<li>mise des matières premières dans le moule ouvert ; fermeture du moule ;</li>
+<li>pressage pour obliger la matière à remplir le moule ; l'excès de matière est évacué par des canalisations faites pour ce but ;</li>
+<li>maintien, dans le cas des matières thermodurcissables, de la chauffe et de la pression jusqu'à la fin de la cuisson (réticulation) ; refroidissement du moule ;</li>
+<li>ouverture du moule et récupération de la pièce.</li>
+</ol>
+<p>Sur le schéma simplifié, le demi-moule supérieur descend avec une vitesse \(v\) et une force \(F\) sur la <strong>charge</strong> ; l'excès passe dans les <strong>rainures de débordement</strong> (overflow grooves) et forme la <strong>bavure</strong> (flash) autour des pièces ; les <strong>éjecteurs</strong> (ejector pins) sortent les pièces. Exemples : plateaux en thermodurcissable, bottes en caoutchouc (photographiées avant ébavurage, la bavure encore visible).</p>
+
+<div id="fig-transfert"></div>
+
+<p>Procédé et mode opératoire du <strong>moulage par compression-transfert</strong>. Mêmes matières premières (poudres, granulés, semi-solides, préformés). Les étapes :</p>
+<ol>
+<li>préchauffage du moule ;</li>
+<li>préchauffage de la matière pour la ramollir ;</li>
+<li>introduction de la matière ramollie dans une cavité d'attente ;</li>
+<li>transfert, par pression, de la matière de la cavité d'attente vers le moule préchauffé à l'aide d'un poinçon à travers un canal ;</li>
+<li>maintien, dans le cas des matières thermodurcissables, de la chauffe jusqu'à la fin de la cuisson (réticulation) ;</li>
+<li>refroidissement du moule ;</li>
+<li>ouverture du moule et récupération de la pièce.</li>
+</ol>
+<p>Sur le schéma, la cavité d'attente est le <strong>pot</strong>, le poinçon est le piston (plunger), et les canaux (sprues) mènent la charge vers les empreintes. Dans le TP, ce procédé apparaît sous le nom anglais <em>Transfer molding</em>, traduit « moulage par transfert de résine ».</p>
+<div class="tableau"><table>
+<tr><th></th><th>Compression</th><th>Compression-transfert</th></tr>
+<tr><td>Où la matière est placée</td><td>directement dans le moule ouvert</td><td>dans une cavité d'attente (pot), après préchauffage</td></tr>
+<tr><td>Comment le moule est rempli</td><td>le moule se ferme et presse la charge</td><td>un poinçon pousse la matière à travers un canal dans le moule fermé</td></tr>
+<tr><td>Nombre d'étapes du cours</td><td>5</td><td>7</td></tr>
+<tr><td>Matière</td><td>surtout thermodurcissables (cuisson = réticulation), caoutchoucs</td><td>surtout thermodurcissables</td></tr>
+<tr><td>Trace sur la pièce</td><td>bavure</td><td>trace des canaux</td></tr>
+</table></div>
+<p>Remarque : la liste du cours cite aussi un huitième procédé, le moulage par centrifugation, sans le décrire. Ajout (hors diapositives) : dans ce procédé, la matière liquide est projetée contre la paroi d'un moule qui tourne vite autour de son axe, ce qui donne des pièces creuses de révolution, comme des tubes.</p>
+
+<h2>Exemple</h2>
+<p>Exemple du cours : des bottes en caoutchouc moulées par compression. La matière (un élastomère qui sera vulcanisé dans le moule chaud) est placée dans le moule, pressée ; l'excès forme une bavure tout autour de la semelle, qu'on enlève ensuite. Sur la première figure, monte la pression jusqu'au bout : la charge s'étale, remplit l'empreinte, et le surplus apparaît dans les rainures de débordement.</p>
+
+<h2>Formules clés</h2>
+<p>Compression (5 étapes) : chauffer le moule, charger et fermer, presser (excès en bavure), maintenir chauffe et pression jusqu'à la fin de la cuisson puis refroidir, ouvrir.</p>
+<p>Compression-transfert (7 étapes) : préchauffer moule et matière, matière ramollie dans une cavité d'attente, transfert par un poinçon à travers un canal, cuisson, refroidissement, ouverture.</p>
+<p>Cuisson = réticulation : c'est pourquoi ces procédés conviennent aux thermodurcissables.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/compression.js"></script>
+</body>
+</html>

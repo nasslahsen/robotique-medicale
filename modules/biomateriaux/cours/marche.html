@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le marché des biomatériaux · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le marché des biomatériaux</h1>
+<p class="chapeau">Pourquoi un ingénieur biomédical doit-il connaître le marché ? Parce que c'est lui qui dit quels dispositifs seront développés, où, et pour quels patients. Et le marché des biomatériaux croît très vite.</p>
+
+<h2>Intuition</h2>
+<p>Plus la population vieillit et plus l'espérance de vie augmente, plus il faut de prothèses, d'implants, de stents et de lentilles. Les dépenses de santé sont très inégales selon les pays : les marchés les plus riches tirent l'innovation. Un taux de croissance annuel de quelques pour cent semble petit, mais il se compose d'année en année : à 7 % par an, un marché grossit de 60 % en sept ans.</p>
+<div id="fig-croissance"></div>
+
+<h2>Formalisation</h2>
+<p>Le <strong>taux de croissance annuel moyen</strong> (TCAC, CAGR en anglais) \( t \) relie la valeur de départ \( V_0 \) et la valeur \( V_n \) après \( n \) années : \( V_n = V_0\,(1 + t)^n \), donc \( t = (V_n / V_0)^{1/n} - 1 \). Ce n'est pas l'augmentation totale divisée par le nombre d'années.</p>
+<p>Les chiffres ci-dessous viennent d'études différentes, avec des périmètres différents : ils ne se raccordent pas exactement entre eux. Ce sont des ordres de grandeur.</p>
+<div class="tableau"><table>
+<tr><th>Indicateur</th><th>Valeur du cours</th></tr>
+<tr><td>Marché mondial, évolution (milliards de $)</td><td>48 (2013), 54,6 (2014), 62,07 (2015), 70,9 (2016), 88,4 (2017), puis projections 102,5 (2019), 130,57 (2020), 149,17 (2021) ; environ 14 % par an de 2013 à 2015, 16 % par an de 2016 à 2021</td></tr>
+<tr><td>Part de l'Amérique du Nord</td><td>environ 37 % en 2015 (22,75 milliards de $), en baisse vers 34 % en 2020</td></tr>
+<tr><td>Marché par région, 2021</td><td>Amérique du Nord 42 %, reste du monde 58 %</td></tr>
+<tr><td>Marché 2023–2030</td><td>43,50 milliards de $ en 2023, 69,86 en 2030, TCAC de 7 % ; par région en 2023 : Amérique du Nord, puis Europe, Asie-Pacifique, Moyen-Orient et Afrique, Amérique du Sud ; types : naturel, métallique, céramique, polymère</td></tr>
+<tr><td>Biomatériaux polymères</td><td>52,52 milliards de $ en 2023, 151,14 en 2030, TCAC de 16,3 % (2024–2030) ; l'Asie-Pacifique devrait dominer ; parts : PMMA (la plus grande), polyéthylène, PVC</td></tr>
+<tr><td>Biomatériaux haute performance</td><td>par type : polymère, métal, céramique, régénératif ; par application, dans l'ordre : cardiovasculaire, orthopédique, ophtalmologie, dentaire, cicatrisation (wound healing)</td></tr>
+</table></div>
+
+<h2>Dépenses de santé et acteurs</h2>
+<p>Dépenses de santé par habitant en 2018 (en euros, sources OCDE et BCE) :</p>
+<div id="fig-depenses"></div>
+<p>Exemple d'acteur cité par le cours, un centre de biologie synthétique (CSB) et ses cinq engagements : 01 développer de nouveaux biomatériaux, 02 améliorer les biomatériaux existants, 03 collaborer avec des partenaires industriels, 04 éduquer la prochaine génération de scientifiques, 05 promouvoir la durabilité.</p>
+
+<h2>Applications des biomatériaux avancés</h2>
+<p>Les biomatériaux avancés ouvrent de nouvelles générations de dispositifs médicaux :</p>
+<div class="tableau"><table>
+<tr><th>Domaine</th><th>Dispositifs</th></tr>
+<tr><td>Traitement des maladies cardiovasculaires</td><td>stimulateurs cardiaques, prothèses et endoprothèses vasculaires, cathéters, valves cardiaques, stents</td></tr>
+<tr><td>Chirurgie orthopédique</td><td>orthèses, prothèses de hanche, tendons artificiels, remplacement et comblement osseux, réparation de fracture</td></tr>
+<tr><td>Ophtalmologie</td><td>implants, lentilles de contact</td></tr>
+<tr><td>Autres</td><td>biocapteurs, libération contrôlée de médicaments, pompes portables et implantables</td></tr>
+</table></div>
+<p>Le marché des biomatériaux, qui « explose », dynamise celui de l'ingénierie tissulaire (voir la page précédente).</p>
+
+<h2>Exemple</h2>
+<p>De 43,50 milliards de dollars en 2023 à 69,86 en 2030 (sept ans) : \( t = (69{,}86/43{,}50)^{1/7} - 1 \approx 0{,}070 \), soit 7 % par an. De 48 milliards en 2013 à 62,07 en 2015 (deux ans) : \( t = (62{,}07/48)^{1/2} - 1 \approx 0{,}137 \), environ 14 % par an. En 2015, l'Amérique du Nord pèse \( 22{,}75 / 62{,}07 \approx 0{,}37 \), soit 37 %.</p>
+
+<h2>Formules clés</h2>
+<p>\[ V_n = V_0\,(1 + t)^n \qquad t = \left(\frac{V_n}{V_0}\right)^{1/n} - 1 \]</p>
+<p>Marché : 43,50 → 69,86 milliards de $ (2023 → 2030), 7 % par an ; polymères 16,3 % par an, PMMA en tête.</p>
+<p>Moteurs : vieillissement de la population, espérance de vie. Premières applications : cardiovasculaire, orthopédie.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/marche.js"></script>
+</body>
+</html>

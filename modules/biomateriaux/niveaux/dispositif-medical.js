@@ -39,7 +39,7 @@ NIVEAU({
   },
   etapes: [
     { nom: "DM ou médicament ?", jouer: function (j, n) {
-      j.fig.astuce("Tout se joue sur la façon dont le produit agit, pas sur sa taille ni son prix.");
+      j.fig.astuce("");
       j.titre("Range ces produits de santé : dispositif médical ou médicament ?");
       var z = j.zone("", '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:17px"><b>Dispositif médical</b><b>Médicament</b>' + [0, 1, 2].map(function () { return '<span class="trou" data-attendu="dm"></span><span class="trou" data-attendu="med"></span>'; }).join("") + "</div>");
       j.jetons({

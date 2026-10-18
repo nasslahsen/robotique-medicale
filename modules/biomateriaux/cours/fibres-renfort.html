@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Verre, carbone, aramide et autres renforts · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Verre, carbone, aramide et autres renforts</h1>
+<p class="chapeau">La main prothétique en carbone, la lame de course, le gilet en Kevlar : derrière chacun, une fibre choisie pour sa résistance, sa légèreté ou sa tenue. Voici les principaux renforts du cours et la façon de les lire.</p>
+
+<h2>Intuition</h2>
+<p>Chaque renfort a sa spécialité. Le verre est bon marché et isolant : c'est le renfort de tous les jours. Le carbone est aussi rigide que l'acier pour quatre fois moins lourd, mais il coûte cher. L'aramide résiste remarquablement en traction et pèse peu, mais tient mal en compression. Les minéraux (mica, wollastonite) et le PTFE apportent des qualités plus ciblées.</p>
+<div id="fig-renforts"></div>
+
+<h2>Formalisation : le verre</h2>
+<p>Sous forme filée, le verre présente une excellente résistance mécanique ainsi qu'une remarquable inertie chimique, une bonne tenue thermique et une bonne isolation électrique. Les fils de verre sont désignés ainsi :</p>
+<ul>
+<li>une lettre pour le type de verre : <strong>E</strong> usage général, bonnes propriétés électriques (90 % des applications) ; <strong>D</strong> hautes propriétés diélectriques ; <strong>C</strong> bonne résistance chimique ; <strong>S</strong> ou <strong>R</strong> bonne résistance mécanique ;</li>
+<li>une lettre pour les fils utilisés : <strong>C</strong> continu, <strong>D</strong> discontinu (verranne) ;</li>
+<li>un nombre de 1 à 2 chiffres : le diamètre de référence en micromètres ;</li>
+<li>un nombre : la masse linéique en tex \((10^{-6}\ \text{kg/m})\).</li>
+</ul>
+<div id="fig-fil"></div>
+<div class="tableau"><table>
+<tr><th>Forme du verre</th><th>Description et usage (cours)</th></tr>
+<tr><td>billes</td><td>améliorent la coulabilité des résines et la résistance en compression</td></tr>
+<tr><td>fibres broyées</td><td>nodules ou poudres fines (longueur < 300 µm), pour renforcer les polymères injectables et les résines de coulée</td></tr>
+<tr><td>fibres coupées</td><td>3 à 30 mm de long, pour renforcer les thermoplastiques (3 mm)</td></tr>
+<tr><td>stratifils (roving)</td><td>ensemble de fils de base ou de filaments parallèles, assemblés sous torsion intentionnelle, pour fabriquer des tissus</td></tr>
+<tr><td>mat</td><td>filaments, fibres discontinues ou fils de base maintenus en nappe ; épaisseur toujours faible (quelques dixièmes de millimètre)</td></tr>
+<tr><td>tissus</td><td>étoffe formée par l'entrecroisement de deux ensembles de fils, par tissage sur métier à tisser</td></tr>
+</table></div>
+<p>Applications du verre : bateaux, planches à voile, cannes à pêche, pales d'hélicoptère.</p>
+
+<h2>Le carbone</h2>
+<p>Le carbone est utilisé dans les polymères sous trois formes très différentes :</p>
+<ul>
+<li><strong>les fibres de carbone</strong> : pièces hautement sollicitées ; densité de 1,75 à 1,95 ; module d'élasticité et résistance en traction proches de ceux de l'acier pour une densité 4 fois inférieure ; fluage réduit, excellentes propriétés en fatigue ; fibres conductrices, bonne conductibilité thermique. Elles s'utilisent broyées (30 µm à 3 mm), courtes (5 mm), longues (5 à 20 mm), en tissus pour le moulage ou en tissage tridimensionnel. Leur prix, bien qu'en baisse, limite leurs applications aux techniques de pointe (sévères conditions d'efforts, de température, d'ambiance), avec des matrices polymères d'excellente tenue ;</li>
+<li><strong>le noir de carbone</strong> (« carbon black ») : historiquement utilisé dans les caoutchoucs naturels pour apporter une résistance au vieillissement ultraviolet, c'est aujourd'hui un stabilisant d'usage courant ; il sert aussi de colorant et de charge conductrice dans les plastiques conducteurs ;</li>
+<li><strong>le graphite</strong> : pour les applications qui réclament un bon frottement et une usure limitée (palier, coussinet), on l'ajoute à des polymères qui ont déjà de bonnes propriétés : on réalise ainsi des pièces autolubrifiantes.</li>
+</ul>
+<div id="fig-acier"></div>
+
+<h2>Aramide et autres renforts</h2>
+<div class="tableau"><table>
+<tr><th>Renfort</th><th>Ce qu'en dit le cours</th></tr>
+<tr><td>Polyamide aromatique (Kevlar, Dupont de Nemours)</td><td>utilisable à 180 °C, excellente résistance en traction, densité 1,49 (gain de poids) ; inconvénients : allongement sous contrainte élevée, tenue en compression limitée ; renfort des polyesters, époxy, polyamides, phénoliques ; bonnes propriétés en fatigue ; renfort des caoutchoucs (pneus, courroies) et des plastiques (garnitures de freins, embrayage, coques de bateaux), utilisé seul en tissus et cordages</td></tr>
+<tr><td>Mica</td><td>agent de renfort très économique : structure lamellaire (renforcement bidirectionnel), inertie chimique, excellente isolation thermique, grande rigidité mécanique, propriétés anti-UV</td></tr>
+<tr><td>Wollastonite</td><td>minéral de forme aciculaire, de plus en plus utilisé dans les polymères techniques ; accroît la résistance thermique</td></tr>
+<tr><td>PTFE (Téflon)</td><td>utilisé pour sa tenue en température et ses qualités de frottement, sous forme de poudre</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p>Un fil « E C 9 68 » est en verre E (usage général), continu, de diamètre 9 µm, de masse linéique 68 tex : 1 km de ce fil pèse \(68 \times 10^{-6} \times 1000 = 0{,}068\) kg, soit 68 g. À même volume, une tige en fibre de carbone pèse environ 4 fois moins qu'une tige d'acier : 100 g au lieu de 400 g pour une rigidité voisine (exemple ajouté).</p>
+
+<h2>Formules clés</h2>
+<p>Fil de verre : type (E, D, C, S/R) + fil (C continu, D discontinu) + diamètre en µm + masse linéique en tex, \(1\ \text{tex} = 10^{-6}\ \text{kg/m} = 1\ \text{g/km}\).</p>
+<p>Carbone : fibres (rigides comme l'acier, densité 1,75 à 1,95), noir de carbone (stabilisant UV, colorant, conducteur), graphite (autolubrifiant).</p>
+<p>Kevlar : traction, 180 °C, densité 1,49 ; faible en compression. Mica : lamellaire, économique. Wollastonite : aciculaire. PTFE : frottement, température.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/fibres-renfort.js"></script>
+</body>
+</html>

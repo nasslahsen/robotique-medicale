@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le moulage par injection · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le moulage par injection</h1>
+<p class="chapeau">Un hôpital consomme des milliers de corps de seringue par jour, tous identiques, finis, prêts à l'emploi. Il faut un procédé qui remplit un moule fermé en quelques secondes et recommence aussitôt.</p>
+
+<h2>Intuition</h2>
+<p>Reprends l'extrudeuse, mais au lieu de laisser la matière sortir en continu, ferme la sortie par un moule. La vis tourne d'abord pour accumuler devant elle juste la bonne quantité de matière fondue, puis elle avance d'un coup comme une seringue : elle devient un piston et injecte la matière dans le moule. On attend que la pièce refroidisse, on ouvre, la pièce tombe. Le cycle recommence.</p>
+
+<div id="fig-injection"></div>
+
+<h2>Formalisation</h2>
+<p>L'<strong>injection plastique</strong> est un procédé de mise en œuvre de matières thermo-formables, notamment les matières thermoplastiques. La matière plastique est ramollie puis injectée dans un moule, et ensuite refroidie.</p>
+<ul>
+<li>La matière plastique est chauffée et ramollie dans un cylindre.</li>
+<li>Une vis sans fin y tourne pour préparer la quantité de matière requise.</li>
+<li>Elle se transforme ensuite en piston pour injecter celle-ci dans un moule fermé.</li>
+</ul>
+<p>Sur le schéma du procédé, la matière part de la <strong>buse</strong> (nozzle) poussée avec une pression \(P\), descend par la <strong>carotte</strong> (sprue), se répartit dans les <strong>canaux</strong> (runner), entre dans chaque empreinte par un <strong>seuil</strong> (gate). À l'ouverture, les <strong>éjecteurs</strong> (ejector pins) poussent les pièces (parts) hors du moule. La machine qui fait tout cela est la presse d'injection plastique.</p>
+<div class="tableau"><table>
+<tr><th>Ce qu'il faut retenir</th><th>Moulage par injection</th></tr>
+<tr><td>Principe</td><td>matière chauffée et ramollie dans un cylindre, dosée par la vis, injectée par la vis devenue piston dans un moule fermé, refroidie</td></tr>
+<tr><td>Matière</td><td>matières thermo-formables, notamment les thermoplastiques</td></tr>
+<tr><td>Exemples du cours</td><td>bouchons, couvercles, téléphone, boîtes, corps de stylo, pièces automobiles, électriques et médicales</td></tr>
+<tr><td>Indice</td><td>objets souvent prêts à être utilisés ; on voit un petit point par où la matière est arrivée</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p>Exemple ajouté : le corps d'une seringue. Il est fini à la sortie du moule (graduations, collerette, embout moulés en une fois) et l'on y trouve un petit point, la trace du seuil. Sur la figure, va jusqu'à l'étape « éjection » : les deux pièces sortent ensemble, avec la matière restée dans la carotte et les canaux, qu'on sépare des pièces au niveau des seuils.</p>
+
+<h2>Formules clés</h2>
+<p>Cycle : chauffer et ramollir, doser (la vis tourne), injecter (la vis pousse comme un piston), refroidir, ouvrir et éjecter.</p>
+<p>Chemin de la matière : buse, carotte, canaux, seuils, empreintes ; éjecteurs à l'ouverture.</p>
+<p>Indice : pièce prête à l'emploi avec un petit point d'injection. Matière : thermoplastique.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/injection.js"></script>
+</body>
+</html>
