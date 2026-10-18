@@ -263,4 +263,8 @@ tous['revision-transformations'] = async (a) => {
   await a.choix(2); await a.suite();
 };
 
+// Sous-module « Éléments mécaniques en robotique » : un fichier de parcours par chapitre (meca-ch5.js, ...)
+const fs = require("fs");
+for (const f of fs.readdirSync(__dirname).filter(f => /^meca-ch\d+\.js$/.test(f)).sort()) Object.assign(tous, require("./" + f));
+
 module.exports = tous;

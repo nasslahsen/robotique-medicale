@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Montage fixe-libre et dilatation · Robotique médicale</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Montage fixe-libre et dilatation</h1>
+<p class="chapeau">Le moteur d'un axe chauffe, l'arbre aussi, et un arbre chaud s'allonge. S'il est bloqué aux deux bouts, il pousse sur ses roulements à chaque cycle de chauffe. Le montage doit le tenir sans l'emprisonner.</p>
+
+<h2>Intuition</h2>
+<p>Pour tenir un arbre dans l'axe, un seul arrêt suffit, à un seul endroit. Si on l'arrête à ses deux extrémités, on l'empêche aussi de s'allonger : le montage est sur-contraint. La solution : un roulement qui tient l'arbre (le palier fixe) et un roulement qui accompagne la dilatation (le palier libre), dont une bague peut coulisser.</p>
+
+<div id="fig-dilatation"></div>
+
+<h2>Formalisation</h2>
+<p>Un <strong>montage fixe-libre</strong> permet de définir axialement l'arbre sans le sur-contraindre lors des variations thermiques. Le <strong>palier fixe</strong> assure le positionnement axial ; le <strong>palier libre</strong> permet le déplacement axial relatif nécessaire à la dilatation.</p>
+<div class="tableau"><table>
+<tr><th>Cas</th><th>Bagues maintenues</th><th>Bague coulissante</th><th>Détails du montage</th></tr>
+<tr><td>Arbre tournant, charge de direction fixe</td><td>les deux bagues intérieures, maintenues latéralement</td><td>la bague extérieure d'un des roulements, pour qu'il prenne librement sa place</td><td>jeu ≈ 0,1 ; rondelle de réglage</td></tr>
+<tr><td>Logement tournant, charge de direction fixe</td><td>les deux bagues extérieures, maintenues axialement</td><td>la bague intérieure d'un des roulements</td><td>maintien axial de la bague intérieure du roulement fixe par écrou à encoches et rondelle frein, pour une excellente sécurité ; joint à lèvres ; bague en deux parties</td></tr>
+<tr><td>Logement tournant, arbre fixe, rouleaux coniques</td><td colspan="2">les deux roulements en opposition, avec un jeu de fonctionnement réglé</td><td>réglage simple et précis du jeu par écrou à encoches et rondelle frein ; rondelle plate entre rondelle frein et bague intérieure, pour une pression de contact uniforme, immobilisée en rotation par une languette dans une rainure de l'arbre ; encoches pour extraction</td></tr>
+</table></div>
+<p>Dans les deux premiers cas, ce sont les bagues qui tournent (avec l'arbre ou avec le logement) qui restent maintenues ; c'est une bague de l'autre côté qui coulisse.</p>
+
+<div id="fig-coniques"></div>
+
+<h2>Exemple</h2>
+<p>Un arbre tourne dans un carter fixe, entraîné par un moteur qui chauffe. Les deux bagues intérieures sont arrêtées sur l'arbre. Le roulement de gauche a aussi sa bague extérieure arrêtée dans le carter : c'est le palier fixe, il positionne l'arbre. Le roulement de droite a sa bague extérieure libre dans son logement, avec un jeu axial d'environ 0,1 : quand l'arbre s'allonge, ce roulement glisse avec lui. Avec deux paliers fixes, l'allongement serait empêché et chargerait les roulements ; avec deux paliers libres, plus rien ne tiendrait l'arbre dans l'axe.</p>
+
+<h2>Formules clés</h2>
+<p>Palier fixe : positionnement axial. Palier libre : dilatation.</p>
+<p>Arbre tournant : bagues intérieures tenues, une bague extérieure coulissante.</p>
+<p>Logement tournant : bagues extérieures tenues, une bague intérieure coulissante.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../meca/dessin.js"></script>
+<script src="../figures/fixe-libre.js"></script>
+</body>
+</html>

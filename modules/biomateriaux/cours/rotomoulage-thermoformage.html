@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr" data-module="biomateriaux">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Rotomoulage et thermoformage · Biomatériaux, biomécanique et prothèses</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Rotomoulage et thermoformage</h1>
+<p class="chapeau">Une citerne d'eau pour un centre de santé, un blister qui protège chaque comprimé : deux pièces sans rapport, mais toutes deux sans vis ni injection. L'une naît d'une poudre dans un moule qui tourne, l'autre d'une feuille chaude aspirée sur un moule.</p>
+
+<h2>Intuition</h2>
+<p>Rotomoulage : mets du sucre glace dans une boîte fermée et chaude, puis fais-la tourner dans tous les sens. La poudre roule sur toutes les parois, fond à leur contact et s'y colle en couche régulière. À la fin, la boîte contient une coque creuse d'un seul tenant, sans aucune soudure.</p>
+<p>Thermoformage : chauffe une feuille de plastique jusqu'à ce qu'elle soit molle, pose-la sur une forme et aspire l'air en dessous. La feuille épouse la forme. Il ne reste qu'à découper le bord.</p>
+
+<div id="fig-rotomoulage"></div>
+
+<h2>Formalisation</h2>
+<p><strong>Rotomoulage</strong> : c'est un moulage qui se fait en insérant la matière plastique sous forme de poudre dans un moule. En faisant faire des rotations au moule, qui est chauffé, on obtient des pièces creuses sans soudure ni collage. Exemples : citernes, kayaks, réservoirs, planches à voile (et, sur les photos du cours, un aéroglisseur). Indice : pièce creuse de toute dimension, avec un temps de cycle assez long (rentabilité).</p>
+<p><strong>Thermoformage</strong> : en chauffant la feuille de plastique, celle-ci se ramollit ; on applique cette feuille encore chaude sur le moule ; on y retire l'air contenu entre ce moule et la feuille. Exemples : barquettes alimentaires, coques de bateaux, enseignes publicitaires. Indice : pièce plutôt mince, à coins arrondis et avec moins de finition ; on peut apercevoir la découpe au pourtour de la pièce. Les éléments thermoformés sortent en feuilles, avant leur découpage.</p>
+<p>Déroulement d'un cycle de thermoformage, sur une machine avec moule, platine, table et pompe à vide : 1. chauffage ; 2. montée du moule ; 3. aspiration ; 4. refroidissement ; 5. démoulage.</p>
+
+<div id="fig-thermoformage"></div>
+
+<p>Les polymères les plus couramment utilisés en thermoformage sont : polystyrène (PS), polyéthylène (PE), polypropylène (PP), polycarbonate (PC), acrylonitrile butadiène styrène (ABS), polychlorure de vinyle (PVC), polyméthacrylate de méthyle (PMMA), polystyrène choc (SB). Tous sont des thermoplastiques : ils se ramollissent quand on les chauffe, ce que demande la première étape du cycle.</p>
+<div class="tableau"><table>
+<tr><th></th><th>Rotomoulage</th><th>Thermoformage</th></tr>
+<tr><td>Matière de départ</td><td>poudre</td><td>feuille</td></tr>
+<tr><td>Principe</td><td>moule chauffé en rotation</td><td>feuille chauffée, plaquée sur le moule par aspiration de l'air</td></tr>
+<tr><td>Pièce obtenue</td><td>creuse, sans soudure ni collage, de toute dimension</td><td>mince, ouverte, à coins arrondis</td></tr>
+<tr><td>Exemples du cours</td><td>citernes, kayaks, réservoirs, planches à voile</td><td>barquettes alimentaires, coques de bateaux, enseignes</td></tr>
+<tr><td>Indice</td><td>pièce creuse, cycle assez long (rentabilité)</td><td>découpe au pourtour, moins de finition</td></tr>
+</table></div>
+
+<h2>Exemple</h2>
+<p>Exemple ajouté : un blister de comprimés est mince, ses alvéoles ont des coins arrondis, et son bord montre une découpe tout autour : trois indices du thermoformage, souvent sur une feuille de PVC ou de PP, deux matières de la liste du cours. À l'inverse, un réservoir d'eau de 1 000 L, creux et sans soudure, appelle le rotomoulage : le cycle long n'est pas un problème pour une grande pièce fabriquée en petit nombre.</p>
+
+<h2>Formules clés</h2>
+<p>Rotomoulage : poudre + moule chauffé en rotation = pièce creuse sans soudure ni collage ; cycle assez long.</p>
+<p>Thermoformage : feuille chauffée + moule + aspiration de l'air ; cycle : chauffage, montée du moule, aspiration, refroidissement, démoulage ; indice : découpe au pourtour.</p>
+<p>Matières du thermoformage : PS, PE, PP, PC, ABS, PVC, PMMA, SB.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../calculs.js"></script>
+<script src="../figures/rotomoulage-thermoformage.js"></script>
+</body>
+</html>

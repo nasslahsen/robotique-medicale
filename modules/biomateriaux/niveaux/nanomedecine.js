@@ -26,7 +26,7 @@ NIVEAU({
         D.rond(g, [x, Y], 6, { fill: "#8b3fd9" });
         D.texte(g, o[1], [x, y], { taille: 15, coul: "#8b3fd9" });
       });
-      if (n.voir) D.texte(g, "tailles d'objets : exemple ajouté, ordres de grandeur", [340, 420], { taille: 14, coul: C.doux, gras: false });
+      if (n.voir) D.texte(g, "tailles d'objets : exemple ajouté, ordres de grandeur", [340, 500], { taille: 14, coul: C.doux, gras: false });
       var xm = X(n.lg);
       D.ligne(g, [xm, Y + 46], [xm, Y + 90], "#3b5bdb", 4);
       if (n.libre) D.poignee(g, [xm, Y + 110], "#3b5bdb"); else D.rond(g, [xm, Y + 110], 12, { fill: "#3b5bdb", stroke: "#fff", ep: 3 });
