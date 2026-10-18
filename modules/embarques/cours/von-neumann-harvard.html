@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Von Neumann, Harvard et Super Harvard · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Von Neumann, Harvard et Super Harvard</h1>
+<p class="chapeau">Un holter doit lire son programme et, en même temps, ranger des milliers d'échantillons ECG. Si les instructions et les données passent par le même chemin, elles font la queue. Faut-il un chemin pour chacune ?</p>
+
+<h2>Intuition</h2>
+<p>Imagine une bibliothèque avec un seul guichet : pour lire la recette (l'instruction) puis chercher l'ingrédient (la donnée), tu passes deux fois au même guichet, l'un après l'autre. C'est l'architecture Von Neumann : simple, une seule mémoire, mais un seul passage à la fois.</p>
+<p>Avec deux guichets, un pour les recettes et un pour les ingrédients, tu peux demander la recette suivante pendant qu'on te sert l'ingrédient de la recette en cours. C'est l'architecture Harvard : deux mémoires et deux jeux de bus, d'où la vitesse. La Super Harvard ajoute un petit stock de recettes près de toi (un cache d'instructions) et un employé qui reçoit les livraisons sans te déranger (un contrôleur d'entrées-sorties dédié).</p>
+
+<div id="fig-memoires"></div>
+
+<h2>Formalisation</h2>
+<div class="tableau"><table>
+<tr><th>Architecture</th><th>Mémoires</th><th>Bus</th><th>Ce que dit le cours</th></tr>
+<tr><td><strong>Von Neumann</strong></td><td>une seule : <i>Memory, Data and instructions</i></td><td>Address bus, Data bus</td><td><i>Single Memory for both Data and Instructions</i></td></tr>
+<tr><td><strong>Harvard</strong></td><td>deux : <i>Program Memory</i> (instructions), <i>Data Memory</i> (data only)</td><td>PM Address bus, PM Data bus, DM Address bus, DM Data bus</td><td><i>Dual Memory, one for Data and an other for Instructions</i> : <i>High Speed</i></td></tr>
+<tr><td><strong>Super Harvard</strong></td><td>comme Harvard</td><td>comme Harvard, plus un lien Data Memory, I/O Controller</td><td><i>Improves upon the Harvard Design by adding an Instruction cache and a Dedicated I/O Controller</i></td></tr>
+</table></div>
+<p>Dans la Super Harvard, l'<strong>I/O Controller</strong> est relié à la Data Memory et échange les <i>Data</i> avec l'extérieur : les données entrent en mémoire sans passer par le CPU.</p>
+<p class="complement">Modèle simple pour compter (ajouté) : chaque instruction est lue en mémoire, puis lit ou écrit une donnée, et chaque accès occupe un bus pendant un cycle. En Von Neumann, ces accès se suivent sur le même bus. En Harvard, pendant que la donnée de l'instruction \(k\) passe sur le DM Data bus, l'instruction \(k + 1\) arrive sur le PM Data bus.</p>
+\[ \text{Von Neumann : } 2N \text{ cycles} \qquad \text{Harvard : } N + 1 \text{ cycles} \]
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Une boucle de filtrage ECG de \(N = 10\) instructions, chacune avec une donnée. En Von Neumann : \(2 \times 10 = 20\) cycles de bus. En Harvard : \(10 + 1 = 11\) cycles. Le gain tend vers un facteur 2 quand \(N\) grandit : \(\dfrac{2N}{N+1} \to 2\). C'est pour cela que les processeurs de traitement du signal et beaucoup de microcontrôleurs sont de type Harvard ; c'est le cas des deux cœurs de l'ESP32 (chapitre 4).</p>
+
+<h2>Formules clés</h2>
+\[ \text{VN} = 2N \qquad \text{Harvard} = N + 1 \qquad \text{Super Harvard} = \text{Harvard} + \text{Instruction cache} + \text{I/O Controller} \]
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/von-neumann-harvard.js"></script>
+</body>
+</html>

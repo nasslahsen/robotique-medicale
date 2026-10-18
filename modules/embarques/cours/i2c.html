@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le bus I2C · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Le bus I2C</h1>
+<p class="chapeau">Sur la carte d'un moniteur de patient, un microcontrôleur doit parler à un capteur de température, une EEPROM, un convertisseur et un contrôleur de LED. Peut-on tout relier avec seulement deux fils ?</p>
+
+<h2>Intuition</h2>
+<p>Deux fils partagés par tout le monde : un pour les données (SDA), un pour l'horloge (SCL). Pour que plusieurs circuits puissent s'y brancher sans court-circuit, aucun ne force jamais la ligne à 1. Des résistances la tirent doucement vers l'alimentation ; chaque circuit peut seulement la relier à la masse.</p>
+<p>Conséquence : il suffit qu'un seul circuit tire la ligne pour qu'elle soit à 0, et elle n'est à 1 que si tous relâchent. Le 0 gagne toujours : c'est le niveau dominant.</p>
+
+<div id="fig-ligne"></div>
+
+<h2>Formalisation</h2>
+<ul>
+<li><strong>I2C</strong> : <i>Inter-Integrated Communication</i>.</li>
+<li>Fonction : interconnecter des circuits dans une carte électronique.</li>
+<li>Architecture : I2C maître, multi-maître, esclave ; 2 fils.</li>
+<li>Le niveau logique dominant est le 0, le niveau récessif est le 1.</li>
+</ul>
+<p>Le schéma du cours : SDA (<i>serial data line</i>) et SCL (<i>serial clock line</i>) sont reliées à \(+V_{DD}\) par des résistances de tirage \(R_P\) (<i>pull-up resistors</i>). Dans chaque circuit (<i>device</i>), une sortie à transistor (SCLKN OUT, DATAN OUT) peut relier la ligne à la masse, et une entrée (SCLK IN, DATA IN) lit son niveau. La ligne vaut 1 seulement si toutes les sorties relâchent.</p>
+
+<div id="fig-topologie"></div>
+
+<p>Le cours donne aussi ce tableau :</p>
+<div class="tableau"><table>
+<tr><th>Bus</th><th>Clock</th></tr>
+<tr><td>50 kbps</td><td>800 kHz</td></tr>
+<tr><td>100 kbps</td><td>1,6 MHz</td></tr>
+<tr><td>400 kbps</td><td>6,4 MHz</td></tr>
+<tr><td>1000 kbps</td><td>16 MHz</td></tr>
+</table></div>
+<p>Dans chaque ligne du tableau, la valeur de Clock vaut 16 fois celle de Bus.</p>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté.</p>
+<p>Trois circuits sur SDA : le MCU relâche, le capteur de température tire à 0, l'EEPROM relâche. SDA = 0. Pour revenir à 1, il faut que le capteur relâche aussi : alors plus rien ne relie la ligne à la masse et les résistances \(R_P\) la ramènent à \(+V_{DD}\). Aucun circuit ne pousse jamais la ligne à 1, donc deux circuits qui écrivent en même temps ne se court-circuitent pas : le 0 l'emporte.</p>
+
+<h2>Formules clés</h2>
+\[ \text{SDA} = \text{sortie}_1 \cdot \text{sortie}_2 \cdots \text{sortie}_n \qquad (\text{relâché} = 1,\ \text{tiré} = 0) \]
+<p>2 fils : SDA et SCL. 0 dominant, 1 récessif. Résistances de tirage \(R_P\) vers \(+V_{DD}\).</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/i2c.js"></script>
+</body>
+</html>

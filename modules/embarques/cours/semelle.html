@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Exemple 1 : semelle instrumentée et connectée · Systèmes embarqués</title>
+<link rel="stylesheet" href="../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../commun/css/barre.css">
+<script src="../../../registre.js"></script>
+<script src="../../../commun/js/plateforme.js"></script>
+<script src="../module.js"></script>
+</head>
+<body>
+<main>
+<p class="etiquette" data-etiquette></p>
+<h1>Exemple 1 : semelle instrumentée et connectée</h1>
+<p class="chapeau">Chez un patient diabétique, une petite plaie sous le pied peut évoluer jusqu'à la gangrène, souvent sans douleur. Une semelle bourrée de capteurs peut-elle repérer le danger avant la plaie ? C'est le premier exemple de système embarqué du cours.</p>
+
+<h2>Intuition</h2>
+<p>Le diabète abîme les nerfs du pied : le patient ne sent plus qu'une zone est trop chargée, ni qu'une plaie commence. La plaie s'aggrave alors par stades, de l'ulcère en surface jusqu'à l'os, puis à la gangrène. Mieux vaut agir au stade 0.</p>
+<p>La semelle mesure en continu ce que le patient ne sent plus : la force d'appui en 16 points, la température et l'humidité, et la bio-impédance des tissus. Un microcontrôleur rassemble ces mesures et les envoie par radio. C'est un système embarqué typique : dédié à une seule tâche, autonome sur accumulateur, avec très peu de place.</p>
+
+<div id="fig-stades"></div>
+
+<h2>Formalisation</h2>
+<h3>Le pied diabétique</h3>
+<p>La figure 1 du cours montre l'évolution d'un ulcère pour un pied diabétique, en six stades : <i>stage 0, no defect</i> ; <i>stage 1, superficial ulcer</i> ; <i>stage 2, deep ulcer</i> ; <i>stage 3, osteitis</i> (atteinte de l'os) ; <i>stage 4, partial gangrene of the foot</i> ; <i>stage 5, gangrene of the whole foot</i>. La photo 1 du cours montre un ulcère.</p>
+<p><strong>Les principales pathologies</strong> : les ulcères, les infections, les déformations et les blessures.</p>
+
+<h3>Les 16 capteurs résistifs de force</h3>
+<p>La semelle porte <strong>16 capteurs résistifs de force</strong>, en forme de deux disques accolés : diamètre \(D = 11\) mm, entraxe \(L = 15\) mm, longueur totale \(LT = 26\) mm. Leur résistance diminue quand on appuie : au repos, elle dépasse 1 MΩ.</p>
+<div class="tableau"><table>
+<tr><th>Caractéristique</th><th>Valeur</th><th>Caractéristique</th><th>Valeur</th></tr>
+<tr><td><i>Thickness</i></td><td>0,4 mm</td><td><i>Response time</i></td><td>&lt; 10 µs</td></tr>
+<tr><td><i>Shape</i></td><td><i>Sheet</i> (feuille)</td><td><i>Operating temperature</i></td><td>−40 °C à +85 °C</td></tr>
+<tr><td><i>Actuation force</i></td><td>500 g</td><td><i>Life time</i></td><td>&gt; 1 million</td></tr>
+<tr><td><i>Sensitivity range</i></td><td>500 g à 10 kg</td><td><i>Repeatability</i></td><td>± 10 % à 2 kg (<i>single</i>)</td></tr>
+<tr><td><i>Resolution</i></td><td><i>continuous</i></td><td><i>Dust/Waterproof</i></td><td>IP67</td></tr>
+<tr><td><i>Non-actuated resistance</i></td><td>&gt; 1 MΩ</td><td></td><td></td></tr>
+</table></div>
+
+<div id="fig-charge"></div>
+
+<h3>Le schéma bloc</h3>
+<p>La semelle instrumentée est reliée à trois blocs de mesure : <strong>Mesure BioZ</strong> (circuit MAX30009, bio-impédance), <strong>Gestion Capteurs Appui Plantaire</strong> et <strong>Capteur T°C &amp; Humidité</strong>. Les trois échangent avec le <strong>µC</strong>, qui échange avec le bloc <strong>TX Radio</strong> relié à une antenne. Un bloc <strong>Gestion Alim.</strong> tire l'énergie d'un accumulateur (<i>Accu</i>).</p>
+
+<div id="fig-schema"></div>
+
+<h2>Exemple</h2>
+<p class="complement">Exemple ajouté : vérifier la plage des capteurs pour un patient de 80 kg en appui sur un pied.</p>
+<p>Si le poids se répartissait également sur les 16 capteurs : \(80 / 16 = 5\) kg par capteur, dans la plage de 500 g à 10 kg. Mais à l'attaque du pas, le talon porte presque tout : sur 2 capteurs, \(80 / 2 = 40\) kg chacun, quatre fois la limite. Le capteur sature : il lit 10 kg au plus. La fiche se lit pour le cas réel, pas pour le cas moyen.</p>
+<p>Les cotes du capteur sont cohérentes : deux disques de diamètre 11 mm dont les centres sont à 15 mm donnent une longueur totale \(15 + 11 = 26\) mm.</p>
+
+<h2>Formules clés</h2>
+\[ \text{charge par capteur} = \frac{\text{poids porté}}{\text{nombre de capteurs chargés}} \qquad 500 \text{ g} \le \text{charge} \le 10 \text{ kg} \qquad LT = L + D \]
+<p>Schéma : trois blocs de mesure, µC, TX Radio, gestion de l'alimentation sur accumulateur.</p>
+
+</main>
+<script src="../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../commun/js/lib.js"></script>
+<script src="../../../commun/js/nav.js"></script>
+<script src="../dessins.js"></script>
+<script src="../figures/semelle.js"></script>
+</body>
+</html>

@@ -461,4 +461,8 @@ test("chapitre 8 : trains, rendement en cascade, réducteur du boss", () => {
   proche(Math.cbrt(16 * Cs * 1000 / (Math.PI * 30)), 5.6, 0.03);
 });
 
+// Module Biomatériaux : un fichier de tests par chapitre (tests/biomateriaux/), mêmes outils.
+const dossierBio = require("path").join(__dirname, "biomateriaux");
+if (require("fs").existsSync(dossierBio)) for (const f of require("fs").readdirSync(dossierBio).filter(f => f.endsWith(".test.js")).sort()) require("./biomateriaux/" + f)({ test, proche, assert });
+
 console.log(`${n} tests réussis`);
