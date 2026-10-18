@@ -142,7 +142,7 @@ NIVEAU({
       j.titre("Le moteur de l'épaule est positionné au millième de tour près, pourtant la pince se décale d'un millimètre. Pourquoi ?");
       j.choix([{ html: "Les performances dépendent de toute la chaîne : jeu, rigidité, déformations, alignement…", juste: true }, { html: "Le moteur ne tourne pas assez vite", aide: "La vitesse ne change pas la position finale : regarde ce qu'il y a entre le moteur et la pince." }, { html: "Un millimètre est toujours négligeable", aide: "En médical, un millimètre au bout d'un instrument compte. Cherche d'où vient l'écart." }], { colonnes: 1, ok: function () {
         j.bravo("Un moteur précis ne suffit pas.");
-        j.expliquer("<p>Les performances d'un robot dépendent de toute la chaîne mécanique : <b>jeu</b>, <b>rigidité</b>, <b>frottement</b>, <b>rendement</b>, <b>déformations</b>, <b>défauts d'alignement</b> et <b>tolérances de montage</b>. Chaque maillon ajoute son petit défaut.</p>");
+        j.expliquer("<p>Les performances d'un robot dépendent de toute la chaîne mécanique : jeu, rigidité, frottement, rendement, déformations, défauts d'alignement et tolérances de montage. Chaque maillon ajoute son petit défaut.</p>");
         j.suite();
       } });
     } },

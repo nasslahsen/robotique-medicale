@@ -96,7 +96,7 @@ NIVEAU({
       function gagne() {
         fini = true; n.surN = null; n.libre = false; n.n = 1000; n.dessin();
         j.bravo("1000 tr/min : 0,955 N·m.", [110 + 520 * 1000 / 6000, 330]);
-        j.expliquer("<p>Pour obtenir plus de couple avec la même puissance, il faut tourner plus lentement. C'est le rôle d'un réducteur, au chapitre suivant de ce sous-module.</p>");
+        j.expliquer("<p>Pour obtenir plus de couple avec la même puissance, il faut tourner plus lentement. C'est le rôle d'un réducteur à engrenages, plus loin dans ce chapitre.</p>");
         j.suite();
       }
       n.surN = function (v) { if (!fini && v === 1000) gagne(); };
