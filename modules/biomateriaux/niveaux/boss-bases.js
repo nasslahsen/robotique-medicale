@@ -18,8 +18,8 @@ NIVEAU({
       E.s("rect", { x: 318 + dx, y: 394, width: 44, height: 40, fill: "#d5dae3", stroke: C.encre, "stroke-width": 2 }, g);
       E.s("rect", { x: 330 + dx, y: 240, width: 20, height: 154, fill: "#d5dae3", stroke: C.encre, "stroke-width": 2 }, g);
       D.ligne(g, [312 + dx, 267], [368 + dx, 267], C.jeu, 3); D.ligne(g, [312 + dx, 367], [368 + dx, 367], C.jeu, 3);
-      D.texte(g, "l0 = 50 mm", [258, 306], { taille: 17, ancre: "start", coul: C.jeu });
-      D.texte(g, "S0 = 20 mm²", [258, 330], { taille: 17, ancre: "start", coul: C.jeu });
+      D.texte(g, "l0 = 50 mm", [224, 306], { taille: 17, ancre: "start", coul: C.jeu });
+      D.texte(g, "S0 = 20 mm²", [224, 330], { taille: 17, ancre: "start", coul: C.jeu });
       if (n.F) { D.fleche(g, [200, 108], [200, 62], "#3b5bdb", 7); D.texte(g, n.F + " N", [216, 74], { taille: 19, coul: "#3b5bdb", ancre: "start" }); }
       // fiche d'essai
       E.s("rect", { x: 420, y: 130, width: 240, height: 360, rx: 18, fill: "#fff", stroke: "#d9dde6", "stroke-width": 2 }, g);

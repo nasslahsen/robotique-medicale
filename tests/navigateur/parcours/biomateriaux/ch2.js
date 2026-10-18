@@ -36,4 +36,18 @@ tous['comparer-familles'] = async (a) => {
   await a.choix(1); await a.suite();
   await a.jetons(['v', 'o', 'y', 'a']); await a.suite();
 };
+tous['revision-familles'] = async (a) => {
+  await a.jetons(['c', 'm', 'p']); await a.suite();
+  await a.choix(1); await a.suite();
+  await a.nombres([100]); await a.suite();
+  await a.choix(0); await a.suite();
+  await a.choix(1); await a.suite();
+};
+tous['boss-familles'] = async (a) => {
+  await a.choix(1); await a.suite();
+  await a.choix(0); await a.suite();
+  await a.choix(0); await a.suite();
+  await a.nombres([221.5, 46.4]); await a.suite();
+  await a.jetons(['m', 'p', 'c']); await a.suite();
+};
 module.exports = tous;

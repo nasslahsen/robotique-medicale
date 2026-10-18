@@ -25,12 +25,12 @@ NIVEAU({
         // deux flacons : colorant soluble (transparent) et pigment dispersé (opaque)
         [[200, "A"], [480, "B"]].forEach(function (f, i) {
           E.s("path", { d: "M" + (f[0] - 40) + " 150 l0 50 q-50 20 -50 70 l0 200 q0 20 20 20 l140 0 q20 0 20 -20 l0 -200 q0 -50 -50 -70 l0 -50 Z", fill: i ? PLATEFORME.teinte(0.95) : PLATEFORME.teinte(0.35), stroke: C.encre, "stroke-width": 3 }, g);
-          D.ligne(g, [f[0] - 45, 380], [f[0] + 45, 380], i ? PLATEFORME.teinte(0.95) : C.encre, 3);
-          D.texte(g, "graduation", [f[0], 410], { taille: 14, coul: i ? "#fff" : C.encre, fond: !i });
+          if (!i) { D.ligne(g, [f[0] - 45, 380], [f[0] + 45, 380], C.encre, 3); D.texte(g, "graduation visible", [f[0], 410], { taille: 15 }); }
+          else D.texte(g, "graduation cachée", [f[0], 520], { taille: 15, coul: C.doux });
           D.texte(g, f[1], [f[0], 120], { taille: 26, coul: C.jeu });
           if (i) { var r = BIO.hasard(11); for (var k = 0; k < 40; k++) D.rond(g, [f[0] - 70 + 140 * r(), 280 + 190 * r()], 4, { fill: "#6e4b8a" }); }
         });
-        D.texte(g, "derrière chaque flacon, une graduation", [340, 540], { taille: 16, coul: C.doux, gras: false });
+        
       } else if (n.mode === "germes") {
         // sans et avec agent de germination : peu de gros cristaux contre beaucoup de petits
         [[40, "sans agent de germination", 5, 70], [360, "avec agent de germination", 26, 30]].forEach(function (c) {

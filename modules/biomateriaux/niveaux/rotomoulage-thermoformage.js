@@ -32,9 +32,10 @@ NIVEAU({
       // flèches de rotation sur deux axes
       E.s("path", { d: "M560 270 A40 40 0 1 1 560 350", fill: "none", stroke: "#3b5bdb", "stroke-width": 4 }, g);
       D.fleche(g, [566, 345], [552, 352], "#3b5bdb", 4);
-      E.s("path", { d: "M300 560 A40 14 0 1 0 380 560", fill: "none", stroke: "#3b5bdb", "stroke-width": 4 }, g);
+      E.s("path", { d: "M545 440 A40 14 0 1 0 625 440", fill: "none", stroke: "#3b5bdb", "stroke-width": 4 }, g);
+      D.fleche(g, [618, 446], [626, 436], "#3b5bdb", 4);
       D.texte(g, "rotation sur deux axes", [580, 395], { taille: 15, coul: "#3b5bdb" });
-      D.texte(g, n.p > 0.95 ? "pièce creuse, d'un seul tenant" : "poudre", [340, 330], { taille: 16, coul: C.jeu });
+      D.texte(g, n.p > 0.95 ? "pièce creuse, d'un seul tenant" : "poudre", [340, n.p > 0.95 ? 482 : 470], { taille: 16, coul: C.jeu });
     }
     function thermo() {
       var k = n.k, monte = k >= 2 && k < 5 ? 1 : 0, cy = 262;
@@ -44,14 +45,14 @@ NIVEAU({
       D.texte(g, "table", [590, 480], { taille: 15, coul: C.doux, ancre: "start" });
       E.s("rect", { x: 300, y: cy + dy, width: 80, height: 470 - cy - dy, fill: "#9aa0ad", stroke: C.encre, "stroke-width": 2 }, g);
       E.s("rect", { x: 210, y: cy + dy, width: 260, height: 14, rx: 3, fill: "#c6cbd8", stroke: C.encre, "stroke-width": 2 }, g);
-      D.texte(g, "platine", [490, cy + dy + 8], { taille: 15, coul: C.doux, ancre: "start" });
+      D.texte(g, "platine", [430, cy + dy + 34], { taille: 15, coul: C.doux });
       var top = cy - 110 + dy;
       E.s("path", { d: "M235 " + (cy + dy) + " L285 " + top + " L395 " + top + " L445 " + (cy + dy) + " Z", fill: "#dfe3ec", stroke: C.encre, "stroke-width": 3, "stroke-linejoin": "round" }, g);
       D.texte(g, "moule", [340, top + 50], { taille: 16, coul: C.doux });
       // pompe à vide
-      E.s("path", { d: "M340 470 L340 540 L500 540", fill: "none", stroke: "#3b5bdb", "stroke-width": 4, "stroke-dasharray": k === 3 || k === 4 ? "8 6" : null }, g);
-      E.s("rect", { x: 500, y: 520, width: 90, height: 40, rx: 8, fill: "#fff", stroke: "#3b5bdb", "stroke-width": 3 }, g);
-      D.texte(g, "pompe à vide", [545, 540], { taille: 14, coul: "#3b5bdb" });
+      E.s("path", { d: "M340 470 L340 540 L490 540", fill: "none", stroke: "#3b5bdb", "stroke-width": 4, "stroke-dasharray": k === 3 || k === 4 ? "8 6" : null }, g);
+      E.s("rect", { x: 490, y: 520, width: 120, height: 40, rx: 8, fill: "#fff", stroke: "#3b5bdb", "stroke-width": 3 }, g);
+      D.texte(g, "pompe à vide", [550, 540], { taille: 14, coul: "#3b5bdb" });
       // feuille tenue par le cadre
       var s = k >= 3 ? 1 : n.aspi, f;
       if (k === 1 || (k === 2 && s === 0 && !monte)) f = "M160 " + cy + " L520 " + cy;
