@@ -3,6 +3,7 @@
   var R = RM, C = R.C, m = R.m;
 
   var f = R.figure("fig-cyl", {
+    directCote: true,
     dessins: [{ l: 600, h: 400, titre: "Vue de dessus : plan (X, Y)" }, { l: 600, h: 420, titre: "Vue 3D : cylindre de rayon r" }],
     essai: "<strong>Essaie</strong> : déplace le point orange dans la vue de dessus, puis règle la hauteur \\(z\\). " +
       "<strong>Observe</strong> : \\(r\\) et \\(\\theta\\) décrivent le même point que \\(x\\) et \\(y\\). Fais passer le point à gauche de l'axe Y : \\(\\arctan(y/x)\\) se trompe de direction, \\(\\operatorname{atan2}(y, x)\\) non."
@@ -79,8 +80,8 @@
     var arct = q[0] !== 0 ? Math.atan(q[1] / q[0]) : NaN;
     R.rendre(zone,
       "\\text{cartésien : } (x, y, z) = (" + R.tn(q[0], 1) + ";\\ " + R.tn(q[1], 1) + ";\\ " + R.tn(cz.v, 1) + ")" +
-      "\\\\[4pt] r = \\sqrt{x^2 + y^2} = " + R.tn(c.r, 3) + "\\qquad \\theta = \\operatorname{atan2}(y, x) = " + R.tn(c.theta / R.DEG, 1) + "° \\qquad z = " + R.tn(cz.v, 1) +
-      "\\\\[4pt] \\text{retour : } r\\cos\\theta = " + R.tn(c.r * Math.cos(c.theta), 3) + ",\\quad r\\sin\\theta = " + R.tn(c.r * Math.sin(c.theta), 3));
+      "\\\\[4pt] r = \\sqrt{x^2 + y^2} = " + R.tn(c.r, 3) + "\\qquad z = " + R.tn(cz.v, 1) + "\\\\[4pt] \\theta = \\operatorname{atan2}(y, x) = " + R.tn(c.theta / R.DEG, 1) + "°" +
+      "\\\\[4pt] \\text{retour : } r\\cos\\theta = " + R.tn(c.r * Math.cos(c.theta), 3) + "\\\\[2pt] r\\sin\\theta = " + R.tn(c.r * Math.sin(c.theta), 3));
     if (isNaN(arct)) alerte.innerHTML = '<span class="alerte">x = 0 : arctan(y/x) n\'est pas défini, atan2 donne ' + R.fmt(c.theta / R.DEG, 1) + "°.</span>";
     else if (Math.abs(arct - c.theta) > 1e-6) alerte.innerHTML = '<span class="alerte">arctan(y/x) = ' + R.fmt(arct / R.DEG, 1) + "° : mauvaise direction (décalage de 180°). atan2(y, x) = " + R.fmt(c.theta / R.DEG, 1) + "°.</span>";
     else alerte.textContent = "Ici arctan(y/x) = atan2(y, x) = " + R.fmt(c.theta / R.DEG, 1) + "° car x > 0.";

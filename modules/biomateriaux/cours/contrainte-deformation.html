@@ -18,66 +18,46 @@
 <main>
 <p class="etiquette" data-etiquette></p>
 <h1>Contrainte, déformation et module</h1>
-<p class="chapeau">Le cours compare des matériaux par leur module (0,001 à 3 GPa pour un polymère, 200 GPa pour une céramique), lit des courbes de traction et calcule des masses volumiques de mélanges. Ces outils ne sont pas rappelés dans les diapositives : les voici, sur l'exemple d'une tige de prothèse de hanche.</p>
+<p class="chapeau">Le cours compare des matériaux par leur module (0,001 à 3 GPa pour un polymère, 200 GPa pour une céramique), lit des courbes de traction et calcule des masses volumiques de mélanges. Ces outils ne sont pas rappelés dans les diapositives : les voici, sur l'exemple d'une tige de prothèse de hanche.</p>
 
 <h2>Le chapitre en bref</h2>
-<p>Ce chapitre 0 rassemble les prérequis de mécanique et de calcul dont le cours se sert sans les redéfinir. Pourquoi c'est utile : choisir le matériau d'un implant, c'est comparer des rigidités, des résistances et des densités. Comment les notions s'enchaînent :</p>
+<p>Ce chapitre 0 rassemble les prérequis de mécanique et de calcul dont le cours se sert sans les redéfinir. Pourquoi c'est utile : choisir le matériau d'un implant, c'est comparer des rigidités, des résistances et des densités. Comment les notions s'enchaînent :</p>
 <ul>
-<li><strong>Contrainte et déformation</strong> : on ramène la force à la section (\(\sigma\)) et l'allongement à la longueur (\(\varepsilon\)) pour comparer des pièces de tailles différentes.</li>
-<li><strong>La courbe de traction</strong> : la relation \(\sigma(\varepsilon)\) d'un matériau, avec sa pente (le module), ses seuils (\(R_e\), \(R_{max}\), \(R_r\)) et son aire (la ténacité).</li>
-<li><strong>Modules et échelle logarithmique</strong> : les modules vont du MPa à la centaine de GPa ; on les compare sur un axe en \(\log E\), comme les courbes \(\log E_r(T)\) des chapitres 3 et 4.</li>
-<li><strong>Masse volumique et mélanges</strong> : \(\rho = m/V\) et la moyenne pondérée par les volumes, qui deviendra \(\rho = \rho_c X + \rho_a(1-X)\) (chapitre 3) et la loi des mélanges des composites (chapitre 6).</li>
+<li><strong>Contrainte et déformation</strong> (cette page) : on ramène la force à la section (\(\sigma\)) et l'allongement à la longueur (\(\varepsilon\)) pour comparer des pièces de tailles différentes.</li>
+<li><strong>La courbe de traction</strong> : la relation \(\sigma(\varepsilon)\) d'un matériau, avec sa pente (le module), ses seuils (\(R_e\), \(R_{max}\), \(R_r\)) et son aire (la ténacité).</li>
+<li><strong>Modules et échelle logarithmique</strong> : les modules vont du MPa à la centaine de GPa ; on les compare sur un axe en \(\log E\), comme les courbes \(\log E_r(T)\) des chapitres 3 et 4.</li>
+<li><strong>Masse volumique et mélanges</strong> : \(\rho = m/V\) et la moyenne pondérée par les volumes, qui deviendra \(\rho = \rho_c X + \rho_a(1-X)\) (chapitre 3) et la loi des mélanges des composites (chapitre 6).</li>
 </ul>
 
 <h2>Intuition</h2>
-<p>Tire avec la même force sur deux tiges du même alliage, l'une fine, l'autre épaisse : la fine souffre davantage, car la force se répartit sur moins de matière. Mesure l'allongement d'une tige courte et d'une tige longue sous la même contrainte : la longue s'allonge davantage, mais chaque millimètre s'allonge autant. D'où l'idée de diviser : la force par la section, l'allongement par la longueur. On obtient deux grandeurs propres au matériau, et la courbe qui les relie.</p>
+<p>Tire avec la même force sur deux tiges du même alliage, l'une fine, l'autre épaisse : la fine souffre davantage, car la force se répartit sur moins de matière. Mesure l'allongement d'une tige courte et d'une tige longue sous la même contrainte : la longue s'allonge davantage, mais chaque millimètre s'allonge autant. D'où l'idée de diviser : la force par la section, l'allongement par la longueur. On obtient deux grandeurs propres au matériau, et la courbe qui les relie.</p>
 
-<div id="fig-traction"></div>
+
+<div id="fig-contrainte"></div>
 
 <h2>Formalisation</h2>
-<p>Une éprouvette de section initiale \(S_0\) et de longueur utile \(l_0\) est tirée par une force \(F\) ; elle s'allonge de \(\Delta l\).</p>
+<p>Une éprouvette de section initiale \(S_0\) et de longueur utile \(l_0\) est tirée par une force \(F\) ; elle s'allonge de \(\Delta l\).</p>
 <ul>
-<li><strong>Contrainte</strong> : \(\sigma = \dfrac{F}{S_0}\). Avec \(F\) en N et \(S_0\) en mm², \(\sigma\) est en MPa (1 MPa = 1 N/mm² = \(10^6\) Pa).</li>
-<li><strong>Déformation</strong> : \(\varepsilon = \dfrac{\Delta l}{l_0}\), sans unité (souvent en %).</li>
-<li><strong>Module d'Young</strong> : dans le domaine élastique, \(\sigma\) est proportionnelle à \(\varepsilon\) (droite de Hooke) : \(\sigma = E\,\varepsilon\). \(E\) est la rigidité du matériau, en MPa ou GPa.</li>
+<li><strong>Contrainte</strong> : \(\sigma = \dfrac{F}{S_0}\). Avec \(F\) en N et \(S_0\) en mm², \(\sigma\) est en MPa (1 MPa = 1 N/mm² = \(10^6\) Pa).</li>
+<li><strong>Déformation</strong> : \(\varepsilon = \dfrac{\Delta l}{l_0}\), sans unité (souvent en %).</li>
+<li><strong>Module d'Young</strong> : dans le domaine élastique, \(\sigma\) est proportionnelle à \(\varepsilon\) (droite de Hooke) : \(\sigma = E\,\varepsilon\). \(E\) est la rigidité du matériau, en MPa ou GPa.</li>
 </ul>
-<p>La courbe de traction du cours (caractéristiques générales des métaux) se lit ainsi :</p>
-<div class="tableau"><table>
-<tr><th>Repère</th><th>Nom</th><th>Ce qu'on lit</th></tr>
-<tr><td>O à A</td><td>droite de Hooke</td><td>domaine de déformation élastique : on relâche, l'éprouvette revient</td></tr>
-<tr><td>A</td><td>résistance élastique \(R_e = F_e / S_0\)</td><td>fin du domaine élastique, début de la déformation permanente</td></tr>
-<tr><td>C</td><td>\(R_{max}\)</td><td>contrainte la plus élevée supportée</td></tr>
-<tr><td>D</td><td>résistance à la rupture \(R_r\)</td><td>contrainte au moment de la rupture</td></tr>
-<tr><td>après A</td><td>domaine de déformation permanente</td><td>en relâchant, il reste un allongement (décharge parallèle à la droite de Hooke)</td></tr>
-</table></div>
-<p>Un matériau <strong>ductile</strong> peut être allongé, étendu, étiré sans se rompre ; un matériau <strong>dur</strong> résiste à la pression (pénétration). Un matériau fragile casse presque au bout de sa droite de Hooke. L'aire sous la courbe est l'énergie absorbée : la <strong>ténacité</strong> est la capacité d'un matériau à absorber de l'énergie et à se déformer plastiquement sans se fracturer. L'énergie est l'aire sous la courbe force-allongement, que la diapo des élastomères note \(W = F\,\Delta l\) (zone hachurée). Pour une droite qui part de zéro, cette aire est un triangle : elle vaut exactement \(\tfrac{1}{2} F\,\Delta l\).</p>
-<p>Pour un matériau <strong>isotrope</strong> (alliages métalliques, céramiques, polymères), il suffit de deux constantes élastiques indépendantes parmi le module d'Young \(E\), le coefficient de Poisson \(\nu\) et le module de cisaillement \(G\), reliées par \(G = \dfrac{E}{2(1+\nu)}\). Un composite n'est pas isotrope : il en faut davantage (chapitre 6).</p>
+<p>Pour un matériau <strong>isotrope</strong> (alliages métalliques, céramiques, polymères), il suffit de deux constantes élastiques indépendantes parmi le module d'Young \(E\), le coefficient de Poisson \(\nu\) et le module de cisaillement \(G\), reliées par \(G = \dfrac{E}{2(1+\nu)}\). Un composite n'est pas isotrope : il en faut davantage (chapitre 6).</p>
 
-<h2>Rappel : modules et échelle logarithmique</h2>
-<p>Les modules des matériaux du cours couvrent plusieurs puissances de 10 : environ 1 MPa pour un élastomère, 0,001 à 3 GPa pour les polymères (valeurs extrêmes 0 à 100 GPa), 110 GPa pour le Ti-6Al-4V, 207 GPa pour l'acier, 200 GPa pour la zircone. Sur un axe ordinaire, le caoutchouc serait collé à zéro. On trace donc \(\log E\) : 1 MPa = \(10^6\) Pa donne 6, 1 GPa = \(10^9\) Pa donne 9. Une différence de log est un rapport : \(\log E_1 - \log E_2 = \log(E_1/E_2)\). Une chute de 9 à 6, comme au passage de \(T_g\), divise le module par 1 000.</p>
-
-<div id="fig-log"></div>
-
-<h2>Rappel : masse volumique et moyenne pondérée</h2>
-<p>La <strong>masse volumique</strong> est \(\rho = m/V\), en g/cm³ ; le cours l'appelle souvent « densité » et la donne dans cette unité. Pour un matériau fait de deux phases qui occupent les fractions de volume \(v_1\) et \(v_2 = 1 - v_1\), la masse volumique est la moyenne pondérée par les volumes : \(\rho = \rho_1 v_1 + \rho_2 v_2\). Ce n'est pas la moyenne simple \((\rho_1 + \rho_2)/2\), sauf si les deux phases occupent autant de volume.</p>
-
-<div id="fig-melange"></div>
 
 <h2>Exemple</h2>
-<p>Exemple ajouté, avec les valeurs du Ti-6Al-4V du tableau du cours (4,43 g/cm³, 110 GPa, 1 171 MPa). Une éprouvette de longueur utile \(l_0 = 50\) mm et de section \(S_0 = 20\) mm² est tirée par \(F = 4\,400\) N ; elle s'allonge de \(\Delta l = 0{,}1\) mm.</p>
+
+<p>Exemple ajouté, avec les valeurs du Ti-6Al-4V du tableau du cours (4,43 g/cm³, 110 GPa, 1 171 MPa). Une éprouvette de longueur utile \(l_0 = 50\) mm et de section \(S_0 = 20\) mm² est tirée par \(F = 4\,400\) N ; elle s'allonge de \(\Delta l = 0{,}1\) mm.</p>
 <ul>
 <li>\(\sigma = 4\,400 / 20 = 220\) MPa et \(\varepsilon = 0{,}1/50 = 0{,}002\), donc \(E = 220 / 0{,}002 = 110\,000\) MPa = 110 GPa.</li>
-<li>Force maximale avec une résistance de 1 171 MPa : \(F = \sigma S_0 = 1\,171 \times 20 = 23\,420\) N.</li>
+<li>Force maximale avec une résistance de 1 171 MPa : \(F = \sigma S_0 = 1\,171 \times 20 = 23\,420\) N.</li>
 <li>Volume utile \(50 \times 20 = 1\,000\) mm³ = 1 cm³, donc masse \(m = 4{,}43\) g.</li>
 <li>Avec \(\nu = 0{,}34\) (valeur ajoutée), \(G = 110 / (2 \times 1{,}34) \approx 41\) GPa.</li>
 </ul>
-<p>Mélange : une plaque de 10 cm × 10 cm × 0,1 cm (TD 1.1) a un volume de 10 cm³ ; si elle pèse 11 g, \(\rho = 1{,}1\) g/cm³, ce qui correspond à moitié de phase à 1,0 et moitié de phase à 1,2 g/cm³ : \(0{,}5 \times 1{,}0 + 0{,}5 \times 1{,}2 = 1{,}1\).</p>
 
 <h2>Formules clés</h2>
-<p>\[\sigma = \frac{F}{S_0} \qquad \varepsilon = \frac{\Delta l}{l_0} \qquad \sigma = E\,\varepsilon \qquad R_e = \frac{F_e}{S_0}\]</p>
-<p>\[G = \frac{E}{2(1+\nu)} \qquad 1\ \text{MPa} = 10^6\ \text{Pa},\ 1\ \text{GPa} = 10^9\ \text{Pa} \qquad \rho = \frac{m}{V} \qquad \rho = \rho_1 v_1 + \rho_2 v_2\]</p>
-<p>Ténacité = aire sous la courbe de traction (énergie absorbée avant rupture).</p>
-
+<p>\[\sigma = \frac{F}{S_0} \qquad \varepsilon = \frac{\Delta l}{l_0} \qquad \sigma = E\,\varepsilon \qquad G = \frac{E}{2(1+\nu)}\]</p>
+<p>1 MPa = 1 N/mm² = \(10^6\) Pa ; \(\varepsilon\) sans unité (souvent en %).</p>
 </main>
 <script src="../../../commun/vendor/katex/katex.min.js"></script>
 <script src="../../../commun/vendor/katex/auto-render.min.js"></script>

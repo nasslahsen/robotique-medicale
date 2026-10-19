@@ -1,82 +1,53 @@
 /*
- * Pages de cours d'un module (modules/<id>/cours/) : barre du site, menu « Tous les concepts »,
- * sommaire, bouton « Jouer le niveau », formules clés en carte, Précédent / Suivant.
- * La liste et l'ordre des pages viennent du module.js du module (champ cours), via PLATEFORME.
+ * Pages de cours d'un module (modules/<id>/cours/) : barre du site avec « Passer aux exercices »,
+ * ancres des sections, formules clés en carte, bas de page, page marquée lue quand on arrive en bas.
+ * Ouverte dans le jeu (cadre, adresse ?dans=1) : ni barre ni bas de page, la section demandée est surlignée.
+ * Sommaire (cours/index.html?sm=…) : la liste simple des pages du sous-module, pour relire.
+ * L'ordre et les étapes viennent de module.js, via PLATEFORME.
  */
 (function () {
   "use strict";
 
   var P = window.PLATEFORME, MID = P.courant, MOD = P.module(MID);
-  var PARTIES = MOD.chapitres.filter(function (ch) { return MOD.cours.some(function (c) { return c.chapitre === ch.id; }); })
-    .map(function (ch) { return { id: ch.id, titre: "Chapitre " + ch.id + " : " + ch.titre.charAt(0).toLowerCase() + ch.titre.slice(1) }; });
-  var CONCEPTS = MOD.cours.map(function (c) { return { partie: PARTIES.findIndex(function (p) { return p.id === c.chapitre; }), slug: c.id, titre: c.titre, pret: true }; });
-  var slugCourant = (location.pathname.match(/([^/]+)\.html$/) || [])[1] || "";
-  var indexCourant = CONCEPTS.findIndex(function (c) { return c.slug === slugCourant; });
-  var aNiveau = function (slug) { return (MOD.niveaux || []).some(function (n) { return n.id === slug && n.pret; }); };
-  if (indexCourant >= 0) P.noterDernier(MID, "Cours : " + CONCEPTS[indexCourant].titre);
+  var slug = (location.pathname.match(/([^/]+)\.html$/) || [])[1] || "";
+  var integre = /[?&]dans=1/.test(location.search) || window.self !== window.top;
+  var trouve = P.trouver(MID, "cours", slug), etape = trouve && trouve.etape;
+  var chapitre = etape ? MOD.chapitres.filter(function (c) { return c.id === etape.chapitre; })[0] : null;
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  if (integre) document.documentElement.classList.add("integre");
 
-  function url(c) { return c.slug + ".html"; }
-  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
-
-  function listeHTML(classeNum) {
-    var h = "";
-    PARTIES.forEach(function (p, ip) {
-      h += '<div class="menu-partie"><h2>' + esc(p.titre) + "</h2><ol>";
-      CONCEPTS.forEach(function (c, i) {
-        if (c.partie !== ip) return;
-        var num = '<span class="' + classeNum + '">' + (i + 1) + "</span>";
-        h += '<li><a href="' + url(c) + '"' + (i === indexCourant ? ' class="courant" aria-current="page"' : "") + ">" + num + esc(c.titre) + "</a></li>";
-      });
-      h += "</ol></div>";
-    });
-    return h;
+  // Exercices de la même notion (étape suivante sur la carte) ; à défaut, l'étape suivante.
+  var exos = etape ? trouve.liste[trouve.rang + 1] : null;
+  if (exos && !(exos.type === "exos" && exos.id === slug)) exos = null;
+  var apres = etape ? trouve.liste[trouve.rang + 1] || null : null;
+  function boutonSuite(cls) {
+    if (exos) return '<a class="' + cls + '" href="../jouer.html#' + encodeURIComponent(slug) + '">Passer aux exercices</a>';
+    if (apres) return '<a class="' + cls + '" href="' + P.urlEtape(apres) + '">Étape suivante</a>';
+    return "";
   }
 
   // Barre du haut
-  var barre = document.createElement("header");
-  P.barre(barre, "cours", '<button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-concepts">Tous les concepts</button>');
-  barre.insertAdjacentHTML("beforeend", '<nav class="menu" id="menu-concepts" aria-label="Liste des concepts">' + listeHTML("num") + "</nav>");
-  document.body.insertBefore(barre, document.body.firstChild);
-  var bouton = barre.querySelector(".menu-bouton");
-  var menu = barre.querySelector(".menu");
-  bouton.addEventListener("click", function () {
-    var ouvert = menu.classList.toggle("ouvert");
-    bouton.setAttribute("aria-expanded", ouvert ? "true" : "false");
-  });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && menu.classList.contains("ouvert")) { menu.classList.remove("ouvert"); bouton.setAttribute("aria-expanded", "false"); }
-  });
+  var main = document.querySelector("main");
+  if (!integre) {
+    var barre = document.createElement("header");
+    P.barre(barre, { sm: etape ? etape.sm : new URLSearchParams(location.search).get("sm") || undefined, chapitre: etape ? etape.chapitre : undefined,
+      droite: etape ? boutonSuite("btn-barre") : "" });
+    document.body.insertBefore(barre, document.body.firstChild);
+  }
+  if (etape && !integre) P.noterDernier(MID, "Cours : " + etape.titre, "modules/" + MID + "/cours/" + slug + ".html");
 
-  // Numéro et partie en tête de page
+  // Chapitre en tête de page
   var etiquette = document.querySelector("[data-etiquette]");
-  if (etiquette && indexCourant >= 0) {
-    etiquette.textContent = "Concept " + (indexCourant + 1) + " sur " + CONCEPTS.length + " · " + PARTIES[CONCEPTS[indexCourant].partie].titre;
-  }
+  if (etiquette && chapitre) etiquette.textContent = "Chapitre " + chapitre.id + " · " + chapitre.titre + " · Cours";
 
-  // Parcours sur le sommaire : une carte par concept
-  var parcours = document.querySelector("[data-parcours]");
-  if (parcours) {
-    var hp = "";
-    PARTIES.forEach(function (p, ip) {
-      hp += '<h3 class="partie-titre">' + esc(p.titre) + '</h3><ol class="parcours-cartes">';
-      CONCEPTS.forEach(function (c, i) {
-        if (c.partie === ip && c.pret) hp += '<li><a href="' + url(c) + '"><span class="num">' + (i < 9 ? "0" : "") + (i + 1) + '</span><span class="nom">' + esc(c.titre) + "</span></a></li>";
-      });
-      hp += "</ol>";
-    });
-    parcours.innerHTML = hp;
-  }
-
-  // Lien vers le niveau du jeu qui porte le même nom, avec ses étoiles
-  function etoiles(slug) { return P.etoiles(MID, slug); }
-  var chapeau = document.querySelector(".chapeau");
-  if (chapeau && indexCourant >= 0 && aNiveau(slugCourant)) {
-    var nb = etoiles(slugCourant), z = document.createElement("div");
-    z.className = "jouer";
-    z.innerHTML = '<a class="btn-jeu" href="../jouer.html#' + slugCourant + '">Jouer le niveau</a><span class="etoiles-page">' +
-      (nb === null ? "Pas encore joué" : nb + " étoile" + (nb > 1 ? "s" : "") + " sur 3") + "</span>";
-    chapeau.parentNode.insertBefore(z, chapeau.nextSibling);
-  }
+  // Ancres des sections (h2, h3) : les liens « Revoir dans le cours » du jeu y mènent.
+  var vus = {};
+  [].forEach.call(document.querySelectorAll("main h2, main h3"), function (t) {
+    if (t.id) return;
+    var a = P.ancre(t.textContent);
+    vus[a] = (vus[a] || 0) + 1;
+    t.id = vus[a] > 1 ? a + "-" + vus[a] : a;
+  });
 
   // Formules clés : regroupées dans une carte
   [].forEach.call(document.querySelectorAll("main > h2"), function (t) {
@@ -88,20 +59,65 @@
     t.parentNode.insertBefore(carte, t.nextSibling);
   });
 
-  // Précédent / Suivant (seulement entre pages prêtes)
-  var main = document.querySelector("main");
-  if (main && indexCourant >= 0) {
-    var prec = null, suiv = null, i;
-    for (i = indexCourant - 1; i >= 0; i--) if (CONCEPTS[i].pret) { prec = CONCEPTS[i]; break; }
-    for (i = indexCourant + 1; i < CONCEPTS.length; i++) if (CONCEPTS[i].pret) { suiv = CONCEPTS[i]; break; }
+  // Bas de page : retour à la carte, et le bouton qui mène aux exercices de la notion
+  if (main && etape && !integre) {
     var bas = document.createElement("nav");
     bas.className = "suite";
-    bas.setAttribute("aria-label", "Concept précédent et suivant");
-    bas.innerHTML =
-      (prec ? '<a class="precedent" href="' + url(prec) + '"><small>Précédent</small>' + esc(prec.titre) + "</a>" : '<span class="vide"></span>') +
-      (aNiveau(slugCourant) ? '<a class="jeu" href="../jouer.html#' + slugCourant + '"><small>S\'entraîner</small>Jouer</a>' : "") +
-      (suiv ? '<a class="suivant" href="' + url(suiv) + '"><small>Suivant</small>' + esc(suiv.titre) + "</a>" : '<a class="suivant" href="../index.html"><small>Fin du cours</small>Parcours du module</a>');
+    bas.setAttribute("aria-label", "Suite du parcours");
+    var ex = exos ? '<small>Exercices · ' + esc(exos.titre) + "</small>Passer aux exercices" : apres ? "<small>" + P.genre(apres) + " · " + esc(apres.titre) + "</small>Étape suivante" : "";
+    bas.innerHTML = '<a class="retour" href="' + P.urlCarte(MID, etape.sm, etape.chapitre) + '"><small>Carte</small>Retour à la carte</a>' +
+      (ex ? '<a class="aller" href="' + (exos ? "../jouer.html#" + encodeURIComponent(slug) : P.urlEtape(apres)) + '">' + ex + "</a>" : "");
     main.appendChild(bas);
+    // Page lue : quand le bas de page apparaît à l'écran
+    if ("IntersectionObserver" in window) {
+      var obs = new IntersectionObserver(function (es) {
+        if (es.some(function (e) { return e.isIntersecting; })) { P.marquerLu(MID, slug); obs.disconnect(); }
+      }, { threshold: 0.5 });
+      obs.observe(bas);
+    } else P.marquerLu(MID, slug);
   }
 
+  // Section demandée dans l'adresse (#ancre ou #ancre~k pour le k-ième bloc de la section) : défilement et surlignage.
+  function viser() {
+    var h = decodeURIComponent((location.hash || "").slice(1));
+    if (!h) return;
+    var parts = h.split("~"), t = document.getElementById(parts[0]);
+    if (!t) return;
+    var cibles = [t], n = t.nextElementSibling, k = 0, bloc = parts[1] !== undefined ? +parts[1] : -1;
+    // la section : le titre et ses blocs jusqu'au titre suivant de même niveau ou plus haut
+    var seuil = t.tagName === "H2" ? /^(H2|NAV)$/ : /^(H2|H3|NAV)$/;
+    var blocs = [];
+    while (n && !seuil.test(n.tagName)) { blocs.push(n); n = n.nextElementSibling; }
+    if (bloc >= 0 && blocs[bloc]) { cibles = [blocs[bloc]]; k = 1; } else cibles = cibles.concat(blocs);
+    document.querySelectorAll(".repere").forEach(function (x) { x.classList.remove("repere"); });
+    cibles.forEach(function (x) { x.classList.add("repere"); });
+    // un passage précis : au milieu de l'écran ; une section : son titre en haut
+    if (k) cibles[0].scrollIntoView({ block: "center" }); else t.scrollIntoView({ block: "start" });
+  }
+  // après KaTeX et les figures : la mise en page est stable
+  window.addEventListener("load", function () { setTimeout(viser, 60); });
+  window.addEventListener("hashchange", viser);
+
+  // Sommaire « Tous les cours » : la liste des pages du sous-module, chapitre par chapitre
+  var liste = document.querySelector("[data-parcours]");
+  if (liste) {
+    var sms = P.sousModules(MID).filter(function (s) { return s.chapitres.length; });
+    var demande = new URLSearchParams(location.search).get("sm");
+    var sm = sms.filter(function (s) { return s.id === demande; })[0] || sms.filter(function (s) { return s.id === P.smCourant(MID); })[0] || sms[0];
+    var b = document.querySelector(".site-module");
+    if (b) b.href = P.urlCarte(MID, sm.id);
+    var h1 = document.querySelector("main h1");
+    if (h1 && sm.titre) h1.insertAdjacentHTML("beforebegin", '<p class="etiquette">' + esc(sm.titre) + "</p>");
+    var hp = "", pages = P.etapes(MID, sm.id).filter(function (x) { return x.type === "cours"; });
+    sm.chapitres.forEach(function (ch) {
+      var siennes = pages.filter(function (x) { return x.chapitre === ch.id; });
+      if (!siennes.length) return;
+      hp += '<h2 class="partie-titre">Chapitre ' + ch.id + " · " + esc(ch.titre) + '</h2><ol class="liste-cours">';
+      siennes.forEach(function (x) {
+        hp += '<li><a href="' + x.id + '.html"><span class="nom">' + esc(x.titreLong) + "</span>" + (x.fait ? '<span class="lu">lu</span>' : "") + "</a></li>";
+      });
+      hp += "</ol>";
+    });
+    liste.innerHTML = hp;
+  }
 })();

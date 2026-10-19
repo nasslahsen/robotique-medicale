@@ -29,7 +29,7 @@ NIVEAU({
       }
       // multiplication de deux nombres en mémoire (exemple ajouté)
       var mem = { "2:3": n.m23, "5:2": 7 }, x0 = 70, y0 = 120, w = 58, h = 44;
-      EMB.texte(g, "Mémoire", [x0 + 2 * w, 92], { taille: 18 });
+      EMB.texte(g, "Mémoire", [x0 + 2 * w, 70], { taille: 18 });
       for (var r = 1; r <= 5; r++) {
         EMB.texte(g, String(r), [x0 - 18, y0 + (r - 1) * h + h / 2], { taille: 14, coul: C.doux, mono: true, halo: false });
         for (var c = 1; c <= 4; c++) {
