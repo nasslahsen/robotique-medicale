@@ -9,11 +9,11 @@ NIVEAU({
     n.dessin = function () {
       pl.vider(); pl.grille({ pas: 0.1, fort: 5 });
       pl.axes({ lx: [-0.55, 0.72], ly: [-0.4, 0.78] });
-      [-0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6].forEach(function (k) { D.texte(pl.fond, E.fmt(k, 1), pl.P([k, -0.035]), { coul: C.gris, taille: 12, gras: false, mono: true }); });
+      [-0.5, -0.4, -0.3, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6].forEach(function (k) { D.texte(pl.fond, E.fmt(k, 1), pl.P([k, -0.035]), { coul: C.gris, taille: 12, gras: false, mono: true }); });
       if (n.anneau) {
         D.rond(pl.fond, pl.P([0, 0]), (n.l1 + n.l2) * pl.u, { fill: "rgba(59,91,219,.08)", stroke: C.acc, ep: 2, tirets: "6 6" });
         D.rond(pl.fond, pl.P([0, 0]), Math.abs(n.l1 - n.l2) * pl.u, { fill: "#fff", stroke: C.acc, ep: 2, tirets: "6 6" });
-        D.texte(pl.fond, "l₁ + l₂ = 0,7", pl.P([0.5, 0.52]), { coul: C.acc, taille: 15 });
+        D.texte(pl.fond, "l₁ + l₂ = 0,7", pl.P([-0.5, 0.52]), { coul: C.acc, taille: 15 });
       }
       if (n.cible) { var q = pl.P(n.cible); D.rond(pl.fond, q, 20, { fill: PLATEFORME.teinte(.12), stroke: C.jeu, ep: 2.5, tirets: "5 5" }); D.texte(pl.fond, "cible", [q[0] + 26, q[1] - 20], { coul: C.jeu, taille: 16, ancre: "start" }); }
       var a = n.t1 * D.DEG, c = (n.t1 + n.t2) * D.DEG, O2 = [n.l1 * Math.cos(a), n.l1 * Math.sin(a), 0], M = n.M();

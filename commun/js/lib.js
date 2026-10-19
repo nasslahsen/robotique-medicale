@@ -383,28 +383,65 @@
   }
 
   // Monte une figure dans <div class="fig" id="..."> : renvoie {svg, reglages, direct, essai}.
+  // o.directCote : les nombres en direct vont dans la colonne de droite (figures à deux dessins).
+  // Mise en page (cours.css) : le dessin à gauche, à droite le texte « Essaie / Observe », les commandes et les nombres
+  // en direct ; le bloc entier tient dans la hauteur de l'écran sous la barre (dessin réduit si besoin).
   function figure(id, o) {
     var racine = typeof id === "string" ? document.getElementById(id) : id;
     if (!racine) return null;
     racine.classList.add("fig");
-    var svgs = [];
-    (o.dessins || [{ l: o.largeur || 600, h: o.hauteur || 420, titre: o.titre }]).forEach(function (d) {
+    var zd = h("div", { "class": "fig-dessins" }, undefined, racine);
+    var cote = h("div", { "class": "fig-cote" }, undefined, racine);
+    var svgs = [], liste = o.dessins || [{ l: o.largeur || 600, h: o.hauteur || 420, titre: o.titre }];
+    liste.forEach(function (d) {
       var s = el("svg", { "class": "dessin", viewBox: "0 0 " + d.l + " " + d.h, role: "img", "aria-label": d.titre || o.titre || "Figure interactive" });
-      // hauteur plafonnée (site.css) : la largeur suit la même proportion, pour ne pas laisser de bandes vides
-      s.style.maxWidth = "calc(72vh * " + (d.l / d.h).toFixed(4) + ")";
-      racine.appendChild(s);
+      // hauteur plafonnée à la place disponible (partagée entre les dessins) : la largeur suit la même proportion (ajuster)
+      zd.appendChild(s);
       svgs.push(s);
     });
-    var reglages = h("div", { "class": "reglages" }, undefined, racine);
-    var direct = h("div", { "class": "direct", "aria-live": "polite" }, undefined, racine);
-    var essai = h("p", { "class": "essai" }, o.essai || "", racine);
+    var essai = h("p", { "class": "essai" }, o.essai || "", cote);
+    var reglages = h("div", { "class": "reglages" }, undefined, cote);
+    // nombres en direct : sous le dessin, comme la bande de l'écran de niveau ; le dessin se réduit pour leur faire place
+    var direct = h("div", { "class": "direct", "aria-live": "polite" }, undefined, o.directCote ? cote : zd);
     if (!o.essai) essai.style.display = "none";
     if (o.direct === false) direct.style.display = "none";
-    return { racine: racine, svg: svgs[0], svgs: svgs, reglages: reglages, direct: direct, essai: essai };
+    function ajuster() {
+      var dh = direct.parentNode === zd && direct.offsetHeight ? direct.offsetHeight + 12 : 0;
+      svgs.forEach(function (s, i) {
+        var hmax = "calc((var(--h-fig) - " + dh + "px - " + 12 * (svgs.length - 1) + "px) / " + svgs.length + ")";
+        s.style.maxHeight = hmax;
+        s.style.maxWidth = "calc(" + hmax + " * " + (liste[i].l / liste[i].h).toFixed(4) + ")";
+      });
+    }
+    ajuster();
+    if (global.ResizeObserver) new global.ResizeObserver(ajuster).observe(direct);
+    // une ligne de formules trop large pour la bande est réduite pour tenir (au plus de 30 %)
+    var attente = false;
+    function serrer() {
+      attente = false;
+      [].forEach.call(direct.querySelectorAll(".katex-display, .katex-ligne"), function (d) {
+        d.style.fontSize = "";
+        if (d.scrollWidth > d.clientWidth + 1) d.style.fontSize = Math.max(0.7, d.clientWidth / d.scrollWidth * 0.98).toFixed(3) + "em";
+      });
+    }
+    if (global.MutationObserver) new global.MutationObserver(function () { if (!attente) { attente = true; requestAnimationFrame(serrer); } })
+      .observe(direct, { childList: true, subtree: true, characterData: true });
+    return { racine: racine, svg: svgs[0], svgs: svgs, reglages: reglages, direct: direct, essai: essai, cote: cote };
   }
+  // Après le montage des figures : une figure sans rien à droite prend toute la largeur.
+  function rangerFigures() {
+    [].forEach.call(document.querySelectorAll(".fig"), function (f) {
+      var c = f.querySelector(".fig-cote");
+      if (!c) return;
+      var vide = [].every.call(c.children, function (x) { return x.style.display === "none" || !x.childNodes.length || getComputedStyle(x).display === "none"; });
+      f.classList.toggle("seule", vide);
+    });
+  }
+  if (typeof window !== "undefined" && window.addEventListener) window.addEventListener("load", rangerFigures);
 
   function curseur(parent, o) {
-    var lab = h("label", { "class": "curseur" }, undefined, parent);
+    // nom court : nom, piste et valeur sur une seule ligne ; nom long : nom et valeur au-dessus de la piste
+    var lab = h("label", { "class": "curseur" + (String(o.nom).length <= 14 ? " court" : "") }, undefined, parent);
     h("span", null, o.nom, lab);
     var inp = h("input", { type: "range", min: o.min, max: o.max, step: o.pas, value: o.val }, undefined, lab);
     var out = h("output", null, undefined, lab);

@@ -16,9 +16,9 @@ PLATEFORME.parcours("embarques", {
     { id: 5, titre: "Programmer les périphériques de l'ESP32", sous: "GPIO, interruptions, ADC, DAC, timers, watchdog, PWM, I2C et SPI", sousModule: "embarques" }
   ],
   niveaux: [
-    { id: "binaire", chapitre: 0, titre: "Bits et binaire", pret: true },
-    { id: "hexadecimal", chapitre: 0, titre: "Hexadécimal et registres", pret: true },
-    { id: "signaux", chapitre: 0, titre: "Signaux logiques et horloge", pret: true },
+    { id: "binaire", chapitre: 0, titre: "Bits et binaire", cours: true, pret: true },
+    { id: "hexadecimal", chapitre: 0, titre: "Hexadécimal et registres", cours: true, pret: true },
+    { id: "signaux", chapitre: 0, titre: "Signaux logiques et horloge", cours: true, pret: true },
     { id: "revision-bases", chapitre: 0, titre: "Révision : les bases", revision: true, pret: true },
     { id: "boss-bases", chapitre: 0, titre: "Le registre du capteur", boss: true, pret: true },
 
@@ -71,6 +71,9 @@ PLATEFORME.parcours("embarques", {
     { id: "boss-peripheriques", chapitre: 5, titre: "Le moniteur de perfusion", boss: true, pret: true }
   ],
   cours: [
+    { chapitre: 0, id: "binaire", titre: "Bits et binaire" },
+    { chapitre: 0, id: "hexadecimal", titre: "Hexadécimal et registres" },
+    { chapitre: 0, id: "signaux", titre: "Signaux logiques et horloge" },
     { chapitre: 1, id: "definition", titre: "Système embarqué : définitions" },
     { chapitre: 1, id: "conception", titre: "Exigences de conception (Requirements Design)" },
     { chapitre: 1, id: "organisation", titre: "Organisation d'un système embarqué" },

@@ -3,10 +3,12 @@
  * ici et dans <html data-module="..."> de chaque page, puis inscrire le module dans registre.js.
  * Voir CLAUDE.md, section « Construire un module ».
  *
+ * La carte de chaque sous-module se construit à partir d'ici (PLATEFORME.etapes) : chapitre par chapitre,
+ * pour chaque niveau de notion, l'étape Cours (si cours: true) puis l'étape Exercices ; la révision et le boss ferment le chapitre.
  * chapitres : dans l'ordre ; sousModule = id d'un sous-module du registre.
- * niveaux : pages du jeu dans l'ordre du parcours. cours: true si cours/<id>.html existe.
+ * niveaux : notions dans l'ordre d'apprentissage. cours: true quand cours/<id>.html existe (toujours, sauf TD).
  *           Chaque chapitre finit par un niveau revision: true puis un niveau boss: true.
- * cours : pages de cours, dans l'ordre du menu « Tous les concepts ».
+ * cours : pages de cours, même ordre (titres longs, liste « Tous les cours »).
  */
 PLATEFORME.parcours("_modele", {
   titre: "Module modèle",

@@ -36,16 +36,19 @@ body.niveau { overflow: hidden; height: 100dvh; }
 .segments span.courant i { width: 35%; }
 
 .scene { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 26px; padding: 4px 30px 26px; height: calc(100dvh - 72px); }
-.figure { position: relative; border: 1px solid var(--trait); border-radius: var(--rayon); overflow: hidden; background: #fff; display: flex; flex-direction: column; }
-.figure > svg { flex: 1; min-height: 0; width: 100%; display: block; overflow: visible; touch-action: none; user-select: none; -webkit-user-select: none; }
-.bande { flex: none; display: none; justify-content: center; align-items: center; gap: 14px; border-top: 1px solid var(--trait); background: #fafbfd; padding: 10px 14px; min-height: 84px; font-size: 18px; }
+/* Figure : la légende (chip, astuce) occupe sa propre rangée au-dessus du dessin, elle ne le recouvre jamais. */
+.figure { position: relative; border: 1px solid var(--trait); border-radius: var(--rayon); overflow: hidden; background: #fff; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; }
+.figure > svg { grid-column: 1 / -1; grid-row: 2; min-height: 0; width: 100%; height: 100%; display: block; overflow: visible; touch-action: none; user-select: none; -webkit-user-select: none; }
+.bande { grid-column: 1 / -1; grid-row: 3; display: none; justify-content: center; align-items: center; gap: 14px; border-top: 1px solid var(--trait); background: #fafbfd; padding: 10px 14px; min-height: 84px; font-size: 18px; }
 .bande.on { display: flex; }
 .bande .katex { font-size: 1.15em; }
-.chip { position: absolute; left: 16px; top: 16px; font: 700 22px "JetBrains Mono", monospace; background: var(--pale); border-radius: 14px; padding: 8px 14px; display: none; }
+.chip { grid-column: 1; grid-row: 1; align-self: start; margin: 14px 0 0 16px; font: 700 22px "JetBrains Mono", monospace; background: var(--pale); border-radius: 14px; padding: 8px 14px; display: none; }
 .chip.on { display: block; }
-.astuce { position: absolute; left: 16px; top: 72px; max-width: 46%; color: var(--doux); font-size: 15px; pointer-events: none; }
+.astuce { grid-column: 2; grid-row: 1; align-self: center; margin: 14px 16px 0; max-width: 560px; color: var(--doux); font-size: 16px; line-height: 1.4; pointer-events: none; }
+.astuce:empty { display: none; }
+.chip:not(.on) + .astuce { grid-column: 1 / -1; }
 .coin { position: absolute; right: 14px; top: 14px; }
-.halo { transform-box: fill-box; transform-origin: center; animation: halo 1.8s ease-in-out infinite; }
+.halo { transform-box: fill-box; transform-origin: center; animation: halo 1.8s ease-in-out 3; }
 @keyframes halo { 50% { transform: scale(1.25); opacity: .55; } }
 
 .panneau { position: relative; overflow: hidden; }
@@ -154,55 +157,83 @@ body.niveau { overflow: hidden; height: 100dvh; }
 .a-revoir small { display: block; color: var(--doux); font-size: 14px; }
 .a-revoir .btn { flex: none; height: 46px; padding: 0 18px; font-size: 16px; border-width: 2px; box-shadow: 3px 3px 0 var(--encre); }
 .resultat .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.resultat .actions .btn-suivant { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; flex-basis: 100%; height: auto; min-height: 64px; padding: 8px 28px; text-decoration: none; }
+.resultat .actions .btn-suivant small { display: block; max-width: 100%; font-size: 14px; font-weight: 500; opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* ---------- Carte des niveaux ---------- */
+/* « Revoir dans le cours » sous le message, et le cours ouvert par-dessus l'exercice */
+.revoir { display: flex; flex-direction: column; gap: 2px; margin: 8px 0 4px; padding: 10px 14px; min-height: 48px; border: 1.5px solid var(--trait); border-radius: 14px; background: #fafbfd; color: var(--encre); text-decoration: none; }
+.revoir span { font: 700 12px "JetBrains Mono", monospace; letter-spacing: .05em; text-transform: uppercase; color: var(--acc); }
+.revoir b { font-weight: 600; font-size: 16px; line-height: 1.35; }
+.revoir:active { background: var(--pale); }
+.fenetre-cours { position: fixed; inset: 0; z-index: 50; display: none; align-items: stretch; justify-content: center; padding: 18px 30px; background: rgba(21, 23, 31, .35); }
+.fenetre-cours.on { display: flex; }
+.fc-carte { width: min(1000px, 100%); display: flex; flex-direction: column; background: #fff; border: 2.5px solid var(--encre); border-radius: 24px; box-shadow: 8px 8px 0 var(--encre); overflow: hidden; }
+.fc-tete { flex: none; display: flex; align-items: center; gap: 16px; padding: 10px 12px 10px 24px; border-bottom: 1px solid var(--trait); }
+.fc-tete span { flex: 1; min-width: 0; font: 800 20px "Bricolage Grotesque", Inter, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fc-tete .btn { height: 50px; padding: 0 20px; font-size: 16px; box-shadow: 3px 3px 0 var(--jeu); }
+.fenetre-cours iframe { flex: 1; width: 100%; border: 0; }
+
+/* ---------- Carte d'un sous-module ---------- */
 body.carte-jeu { min-height: 100dvh; }
-.entete { max-width: 1180px; margin: 0 auto; padding: 44px 40px 10px; display: flex; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
-.entete h1 { font-size: 46px; line-height: 1.05; margin: 0; letter-spacing: -0.025em; font-weight: 800; }
-.entete p { margin: 8px 0 0; color: var(--doux); max-width: 640px; }
-.entete .total { margin-left: auto; text-align: right; }
-.entete .total b { display: block; font: 700 34px "JetBrains Mono", monospace; }
-.entete .total small { color: var(--doux); }
-.reprendre { max-width: 1180px; margin: 18px auto 0; padding: 0 40px; }
-.chapitre { max-width: 1180px; margin: 0 auto; padding: 30px 40px 10px; }
+.entete { max-width: 1180px; margin: 0 auto; padding: 30px 40px 6px; }
+.choix-sm { display: inline-flex; flex-wrap: wrap; gap: 6px; padding: 5px; background: var(--pale); border-radius: 16px; margin-bottom: 22px; }
+.choix-sm a, .choix-sm .sm-vide { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 12px; font: 600 16px Inter, sans-serif; color: var(--doux); text-decoration: none; }
+.choix-sm a[aria-current="page"] { background: var(--encre); color: #fff; box-shadow: 3px 3px 0 var(--jeu); }
+.choix-sm .sm-vide { color: #a3a9b5; }
+.choix-sm .sm-vide small { font: 700 11px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .05em; }
+.entete-ligne { display: flex; align-items: flex-end; gap: 30px; }
+.entete-titre { flex: 1; min-width: 0; }
+.entete h1 { font-size: 44px; line-height: 1.05; margin: 0; letter-spacing: -0.025em; font-weight: 800; }
+.entete p { margin: 10px 0 0; color: var(--doux); max-width: 680px; }
+.entete .total { flex: none; text-align: right; }
+.entete .total b { display: block; font: 700 30px "JetBrains Mono", monospace; }
+.entete .total small { color: var(--doux); font-size: 15px; }
+.entete-actions { display: flex; align-items: center; gap: 26px; margin-top: 22px; flex-wrap: wrap; }
+.entete-actions .btn { display: inline-flex; align-items: center; text-decoration: none; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.entete-actions .tout-fait { color: var(--ok); font-weight: 600; }
+.lien-cours { display: inline-flex; align-items: center; min-height: 48px; color: var(--doux); font-size: 16px; font-weight: 500; text-decoration: underline; text-decoration-color: #c9cdd8; text-underline-offset: 5px; }
+
+.chapitre { max-width: 1180px; margin: 0 auto; padding: 34px 40px 10px; }
 .chapitre header { display: flex; align-items: baseline; gap: 16px; border-bottom: 2px solid var(--encre); padding-bottom: 10px; }
-.chapitre header .num { font: 700 14px "JetBrains Mono", monospace; color: var(--jeu-texte); letter-spacing: .06em; }
+.chapitre header .num { flex: none; font: 700 14px "JetBrains Mono", monospace; color: var(--jeu-texte); letter-spacing: .06em; }
 .chapitre header h2 { margin: 0; font-size: 30px; letter-spacing: -0.015em; }
-.chapitre header p { margin: 0 0 0 auto; color: var(--doux); font-size: 15px; }
-.chemin { position: relative; }
-.chemin svg.trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.noeuds { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 26px; padding: 28px 0 14px; }
-.noeud { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; text-decoration: none; color: var(--encre); padding: 0 8px; }
-.noeud .rond { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 800 28px "Bricolage Grotesque", sans-serif; border: 3px solid var(--encre); background: #fff; box-shadow: 4px 4px 0 var(--encre); transition: transform .15s; }
-.noeud:active .rond { transform: scale(.95); }
-.noeud .nomn { font-weight: 600; font-size: 15px; line-height: 1.25; max-width: 200px; }
-.noeud .mini { display: flex; gap: 3px; height: 18px; }
-.noeud .mini svg { width: 18px; height: 18px; }
-.noeud .mini .pleine path { fill: var(--jeu); stroke: var(--encre); }
-.noeud .mini .vide path { fill: var(--pale); stroke: #c9cdd8; }
-.noeud.fait .rond { background: var(--ok); color: #fff; }
-.noeud.suivant .rond { background: var(--acc); color: #fff; animation: appel 1.6s ease-in-out infinite; }
-@keyframes appel { 50% { transform: scale(1.08); box-shadow: 4px 4px 0 var(--encre), 0 0 0 12px rgba(59, 91, 219, .15); } }
-.noeud.ferme { pointer-events: none; }
-.noeud.ferme .rond { background: var(--pale); color: #b3b8c4; border-color: #c9cdd8; box-shadow: none; }
-.noeud.ferme .nomn { color: #9aa0ad; }
-.noeud.boss .rond { width: 100px; height: 100px; border-radius: 26px; transform: rotate(45deg); }
-.noeud.boss .rond span { transform: rotate(-45deg); font-size: 18px; letter-spacing: .04em; }
-.noeud.boss:not(.ferme):not(.fait):not(.bientot) .rond { background: var(--jeu); color: #fff; }
-.noeud.boss { padding-top: 6px; }
-.noeud.bientot .rond { border-style: dashed; box-shadow: none; background: #fff; color: #b3b8c4; border-color: #c9cdd8; }
-.noeud.bientot { pointer-events: auto; }
-.noeud.revision .rond { border-style: double; border-width: 6px; }
-.noeud.revision .rond span { font-size: 17px; letter-spacing: .04em; }
-.sous-module-titre { max-width: 1180px; margin: 46px auto 0; padding: 0 40px; display: flex; align-items: center; gap: 16px; }
-.sous-module-titre h2 { margin: 0; font-size: 34px; letter-spacing: -0.02em; font-weight: 800; }
-.sous-module-titre .etiquette-sm { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 8px; background: var(--jeu-pale); color: var(--jeu-texte); font: 700 12px "JetBrains Mono", monospace; letter-spacing: .06em; }
-.sous-module-titre.vide h2 { color: var(--doux); }
-.a-venir-carte.petit { padding: 16px 24px; font-size: 15px; margin-top: 10px; }
-.a-venir-carte { margin: 22px 0 40px; padding: 26px 28px; border: 2.5px dashed #c9cdd8; border-radius: 22px; color: var(--doux); font-size: 17px; text-align: center; }
-.a-venir-carte b { color: var(--encre); }
-#chapitres > .a-venir-carte { max-width: 1100px; margin: 22px auto 40px; }
-#chapitres > .a-venir-carte.petit { margin: 6px auto 10px; }
-.noeud .bientot-txt { font-size: 13px; color: var(--doux); }
-.pied { max-width: 1180px; margin: 30px auto 40px; padding: 0 40px; display: flex; gap: 16px; align-items: center; color: var(--doux); font-size: 15px; flex-wrap: wrap; }
-.pied button { height: 46px; padding: 0 18px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; font-weight: 600; cursor: pointer; }
+.chapitre header p { margin: 0 0 0 auto; color: var(--doux); font-size: 15px; text-align: right; max-width: 46%; }
+.chemin { position: relative; padding-bottom: 6px; }
+.chemin svg.trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.unites { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 54px; padding: 32px 0 6px; }
+.unites.fin-chapitre { display: flex; justify-content: center; gap: 120px; padding-top: 54px; }
+.unite { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+.paire { display: flex; align-items: center; }
+.lien-paire { width: 34px; height: 5px; border-radius: 3px; background: var(--encre); }
+.unite .nomn { font-weight: 600; font-size: 16px; line-height: 1.3; max-width: 230px; color: var(--encre); }
+.unite.finale .nomn { max-width: 210px; }
+.unite .mini { display: flex; gap: 3px; height: 18px; margin-top: -4px; }
+.unite .mini svg { width: 18px; height: 18px; }
+.unite .mini .pleine path { fill: var(--jeu); stroke: var(--encre); }
+.unite .mini .vide path { fill: var(--pale); stroke: #c9cdd8; }
+
+.noeud-cours, .noeud-exos { position: relative; display: block; text-decoration: none; color: var(--encre); -webkit-tap-highlight-color: transparent; }
+.forme { display: flex; align-items: center; justify-content: center; border: 3px solid var(--encre); background: #fff; box-shadow: 4px 4px 0 var(--encre); transition: transform .12s, box-shadow .12s; }
+a:active > .forme { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--encre); }
+/* Cours : un livre (carré aux coins doux, livre ouvert) */
+.noeud-cours .forme { width: 78px; height: 78px; border-radius: 16px; background: var(--jeu-pale); }
+.noeud-cours .livre { width: 42px; height: 34px; }
+.noeud-cours .livre path { fill: #fff; stroke: var(--encre); stroke-width: 2.6; stroke-linejoin: round; }
+/* Exercices : un rond numéroté */
+.noeud-exos .forme { width: 78px; height: 78px; border-radius: 50%; font: 800 28px "Bricolage Grotesque", sans-serif; }
+/* Révision du chapitre : grand rond à double trait ; boss : losange */
+.noeud-exos.revision { width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; }
+.noeud-exos.revision .forme { width: 104px; height: 104px; border-style: double; border-width: 8px; }
+.noeud-exos.revision .forme span, .noeud-exos.boss .forme span { font-size: 19px; letter-spacing: .05em; }
+.noeud-exos.boss { width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; }
+.noeud-exos.boss .forme { width: 86px; height: 86px; border-radius: 18px; transform: rotate(45deg); background: var(--jeu); color: #fff; }
+.noeud-exos.boss .forme span { transform: rotate(-45deg); }
+.noeud-exos.boss:active .forme { transform: rotate(45deg) translate(2px, 2px); }
+/* fait : vert ; prochaine étape conseillée : bleu (sans animation) */
+.fait .forme { background: var(--ok); color: #fff; }
+.noeud-cours.fait .livre path { fill: var(--ok); stroke: #fff; }
+.suivant .forme { background: var(--acc); color: #fff; box-shadow: 4px 4px 0 var(--encre), 0 0 0 8px rgba(59, 91, 219, .16); }
+.noeud-cours.suivant .livre path { fill: var(--acc); stroke: #fff; }
+.a-venir-carte { max-width: 1100px; margin: 22px auto 40px; padding: 26px 28px; border: 2.5px dashed #c9cdd8; border-radius: 22px; color: var(--doux); font-size: 17px; text-align: center; }
+.pied { max-width: 1180px; margin: 40px auto 40px; padding: 0 40px; display: flex; gap: 16px; align-items: center; color: var(--doux); font-size: 15px; flex-wrap: wrap; }
+.pied button { height: 46px; padding: 0 18px; border: 2px solid var(--trait); border-radius: 12px; background: #fff; color: var(--doux); font-weight: 600; cursor: pointer; }

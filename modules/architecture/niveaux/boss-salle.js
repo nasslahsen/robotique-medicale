@@ -10,7 +10,7 @@ NIVEAU(ARCHI.rejouable({
       var u = 56, L = 8.4, l = n.l || 5.6, w = L * u, h = l * u, x0 = 340 - w / 2, y0 = 320 - h / 2;
       A.s("rect", { x: x0, y: y0, width: w, height: h, fill: n.l ? C.okPale : "#fff", stroke: C.encre, "stroke-width": 6 }, g);
       A.texte(g, "8,40 m (trame du bâtiment)", [340, y0 - 20], { taille: 16, mono: true });
-      A.texte(g, n.l ? String(n.l.toFixed(2)).replace(".", ",") + " m" : "largeur ?", [x0 + 10, 320], { taille: 16, mono: true, ancre: "start" });
+      A.texte(g, n.l ? String(n.l.toFixed(2)).replace(".", ",") + " m" : "largeur ?", [x0 + 14, y0 + 26], { taille: 16, mono: true, ancre: "start" });
       A.s("rect", { x: 310, y: 230, width: 60, height: 180, rx: 8, fill: "#d9dde6", stroke: C.encre, "stroke-width": 2.5 }, g);
       A.s("path", { d: "M270 280 A70 70 0 0 1 410 280", fill: "none", stroke: C.v, "stroke-width": 12, "stroke-linecap": "round" }, g);
       A.icone(g, "personne", [250, 340], 40, C.personnel);

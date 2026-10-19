@@ -16,13 +16,13 @@ NIVEAU(ARCHI.rejouable({
         A.boite(g, 510, 210, 150, 90, { titre: "Local sale", fond: "#fbeee6", bord: C.sale });
         // couloir commun
         A.s("rect", { x: 190, y: 120, width: 300, height: 130, rx: 10, fill: C.fond, stroke: C.trait, "stroke-width": 2 }, g);
-        A.texte(g, deux ? "Couloir A" : "Même circulation, sans contrôle", [318, 236], { taille: 15, coul: C.doux });
+        A.texte(g, deux ? "Couloir A" : "Même circulation, sans contrôle", [285, 236], { taille: 15, coul: C.doux });
         A.chemin(g, [[170, 115], [230, 115], [230, 175], [508, 120]], { coul: C.propre, ep: 5 });
         A.chemin(g, [[170, 255], [260, 255], [260, 200], [508, 140]], { coul: C.patient, ep: 5 });
         if (!n.saleB) {
           A.chemin(g, [[510, 140], [440, 200], [440, 240], [508, 255]], { coul: C.sale, ep: 5, tirets: "10 6" });
           A.s("circle", { cx: 420, cy: 190, r: 30, fill: "none", stroke: C.ko, "stroke-width": 4 }, g);
-          A.texte(g, "croisement", [420, 236], { taille: 15, coul: C.ko });
+          A.texte(g, "croisement", [448, 236], { taille: 15, coul: C.ko });
         }
         if (deux) {
           A.s("rect", { x: 190, y: 360, width: 470, height: 110, rx: 10, fill: n.saleB ? "#fbeee6" : "#fff", stroke: n.saleB ? C.sale : C.gris, "stroke-width": n.saleB ? 3 : 2, "stroke-dasharray": n.saleB ? null : "8 6" }, g);

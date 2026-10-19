@@ -1,6 +1,7 @@
 /*
  * Tableau de bord : une carte par module du registre, avec ses sous-modules, sa couleur, sa progression
- * et un bouton « Continuer ». Les modules actifs chargent leur module.js pour compter leurs pages.
+ * et un bouton « Continuer » qui mène à la prochaine étape pas faite de la carte (cours ou exercices).
+ * Les modules actifs chargent leur module.js pour compter leurs étapes.
  */
 (function () {
   "use strict";
@@ -26,7 +27,7 @@
       faits += c.faits; total += c.total;
       if (d && (!recent || (d.quand || 0) > (recent.d.quand || 0))) recent = { m: m, d: d };
     });
-    document.getElementById("total-global").innerHTML = "<b>" + faits + " / " + total + "</b> pages terminées";
+    document.getElementById("total-global").innerHTML = "<b>" + faits + " / " + total + "</b> étapes faites";
 
     // Bandeau « Reprendre » : le module ouvert en dernier
     var zr = document.getElementById("reprendre-module");
@@ -44,8 +45,11 @@
     var z = document.getElementById("modules"), h = "";
     R.modules.forEach(function (m0, i) {
       var m = P.module(m0.id), actif = m.statut === "actif";
+      // un sous-module construit mène directement à sa carte
+      var construits = actif ? P.sousModules(m.id).filter(function (s) { return s.chapitres.length; }).map(function (s) { return s.id; }) : [];
       var sms = (m.sousModules || []).map(function (sm) {
-        return '<span class="sm' + (sm.statut === "a-venir" ? " sm-vide" : "") + '">' + esc(sm.titre) + "</span>";
+        if (construits.indexOf(sm.id) >= 0) return '<a class="sm" href="' + P.urlCarte(m.id, sm.id) + '">' + esc(sm.titre) + "</a>";
+        return '<span class="sm' + (sm.statut === "a-venir" || actif ? " sm-vide" : "") + '">' + esc(sm.titre) + "</span>";
       }).join("");
       var bas;
       if (actif) {
@@ -54,7 +58,7 @@
       } else {
         bas = '<span class="badge-avenir">À venir</span>';
       }
-      h += '<article class="carte-module' + (actif ? "" : " avenir") + '" style="--c:' + m.couleur + ";--cl:" + m.clair + ";--ct:" + m.texte + '">' +
+      h += '<article class="carte-module' + (actif ? "" : " avenir") + '" style="--c:' + m.couleur + ";--cl:" + m.clair + ";--ct:" + m.texte + '">' +
         '<span class="cm-num">MODULE ' + (i + 1) + "</span>" +
         (actif ? '<h3><a href="' + P.racine + "modules/" + m.id + '/index.html">' + esc(m.titre) + "</a></h3>" : "<h3>" + esc(m.titre) + "</h3>") +
         (sms ? '<div class="cm-sms">' + sms + "</div>" : '<div class="cm-sms"></div>') +
@@ -65,6 +69,6 @@
 
   function barre(c) {
     var pc = c.total ? Math.round(100 * c.faits / c.total) : 0;
-    return '<div class="progres"><div class="piste"><i style="width:' + pc + '%"></i></div><span><b>' + c.faits + " / " + c.total + "</b> pages</span></div>";
+    return '<div class="progres"><div class="piste"><i style="width:' + pc + '%"></i></div><span><b>' + c.faits + " / " + c.total + "</b> étapes</span></div>";
   }
 })();

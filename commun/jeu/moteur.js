@@ -1,6 +1,7 @@
 /*
  * Moteur des niveaux : étapes, retours, étoiles, sauvegarde, écran de fin.
  * Un niveau appelle NIVEAU({ id, init(fig), etapes: [{ nom, jouer(j) }] }).
+ * Fin du niveau : le bouton principal mène à l'étape suivante de la carte (PLATEFORME.apres).
  */
 (function () {
   "use strict";
@@ -12,16 +13,17 @@
   window.JEU = {
     ETOILE: ETOILE,
     etoiles: function (erreurs) { return erreurs === 0 ? 3 : erreurs <= 2 ? 2 : 1; },
-    toutDebloque: function () { return P.tout(MID); }
   };
 
   window.NIVEAU = function (def) {
     var liste = MOD.niveaux, rang = liste.findIndex(function (n) { return n.id === def.id; }), info = liste[rang] || { titre: def.id, chapitre: 0 };
     document.title = info.titre + " · " + MOD.titre;
     P.noterDernier(MID, info.titre);
-    var nom = document.getElementById("nom-niveau");
-    nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : info.revision ? "RÉVISION · " : "") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
-    // lien vers la page de cours du même concept, à côté du lien Carte
+    var nom = document.getElementById("nom-niveau"), ici = P.trouver(MID, "exos", def.id);
+    nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : info.revision ? "RÉVISION · " : "EXERCICES · ") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
+    var lienCarte = document.querySelector(".barre .carte-lien");
+    if (lienCarte) lienCarte.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
+    // lien vers la page de cours de la même notion, à côté du lien Carte
     if (info.cours) {
       var lc = document.createElement("a");
       lc.className = "carte-lien"; lc.href = "cours/" + info.id + ".html"; lc.textContent = "Cours";
@@ -103,14 +105,14 @@
         var z = el.querySelector(".aide-q"); if (z) z.style.visibility = "hidden";
         var attente = 0;
         (function pas() {
-          if (courante !== i || el.querySelector(".btn.suite")) { revelation = false; return; }
+          if (courante !== i || el.querySelector(".btn.suite")) { revelation = false; if (courante === i) lienCours(el, i, el.querySelector(".retour-msg")); return; }
           var r = resolveurs.filter(function (x) { return !x.fait; }).pop();
           if (r) { r.fait = true; attente = 0; r.faire(); setTimeout(pas, 450); return; }
           // une question peut apparaître après une petite animation : on attend un peu
           if ((attente += 250) < 5000) { setTimeout(pas, 250); return; }
           revelation = false;
           if (z) z.style.visibility = "";
-          j.info("Cette question n'a pas de réponse toute prête : passe-la.");
+          j.info("Cette question n'a pas de réponse toute prête : passe-la.");
         })();
       };
       function ligneMsg() { if (!msg || !msg.parentNode) msg = E.h("div", "retour-msg", "", el); return msg; }
@@ -125,12 +127,13 @@
         erreurs++;
         var m = ligneMsg(); m.className = "retour-msg ko"; m.innerHTML = "<span>" + html + "</span>"; E.rendre(m);
         m.classList.remove("secoue"); void m.offsetWidth; m.classList.add("secoue");
+        lienCours(el, i, m);
       };
       j.info = function (html) { var m = ligneMsg(); m.className = "retour-msg info"; m.innerHTML = "<span>" + html + "</span>"; E.rendre(m); };
       j.efface = function () { if (msg) { msg.innerHTML = ""; msg.className = "retour-msg"; } };
       j.bravo = function (html, point) {
         // réponse montrée : on donne la réponse, sans féliciter
-        if (etats[i] === "revelee") { var mr = ligneMsg(); mr.className = "retour-msg info"; mr.innerHTML = "<span>Réponse : " + (html || "") + "</span>"; E.rendre(mr); return; }
+        if (etats[i] === "revelee") { var mr = ligneMsg(); mr.className = "retour-msg info"; mr.innerHTML = "<span>Réponse : " + (html || "") + "</span>"; E.rendre(mr); lienCours(el, i, mr); return; }
         var m = ligneMsg(); m.className = "retour-msg ok"; m.innerHTML = COCHE + "<span>" + (html || "Bravo.") + "</span>"; E.rendre(m);
         var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
         var p = point ? [r.left + point[0] / vb.width * r.width, r.top + point[1] / vb.height * r.height] : [r.left + r.width / 2, r.top + r.height / 2];
@@ -206,7 +209,7 @@
             cases[k].classList.toggle("bon", bon); cases[k].classList.toggle("faux", !bon);
             if (!bon) faux.push(k);
           });
-          if (faux.length) { j.erreur(cfg.aide ? cfg.aide(faux[0], val) : "Une valeur ne va pas : elle est en rouge."); return; }
+          if (faux.length) { j.erreur(cfg.aide ? cfg.aide(faux[0], val) : "Une valeur ne va pas : elle est en rouge."); return; }
           r.fait = true; clav.style.display = "none";
           if (cfg.ok) cfg.ok();
         });
@@ -299,16 +302,15 @@
       def.etapes.forEach(function (e, k) { if (etats[k] === "resolue") trouvees++; else restantes.push(k); });
       var nb = !restantes.length ? JEU.etoiles(erreurs) : trouvees ? 1 : 0;
       if (nb) P.marquer(MID, def.id, nb);
-      var suivant = null;
-      for (var k = rang + 1; k < liste.length; k++) if (liste[k].pret) { suivant = liste[k]; break; }
-      // « Continuer » reprendra au niveau suivant
-      if (suivant) P.noterDernier(MID, suivant.titre, "modules/" + MID + "/jouer.html#" + suivant.id);
+      // l'étape suivante sur la carte : le cours de la notion suivante, ou la révision, ou le boss
+      var suivant = P.apres(MID, "exos", def.id);
+      if (suivant) P.noterDernier(MID, P.genre(suivant) + " : " + suivant.titre, suivant.url);
       var r = document.getElementById("resultat");
       var et = ""; for (var s = 0; s < 3; s++) et += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";
       var texte = restantes.length
-        ? (restantes.length > 1 ? restantes.length + " questions passées ou vues : elles ne comptent pas pour les étoiles. Réessaie-les." : "Une question passée ou vue : elle ne compte pas pour les étoiles. Réessaie-la.")
+        ? (restantes.length > 1 ? restantes.length + " questions passées ou vues : elles ne comptent pas pour les étoiles. Réessaie-les." : "Une question passée ou vue : elle ne compte pas pour les étoiles. Réessaie-la.")
         : erreurs === 0 ? "Aucune erreur. Parfait." : erreurs + (erreurs > 1 ? " erreurs" : " erreur") + ". Rejoue sans erreur pour avoir les trois étoiles.";
-      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss && !restantes.length ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
+      r.innerHTML = '<div class="carte"><span class="kicker' + (info.boss ? " boss" : "") + '">' + (info.boss && !restantes.length ? "BOSS VAINCU" : "NIVEAU TERMINÉ") + '</span><div class="etoiles">' + et + "</div><h2>" + info.titre + "</h2><p>" +
         texte + '</p><div class="a-revoir"></div><div class="actions"></div></div>';
       var liste2 = r.querySelector(".a-revoir");
       restantes.forEach(function (k) {
@@ -317,11 +319,44 @@
         b.addEventListener("click", function () { r.classList.remove("on"); rejeu = true; etats[k] = undefined; aller(k); });
       });
       var act = r.querySelector(".actions");
-      if (suivant) { var b1 = E.h("a", "btn", "Niveau suivant", act); b1.href = "jouer.html#" + suivant.id; }
+      var b1 = null;
+      if (suivant) {
+        var lib = suivant.type === "cours" ? "Cours suivant" : suivant.boss ? "Le boss du chapitre" : suivant.revision ? "Révision du chapitre" : "Exercices suivants";
+        b1 = E.h("a", "btn btn-suivant", lib + "<small>" + suivant.titre + "</small>", act); b1.href = P.urlEtape(suivant);
+      }
       var b2 = E.h("a", "btn clair", "Rejouer", act); b2.href = "jouer.html#" + def.id; b2.addEventListener("click", function (e) { e.preventDefault(); location.reload(); });
-      var b3 = E.h("a", "btn clair", "Carte", act); b3.href = "index.html#ch" + info.chapitre;
-      [b1, b2, b3].forEach(function (b) { if (b) b.style.cssText = "display:inline-flex;align-items:center;text-decoration:none"; });
+      var b3 = E.h("a", "btn clair", "Carte", act); b3.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
+      [b2, b3].forEach(function (b) { b.style.cssText = "display:inline-flex;align-items:center;text-decoration:none"; });
       r.classList.add("on");
+    }
+
+    // « Revoir dans le cours » : après une erreur ou une réponse vue, un lien vers la partie du cours qui l'explique.
+    // La correspondance étape → section vient de liens-cours.js (généré par tests/navigateur/liens.js) ;
+    // à défaut, la page de cours de la notion. Le cours s'ouvre par-dessus l'exercice, qui reste en l'état.
+    function lienCours(el, i, apresEl) {
+      if (el.querySelector(".revoir")) return;
+      var L = (window.LIENS_COURS || {})[def.id], c = L && L[i];
+      if (!c && info.cours) c = [info.id, "", ""];
+      if (!c) return;
+      var page = (MOD.cours || []).filter(function (x) { return x.id === c[0]; })[0];
+      var titre = (page ? page.titre : c[0]) + (c[2] ? " · " + c[2] : "");
+      var a = E.h("a", "revoir", "<span>Revoir dans le cours</span><b>" + titre + "</b>", el);
+      a.href = "cours/" + c[0] + ".html" + (c[1] ? "#" + c[1] : "");
+      if (apresEl && apresEl.nextSibling) el.insertBefore(a, apresEl.nextSibling);
+      a.addEventListener("click", function (e) { e.preventDefault(); ouvrirCours(c[0], c[1], page ? page.titre : ""); });
+    }
+    function ouvrirCours(page, ancre, titre) {
+      var f = document.getElementById("fenetre-cours");
+      if (!f) {
+        f = E.h("div", "fenetre-cours", '<div class="fc-carte"><div class="fc-tete"><span></span><button type="button" class="btn">Revenir à l\'exercice</button></div><iframe title="Cours"></iframe></div>', document.body);
+        f.id = "fenetre-cours";
+        f.querySelector("button").addEventListener("click", function () { f.classList.remove("on"); });
+        f.addEventListener("click", function (e) { if (e.target === f) f.classList.remove("on"); });
+      }
+      f.querySelector(".fc-tete span").textContent = titre;
+      var fr = f.querySelector("iframe"), url = "cours/" + page + ".html?dans=1" + (ancre ? "#" + ancre : "");
+      if (fr.getAttribute("src") !== url) fr.setAttribute("src", url);
+      f.classList.add("on");
     }
 
     window.essaiJeu = { aller: aller, n: n, erreurs: function () { return erreurs; } };
@@ -332,8 +367,13 @@
   addEventListener("hashchange", function () { location.reload(); });
   var premier = (MOD.niveaux || []).filter(function (n) { return n.pret; })[0];
   var id = (location.hash || "").slice(1) || (premier ? premier.id : "");
-  var s = document.createElement("script");
-  s.src = "niveaux/" + encodeURIComponent(id) + ".js";
-  s.onerror = function () { location.replace("index.html"); };
-  document.body.appendChild(s);
+  var l = document.createElement("script");
+  l.src = "liens-cours.js";
+  l.onload = l.onerror = function () {
+    var s = document.createElement("script");
+    s.src = "niveaux/" + encodeURIComponent(id) + ".js";
+    s.onerror = function () { location.replace("index.html"); };
+    document.body.appendChild(s);
+  };
+  document.body.appendChild(l);
 })();

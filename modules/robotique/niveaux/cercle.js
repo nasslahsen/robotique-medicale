@@ -13,7 +13,7 @@ NIVEAU({
       D.texte(pl.fond, "x", pl.P([1.5 * Math.max(1, n.r * 0.75), -0.12]), { coul: C.doux });
       D.texte(pl.fond, "y", pl.P([-0.1, 1.45 * Math.max(1, n.r * 0.75)]), { coul: C.doux });
       D.rond(pl.fond, pl.P([0, 0]), n.r * pl.u, { fill: "none", stroke: "#d6dae3", ep: 2.5 });
-      if (n.r === 1) { D.texte(pl.fond, "1", pl.P([-1.07, 0.08]), { coul: C.gris, taille: 16 }); D.texte(pl.fond, "1", pl.P([0.07, 1.07]), { coul: C.gris, taille: 16 }); }
+      if (n.r === 1) { D.texte(pl.fond, "1", pl.P([-1.09, -0.1]), { coul: C.gris, taille: 16 }); D.texte(pl.fond, "1", pl.P([0.1, 1.09]), { coul: C.gris, taille: 16 }); }
       var t = n.t * D.DEG, c = n.r * Math.cos(t), s = n.r * Math.sin(t), M = pl.P([c, s]);
       pl.arc(pl.fig, [0, 0], 0.26 * pl.u, 0, n.t, C.jeu, "θ", { ep: 3 });
       if (n.ombres) {

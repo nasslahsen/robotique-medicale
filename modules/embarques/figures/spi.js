@@ -29,7 +29,7 @@
     function dessiner() {
       EMB.vider(g);
       [470, 500].forEach(function (x) { EMB.el("line", { x1: x, y1: 70, x2: x, y2: 470, stroke: C.encre, "stroke-width": 4 }, g); });
-      EMB.texte(g, "Maître SPI", [250, 290], { taille: 24 }); EMB.texte(g, "Esclave SPI", [720, 50], { taille: 24 });
+      EMB.texte(g, "Maître SPI", [250, 280], { taille: 24 }); EMB.texte(g, "Esclave SPI", [720, 50], { taille: 24 });
       EMB.el("polyline", { points: [[MX, MY + 28], [50, MY + 28], [50, SY + 28], [SX - 14, SY + 28]].join(" "), fill: "none", stroke: C.encre, "stroke-width": 2.5 }, g);
       EMB.fleche(g, [SX - 40, SY + 28], [SX, SY + 28], { ep: 2.5 });
       EMB.el("polyline", { points: [[SX + 8 * W, SY + 28], [920, SY + 28], [920, MY + 28], [MX + 8 * W + 14, MY + 28]].join(" "), fill: "none", stroke: C.encre, "stroke-width": 2.5 }, g);
@@ -44,7 +44,7 @@
       });
       EMB.texte(g, "Sortie", [436, SY + 50], { taille: 14, coul: C.ko }); EMB.texte(g, "Entrée", [534, SY + 50], { taille: 14, coul: C.acc });
       EMB.texte(g, "Entrée", [438, MY + 50], { taille: 14, coul: C.ko }); EMB.texte(g, "Sortie", [534, MY + 50], { taille: 14, coul: C.acc });
-      EMB.texte(g, "Registre à décalage", [MX + 160, MY - 22], { taille: 15, coul: C.doux, gras: false });
+      EMB.texte(g, "Registre à décalage", [MX + 160, MY - 16], { taille: 15, coul: C.doux, gras: false });
       reg(MX, MY, m); reg(SX, SY, s);
       EMB.texte(g, "MSB", [MX, MY + 76], { taille: 15, ancre: "start", coul: C.doux });
       EMB.texte(g, "MSB", [SX + 8 * W, SY - 16], { taille: 15, ancre: "end", coul: C.doux });
@@ -73,7 +73,7 @@
         EMB.texte(g, p[2], [p[0] + 200, 350], { taille: 16 });
         EMB.bloc(g, p[0] + 90, 90, 220, 66, "Serial Input Buffer\n(SSPBUF)", { taille: 16, actif: vue === 3 });
         EMB.bloc(g, p[0] + 90, 220, 220, 66, "Shift Register\n(SSPSR)", { taille: 16, actif: vue === 1 || vue === 3 });
-        EMB.texte(g, "MSb", [p[0] + 100, 302], { taille: 13, coul: C.doux, ancre: "start" }); EMB.texte(g, "LSb", [p[0] + 300, 302], { taille: 13, coul: C.doux, ancre: "end" });
+        EMB.texte(g, "MSb", [p[0] + 100, 206], { taille: 13, coul: C.doux, ancre: "start" }); EMB.texte(g, "LSb", [p[0] + 300, 206], { taille: 13, coul: C.doux, ancre: "end" });
         EMB.fleche(g, [p[0] + 200, 220], [p[0] + 200, 156], { ep: vue === 3 ? 5 : 3, coul: vue === 3 ? C.acc : C.encre });
       });
       var cd = vue === 1 ? C.acc : C.encre, ck = vue === 2 ? C.acc : C.encre;

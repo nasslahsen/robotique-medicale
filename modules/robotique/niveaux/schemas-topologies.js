@@ -24,7 +24,7 @@ NIVEAU({
         sc.segment(l, O1, O2, "#5e3a99", 12); sc.segment(l, O2, P, "#d0603a", 11);
         sc.segment(l, [0, 0, 0], [0, 0, 1.9], C.z, 3, "6 5"); sc.texte(l, "z₀", [0, 0, 2.05], { coul: C.z });
         sc.segment(l, [O2[0] - 0.6 * z1[0], O2[1] - 0.6 * z1[1], O2[2] - 0.6 * z1[2]], [O2[0] + 0.6 * z1[0], O2[1] + 0.6 * z1[1], O2[2] + 0.6 * z1[2]], C.x, 3, "6 5");
-        sc.texte(l, "z₁", [O2[0] + 0.75 * z1[0], O2[1] + 0.75 * z1[1], O2[2] + 0.75 * z1[2]], { coul: C.x });
+        sc.texte(l, "z₁", [O2[0] + 1.05 * z1[0], O2[1] + 1.05 * z1[1], O2[2] + 1.05 * z1[2]], { coul: C.x });
         sc.point(l, O1, 10, "#fff"); sc.point(l, O2, 10, "#fff"); sc.point(l, P, 9, C.jeu, "P");
         sc.dessiner(g, l);
       } else {

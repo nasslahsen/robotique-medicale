@@ -34,7 +34,7 @@ NIVEAU({
         // résistance relative d'un polymère qui chute avant 200 °C (allure qualitative)
         var O = [110, 470], W = 480, H = 300;
         D.fleche(g, O, [O[0] + W + 40, O[1]], C.encre, 3); D.fleche(g, O, [O[0], O[1] - H - 40], C.encre, 3);
-        D.texte(g, "T (°C)", [O[0] + W + 30, O[1] + 30], { taille: 17 });
+        D.texte(g, "T (°C)", [O[0] + W + 10, O[1] - 24], { taille: 17 });
         D.texte(g, "résistance d'un polymère", [O[0] + 10, O[1] - H - 50], { ancre: "start", taille: 17 });
         var pts = [];
         for (var t = 0; t <= 300; t += 5) { var r = 1 / (1 + Math.exp((t - 150) / 18)); pts.push([O[0] + t / 300 * W, O[1] - r * H]); }
