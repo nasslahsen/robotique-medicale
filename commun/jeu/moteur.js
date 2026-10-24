@@ -4,7 +4,7 @@
  * Fin du niveau : le bouton principal mène à l'étape suivante de la carte (PLATEFORME.apres).
  * Ouvert depuis S'entraîner (structure par chapitres, jouer.html?plan=<dossier>#<niveau>) : « Chapitre » au lieu de « Carte »,
  * le bouton principal mène à l'exercice suivant du chapitre (puis la révision, le défi final, le retour au chapitre)
- * et « Revoir dans le cours » ouvre la section qui réunit la page de cours visée.
+ * et « Revoir dans le cours » ouvre le cours du chapitre au passage visé.
  */
 (function () {
   "use strict";
@@ -379,7 +379,7 @@
     // Adresse d'un passage du cours : la page de la notion, ou (S'entraîner) la section qui la réunit, ancre préfixée par la notion
     function urlCours(page, ancre, dans) {
       var sc = plan && P.sectionDe(MID, page);
-      if (sc) return P.dossierChapitres(MID).replace("modules/" + MID + "/", "") + "cours/" + sc.id + ".html" + (dans ? "?dans=1" : "") + "#" + (ancre ? page + "-" + ancre : "n-" + page);
+      if (sc) return P.pageCours(MID, sc.id).replace("modules/" + MID + "/", "") + (dans ? "?dans=1" : "") + "#" + (ancre ? page + "-" + ancre : "n-" + page);
       return "cours/" + page + ".html" + (dans ? "?dans=1" : "") + (ancre ? "#" + ancre : "");
     }
 

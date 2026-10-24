@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>L'ESP32 : la carte et la puce</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 4. -->
+<main class="cours-chapitre" data-chapitre="4">
+<p class="etiquette" data-etiquette></p>
+<h1>L'ESP32 : la carte et la puce</h1>
+
+<section class="partie" id="s-carte">
+<p class="rang-partie">1 / 3</p>
+<h2>L'ESP32 et sa carte</h2>
+
+<article class="notion" id="n-esp32">
+<h3>ESP32 et nomenclature des puces</h3>
+<p class="chapeau">Un thermomètre qui envoie ses mesures en Wi-Fi, un patch ECG relié en Bluetooth à un téléphone : il faut un microcontrôleur qui sache mesurer, calculer et communiquer sans fil. L'ESP32 fait tout cela dans une seule puce. Encore faut-il choisir la bonne version, et pour cela savoir lire son nom.</p>
+
+<h4>Le chapitre en bref</h4>
+<p>La Section III du cours passe de la théorie à une puce réelle. Son plan : caractéristiques, architecture, GPIO et interruptions, conversion de signaux (ADC et DAC), timer et PWM, bus de communication I2C et SPI. Ce chapitre couvre les deux premiers points : ce qu'est l'ESP32 et comment lire sa référence (cette page), la carte de développement DEV KIT V1 et son brochage, l'architecture en blocs et les spécifications, les deux cœurs avec le DMA et le plan d'adressage, puis les domaines d'alimentation. Le chapitre 5 programme ensuite ses périphériques, un par un.</p>
+<p>Tout ce qui a été vu avant se retrouve ici : un système embarqué dédié (chapitre 1), des cœurs d'architecture Harvard avec cache et MMU (chapitre 2), des bus UART, SPI et I2C (chapitre 3).</p>
+
+<h4>Intuition</h4>
+<p>Une même famille de puces se décline en plusieurs versions : un ou deux cœurs, avec ou sans mémoire flash dans le boîtier, avec ou sans PSRAM, boîtier plus ou moins grand. Plutôt que d'inventer un nom par version, le fabricant colle des codes les uns aux autres, comme une plaque d'immatriculation : chaque lettre ou chiffre répond à une question précise. Lire le nom, c'est répondre à ces questions sans ouvrir la fiche technique.</p>
+
+<div id="fig-nomenclature"></div>
+
+<h4>Formalisation</h4>
+<h5>L'ESP32</h5>
+<p><strong>ESP32</strong> : <i>a feature-rich MCU with integrated Wi-Fi and Bluetooth connectivity for a wide-range of applications</i>, conçu par Espressif. Il fonctionne de façon fiable en milieu industriel, avec une température de fonctionnement de −40 °C à +125 °C.</p>
+<p><strong>ESP-IDF</strong> : l'<i>IoT Development Framework</i> officiel d'Espressif, pour les séries de SoC ESP32, ESP32-S, ESP32-C et ESP32-H. La puce est vendue seule ou dans des modules prêts à souder, comme l'ESP32-S2-WROOM et l'ESP32-S2-WROVER (puce, mémoire, quartz et antenne sous un capot métallique).</p>
+
+<div id="fig-plage"></div>
+
+<h5>Nomenclature</h5>
+<p>Exemple de la diapositive : ESP32 D 0 WD R2 H Q6 V3.</p>
+<div class="tableau"><table>
+<tr><th>Champ</th><th>Exemple</th><th>Signification</th></tr>
+<tr><td>Série (<i>Chip Series</i>)</td><td>ESP32</td><td>la famille de la puce</td></tr>
+<tr><td>Cœur (<i>Core</i>)</td><td>D</td><td>D ou U : <i>dual core</i> ; S : <i>single core</i></td></tr>
+<tr><td>Flash intégrée (<i>In-package flash</i>)</td><td>0</td><td>0 : pas de flash dans le boîtier ; 2 : 2 MB ; 4 : 4 MB</td></tr>
+<tr><td>Connexion (<i>Connection</i>)</td><td>WD</td><td>Wi-Fi b/g/n + Bluetooth/Bluetooth LE <i>dual mode</i></td></tr>
+<tr><td>PSRAM intégrée (<i>In-package PSRAM</i>)</td><td>R2</td><td>2 MB de PSRAM</td></tr>
+<tr><td>Température</td><td>H</td><td><i>High temperature</i>, haute température</td></tr>
+<tr><td>Boîtier (<i>Package</i>)</td><td>Q6</td><td>Q6 : QFN 6*6 ; rien : QFN 5*5</td></tr>
+<tr><td>Révision (<i>Chip revision</i>)</td><td>V3</td><td>révision v3.0 ou plus récente</td></tr>
+</table></div>
+<h5>Les références de la série</h5>
+<div class="tableau"><table>
+<tr><th>Part Number</th><th>Core</th><th>Chip Revision</th><th>In-Package Flash/PSRAM</th><th>Package</th><th>VDD_SDIO</th></tr>
+<tr><td>ESP32-D0WD-V3</td><td>Dual core</td><td>v3.0/v3.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WDR2-V3 (EOL), remplacée par ESP32-D0WDRH2-V3</td><td>Dual core</td><td>v3.0/v3.1</td><td>2 MB PSRAM</td><td>QFN 5*5</td><td>3,3 V</td></tr>
+<tr><td>ESP32-U4WDH</td><td>Dual core</td><td>v3.0/v3.1</td><td>4 MB flash</td><td>QFN 5*5</td><td>3,3 V</td></tr>
+<tr><td>ESP32-D0WDQ6-V3 (NRND)</td><td>Dual core</td><td>v3.0/v3.1</td><td>aucune</td><td>QFN 6*6</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WD (NRND)</td><td>Dual core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-D0WDQ6 (NRND)</td><td>Dual core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 6*6</td><td>1,8 V/3,3 V</td></tr>
+<tr><td>ESP32-S0WD (NRND)</td><td>Single core</td><td>v1.0/v1.1</td><td>aucune</td><td>QFN 5*5</td><td>1,8 V/3,3 V</td></tr>
+</table></div>
+<p class="complement">Sigles usuels de la fiche : EOL (<i>End Of Life</i>) veut dire que la puce n'est plus fabriquée ; NRND (<i>Not Recommended for New Designs</i>), qu'elle est déconseillée pour un nouveau produit. VDD_SDIO est une des tensions d'alimentation, vue à la page « Power Supply ».</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Un patch ECG Bluetooth doit garder plusieurs secondes de signal en mémoire : il lui faut de la PSRAM dans le boîtier. Dans le tableau, seule la ligne ESP32-D0WDR2-V3 a 2 MB de PSRAM, et elle est en fin de vie : on prend sa remplaçante, l'ESP32-D0WDRH2-V3. Son nom se lit D (deux cœurs), 0 (pas de flash dans le boîtier), WD (Wi-Fi et Bluetooth), R2 (2 MB de PSRAM), H (haute température), pas de Q6 (boîtier QFN 5*5), V3 (révision v3.0 ou plus). Dans ce nom réel, le H est glissé entre le R et le 2.</p>
+<p>À l'inverse, un glucomètre qui doit garder son programme dans le boîtier demande de la flash intégrée : ESP32-U4WDH, U (deux cœurs), 4 (4 MB de flash), WD, H.</p>
+
+<h4>Formules clés</h4>
+<p>ESP32 = MCU + Wi-Fi + Bluetooth, de −40 °C à +125 °C, programmé avec ESP-IDF. Nom : série, cœur (D/U dual, S single), flash (0, 2, 4 MB), connexion (WD), PSRAM (R2), H, boîtier (Q6 = QFN 6*6, sinon QFN 5*5), révision (V3).</p>
+</article>
+
+<article class="notion" id="n-devkit">
+<h3>ESP32 DEV KIT V1 et brochage</h3>
+<p class="chapeau">La puce ESP32 seule ne se branche pas sur un ordinateur ni sur une plaque d'essai. Pour la programmer et y câbler un capteur, on utilise une carte de développement : la DEV KIT V1. Que porte-t-elle, et quelle broche choisir pour quel signal ?</p>
+
+<h4>Intuition</h4>
+<p>La carte est un adaptateur autour du module ESP-WROOM-32. Il faut l'alimenter : le câble USB donne du 5 V, un régulateur le ramène à 3,3 V. Il faut lui envoyer le programme : l'ordinateur parle USB, la puce écoute sur son UART, un convertisseur traduit. Il faut pouvoir la redémarrer et la mettre en mode programmation : deux boutons. Et il faut voir qu'elle vit : une LED rouge s'allume dès qu'elle est alimentée, une LED bleue obéit au programme.</p>
+<p>Autour, deux rangées de broches sortent les signaux de la puce. Chaque broche peut jouer plusieurs rôles (entrée, sortie, ADC, DAC, capteur tactile, UART, SPI, I2C) : le brochage dit lesquels.</p>
+
+<div id="fig-carte"></div>
+
+<h4>Formalisation</h4>
+<h5>Les composants de la carte</h5>
+<div class="tableau"><table>
+<tr><th>Composant</th><th>Rôle</th></tr>
+<tr><td>ESP-WROOM-32</td><td>le module qui contient la puce ESP32</td></tr>
+<tr><td>Antenna</td><td>antenne du Wi-Fi et du Bluetooth, tracée sur le module</td></tr>
+<tr><td>Voltage Regulator 3.3V</td><td>régulateur de tension qui fournit le 3,3 V</td></tr>
+<tr><td>USB INPUT</td><td>prise micro-USB : alimentation et programmation</td></tr>
+<tr><td>CP2102 (USB to UART)</td><td>convertisseur entre l'USB de l'ordinateur et l'UART de l'ESP32</td></tr>
+<tr><td>RESET/EN</td><td>bouton de redémarrage (broche EN)</td></tr>
+<tr><td>BOOT</td><td>bouton BOOT</td></tr>
+<tr><td>RED LED (Power ON)</td><td>s'allume quand la carte est alimentée</td></tr>
+<tr><td>Blue LED (PIN2)</td><td>LED reliée à la broche GPIO2, commandée par le programme</td></tr>
+</table></div>
+<h5>Le brochage (pinout)</h5>
+<p>La carte a deux rangées de 15 broches. Les broches d'alimentation sont VIN, 3.3V et GND ; EN est la broche de redémarrage. Les autres sont des GPIO, chacune avec ses fonctions :</p>
+<ul>
+<li>entrée seule (<i>input only</i>) : GPIO36, GPIO39, GPIO34, GPIO35 ;</li>
+<li>ADC1 : GPIO36 (ADC1_0), 39 (ADC1_3), 34 (ADC1_6), 35 (ADC1_7), 32 (ADC1_4), 33 (ADC1_5) ;</li>
+<li>ADC2 : GPIO4, 2, 15, 13, 12, 14, 27, 25, 26 ;</li>
+<li>DAC : DAC1 sur GPIO25, DAC2 sur GPIO26 ;</li>
+<li>capteurs tactiles : Touch0 (GPIO4), Touch2 (GPIO2), Touch3 (GPIO15), Touch4 (GPIO13), Touch5 (GPIO12), Touch6 (GPIO14), Touch7 (GPIO27), Touch8 (GPIO33), Touch9 (GPIO32) ;</li>
+<li>UART : TXD0 (GPIO1), RXD0 (GPIO3), TXD2 (GPIO17), RXD2 (GPIO16) ;</li>
+<li>I2C : SDA (GPIO21), SCL (GPIO22) ;</li>
+<li>VSPI : MOSI (GPIO23), MISO (GPIO19), SCK (GPIO18), SS (GPIO5) ; HSPI : HSPI_CLK (GPIO14), HSPI_Q (GPIO12), HSPI_ID (GPIO13), HSPI_CS0 (GPIO15), HSPI_WP0 (GPIO2), HSPI_HD (GPIO4).</li>
+</ul>
+
+<div id="fig-brochage"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Un thermomètre médical à thermistance avec un petit écran I2C. La thermistance donne une tension : on la lit sur une entrée analogique de l'ADC1, par exemple GPIO34 (ADC1_6), qui est en entrée seule et n'a pas besoin de sortir quoi que ce soit. L'écran se branche sur SDA (GPIO21) et SCL (GPIO22). La LED bleue (GPIO2) peut clignoter à chaque mesure. Le câble USB alimente la carte (LED rouge) et charge le programme par le CP2102.</p>
+
+<h4>Formules clés</h4>
+<p>Carte = ESP-WROOM-32 + régulateur 3,3 V + CP2102 (USB to UART) + RESET/EN + BOOT + LED rouge (Power ON) + LED bleue (PIN2) + antenne. Entrée seule : GPIO34, 35, 36, 39. DAC1 : GPIO25, DAC2 : GPIO26. I2C : SDA GPIO21, SCL GPIO22. VSPI : MOSI 23, MISO 19, SCK 18, SS 5.</p>
+</article>
+
+<div class="fin-partie" data-section="carte"></div>
+</section>
+
+<section class="partie" id="s-coeurs-memoire">
+<p class="rang-partie">2 / 3</p>
+<h2>Architecture, cœurs et mémoire</h2>
+
+<article class="notion" id="n-specifications">
+<h3>Architecture en blocs et spécifications</h3>
+<p class="chapeau">Avant de choisir l'ESP32 pour un glucomètre connecté, il faut vérifier qu'il a tout ce qu'il faut : assez de calcul, assez de mémoire, la bonne radio, assez d'entrées analogiques et de bus. Le schéma en blocs et la liste des spécifications répondent à ces questions.</p>
+
+<h4>Intuition</h4>
+<p>Le schéma en blocs est un plan de la puce, vu de haut. À gauche, les périphériques : tout ce qui parle au monde extérieur (bus, conversion analogique, capteurs). En haut, la partie sans fil : Bluetooth, Wi-Fi et la radio qui les émet. Au centre, le cœur : deux processeurs avec leur ROM et leur SRAM. À côté, un accélérateur de cryptographie, pour chiffrer sans ralentir le programme. En bas, le RTC : un petit domaine qui reste éveillé quand le reste dort, avec son propre coprocesseur basse consommation.</p>
+<p>Pour un dispositif médical sur batterie, ce dernier bloc compte beaucoup : le capteur peut être surveillé pendant que les gros processeurs sont éteints.</p>
+
+<div id="fig-blocs"></div>
+
+<h4>Formalisation</h4>
+<h5>Les blocs (diapositive 7)</h5>
+<div class="tableau"><table>
+<tr><th>Bloc</th><th>Contenu</th></tr>
+<tr><td>Périphériques</td><td>SPI, I2C, I2S, SDIO, UART, CAN, ETH, IR, PWM, Temperature Sensor, Touch Sensor, DAC, ADC</td></tr>
+<tr><td>Bluetooth</td><td>Bluetooth link controller, Bluetooth baseband</td></tr>
+<tr><td>Wi-Fi</td><td>WiFi MAC, WiFi baseband</td></tr>
+<tr><td>Radio</td><td>RF receiver, Clock generator, RF transmitter, Switch, Balun</td></tr>
+<tr><td>Core and memory</td><td>2 × Xtensa 32 bit LX6 Microprocessors, ROM, SRAM</td></tr>
+<tr><td>Cryptographic hardware acceleration</td><td>SHA, RSA, AES, RNG</td></tr>
+<tr><td>RTC</td><td>PMU, ULP coprocessor, Recovery memory</td></tr>
+</table></div>
+<h5>Spécifications (diapositives 8 et 9)</h5>
+<ul>
+<li><strong>Processeurs</strong> : CPU Xtensa <i>dual-core</i> (ou <i>single-core</i>) 32 bits LX6, à 160 ou 240 MHz, jusqu'à 600 DMIPS ; coprocesseur ultra basse consommation (ULP).</li>
+<li><strong>Mémoire</strong> : 520 KiB de SRAM ; 448 KB de ROM ; 16 KB de SRAM dans le RTC.</li>
+<li><strong>Connectivité sans fil</strong> : Wi-Fi 802.11 (2,4 GHz) b/g/n jusqu'à 150 Mbps ; Bluetooth v4.2 BR/EDR et BLE.</li>
+<li><strong>Horloges et timers</strong> : oscillateur interne 8 MHz ; oscillateur RC interne avec calibration ; quartz externe de 2 MHz à 60 MHz (40 MHz seulement pour le Wi-Fi et le Bluetooth) ; quartz externe 32 kHz pour le RTC, avec calibration ; deux groupes de timers, avec 2 timers 64 bits et 1 watchdog principal dans chaque groupe ; un timer RTC ; un watchdog RTC.</li>
+<li><strong>Interfaces périphériques</strong> : 34 GPIO programmables ; ADC SAR 12 bits jusqu'à 18 canaux ; 2 DAC 8 bits ; 10 capteurs tactiles (GPIO à détection capacitive) ; 4 SPI ; 2 interfaces I2S ; 2 interfaces I2C ; 3 UART ; interface Ethernet MAC avec DMA dédié et support IEEE 1588 (<i>Precision Time Protocol</i>) ; CAN bus 2.0 ; télécommande infrarouge (TX/RX, jusqu'à 8 canaux) ; Motor PWM ; LED PWM (jusqu'à 16 canaux) ; capteur à effet Hall.</li>
+</ul>
+<p class="complement">DMIPS : millions d'instructions par seconde, mesurées avec le test de performance Dhrystone. 600 DMIPS à 240 MHz font 2,5 DMIPS par MHz.</p>
+
+<div id="fig-horloges"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Un moniteur de chevet doit lire 3 liaisons série (UART), 2 capteurs I2C sur des bus séparés, une électrode tactile pour l'appel infirmier, et envoyer ses mesures chiffrées en Wi-Fi. La liste des interfaces donne 3 UART et 2 I2C : juste assez. Le capteur tactile existe (10 GPIO capacitifs). Le chiffrement AES est fait par l'accélérateur matériel. Le Wi-Fi impose un quartz de 40 MHz. Combien de timers 64 bits pour cadencer les mesures ? Deux groupes de 2, soit \(2 \times 2 = 4\), et \(2 \times 1 = 2\) watchdogs principaux.</p>
+
+<h4>Formules clés</h4>
+\[ \frac{600 \text{ DMIPS}}{240 \text{ MHz}} = 2{,}5 \text{ DMIPS/MHz} \qquad T = \frac{1}{f} = \frac{1}{240 \text{ MHz}} \approx 4{,}17 \text{ ns} \]
+<p>520 KiB SRAM, 448 KB ROM, 16 KB SRAM RTC. Quartz 2 à 60 MHz, 40 MHz pour Wi-Fi et Bluetooth, 32 kHz pour le RTC. 34 GPIO, ADC 12 bits 18 canaux, 2 DAC 8 bits, 10 touch, 4 SPI, 2 I2S, 2 I2C, 3 UART.</p>
+</article>
+
+<article class="notion" id="n-coeurs-memoire">
+<h3>PRO_CPU et APP_CPU, DMA, plan d'adressage</h3>
+<p class="chapeau">Un holter enregistre l'ECG pendant 24 heures : des centaines d'échantillons par seconde arrivent de l'ADC et doivent finir en mémoire, pendant que le programme calcule le rythme cardiaque et gère le Bluetooth. Qui fait quoi dans la puce, et comment chaque donnée trouve-t-elle sa place ?</p>
+
+<h4>Intuition</h4>
+<p>L'ESP32 a deux processeurs : on peut confier la radio à l'un et l'application à l'autre. Copier des données ne demande aucune intelligence : un circuit dédié, le DMA, s'en charge seul, et laisse les processeurs calculer.</p>
+<p>Pour que tout ce monde se retrouve, chaque mémoire et chaque périphérique reçoit une plage d'adresses, comme les rues d'une ville reçoivent des numéros. Lire à une adresse, c'est aller frapper à une porte précise : la SRAM, la ROM, un périphérique, la mémoire du RTC ou, à travers le cache et la MMU, la mémoire externe.</p>
+
+<div id="fig-coeurs"></div>
+
+<h4>Formalisation</h4>
+<h5>Deux cœurs Harvard (diapositive 10)</h5>
+<p>L'<strong>ESP32</strong> est un système <i>dual-core</i> à deux CPU Xtensa LX6 d'architecture Harvard. Toute la mémoire embarquée, la mémoire externe et les périphériques sont placés sur le bus de données et/ou le bus d'instructions de ces CPU. Les deux CPU s'appellent :</p>
+<ul>
+<li><strong>PRO_CPU</strong> : <i>protocol</i>, le protocole ;</li>
+<li><strong>APP_CPU</strong> : <i>application</i>, l'application.</li>
+</ul>
+<p>Pour la plupart des usages, les deux CPU sont interchangeables. Sur le schéma, chacun accède à la mémoire embarquée (Embedded Memory), au cache, puis par la MMU à la mémoire externe (External Memory), et aux périphériques (Peripheral) ; le DMA accède aussi à la mémoire embarquée. On retrouve l'architecture Harvard et la MMU du chapitre 2 : bus d'instructions et de données séparés, traduction d'adresses vers la mémoire externe.</p>
+<h5>Le DMA (diapositive 12)</h5>
+<p><strong>Direct Memory Access (DMA)</strong> : il sert aux transferts rapides de données entre périphériques et mémoire, et de mémoire à mémoire. Les données sont déplacées sans aucune intervention du CPU, ce qui permet d'utiliser les cœurs plus efficacement pour traiter les données. Le moteur DMA (DMA_ENGINE) accède à la SRAM par le bus AHB, avec des descripteurs de sortie (out_link0 … out_linkn) et d'entrée (in_link0 … in_linkn).</p>
+
+<div id="fig-dma"></div>
+
+<h5>Le plan d'adressage (diapositive 13)</h5>
+<div class="tableau"><table>
+<tr><th>Plage d'adresses</th><th>Destination</th></tr>
+<tr><td>0x3F40_0000 à 0x3F7F_FFFF</td><td>Cache, puis MMU vers External Flash et External SRAM</td></tr>
+<tr><td>0x3F80_0000 à 0x3FBF_FFFF</td><td>Cache, puis MMU vers la mémoire externe</td></tr>
+<tr><td>0x3FF0_0000 à 0x3FF7_FFFF</td><td>Peripheral</td></tr>
+<tr><td>0x3FF8_0000 à 0x3FF8_1FFF</td><td>RTC FAST Memory</td></tr>
+<tr><td>0x3FF9_0000 à 0x3FF9_FFFF</td><td>Internal ROM</td></tr>
+<tr><td>0x3FFA_E000 à 0x3FFF_FFFF</td><td>Internal SRAM</td></tr>
+<tr><td>0x4000_0000 à 0x4005_FFFF</td><td>Internal ROM</td></tr>
+<tr><td>0x4007_0000 à 0x400B_FFFF</td><td>Internal SRAM</td></tr>
+<tr><td>0x400C_0000 à 0x400C_1FFF</td><td>RTC FAST Memory</td></tr>
+<tr><td>0x400C_2000 à 0x40BF_FFFF</td><td>Cache, puis MMU vers la mémoire externe</td></tr>
+<tr><td>0x5000_0000 à 0x5000_1FFF</td><td>RTC SLOW Memory</td></tr>
+</table></div>
+<p>Les autres plages (0x0000_0000 à 0x3F3F_FFFF, 0x3FC0_0000 à 0x3FEF_FFFF, 0x3FF8_2000 à 0x3FF8_FFFF, 0x3FFA_0000 à 0x3FFA_DFFF, 0x4006_0000 à 0x4006_FFFF, 0x40C0_0000 à 0x4FFF_FFFF, 0x5000_2000 à 0xFFFF_FFFF) sont grisées : aucune mémoire n'y est reliée sur le schéma. Le DMA est relié à la SRAM interne. Entre la MMU et les mémoires externes, le schéma porte les nombres 24 (vers la flash externe) et 23 (vers la SRAM externe).</p>
+
+<div id="fig-adresses"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Le holter échantillonne l'ECG à 500 échantillons par seconde, 2 octets par échantillon. Le DMA copie \(500 \times 2 = 1000\) octets par seconde de l'ADC vers la SRAM interne, soit 10 000 octets en 10 s, sans un cycle de CPU. Le programme lit ces octets dans la SRAM interne, par exemple à l'adresse 0x3FFB_0000 (comprise entre 0x3FFA_E000 et 0x3FFF_FFFF). Une table de constantes en ROM se lit à 0x4000_8000 (entre 0x4000_0000 et 0x4005_FFFF), et un registre de périphérique à 0x3FF4_4000 (entre 0x3FF0_0000 et 0x3FF7_FFFF).</p>
+
+<h4>Formules clés</h4>
+<p>ESP32 : 2 CPU Xtensa LX6 Harvard, PRO_CPU (protocole) et APP_CPU (application), interchangeables. DMA : transfert périphérique ↔ mémoire ou mémoire ↔ mémoire, sans CPU, par le bus AHB. Une adresse appartient à une plage ; la plage donne la mémoire : SRAM interne, ROM interne, périphériques, RTC FAST, RTC SLOW, ou cache et MMU vers la mémoire externe.</p>
+</article>
+
+<div class="fin-partie" data-section="coeurs-memoire"></div>
+</section>
+
+<section class="partie" id="s-alimentation">
+<p class="rang-partie">3 / 3</p>
+<h2>Domaines d'alimentation</h2>
+
+<article class="notion" id="n-alimentation">
+<h3>Power Supply : domaines d'alimentation</h3>
+<p class="chapeau">La carte donne 3,3 V, mais le cœur de l'ESP32 travaille à 1,1 V, et une mémoire externe peut demander 1,8 V ou 3,3 V. Comment une seule puce distribue-t-elle plusieurs tensions à ses différentes parties ?</p>
+
+<h4>Intuition</h4>
+<p>Pense à un immeuble alimenté par une seule arrivée électrique, mais où chaque étage a son propre disjoncteur et sa propre tension. La puce est découpée en domaines : le domaine CPU, le domaine RTC (celui qui reste éveillé en veille) et le domaine SDIO (l'interface vers la mémoire externe). Chaque domaine a son petit régulateur qui abaisse la tension d'entrée à ce dont il a besoin.</p>
+<p>Le domaine SDIO a un choix à faire : soit il prend la tension d'entrée presque telle quelle (3,3 V, à travers une petite résistance), soit il passe par un régulateur 1,8 V. Un multiplexeur choisit, selon la mémoire branchée.</p>
+
+<div id="fig-alim"></div>
+
+<h4>Formalisation</h4>
+<h5>Broches d'alimentation (Power Pins)</h5>
+<p>Les broches numériques de l'ESP32 sont réparties en trois <strong>domaines d'alimentation</strong> :</p>
+<ul>
+<li>VDD3P3_RTC ;</li>
+<li>VDD3P3_CPU ;</li>
+<li>VDD_SDIO.</li>
+</ul>
+<p>VDD3P3_RTC est aussi l'alimentation d'entrée du RTC et du CPU.</p>
+<h5>Schéma d'alimentation (Power Scheme)</h5>
+<div class="tableau"><table>
+<tr><th>Domaine</th><th>Régulateur</th><th>Tension</th></tr>
+<tr><td>SDIO Domain</td><td>LDO 1,8 V, ou résistance R = 6 Ω depuis VDD3P3_RTC, choisis par un multiplexeur</td><td>VDD_SDIO = 3,3 V ou 1,8 V</td></tr>
+<tr><td>RTC Domain</td><td>LDO</td><td>1,1 V</td></tr>
+<tr><td>CPU Domain</td><td>LDO</td><td>1,1 V</td></tr>
+</table></div>
+<p><strong>LDO</strong> : <i>Low Dropout Regulator</i>.</p>
+<p class="complement">Un LDO est un régulateur linéaire : il fournit une tension de sortie fixe et dissipe la différence avec l'entrée. « Low dropout » veut dire qu'il continue de réguler même quand l'entrée n'est que légèrement au-dessus de la sortie.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner.</p>
+<p>Le LDO du domaine CPU reçoit 3,3 V et sort 1,1 V : il retranche \(3{,}3 - 1{,}1 = 2{,}2\) V. Si une mémoire externe à 3,3 V tire 50 mA par le chemin de la résistance R = 6 Ω, la chute de tension vaut \(U = R\,I = 6 \times 0{,}05 = 0{,}3\) V : VDD_SDIO vaut environ \(3{,}3 - 0{,}3 = 3{,}0\) V. Pour une mémoire à 1,8 V, le multiplexeur prend la sortie du LDO 1,8 V.</p>
+
+<h4>Formules clés</h4>
+\[ V_{chute} = V_{entrée} - V_{sortie} \qquad U = R\,I \]
+<p>Trois domaines : VDD3P3_RTC, VDD3P3_CPU, VDD_SDIO. VDD3P3_RTC alimente aussi RTC et CPU. RTC et CPU : LDO 1,1 V. VDD_SDIO : 3,3 V (par R = 6 Ω) ou 1,8 V (par le LDO).</p>
+</article>
+
+<div class="fin-partie" data-section="alimentation"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../dessins.js"></script>
+<script src="../../figures/esp32.js"></script>
+<script src="../../figures/devkit.js"></script>
+<script src="../../figures/specifications.js"></script>
+<script src="../../figures/coeurs-memoire.js"></script>
+<script src="../../figures/alimentation.js"></script>
+</body>
+</html>

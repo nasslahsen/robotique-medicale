@@ -119,10 +119,10 @@ for (const id of modules) {
     }
   }
   // Structure par chapitres : plan, chapitres, sections (chaque page de cours d'un chapitre dans une seule section,
-  // pages des sections à jour avec les pages de cours qu'elles réunissent : node outils/regrouper.js <id>)
+  // cours de chaque chapitre à jour avec les pages de cours qu'il réunit : node outils/regrouper.js <id>)
   if (P.sections) {
     const dc = d + "/" + (P.dossierChapitres ? P.dossierChapitres + "/" : "");
-    const { pageSection } = require("../outils/regrouper.js");
+    const { pageChapitre, chapitresAvecSections } = require("../outils/regrouper.js");
     const vues = {};
     for (const ch of P.chapitres) for (const a of ch.avant || []) if (!P.chapitres.some(c => c.id === a)) err(`${d} : chapitre ${ch.id}, prérequis inconnu ${a}`);
     for (const ch of P.chapitres) {
@@ -135,13 +135,16 @@ for (const id of modules) {
       }
     }
     for (const s of P.sections) {
-      const f = `${dc}cours/${s.id}.html`;
       if (vues[s.id]) err(`${d} : section ${s.id} en double`); vues[s.id] = 1;
       for (const n of s.notions) if (!(P.cours || []).some(c => c.id === n && c.chapitre === s.chapitre)) err(`${d} : section ${s.id}, page de cours inconnue ${n}`);
-      if (!existe(f)) { err(`page de section manquante ${f}`); continue; }
-      if (lire(f) !== pageSection(id, path.join(racine, d), P, s)) err(`${f} pas à jour : node outils/regrouper.js ${id}`);
     }
-    for (const f of [dc + "index.html", dc + "chapitre.html"].concat(P.sections.map(s => `${dc}cours/${s.id}.html`))) {
+    const pagesCh = chapitresAvecSections(P).map(ch => ({ ch, f: `${dc}cours/chapitre-${ch.id}.html` }));
+    for (const { ch, f } of pagesCh) {
+      if (!existe(f)) { err(`cours du chapitre manquant ${f}`); continue; }
+      if (lire(f) !== pageChapitre(id, path.join(racine, d), P, ch)) err(`${f} pas à jour : node outils/regrouper.js ${id}`);
+    }
+    for (const f of liste(dc + "cours", /\.html$/)) if (!pagesCh.some(x => x.f === f)) err(`${f} : page en trop (cours/chapitre-<n>.html seulement)`);
+    for (const f of [dc + "index.html", dc + "chapitre.html"].concat(pagesCh.map(x => x.f))) {
       if (!existe(f)) { err(`${f} manquant`); continue; }
       const html = lire(f); nbPages++;
       verifierLiens(f, html); verifierMaths(f, html, false); verifierEcriture(f, html);

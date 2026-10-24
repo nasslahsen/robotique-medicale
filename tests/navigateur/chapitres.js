@@ -1,6 +1,6 @@
 // Structure par chapitres : plan, écrans de chapitre, sections du cours, S'entraîner.
-// Vérifie : aucune erreur, plan et écran de chapitre sans défilement, état des nœuds, Précédent / Suivant et « 2 / 4 »,
-// section lue en bas de page, fin du cours avec l'option S'entraîner, exercice ouvert depuis S'entraîner (lien Chapitre,
+// Vérifie : aucune erreur, plan et écran de chapitre sans défilement, état des nœuds, cours du chapitre sur une page
+// (sections dans l'ordre, « 2 / 4 » dans la barre qui suit la lecture, section lue quand on passe sa fin), fin du cours avec l'option S'entraîner, exercice ouvert depuis S'entraîner (lien Chapitre,
 // suite dans le chapitre, « Revoir dans le cours » vers la section), Reprendre. Une capture par écran.
 // Lancer : node tests/navigateur/chapitres.js <module>      (W et H pour la taille d'écran)
 "use strict";
@@ -47,30 +47,38 @@ const dc = `${BASE}modules/${mid}/${P.dossierChapitres ? P.dossierChapitres + "/
     const lst = await pg.evaluate(() => [...document.querySelectorAll(".carte-ch .liste")].map(l => l.scrollHeight - l.clientHeight));
     if (lst.some(x => x > 1)) pb(`chapitre ${ch} : une liste défile (${lst})`);
     await pg.screenshot({ path: path.join(out, `chapitre-${ch}.png`) });
-    // chaque section : figures et KaTeX sans erreur, rang, Précédent / Suivant, lue en bas
+    // le cours du chapitre : une page, toutes les sections, la barre suit la lecture, chaque section lue en passant sa fin
+    await pg.goto(dc + `cours/chapitre-${ch}.html`, { waitUntil: "networkidle" }); await pg.waitForTimeout(300);
+    verifErr("cours du chapitre " + ch);
+    const v = await pg.evaluate(() => ({ parties: [...document.querySelectorAll("section.partie")].map(x => x.id), notions: [...document.querySelectorAll("article.notion")].map(a => a.id),
+      katexErr: document.querySelectorAll(".katex-error").length, figs: document.querySelectorAll(".fig .dessin").length, vides: [...document.querySelectorAll(".fig")].filter(f => !f.querySelector(".dessin")).length,
+      fin: !!document.querySelector(".fin-cours a.aller[href*='chapitre.html']"), opt: !!document.querySelector(".fin-cours .option-entrainer a"),
+      boutons: document.querySelectorAll(".suite-section, .suite").length }));
+    if (v.parties.join() !== ss.map(x => "s-" + x.id).join()) pb(`chapitre ${ch} : sections ${v.parties}`);
+    if (v.notions.join() !== ss.flatMap(x => x.notions).map(n => "n-" + n).join()) pb(`chapitre ${ch} : notions ${v.notions}`);
+    if (v.katexErr) pb(`chapitre ${ch} : ${v.katexErr} formules en erreur`);
+    if (!v.figs || v.vides) pb(`chapitre ${ch} : ${v.vides} figures pas dessinées`);
+    if (!v.fin || !v.opt) pb(`chapitre ${ch} : fin du cours sans retour au chapitre ou sans l'option S'entraîner`);
+    if (v.boutons) pb(`chapitre ${ch} : boutons entre les sections`);
+    await pg.screenshot({ path: path.join(out, `cours-${ch}-debut.png`) });
     for (let k = 0; k < ss.length; k++) {
-      await pg.goto(dc + "cours/" + ss[k].id + ".html", { waitUntil: "networkidle" }); await pg.waitForTimeout(250);
-      verifErr("section " + ss[k].id);
-      const v = await pg.evaluate(() => ({ rang: (document.querySelector(".suite-section .rang") || {}).textContent, liens: [...document.querySelectorAll(".suite-section a")].map(a => a.href),
-        opt: !!document.querySelector(".option-entrainer a"), katexErr: document.querySelectorAll(".katex-error").length, figs: document.querySelectorAll(".fig .dessin").length,
-        notions: [...document.querySelectorAll("article.notion")].map(a => a.id) }));
-      if (v.rang !== `${k + 1} / ${ss.length}`) pb(`${ss[k].id} : rang « ${v.rang} »`);
-      if (v.katexErr) pb(`${ss[k].id} : ${v.katexErr} formules en erreur`);
-      if (v.notions.join() !== ss[k].notions.map(n => "n-" + n).join()) pb(`${ss[k].id} : notions ${v.notions}`);
-      if (!v.figs) pb(`${ss[k].id} : aucune figure dessinée`);
-      if (k < ss.length - 1 && !v.liens[1].endsWith(ss[k + 1].id + ".html")) pb(`${ss[k].id} : Suivant ne mène pas à ${ss[k + 1].id}`);
-      if (k === ss.length - 1 && (!v.opt || !/chapitre\.html/.test(v.liens[1]))) pb(`${ss[k].id} : fin du cours sans retour au chapitre ou sans l'option S'entraîner`);
-      if (k === 0) await pg.screenshot({ path: path.join(out, `section-${ss[k].id}.png`) });
-      await pg.evaluate(() => document.querySelector(".suite-section").scrollIntoView()); await pg.waitForTimeout(150);
+      await pg.evaluate(id => document.getElementById(id).scrollIntoView({ block: "start" }), "s-" + ss[k].id); await pg.waitForTimeout(250);
+      const r = await pg.$eval(".rang-barre", e => e.textContent);
+      if (k < ss.length - 1 && r !== `${k + 1} / ${ss.length}`) pb(`chapitre ${ch}, section ${k + 1} : la barre indique « ${r} »`);
+      if (k === 1) await pg.screenshot({ path: path.join(out, `cours-${ch}-section-2.png`) });
+      await pg.evaluate(id => document.querySelector(`.fin-partie[data-section="${id}"]`).scrollIntoView({ block: "center" }), ss[k].id); await pg.waitForTimeout(200);
       const lue = await pg.evaluate(([m, s]) => !!(JSON.parse(localStorage.getItem("s5-progres"))[m].sections || {})[s], [mid, ss[k].id]);
-      if (!lue) pb(`${ss[k].id} : pas marquée lue en bas de page`);
+      if (!lue) pb(`${ss[k].id} : pas marquée lue en passant sa fin`);
     }
+    await pg.evaluate(() => scrollTo(0, 1e7)); await pg.waitForTimeout(1000);
+    if (await pg.$eval(".rang-barre", e => e.textContent) !== `${ss.length} / ${ss.length}`) pb(`chapitre ${ch} : en bas, la barre n'indique pas la dernière section`);
+    await pg.screenshot({ path: path.join(out, `cours-${ch}-fin.png`) });
   }
   // Après lecture : nœuds commencés ; Reprendre mène à la dernière section ouverte
   await pg.goto(dc + "index.html", { waitUntil: "networkidle" }); await pg.waitForTimeout(200);
   if (await pg.$$eval(".noeud-chapitre.encours", l => l.length) !== chs.length) pb("plan : les chapitres lus ne sont pas « commencés »");
   const rep = await pg.$eval(".btn.reprendre", a => a.href);
-  if (!rep.endsWith(P.sections.filter(s => s.chapitre === chs[chs.length - 1]).pop().id + ".html")) pb("Reprendre ne mène pas à la dernière section ouverte : " + rep);
+  if (!rep.endsWith(`chapitre-${chs[chs.length - 1]}.html#s-` + P.sections.filter(s => s.chapitre === chs[chs.length - 1]).pop().id)) pb("Reprendre ne mène pas à la dernière section lue : " + rep);
 
   // S'entraîner : un exercice du premier chapitre, lien Chapitre, Revoir dans le cours vers une section
   const n0 = P.niveaux.find(n => n.chapitre === chs[0] && n.pret);
@@ -81,7 +89,7 @@ const dc = `${BASE}modules/${mid}/${P.dossierChapitres ? P.dossierChapitres + "/
   const lc = await pg.$eval(".barre .carte-lien", a => [a.textContent, a.href]);
   if (!/^Chapitre/.test(lc[0]) || !/chapitre\.html\?ch=/.test(lc[1])) pb("exercice : le lien du haut ne mène pas au chapitre");
   const cours = await pg.$$eval(".barre .carte-lien", l => l.map(a => a.href));
-  if (!cours.some(h => /\/cours\/[^/]+\.html#n-/.test(h) && h.includes(`/${P.dossierChapitres}/`))) pb("exercice : le lien Cours ne mène pas à la section");
+  if (!cours.some(h => /\/cours\/chapitre-\d+\.html#n-/.test(h) && h.includes(`/${P.dossierChapitres}/`))) pb("exercice : le lien Cours ne mène pas au cours du chapitre");
   await pg.screenshot({ path: path.join(out, "exercice.png") });
   // voir la réponse sur chaque étape jusqu'à la fin : bouton suivant dans le chapitre
   for (let i = 0; i < 8; i++) {
@@ -96,7 +104,7 @@ const dc = `${BASE}modules/${mid}/${P.dossierChapitres ? P.dossierChapitres + "/
       const rv = await pg.$(".etape:not(.sortie) .revoir");
       if (rv) { await rv.click(); await pg.waitForTimeout(900);
         const src = await pg.$eval("#fenetre-cours iframe", f => f.src);
-        if (!src.includes(`/${P.dossierChapitres}/cours/`) || !src.includes("dans=1")) pb("Revoir dans le cours n'ouvre pas la section : " + src);
+        if (!/\/cours\/chapitre-\d+\.html\?dans=1#/.test(src) || !src.includes(`/${P.dossierChapitres}/`)) pb("Revoir dans le cours n'ouvre pas le cours du chapitre : " + src);
         const vise = await pg.frames()[1].evaluate(() => document.querySelectorAll(".repere").length).catch(() => 0);
         if (!vise) pb("Revoir dans le cours : aucun passage surligné");
         await pg.screenshot({ path: path.join(out, "revoir.png") });

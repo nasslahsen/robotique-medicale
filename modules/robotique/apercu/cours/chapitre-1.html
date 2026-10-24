@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le robot et sa description</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 1. -->
+<main class="cours-chapitre" data-chapitre="1">
+<p class="etiquette" data-etiquette></p>
+<h1>Le robot et sa description</h1>
+
+<section class="partie" id="s-robot-anatomie">
+<p class="rang-partie">1 / 4</p>
+<h2>Le robot et son anatomie</h2>
+
+<article class="notion" id="n-robot-systeme">
+<h3>Le robot et le système robotisé</h3>
+<p class="chapeau">Ce qu'est un robot, comment il fonctionne en boucle, de quoi est faite une cellule robotisée, et comment on classe les robots.</p>
+
+<h4>Intuition</h4>
+<p>Un robot fonctionne comme un humain qui fait un geste : il regarde, réfléchit, décide, bouge, puis regarde à nouveau le résultat. Dans une cellule robotisée, ce cycle se répète à chaque pièce : une caméra voit la pièce arriver, l'automate autorise le cycle, le bras va la chercher, la saisit, la déplace et la dépose. Le bras n'est qu'une partie de l'installation : il faut aussi des capteurs, une commande, de l'énergie et de la sécurité.</p>
+
+<div id="fig-cellule"></div>
+
+<h4>Formalisation</h4>
+<h5>Robotique et robot</h5>
+<p>La robotique est un domaine pluridisciplinaire consacré à l'étude, la conception, la réalisation, la programmation, la commande et l'utilisation des robots. Elle est à l'intersection de l'ingénierie électrique et mécanique, de la science des matériaux, des mathématiques, de l'informatique, des sciences cognitives et de la biologie.</p>
+<p>Le cours compare trois définitions du robot : celle du Larousse (appareil automatique capable de manipuler des objets ou d'exécuter des opérations selon un programme fixe, modifiable ou adaptable), celle de Wikipédia (dispositif mécatronique, alliant mécanique, électronique et informatique, conçu pour accomplir automatiquement des tâches imitant ou reproduisant des actions humaines), et la définition retenue :</p>
+<p><strong>Un robot est un système programmable capable d'exécuter des actions dans son environnement afin d'accomplir une tâche donnée, de manière automatique, semi-autonome ou sous le contrôle d'un opérateur.</strong> Mots clés : programmable, action, environnement, tâche.</p>
+<h5>Principe de fonctionnement</h5>
+<div class="tableau"><table>
+<tr><th>Action</th><th>Rôle</th><th>Moyens</th></tr>
+<tr><td>1. Percevoir</td><td>acquérir des informations sur l'environnement et sur son propre état</td><td>capteurs (entrées)</td></tr>
+<tr><td>2. Traiter</td><td>traiter les informations reçues</td><td>système de commande : ordinateur, API</td></tr>
+<tr><td>3. Décider</td><td>analyser les données et prendre une décision selon le programme et la situation</td><td>plan d'action</td></tr>
+<tr><td>4. Agir</td><td>exécuter l'action décidée</td><td>actionneurs (sorties)</td></tr>
+</table></div>
+<p>Le résultat de l'action modifie l'environnement, qui fournit de nouvelles informations : c'est l'interaction avec l'environnement, qui referme la boucle.</p>
+<h5>Le système robotisé</h5>
+<p>Un robot industriel est un manipulateur programmable, commandé automatiquement, capable de réaliser différents mouvements afin d'effectuer des tâches dans un processus de production. Il ne constitue qu'un élément de la cellule : <strong>un système robotisé est un ensemble de composants qui coopèrent pour réaliser automatiquement une tâche industrielle.</strong></p>
+<p>Composants d'un robot industriel : manipulateur (bras, articulations, transmissions, réducteurs), actionneurs (servomoteurs), capteurs (codeurs absolus, capteurs de couple, vision), contrôleur (armoire de commande, cartes de puissance, calcul cinématique), effecteur terminal (EOAT : pince, ventouse, torche, outil de mesure), teach pendant (pupitre de programmation).</p>
+<div class="tableau"><table>
+<tr><th>Sous-système</th><th>Rôle</th><th>Éléments</th></tr>
+<tr><td>Chaîne d'information</td><td>mesurer l'état du système, traiter les informations, générer les commandes : acquérir, traiter, communiquer, commander</td><td>capteurs, vision, contrôleur, API, IHM, réseau</td></tr>
+<tr><td>Chaîne d'énergie</td><td>alimenter et moduler l'énergie</td><td>alimentation, variateurs, moteurs</td></tr>
+<tr><td>Chaîne d'action</td><td>transformer les ordres de commande en action physique : transformer l'énergie, transmettre le mouvement, agir sur le procédé</td><td>actionneurs et transmissions, manipulateur, effecteur</td></tr>
+<tr><td>Sécurité</td><td>prévenir les accidents et protéger opérateurs, équipements et procédé</td><td>arrêt d'urgence, barrière immatérielle, porte interverrouillée, scanner laser, automate de sécurité</td></tr>
+</table></div>
+<p>Équipements périphériques : convoyeur, magasin de pièces, montage ou gabarit, machine-outil, système de vision, IHM de supervision. Pourquoi des robots dans l'industrie : ils prennent en charge les tâches répétitives, pénibles, dangereuses ou exigeant des performances constantes (productivité, répétabilité, précision, flexibilité, sécurité, qualité) ; ils assistent l'humain plus qu'ils ne le remplacent.</p>
+
+<h4>Classer un robot : cinq critères</h4>
+<p>Un même robot peut être décrit sous plusieurs angles. Le cours retient cinq critères, et un robot peut appartenir à plusieurs catégories selon le critère considéré.</p>
+
+<div id="fig-classes"></div>
+
+<div class="tableau"><table>
+<tr><th>Critère</th><th>Catégories</th></tr>
+<tr><td>Mobilité</td><td>fixes (base immobile), mobiles (roues, chenilles, pattes, aériens, aquatiques), hybrides (manipulateur mobile : base mobile + bras)</td></tr>
+<tr><td>Architecture cinématique</td><td>sériels (chaîne ouverte), parallèles (chaîne fermée), hybrides</td></tr>
+<tr><td>Interaction avec l'humain</td><td>industriels conventionnels (séparés), collaboratifs ou cobots (espace partagé, sécurité intégrée), de service</td></tr>
+<tr><td>Niveau d'autonomie</td><td>téléopéré (1), programmé (2), adaptatif (3), autonome (4)</td></tr>
+<tr><td>Domaine d'application</td><td>industriel, service professionnel, service personnel, médical et d'assistance, militaire, spatial et sous-marin</td></tr>
+</table></div>
+<p>Historique en bref : 1920, le mot « robot » (R.U.R., Karel Čapek) ; 1942, Asimov popularise « robotique » ; 1954, brevet de George Devol ; 1961, Unimate chez General Motors ; 1970–1980, robots articulés et SCARA ; 1990–2000, vision industrielle ; 2000–2010, robots mobiles et cobots ; depuis 2010, robots autonomes, IA, industrie 4.0.</p>
+
+<h4>Exemple</h4>
+<p>Exemple de fonctionnement d'une cellule du cours (figure ci-dessus) : détection (la caméra détecte la pièce entrante), autorisation (l'API autorise le cycle), approche, préhension, déplacement selon la trajectoire programmée, dépose sur le convoyeur de sortie. Chaque étape mobilise la chaîne d'information, la chaîne d'énergie, la chaîne d'action et la sécurité. L'étape de détection relève surtout de « percevoir » et de la chaîne d'information ; la préhension relève d'« agir » et de la chaîne d'action.</p>
+
+<h4>Formules clés</h4>
+<p>Robot = système <strong>programmable</strong> qui exécute des <strong>actions</strong> dans son <strong>environnement</strong> pour une <strong>tâche</strong>. Boucle : percevoir, traiter, décider, agir. Système robotisé = chaîne d'information + chaîne d'énergie + chaîne d'action + sécurité. Cinq critères : mobilité, architecture, interaction, autonomie, domaine.</p>
+</article>
+
+<article class="notion" id="n-anatomie">
+<h3>Anatomie d'un robot</h3>
+<p class="chapeau">Le vocabulaire de base pour décrire un bras : base, segment, articulation, axe, poignet, effecteur. Et les deux façons dont une articulation peut bouger.</p>
+
+<h4>Intuition</h4>
+<p>Comparez le robot à votre bras : les os sont rigides (ce sont les segments), les articulations les relient et permettent de bouger (épaule, coude, poignet), et la main tient l'outil (l'effecteur). Chaque articulation ne fait qu'un mouvement simple, autour ou le long d'un axe. Toute la suite du cours décrit un robot comme une succession de ces éléments.</p>
+
+<div id="fig-anatomie"></div>
+
+<h4>Formalisation</h4>
+<div class="tableau"><table>
+<tr><th>Terme</th><th>Définition du cours</th></tr>
+<tr><td>Base</td><td>partie fixe qui supporte le robot</td></tr>
+<tr><td>Segment</td><td>élément mécanique rigide reliant deux articulations</td></tr>
+<tr><td>Articulation</td><td>liaison mécanique mobile entre deux segments, permettant un mouvement relatif</td></tr>
+<tr><td>Axe</td><td>direction autour de laquelle une articulation tourne, ou le long de laquelle elle se déplace ; il correspond à un mouvement indépendant commandé par le robot</td></tr>
+<tr><td>Poignet</td><td>ensemble de plusieurs articulations terminales assurant principalement l'orientation de l'effecteur</td></tr>
+<tr><td>Effecteur (organe terminal)</td><td>outil fixé à l'extrémité du robot pour réaliser la tâche</td></tr>
+</table></div>
+<p>Relation entre les notions : l'articulation (relie deux segments) <strong>définit</strong> l'axe (direction du mouvement), qui <strong>produit</strong> le mouvement (déplacement relatif). Lecture d'une chaîne robotique : un robot est une succession de segments reliés par des articulations,</p>
+\[ \text{Segment}_i \;\rightarrow\; \text{Articulation}_i \;\rightarrow\; \text{Segment}_{i+1} \]
+
+<h4>Deux types d'articulations</h4>
+<p>Une articulation <strong>rotoïde (R)</strong> produit un mouvement angulaire autour de son axe de rotation ; sa variable est un angle \(\theta_i\). Une articulation <strong>prismatique (P)</strong> produit un mouvement linéaire le long de son axe de translation ; sa variable est une distance \(d_i\).</p>
+
+<div id="fig-rp"></div>
+
+<p>Exemples selon la nature du mouvement : robot articulé R-R-R-R-R-R (rotations successives), robot cartésien P-P-P (translations selon X, Y, Z), robot SCARA ou cylindrique R + P (rotation et translation combinées). Le type de mouvement dépend de la nature des articulations utilisées.</p>
+
+<h4>Exemple</h4>
+<p>Le choix de l'effecteur dépend de la tâche, de la pièce et du procédé. Effecteurs industriels : pince de préhension, ventouse, torche de soudage, pistolet de peinture, outil de vissage, caméra d'inspection. En médecine, l'effecteur est un instrument adapté à un geste clinique : pince chirurgicale (préhension de tissus), ciseaux (section contrôlée), porte-aiguille (suture), caméra endoscopique (visualisation), instrument de biopsie (prélèvement), électrode de coagulation. Ces outils sont interchangeables au poignet robotique.</p>
+
+<h4>Formules clés</h4>
+\[ \text{Segment}_i \rightarrow \text{Articulation}_i \rightarrow \text{Segment}_{i+1} \qquad \text{R : variable } \theta_i \qquad \text{P : variable } d_i \]
+</article>
+
+<div class="fin-partie" data-section="robot-anatomie"></div>
+</section>
+
+<section class="partie" id="s-articulations-liaisons">
+<p class="rang-partie">2 / 4</p>
+<h2>Articulations, DDL et liaisons</h2>
+
+<article class="notion" id="n-articulations-ddl">
+<h3>Articulations, DDL et configuration articulaire</h3>
+<p class="chapeau">Compter les mouvements indépendants d'un robot, et distinguer ce que commandent les articulations de ce que peut faire l'outil.</p>
+
+<h4>Intuition</h4>
+<p>Compter les degrés de liberté (DDL), c'est compter combien de « boutons » indépendants on peut tourner pour faire bouger le robot : chaque moteur d'articulation en est un. La liste des valeurs de ces boutons décrit la posture du robot. Mais ce qui intéresse l'utilisateur, c'est l'outil : où il est et comment il est tourné. Ajouter des articulations ne donne pas toujours plus de liberté à l'outil.</p>
+
+<div id="fig-chaine"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Degré de liberté.</strong> Un degré de liberté représente un mouvement indépendant qu'un système mécanique peut réaliser. Articulation active → mouvement indépendant → 1 DDL. Une articulation rotoïde a une variable angulaire \(\theta_i\) (1 DDL angulaire), une prismatique une variable linéaire \(d_i\) (1 DDL linéaire). Chaque articulation active contribue généralement à un degré de liberté.</p>
+<p><strong>Pose complète dans l'espace.</strong> L'effecteur peut au maximum effectuer :</p>
+\[ 6 \text{ DDL} = 3 \text{ DDL de position } (x, y, z) + 3 \text{ DDL d'orientation } (R_x, R_y, R_z) \]
+<p>Dans le plan (comme sur la figure), c'est \(3 = 2\) de position \((x, y)\) \(+ 1\) d'orientation. Sur la figure, chaque glissière est suivie d'un coude fixe de 90°, comme les glissières orthogonales d'un robot cartésien.</p>
+<p><strong>Trois notions liées mais distinctes.</strong></p>
+<div class="tableau"><table>
+<tr><th>Notion</th><th>Définition</th><th>Ce qu'elle décrit</th></tr>
+<tr><td>Nombre d'axes du robot</td><td>nombre de mouvements articulaires commandés</td><td>ce que le contrôleur commande</td></tr>
+<tr><td>DDL articulaires</td><td>nombre de mouvements indépendants des articulations</td><td>ce que chaque articulation peut faire</td></tr>
+<tr><td>DDL de l'effecteur</td><td>nombre de mouvements indépendants réalisables par l'effecteur</td><td>ce que l'outil peut réaliser globalement</td></tr>
+</table></div>
+<p><strong>Configuration articulaire</strong> : position et orientation des segments les uns par rapport aux autres, décrite par l'ensemble des variables articulaires,</p>
+\[ q = [\,q_1,\ q_2,\ \dots,\ q_n\,]^T \qquad q_i = \theta_i \text{ (rotoïde) ou } d_i \text{ (prismatique)} \]
+<p>\(q_i\) définit la position d'un segment par rapport au segment précédent : la configuration articulaire est la posture relative des segments.</p>
+<p><strong>Configuration opérationnelle</strong> : position et orientation de l'effecteur par rapport au corps de base, indépendamment de la configuration des articulations,</p>
+\[ X = [\,x,\ y,\ z,\ \alpha,\ \beta,\ \gamma\,]^T \qquad p = [\,x,\ y,\ z\,]^T \qquad R = R(\alpha, \beta, \gamma) \]
+<p>Le passage de \(q\) à \(X\) est le modèle géométrique direct, \(p = f(q)\), traité en fin de parcours avec le bras 2R.</p>
+
+<h4>Exemple</h4>
+<p>Exemples du cours :</p>
+<div class="tableau"><table>
+<tr><th>Robot</th><th>Axes</th><th>DDL articulaires</th><th>DDL de l'effecteur</th></tr>
+<tr><td>Cartésien</td><td>3</td><td>3 translations</td><td>3 DDL de position</td></tr>
+<tr><td>Articulé</td><td>6</td><td>6 rotations</td><td>jusqu'à 6 DDL (position + orientation)</td></tr>
+<tr><td>Redondant</td><td>7</td><td>7 mouvements indépendants</td><td>au maximum 6 DDL, plus 1 DDL de redondance</td></tr>
+</table></div>
+<p>Exemple clé : 7 axes articulaires peuvent produire une pose d'effecteur limitée à 6 DDL, avec une redondance. Sur la figure, le bouton « Bras redondant » construit l'équivalent plan : 4 pivots pour 3 DDL de l'effecteur, soit 1 DDL de redondance ; on peut alors bouger le coude sans bouger la pince.</p>
+
+<h4>Formules clés</h4>
+\[ q = [q_1, \dots, q_n]^T \qquad X = [x, y, z, \alpha, \beta, \gamma]^T \qquad 6 \text{ DDL} = 3 + 3 \qquad \text{DDL effecteur} \leq 6 \]
+</article>
+
+<article class="notion" id="n-liaisons">
+<h3>DDL d'un solide et liaisons normalisées</h3>
+<p class="chapeau">Un solide libre peut bouger de six façons indépendantes. Une liaison en bloque certaines : ce qui reste, ce sont les mouvements possibles entre les deux pièces.</p>
+
+<h4>Intuition</h4>
+<p>Tenez un objet en l'air : vous pouvez le déplacer selon trois directions et le tourner autour de trois axes. Posez-le maintenant sur une charnière : il ne peut plus que tourner autour de l'axe de la charnière. La charnière a « supprimé » cinq mouvements. Les liaisons normalisées sont un catalogue de ces façons de relier deux solides, chacune caractérisée par les mouvements qu'elle laisse.</p>
+<p>On suppose les solides <strong>indéformables</strong> : la distance entre deux points quelconques d'un solide reste constante au cours du temps, quel que soit son mouvement. En réalité les bras fléchissent un peu sous la charge, mais ces déformations sont négligées pour la modélisation géométrique de base. Le mouvement d'un solide se réduit alors à une rotation et une translation : \(\mathbf{p}_2 = \mathbf{R}\,\mathbf{p}_1 + \mathbf{t}\).</p>
+
+<div id="fig-liaisons"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Degrés de liberté d'un solide</strong> : nombre de paramètres indépendants nécessaires pour définir complètement la situation (position + orientation) d'un solide par rapport à un repère de référence.</p>
+\[ \text{dans l'espace : } 3 \text{ translations } (T_x, T_y, T_z) + 3 \text{ rotations } (R_x, R_y, R_z) = 6 \text{ DDL} \]
+\[ \text{dans un plan : } 2 \text{ translations } (T_x, T_y) + 1 \text{ rotation } (R_z) = 3 \text{ DDL} \]
+<p>\(R_x\) : roulis, \(R_y\) : tangage, \(R_z\) : lacet.</p>
+<p><strong>Liaison</strong> : connexion physique entre deux segments voisins ; elle définit leurs mouvements relatifs autorisés et bloqués. Une liaison impose des contraintes physiques (contact, guidage) qui suppriment certains DDL relatifs :</p>
+\[ \text{DDL relatifs restants} = 6 - \text{nombre de contraintes indépendantes} \]
+<p>Tableau des liaisons normalisées (l'axe de la liaison est \(x\) ; pour la liaison plane et la ponctuelle, la normale au contact est \(z\)) :</p>
+<div class="tableau"><table>
+<tr><th>Liaison</th><th>Mouvements permis</th><th>Degrés de mobilité</th><th>Degrés de liaison</th></tr>
+<tr><td>Encastrement</td><td>aucun</td><td>0</td><td>6</td></tr>
+<tr><td>Glissière</td><td>\(T_x\)</td><td>1</td><td>5</td></tr>
+<tr><td>Pivot</td><td>\(R_x\)</td><td>1</td><td>5</td></tr>
+<tr><td>Pivot glissant</td><td>\(T_x, R_x\)</td><td>2</td><td>4</td></tr>
+<tr><td>Hélicoïdale</td><td>\(T_x\) et \(R_x\) couplées</td><td>1</td><td>5</td></tr>
+<tr><td>Plane</td><td>\(T_x, T_y, R_z\)</td><td>3</td><td>3</td></tr>
+<tr><td>Rotule</td><td>\(R_x, R_y, R_z\)</td><td>3</td><td>3</td></tr>
+<tr><td>Linéaire annulaire</td><td>\(T_x, R_x, R_y, R_z\)</td><td>4</td><td>2</td></tr>
+<tr><td>Ponctuelle</td><td>\(T_x, T_y, R_x, R_y, R_z\)</td><td>5</td><td>1</td></tr>
+</table></div>
+<p>Liaison hélicoïdale : translation et rotation couplées, une seule mobilité indépendante.</p>
+<p><strong>Pivot (R) et glissière (P).</strong> La très grande majorité des manipulateurs (environ 95 %) repose exclusivement sur ces deux liaisons à un degré de liberté : la liaison pivot, une rotation autour d'un axe fixe (\(q = \theta\), par exemple l'articulation d'un bras robotisé, ou le poignet articulé d'un robot chirurgical), et la liaison glissière, une translation le long d'un axe fixe (\(q = d\), par exemple l'axe linéaire d'un robot cartésien, ou le plateau d'IRM qui translate le patient). Pourquoi : une commande simple (1 DDL, 1 actionneur, un seul paramètre à piloter) et une bonne rigidité et précision. Les autres liaisons (rotule, contact ponctuel) servent aux contacts, aux appuis, aux mécanismes complexes, et peuvent être passives, comme les rotules d'un robot parallèle.</p>
+
+<h4>Exemple</h4>
+<p>Exemple du cours : une liaison pivot d'axe \(z\) entre un solide \(A\) fixe et un solide \(B\) impose 5 contraintes. Autorisé : \(R_z\). Bloqués : \(T_x, T_y, T_z, R_x, R_y\). DDL relatif restant : \(6 - 5 = 1\). Sur la figure, choisissez « Pivot » : un seul curseur reste actif.</p>
+
+<h4>Formules clés</h4>
+\[ 6 \text{ DDL (espace)} \qquad 3 \text{ DDL (plan)} \qquad \text{DDL restants} = 6 - \text{contraintes} \qquad \text{mobilité} + \text{liaison} = 6 \]
+</article>
+
+<div class="fin-partie" data-section="articulations-liaisons"></div>
+</section>
+
+<section class="partie" id="s-schemas-architectures">
+<p class="rang-partie">3 / 4</p>
+<h2>Schémas, topologies et architectures</h2>
+
+<article class="notion" id="n-schemas-topologies">
+<h3>Schémas cinématiques et topologies</h3>
+<p class="chapeau">Dessiner un robot avec des traits et des symboles de liaisons, puis le classer selon la forme de son graphe : chaîne série, parallèle, arborescente ou hybride.</p>
+
+<h4>Intuition</h4>
+<p>Un robot réel a des carters, des moteurs, des câbles, des vis. Pour étudier son mouvement, on efface tout cela et on ne garde que des traits (les segments) et des symboles (les liaisons) : c'est le schéma cinématique, comme le plan de l'architecte face au bâtiment réel. On peut ensuite simplifier encore : des cercles pour les solides, des traits pour les liaisons. La forme de ce graphe (une file, une boucle, des branches) classe le robot.</p>
+
+<div id="fig-plan-spatial"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Schéma cinématique</strong> : représentation graphique épurée et normalisée de la chaîne cinématique. C'est un outil d'analyse qui ne conserve que l'information utile au mouvement : les axes des liaisons et les lignes qui les relient (dont les longueurs sont utiles aux calculs). Pour passer de la chaîne au schéma, on supprime les enveloppes, les moteurs, les vis, les épaisseurs. Le schéma prépare les calculs : on y place les repères, puis on applique les méthodes de modélisation, par exemple la méthode de Denavit–Hartenberg.</p>
+<p><strong>Schéma plan (2D)</strong> : tous les mouvements du mécanisme se déroulent dans des plans parallèles à un même plan de référence, généralement le plan \(X - Y\) ; tous les axes de rotation sont parallèles entre eux, suivant l'axe \(Z\) : \(\vec{z}_0 \parallel \vec{z}_1 \parallel \vec{Z}\). On l'utilise pour simplifier l'apprentissage et l'analyse géométrique des robots simples (exemple du cours : le robot Quanser 2R).</p>
+<p><strong>Schéma spatial (3D)</strong> : les mouvements ne peuvent pas être décrits dans un unique plan ; les axes des liaisons ont des orientations différentes, par exemple suivant \(Z\), puis \(Y\), puis \(X\). C'est la représentation nécessaire pour la quasi-totalité des robots manipulateurs industriels (exemple du cours : le Kinova Jaco, 6 pivots en série). Exemple du bras spatial à deux pivots : pivot 1 entre le bâti 0 et le solide 1, d'axe vertical \(\vec{z}_0\) ; pivot 2 entre les solides 1 et 2, d'axe horizontal \(\vec{z}_1\), avec \(\vec{z}_0 \perp \vec{z}_1\).</p>
+
+<h4>Topologie des architectures</h4>
+
+<div id="fig-graphes"></div>
+
+<div class="tableau"><table>
+<tr><th>Topologie</th><th>Définition du cours</th><th>Exemples</th></tr>
+<tr><td>Chaîne ouverte simple (série)</td><td>chaque solide est relié à au plus deux autres ; aucune boucle ni embranchement ; l'extrémité terminale est libre</td><td>bras 6R, ROSA ONE Brain (neurochirurgie, 6 pivots en série)</td></tr>
+<tr><td>Chaîne fermée (parallèle)</td><td>au moins une boucle cinématique (un chemin fermé de solides et de liaisons) ; l'organe terminal est relié à la base par plusieurs chaînes ouvertes en parallèle</td><td>robot Delta, plateforme de Stewart, SurgiScope (3 chaînes, 3 DDL en translation)</td></tr>
+<tr><td>Arborescente</td><td>des embranchements : un solide peut être relié à plus de deux autres ; chaque extrémité est reliée à la racine par un chemin unique, sans boucle</td><td>humanoïde (tronc = solide racine), base mobile à deux bras</td></tr>
+<tr><td>Hybride</td><td>association de sous-chaînes série et parallèles ; peut comporter des boucles fermées</td><td>plateforme parallèle portant un bras série</td></tr>
+</table></div>
+
+<h4>Exemple</h4>
+<p>Les trois constructions de schéma du cours. Méthode : repérer chaque mouvement indépendant du robot réel, lui associer une liaison (R ou P) et son axe, puis relier les liaisons de la base vers l'effecteur.</p>
+<ul>
+<li>Robot cartésien <strong>PPP</strong> : trois liaisons prismatiques, trois translations indépendantes (3 DDL).</li>
+<li>Robot SCARA <strong>RRRP</strong> : trois rotations et une translation verticale (4 DDL), \(\overrightarrow{OM} = f(X_1, X_2, X_3, q)\).</li>
+<li>Robot articulé <strong>RRRRR</strong> : cinq articulations rotoïdes, cinq rotations indépendantes (5 DDL), \(\overrightarrow{OM} = f(\theta_1, \dots, \theta_5)\).</li>
+</ul>
+
+<h4>Formules clés</h4>
+<p>Schéma plan : \(\vec{z}_0 \parallel \vec{z}_1 \parallel \vec{Z}\). Série : chaque solide relié à au plus deux autres, pas de boucle. Parallèle : au moins une boucle. Arborescente : embranchements, pas de boucle. Hybride : série + parallèle.</p>
+<p class="complement">Complément : dans un graphe connexe de \(N\) solides et \(L\) liaisons, le nombre de boucles indépendantes vaut \(L - N + 1\). Il est nul pour une chaîne série ou arborescente.</p>
+</article>
+
+<article class="notion" id="n-architectures">
+<h3>Architectures et espace de travail</h3>
+<p class="chapeau">La façon dont les articulations sont enchaînées fixe la forme de la zone que l'outil peut atteindre.</p>
+
+<h4>Intuition</h4>
+<p>Un robot cartésien ne fait que des translations : son outil se promène dans une boîte. Un robot qui tourne autour d'une colonne et dont le bras avance et monte balaie un cylindre. Un bras articulé, comme le nôtre, atteint une zone plus complexe. Pour voir cette zone, il suffit d'essayer beaucoup de combinaisons de valeurs articulaires et de marquer chaque position atteinte par l'outil.</p>
+
+<div id="fig-archi"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Architecture cinématique</strong> : structure de la chaîne cinématique du robot (disposition des liaisons et des axes) ; elle détermine le volume de travail, la dextérité et les performances.</p>
+<div class="tableau"><table>
+<tr><th>Robot sériel (chaîne ouverte)</th><th>Mouvements</th><th>Forme de l'espace de travail</th></tr>
+<tr><td>Cartésien (rectiligne), PPP</td><td>déplacements linéaires selon X, Y, Z</td><td>parallélépipède</td></tr>
+<tr><td>Cylindrique</td><td>rotation autour de Z + translations verticale et radiale</td><td>cylindre</td></tr>
+<tr><td>Sphérique (polaire)</td><td>rotations + translation radiale</td><td>sphère</td></tr>
+<tr><td>SCARA</td><td>2 rotations dans le plan horizontal + 1 translation verticale</td><td>anneau extrudé</td></tr>
+<tr><td>Articulé (anthropomorphe)</td><td>articulations en série, comme un bras humain</td><td>forme complexe</td></tr>
+</table></div>
+<p>Robots parallèles (chaîne fermée) : Delta (3 bras), plateforme de Stewart (6 DDL, 6 actionneurs), parallèles planaires.</p>
+<p><strong>Espace de travail</strong> : ensemble des positions que peut atteindre l'effecteur, pour au moins une configuration de ses articulations, dans le respect des limites articulaires. Il dépend de l'architecture cinématique, de la longueur des segments, des limites articulaires, de la présence d'obstacles et de l'orientation imposée à l'effecteur. Il se caractérise par les positions accessibles, la frontière de la zone atteignable et le volume accessible. Les formes du tableau sont idéalisées : les limites articulaires et les obstacles réduisent la zone accessible (curseur « limites articulaires » de la figure).</p>
+<p><strong>Sériels ou parallèles.</strong> Sériels : grande flexibilité et grande enveloppe de travail, excellente dextérité, polyvalence, programmation plus simple, coût souvent inférieur, maintenance aisée. Parallèles : très grande précision et répétabilité, rigidité, vitesse et accélération élevées, bonne capacité de charge par rapport au poids propre, moins d'inertie mobile (actionneurs fixés à la base). Le choix dépend de l'application : précision, charge utile, vitesse, espace de travail, coût.</p>
+<p><strong>Charge utile</strong> : masse maximale que le robot peut transporter avec son effecteur, tout en conservant ses performances spécifiées. Il faut compter la masse totale transportée : effecteur + pièce + accessoires.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Une pince de 1,2 kg, une pièce de 2,5 kg et un adaptateur de 0,3 kg font une masse totale de 4,0 kg : un robot de charge utile 3 kg ne convient pas, même si la pièce seule pèse moins de 3 kg.</p>
+<p>Pour le SCARA de la figure (segments de 0,8 et 0,6), l'espace de travail vu de dessus est un anneau entre \(|0{,}8 - 0{,}6| = 0{,}2\) et \(0{,}8 + 0{,}6 = 1{,}4\) quand les pivots tournent librement ; la course verticale de la glissière lui donne son épaisseur.</p>
+
+<h4>Formules clés</h4>
+<p>Cartésien : parallélépipède. Cylindrique : cylindre. Polaire : sphère. Articulé : forme complexe. Masse à porter = effecteur + pièce + accessoires.</p>
+</article>
+
+<div class="fin-partie" data-section="schemas-architectures"></div>
+</section>
+
+<section class="partie" id="s-performances-medical">
+<p class="rang-partie">4 / 4</p>
+<h2>Performances et spécificités du médical</h2>
+
+<article class="notion" id="n-performances">
+<h3>Précision, répétabilité et temps de cycle</h3>
+<p class="chapeau">Trois chiffres pour juger un robot : atteint-il le bon point, y revient-il à chaque fois, et en combien de temps fait-il un cycle ?</p>
+
+<h4>Intuition</h4>
+<p>Pensez à un joueur de fléchettes. La précision, c'est viser juste : les fléchettes autour du centre. La répétabilité, c'est viser pareil : les fléchettes groupées, même si le groupe est à côté du centre. Un robot peut être très répétable sans être précis : il pose toujours la pièce au même endroit, mais à 2 mm de la cible.</p>
+<p>Pour la cadence, un cycle complet de pick and place enchaîne des mouvements et des temps fixes (saisir, déposer, attendre l'automate). Aller plus vite raccourcit les mouvements, pas les temps fixes.</p>
+
+<div id="fig-precision"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Précision</strong> : indique si le robot atteint le point demandé ; c'est la proximité de la cible (écart entre position atteinte et position demandée). <strong>Répétabilité</strong> : capacité du robot à reproduire plusieurs fois le même mouvement et à regrouper ses positions autour d'un même point (même mouvement + positions peu dispersées). Un robot peut être très répétable sans être parfaitement précis.</p>
+<div class="tableau"><table>
+<tr><th>Cas</th><th>Précision</th><th>Répétabilité</th><th>Résultat</th></tr>
+<tr><td>A</td><td>bonne</td><td>bonne</td><td>les 5 pièces arrivent près de P</td></tr>
+<tr><td>B</td><td>faible</td><td>bonne</td><td>regroupées mais décalées de P (écart constant, point atteint P')</td></tr>
+<tr><td>C</td><td>moyenne</td><td>faible</td><td>dispersées autour de P, moyenne proche de P</td></tr>
+<tr><td>D</td><td>faible</td><td>faible</td><td>éloignées de P et dispersées</td></tr>
+</table></div>
+<p><strong>Vitesse</strong> : rapidité de déplacement des articulations ou de l'outil. Vitesse articulaire (°/s pour les axes rotatifs, mm/s pour les axes linéaires), vitesse linéaire du TCP (<em>Tool Center Point</em>, en mm/s ou m/s), vitesse angulaire du TCP (°/s), vitesse moyenne \(v_{moy} = d / t\).</p>
+<p><strong>Temps de cycle</strong> : durée nécessaire au robot pour réaliser une opération complète et revenir à son état initial.</p>
+\[ T_{cycle} = T_{approche} + T_{prise} + T_{transfert} + T_{dépose} + T_{retour} + T_{synchronisation} \qquad N = \frac{3600}{T_{cycle}} \ \text{cycles/h} \]
+<p>Relation entre vitesse et temps de cycle : \(T_{cycle} = T_{mouvement} + T_{prise} + T_{dépose} + T_{attente}\). Si \(v\) augmente, \(T_{mouvement}\) diminue, donc \(T_{cycle}\) diminue ; la vitesse ne supprime pas les temps de prise, de dépose et d'attente.</p>
+
+<div id="fig-cycle"></div>
+
+<h4>Exemple du cours</h4>
+<p>Robot pick and place : approche 0,30 s, prise 0,20 s, transfert 0,55 s, dépose 0,15 s, retour 0,45 s, synchronisation 0,35 s.</p>
+\[ T_{cycle} = 0{,}30 + 0{,}20 + 0{,}55 + 0{,}15 + 0{,}45 + 0{,}35 = 2{,}00 \text{ s/cycle} \qquad N = \frac{3600}{2{,}00} = 1800 \text{ cycles/h, soit } 30 \text{ cycles/min} \]
+<p>Cette cadence est théorique : en production, elle est réduite par les arrêts, les défauts, la maintenance et l'alimentation en pièces. <span class="complement">Si l'on double la vitesse, seuls l'approche, le transfert et le retour sont divisés par deux : \(T_{cycle} = 1{,}35\) s et \(N \approx 2667\) cycles/h. La cadence n'est pas doublée (vérifiable sur la figure avec « vitesse × 2 »).</span></p>
+
+<h4>Rappel : vitesse moyenne et vitesse instantanée</h4>
+<p>La vitesse moyenne sur un trajet est \(v_{moy} = d / t\). La vitesse instantanée est la limite de cette moyenne sur un intervalle de temps de plus en plus court : c'est la dérivée de la position par rapport au temps, \(v(t) = \dfrac{dx}{dt} = \dot{x}\), qui se lit comme la pente de la tangente à la courbe \(x(t)\). Règles utiles : la dérivée de \(t^n\) est \(n\,t^{n-1}\), celle de \(\sin t\) est \(\cos t\), celle de \(\cos t\) est \(-\sin t\), et pour une fonction composée, \(\frac{d}{dt}\cos\theta(t) = -\sin\theta(t)\,\dot{\theta}\).</p>
+
+<div id="fig-derivee"></div>
+
+<h4>Formules clés</h4>
+\[ T_{cycle} = \sum T_i \qquad N = \frac{3600}{T_{cycle}} \qquad v_{moy} = \frac{d}{t} \qquad v(t) = \frac{dx}{dt} \]
+</article>
+
+<article class="notion" id="n-robotique-medicale">
+<h3>Spécificités de la robotique médicale</h3>
+<p class="chapeau">Les mêmes technologies que dans l'industrie, mais de nouvelles exigences : la pièce est un patient qui respire, l'opérateur est au contact, et une erreur peut être irréversible.</p>
+
+<h4>Intuition</h4>
+<p>Un robot industriel vise une pièce posée, immobile, toujours au même endroit. Un robot médical vise une cible dans un corps qui bouge : respiration, battements cardiaques, mouvements involontaires. S'il vise le point planifié sans suivre ce mouvement, il le manque. D'où le besoin d'une perception adaptative : imagerie en temps réel, recalage anatomique, suivi des mouvements physiologiques.</p>
+
+<div id="fig-respiration"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Robotique médicale</strong> : application particulière de la robotique dans laquelle les robots sont utilisés pour assister les professionnels de santé, améliorer la précision des interventions et faciliter la prise en charge des patients. Robotique médicale = robot + professionnel de santé + patient + environnement clinique.</p>
+<div class="tableau"><table>
+<tr><th>Critère</th><th>Robotique industrielle</th><th>Robotique médicale</th></tr>
+<tr><td>Environnement</td><td>structuré, statique et contrôlé</td><td>vivant, variable et non structuré</td></tr>
+<tr><td>Objet d'intervention</td><td>produit ou pièce standardisée</td><td>patient variable, tissus déformables</td></tr>
+<tr><td>Relation avec l'humain</td><td>séparation physique, zone d'exclusion</td><td>contact direct ou interaction avec le patient</td></tr>
+<tr><td>Objectif principal</td><td>performance, vitesse, cadence</td><td>assistance, précision, sécurité</td></tr>
+<tr><td>Commande</td><td>programmée et déterministe</td><td>téléopérée, adaptative et supervisée</td></tr>
+<tr><td>Sécurité</td><td>barrières, clôtures, arrêt d'urgence</td><td>limitation des forces, détection de collision, sécurité intrinsèque</td></tr>
+</table></div>
+<p>Les six ruptures du cours et leur conséquence :</p>
+<ul>
+<li><strong>Du produit standardisé au patient variable</strong> : perception adaptative (imagerie en temps réel, recalage anatomique, suivi des mouvements physiologiques). C'est la figure ci-dessus.</li>
+<li><strong>De la zone d'exclusion au contact direct</strong> : sécurité intrinsèque (limitation des forces et des couples, détection de collision, arrêt instantané, redondance des capteurs).</li>
+<li><strong>De la précision géométrique à la précision biomécanique</strong> : passer du repère cartésien au repère anatomique (repérage par imagerie, suivi du mouvement physiologique, asservissement visuel). C'est l'outil des pages sur les repères et les matrices.</li>
+<li><strong>De la reprogrammation à la décision assistée</strong> : l'humain ne programme plus en amont, il supervise et pilote pendant l'acte, avec une responsabilité clinique directe.</li>
+<li><strong>De la fiabilité économique à la fiabilité vitale</strong> : dispositif médical souvent de classe III, normes ISO 13485, IEC 60601, ISO 14971 (au lieu de l'ISO 10218), traçabilité obligatoire, essais cliniques, certification ; une erreur est souvent irréversible.</li>
+<li><strong>De l'environnement contrôlé à l'environnement contraint</strong> : stérilisation ou usage unique, biocompatibilité, compatibilité IRM (actionneurs piézoélectriques, pas de matériau ferromagnétique), surfaces lisses sans zone de rétention bactérienne.</li>
+</ul>
+<p>Cinq axes à repenser : perception, sécurité, commande, précision, validation. Objectifs : assister, diagnostiquer, traiter, rééduquer. Exigences : précision, sécurité, fiabilité, interaction avec l'humain.</p>
+
+<h4>Interfaces homme-machine</h4>
+<p>Une IHM est l'ensemble des moyens qui permettent à un professionnel de santé ou à un patient d'interagir avec un système robotisé médical : commander, observer, superviser. Le praticien reste dans la boucle. En <strong>téléopération</strong> (maître-esclave, comme le da Vinci), le chirurgien commande les instruments depuis une console ; le système peut réduire l'amplitude des mouvements (mise à l'échelle, par exemple 1 cm de la main donne 3 mm à l'instrument) et filtrer les tremblements.</p>
+
+<div id="fig-teleop"></div>
+
+<div class="tableau"><table>
+<tr><th>Forme d'IHM</th><th>Principe</th><th>Exemple</th><th>Limite principale</th></tr>
+<tr><td>Téléopération</td><td>commande à distance depuis une console</td><td>da Vinci</td><td>retour haptique limité, encombrement, coût</td></tr>
+<tr><td>Co-manipulation</td><td>chirurgien et robot tiennent ensemble l'instrument ; barrière virtuelle</td><td>Mako</td><td>recalage image-patient indispensable</td></tr>
+<tr><td>Haptique</td><td>restitue les sensations de contact (tactile, kinesthésique)</td><td>simulateur à retour d'effort</td><td>capteurs à miniaturiser, retard, coût</td></tr>
+<tr><td>Multimodale</td><td>commande vocale ou gestuelle sans toucher</td><td>zoom vocal, défilement d'images</td><td>bruit du bloc, gestes mal reconnus</td></tr>
+<tr><td>Immersive</td><td>RV pour planifier et former, RA pour guider pendant l'opération</td><td>modèle 3D superposé à la vue</td><td>recalage en temps réel, déformation des tissus</td></tr>
+<tr><td>Cerveau-machine (BCI)</td><td>traduit l'activité cérébrale en commandes</td><td>BrainGate</td><td>chirurgie des implants, fiabilité, données neuronales</td></tr>
+</table></div>
+<p>Enjeux des IHM médicales : clarté, ergonomie et adaptation, précision et fidélité, réactivité (latence), sécurité (alertes, état sûr en cas de panne), cybersécurité.</p>
+
+<h4>Classification et historique</h4>
+<p>Quatre critères complémentaires et indépendants : <strong>domaine</strong> (chirurgicaux, rééducation, exosquelettes et orthèses, assistance et mobilité, diagnostic et navigation, téléprésence, logistique hospitalière), <strong>autonomie</strong> (téléopérés, programmés, adaptatifs, autonomes supervisés), <strong>mode d'interaction</strong> (sans contact, contact externe, invasif, co-manipulation), <strong>fonction médicale</strong> (assister, diagnostiquer, traiter, rééduquer).</p>
+<p>Historique : 1985, PUMA 200 pour une biopsie cérébrale guidée par scanner ; 1992, ROBODOC (prothèse de hanche) ; 1994–1996, AESOP (porte-endoscope, commande vocale) ; 1997–2000, da Vinci ; 1998–2001, ZEUS ; 2001, opération Lindbergh (téléchirurgie New York – Strasbourg) ; depuis 2010, Mako, ROSA, Lokomat, exosquelettes, micro-robots, IA. Écosystème : marché de plus de 16 milliards de dollars ; acteurs : patients et soignants, ingénieurs, fabricants, hôpitaux, autorités (au Maroc, l'AMMPS pour les dispositifs médicaux).</p>
+
+<h4>Exemple</h4>
+<p>Mise à l'échelle du cours : avec un rapport 1 cm → 3 mm, un mouvement de la main de 2 cm donne un mouvement de l'instrument de \(2 \times 3 = 6\) mm, et un tremblement de la main de 1 mm n'en fait plus que \(0{,}3\) mm à l'instrument, avant même tout filtrage. Sur la figure, réglez le rapport sur 0,3 et activez le tremblement pour le constater.</p>
+
+<h4>Formules clés</h4>
+<p>Robotique médicale = robot + professionnel de santé + patient + environnement clinique. Cinq axes de rupture : perception, sécurité, commande, précision, validation. Mise à l'échelle : déplacement instrument = rapport × déplacement de la main.</p>
+</article>
+
+<div class="fin-partie" data-section="performances-medical"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/robot-systeme.js"></script>
+<script src="../../figures/anatomie.js"></script>
+<script src="../../figures/articulations-ddl.js"></script>
+<script src="../../figures/liaisons.js"></script>
+<script src="../../figures/schemas-topologies.js"></script>
+<script src="../../figures/architectures.js"></script>
+<script src="../../figures/performances.js"></script>
+<script src="../../figures/robotique-medicale.js"></script>
+</body>
+</html>

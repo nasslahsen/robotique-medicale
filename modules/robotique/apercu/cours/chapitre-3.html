@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Orientations</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 3. -->
+<main class="cours-chapitre" data-chapitre="3">
+<p class="etiquette" data-etiquette></p>
+<h1>Orientations</h1>
+
+<section class="partie" id="s-matrice-rotation">
+<p class="rang-partie">1 / 3</p>
+<h2>La matrice de rotation et ses propriétés</h2>
+
+<article class="notion" id="n-matrice-rotation">
+<h3>Matrice de rotation</h3>
+<p class="chapeau">Pour dire comment un objet est tourné, on donne les directions des axes de son repère, vues depuis le repère fixe. Rangées en colonnes, elles forment la matrice de rotation.</p>
+
+<h4>Intuition</h4>
+<p>Attachez un repère \(R_1\) à un objet. Quand l'objet tourne, ses axes \(\vec{x}_1\), \(\vec{y}_1\), \(\vec{z}_1\) tournent avec lui. Pour décrire son orientation, il suffit de dire où pointent ces trois axes, en coordonnées du repère fixe \(R_0\). Chaque axe donne trois nombres, d'où une matrice \(3 \times 3\).</p>
+<p>Ces nombres, vous les avez déjà calculés : ce sont les produits scalaires de l'exercice des deux repères. La matrice de rotation n'est que leur rangement.</p>
+
+<div id="fig-rot"></div>
+
+<h4>Formalisation</h4>
+<p>Deux repères de même origine \(O\) : \(A\) (repère fixe) et \(B\) (repère de l'objet). La matrice de rotation \(R^{A,B}\) a pour colonnes les coordonnées des axes de \(B\) exprimées dans \(A\) :</p>
+\[ R^{A,B} = \begin{bmatrix} r_{11} & r_{12} & r_{13} \\ r_{21} & r_{22} & r_{23} \\ r_{31} & r_{32} & r_{33} \end{bmatrix} \qquad \text{colonne 1 : } \vec{x}_B,\ \text{colonne 2 : } \vec{y}_B,\ \text{colonne 3 : } \vec{z}_B \]
+<p>Notations équivalentes utilisées dans le cours : \(R^{i,j} = {}^iR_j = R_{ij} = R^i_j\).</p>
+<p>Pour un solide \(S\) et le repère fixe \(R_0\) :</p>
+\[ R^{(0,S)} = \Big[\ [\vec{x}_S]_{R_0} \quad [\vec{y}_S]_{R_0} \quad [\vec{z}_S]_{R_0}\ \Big] \]
+<p>Chaque coefficient est un produit scalaire entre un axe de \(R_0\) et un axe de \(R_S\) : par exemple \(r_{21} = \vec{y}_0 \cdot \vec{x}_S\).</p>
+<p><strong>Rotation d'angle \(\alpha\) autour de \(\vec{z}_0\).</strong> Avec les projections de l'exercice des deux repères, \([\vec{x}_1]_{R_0} = (\cos\alpha;\ \sin\alpha;\ 0)\), \([\vec{y}_1]_{R_0} = (-\sin\alpha;\ \cos\alpha;\ 0)\), \([\vec{z}_1]_{R_0} = (0;\ 0;\ 1)\) :</p>
+\[ R^{0,1} = R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \]
+<p><strong>À quoi elle sert.</strong> Un vecteur fixe dans \(R_1\) (par exemple la direction d'un instrument tenu par le robot) a des composantes connues \(V^1\). Ses composantes dans \(R_0\) s'obtiennent en multipliant par la matrice : \(V^0 = R^{0,1}\,V^1\). C'est la relation (1.2), détaillée dans la page « Changement de repère ».</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\alpha = 30°\) et un vecteur \(V^1 = (2;\ 1;\ 0)^T\), fixe dans \(R_1\).</p>
+\[ R^{0,1} = \begin{pmatrix} 0{,}866 & -0{,}5 & 0 \\ 0{,}5 & 0{,}866 & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad V^0 = \begin{pmatrix} 0{,}866 \times 2 + (-0{,}5) \times 1 \\ 0{,}5 \times 2 + 0{,}866 \times 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 1{,}232 \\ 1{,}866 \\ 0 \end{pmatrix} \]
+<p>Réglez la figure sur \(\alpha = 30°\), \(V^1_x = 2\), \(V^1_y = 1\) pour retrouver ce résultat.</p>
+
+<h4>Rappel : produit d'une matrice par un vecteur</h4>
+<p>Chaque composante du résultat est le produit d'une <strong>ligne</strong> de la matrice par la <strong>colonne</strong> du vecteur : on multiplie terme à terme et on additionne. Une autre lecture, très utile ici : \(R\,V\) est une combinaison des colonnes de \(R\), avec pour coefficients les composantes de \(V\).</p>
+\[ \begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} u \\ v \end{pmatrix} = \begin{pmatrix} a u + b v \\ c u + d v \end{pmatrix} = u \begin{pmatrix} a \\ c \end{pmatrix} + v \begin{pmatrix} b \\ d \end{pmatrix} \]
+<p>Ainsi \(R^{0,1}\,(1;\ 0;\ 0)^T\) est la première colonne : c'est bien \([\vec{x}_1]_{R_0}\). Le bouton « Détailler le produit » de la figure parcourt les lignes une par une.</p>
+
+<h4>Formules clés</h4>
+\[ R^{(0,S)} = \Big[\ [\vec{x}_S]_{R_0}\ \ [\vec{y}_S]_{R_0}\ \ [\vec{z}_S]_{R_0}\ \Big] \qquad R^{i,j} = {}^iR_j = R_{ij} = R^i_j \]
+\[ R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad V^0 = R^{0,1}\,V^1 \]
+</article>
+
+<article class="notion" id="n-so3">
+<h3>Propriétés : le groupe SO(3)</h3>
+<p class="chapeau">N'importe quel tableau de 9 nombres n'est pas une rotation. Ses colonnes doivent former un vrai repère : trois vecteurs unitaires, perpendiculaires, dans le bon sens.</p>
+
+<h4>Intuition</h4>
+<p>Les colonnes d'une matrice de rotation sont les axes d'un repère tourné. Un repère ne se déforme pas quand on le tourne : ses axes restent de longueur 1 et perpendiculaires entre eux, et la main droite reste une main droite. Ces trois conditions définissent l'ensemble des matrices de rotation, noté \(SO(3)\). Elles ont une conséquence très pratique : pour défaire une rotation, il suffit de transposer la matrice.</p>
+
+<div id="fig-so3"></div>
+
+<h4>Formalisation</h4>
+<p>L'ensemble des matrices de rotation forme le groupe spécial orthogonal \(SO(3)\), caractérisé par :</p>
+<div class="tableau"><table>
+<tr><th>Propriété</th><th>Expression</th><th>Signification</th></tr>
+<tr><td>Orthogonalité</td><td>\(\mathbf{R}^T\mathbf{R} = \mathbf{I}\)</td><td>les colonnes sont orthonormées</td></tr>
+<tr><td>Inverse = transposée</td><td>\(\mathbf{R}^{-1} = \mathbf{R}^T\)</td><td>changement de repère facile</td></tr>
+<tr><td>Déterminant unitaire</td><td>\(\det(\mathbf{R}) = +1\)</td><td>conservation de l'orientation (pas de réflexion)</td></tr>
+<tr><td>Norme des colonnes</td><td>\(\|\vec{x}'\| = \|\vec{y}'\| = \|\vec{z}'\| = 1\)</td><td>vecteurs unitaires</td></tr>
+</table></div>
+<p><strong>Conséquence pratique</strong> : l'inverse d'une rotation est sa transposée, ce qui est très économique en calcul (pas d'inversion matricielle coûteuse).</p>
+<p>Pourquoi \(\mathbf{R}^T\mathbf{R} = \mathbf{I}\) : l'élément \((i, j)\) de \(\mathbf{R}^T\mathbf{R}\) est le produit scalaire de la colonne \(i\) par la colonne \(j\). Les colonnes étant les axes d'un repère orthonormé, ce produit vaut 1 si \(i = j\) et 0 sinon. C'est ce que la figure affiche dans la matrice \(\mathbf{R}^T\mathbf{R}\).</p>
+<p>Conséquence pour le nombre de paramètres : les 9 coefficients sont liés par 6 contraintes (3 normes égales à 1, 3 produits scalaires nuls). Il ne reste que \(9 - 6 = 3\) paramètres indépendants pour décrire une orientation : on les choisira sous forme d'angles d'Euler.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec \(R = R_z(30°)\) :</p>
+\[ \text{colonne 1} \cdot \text{colonne 1} = 0{,}866^2 + 0{,}5^2 = 0{,}75 + 0{,}25 = 1 \]
+\[ \text{colonne 1} \cdot \text{colonne 2} = 0{,}866 \times (-0{,}5) + 0{,}5 \times 0{,}866 = 0 \qquad \det R = 0{,}866^2 + 0{,}5^2 = 1 \]
+<p>Et la matrice \(\begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1 \end{pmatrix}\) a des colonnes orthonormées mais un déterminant \(-1\) : c'est un miroir (l'axe \(z\) est retourné), pas une rotation. Bouton « Miroir » sur la figure.</p>
+
+<h4>Rappel : transposée et déterminant</h4>
+<p><strong>Transposée.</strong> On échange lignes et colonnes : la ligne \(i\) devient la colonne \(i\). Une matrice \([m \times n]\) devient \([n \times m]\). Règle utile : \((AB)^T = B^T A^T\).</p>
+<p><strong>Déterminant.</strong> Pour une matrice \(2 \times 2\) : \(\det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc\). Pour une \(3 \times 3\), on développe sur la première ligne :</p>
+\[ \det\begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix} = a(ei - fh) - b(di - fg) + c(dh - eg) \]
+<p>Le déterminant mesure comment la matrice change les volumes, avec un signe. Une rotation ne change ni les volumes ni le sens du repère : \(\det R = +1\). Un déterminant \(-1\) correspond à un repère indirect.</p>
+
+<h4>Formules clés</h4>
+\[ \mathbf{R}^T\mathbf{R} = \mathbf{I} \qquad \mathbf{R}^{-1} = \mathbf{R}^T \qquad \det\mathbf{R} = +1 \qquad 9 - 6 = 3 \text{ paramètres} \]
+</article>
+
+<div class="fin-partie" data-section="matrice-rotation"></div>
+</section>
+
+<section class="partie" id="s-rotations-elementaires">
+<p class="rang-partie">2 / 3</p>
+<h2>Rotations élémentaires</h2>
+
+<article class="notion" id="n-rotations-elementaires">
+<h3>Rotations élémentaires</h3>
+<p class="chapeau">Les briques de base de toute orientation : une rotation autour d'un seul axe principal, x, y ou z.</p>
+
+<h4>Intuition</h4>
+<p>Une matrice de rotation contient 9 nombres : ce n'est pas intuitif. Mais une rotation autour d'un seul axe est très simple : l'axe de rotation ne bouge pas, et les deux autres axes tournent dans le plan qui lui est perpendiculaire, exactement comme dans le cas plan de la page précédente. Toute orientation pourra ensuite s'obtenir en enchaînant trois de ces rotations simples.</p>
+<p>Les noms viennent de l'aviation et de la navigation : rotation autour de \(z\) = <strong>lacet</strong> (yaw), autour de \(y\) = <strong>tangage</strong> (pitch), autour de \(x\) = <strong>roulis</strong> (roll).</p>
+
+<div id="fig-elem"></div>
+
+<h4>Formalisation</h4>
+<p>Sens positif : règle de la main droite autour de l'axe de rotation. Les trois matrices du cours :</p>
+\[ R_z(\alpha) = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 \\ \sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad \text{axe conservé : } \vec{z}_0 = \vec{z}_1 \]
+\[ R_y(\beta) = \begin{pmatrix} \cos\beta & 0 & \sin\beta \\ 0 & 1 & 0 \\ -\sin\beta & 0 & \cos\beta \end{pmatrix} \qquad \text{axe conservé : } \vec{y}_1 = \vec{y}_2 \]
+\[ R_x(\gamma) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos\gamma & -\sin\gamma \\ 0 & \sin\gamma & \cos\gamma \end{pmatrix} \qquad \text{axe conservé : } \vec{x}_2 = \vec{x}_s \]
+<p>Dans chaque matrice, la ligne et la colonne de l'axe conservé valent \((0, 1, 0)\) au bon endroit : cet axe est sa propre image.</p>
+<p><strong>Pourquoi le signe moins de \(R_y\) est en bas à gauche.</strong> L'ordre cyclique des axes est \(x \to y \to z \to x\). Pour une rotation autour de \(z\), le plan qui tourne va de \(x\) vers \(y\) ; pour \(x\), de \(y\) vers \(z\) ; pour \(y\), de \(z\) vers \(x\). Dans \(R_y\), le « premier » axe du plan est donc \(z\), et le signe moins se retrouve sur la ligne de \(z\). Avec la figure : choisissez \(y\), un petit angle positif, et regardez \(\vec{x}\) descendre vers \(-\vec{z}\) : sa troisième composante \(-\sin\beta\) est négative.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Rotation de \(90°\) autour de \(z\), puis de \(90°\) autour du nouvel axe \(x\) :</p>
+\[ R_z(90°) = \begin{pmatrix} 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \qquad R_x(90°) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & -1 \\ 0 & 1 & 0 \end{pmatrix} \qquad R_z(90°)\,R_x(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix} \]
+<p>Lecture par colonnes : \(\vec{x}_s = \vec{y}_0\), \(\vec{y}_s = \vec{z}_0\), \(\vec{z}_s = \vec{x}_0\). Dans l'ordre inverse, \(R_x(90°)\,R_z(90°) = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & -1 \\ 1 & 0 & 0 \end{pmatrix}\) : une orientation différente. L'ordre des rotations compte.</p>
+
+<h4>Rappel : produit de deux matrices</h4>
+<p>Pour multiplier \(A\) par \(B\), le nombre de colonnes de \(A\) doit être égal au nombre de lignes de \(B\) : \([m \times n] \times [n \times p] = [m \times p]\). L'élément \((i, j)\) du produit est le produit de la ligne \(i\) de \(A\) par la colonne \(j\) de \(B\). En général \(A B \neq B A\) : l'ordre compte. Le produit est associatif, \((AB)C = A(BC)\), ce qui permet d'écrire des chaînes de rotations sans parenthèses.</p>
+
+<h4>Formules clés</h4>
+\[ R_z(\alpha),\ R_y(\beta),\ R_x(\gamma) \text{ (ci-dessus)} \qquad \text{lacet (z), tangage (y), roulis (x)} \qquad A B \neq B A \]
+</article>
+
+<div class="fin-partie" data-section="rotations-elementaires"></div>
+</section>
+
+<section class="partie" id="s-angles-euler">
+<p class="rang-partie">3 / 3</p>
+<h2>Angles d'Euler</h2>
+
+<article class="notion" id="n-angles-euler">
+<h3>Angles d'Euler</h3>
+<p class="chapeau">Au lieu de donner 9 coefficients, on dit : « pour arriver à cette orientation, j'ai effectué 3 rotations simples l'une après l'autre ».</p>
+
+<h4>Intuition</h4>
+<p>Prenez un téléphone posé à plat. Tournez-le d'abord sur la table (lacet), puis inclinez-le autour de son nouvel axe transversal (tangage), puis faites-le rouler autour de son nouvel axe longitudinal (roulis). Trois angles suffisent pour décrire n'importe quelle orientation, ce qui est bien plus parlant que 9 nombres. Le point délicat : chaque rotation se fait autour d'un axe <strong>du téléphone déjà tourné</strong>, et l'ordre des rotations doit toujours être précisé.</p>
+
+<div id="fig-euler"></div>
+
+<h4>Formalisation</h4>
+<p>Objectif du cours : décrire n'importe quelle orientation 3D avec seulement 3 angles de rotation successifs, et identifier les limites de cette méthode (singularités). Il existe 12 conventions (combinaisons d'axes) ; en robotique et en santé digitale, on utilise principalement deux familles : <strong>Z-Y-X (angles RPY)</strong> et <strong>Z-Y-Z</strong>.</p>
+<p><strong>Convention ZYX</strong>, la convention par défaut dans la plupart des logiciels de robotique (ROS, MATLAB Robotics Toolbox, KUKA, ABB) :</p>
+<ul>
+<li>séquence : rotation autour de \(Z\) (lacet, yaw), puis autour de \(Y\) (tangage, pitch), puis autour de \(X\) (roulis, roll) ;</li>
+<li>type : axes <strong>mobiles</strong> (intrinsèques) : on tourne d'abord autour de l'axe \(Z\) du robot, puis autour de son <em>nouvel</em> axe \(Y\), puis autour de son <em>nouvel</em> axe \(X\).</li>
+</ul>
+<div class="tableau"><table>
+<tr><th>Étape</th><th>Rotation</th><th>Matrice</th><th>Axe conservé</th></tr>
+<tr><td>1. lacet</td><td>\(R_0\) tourne de \(\alpha\) autour de \(\vec{z}_0\) pour devenir \(R_1\)</td><td>\(R^{(0,1)} = R_z(\alpha)\)</td><td>\(\vec{z}_0 = \vec{z}_1\)</td></tr>
+<tr><td>2. tangage</td><td>à partir de \(R_1\), rotation \(\beta\) autour du nouvel axe \(\vec{y}_1\) : \(R_2\)</td><td>\(R^{(1,2)} = R_y(\beta)\)</td><td>\(\vec{y}_1 = \vec{y}_2\)</td></tr>
+<tr><td>3. roulis</td><td>à partir de \(R_2\), rotation \(\gamma\) autour du nouvel axe \(\vec{x}_2\) : \(R_s\)</td><td>\(R^{(2,s)} = R_x(\gamma)\)</td><td>\(\vec{x}_2 = \vec{x}_s\)</td></tr>
+</table></div>
+\[ R^{(0,2)} = R_z(\alpha)\,R_y(\beta) \qquad R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma) \]
+<p>Pourquoi en robotique : cette séquence correspond intuitivement au mouvement d'un véhicule ou d'un effecteur ; l'axe \(Z\) est souvent l'axe vertical de la base du robot ; l'axe \(X\) pointe souvent vers l'avant de l'outil.</p>
+<p>Pourquoi les matrices se multiplient à droite, dans l'ordre des rotations : chaque nouvelle rotation est décrite dans le repère obtenu juste avant, comme les maillons d'une chaîne \(R^{(0,1)}\,R^{(1,2)}\,R^{(2,s)}\).</p>
+<p><strong>Convention XYZ (téléphone du cours)</strong> : roulis autour de \(X\), puis tangage autour de \(Y\), puis lacet autour de \(Z\), toujours en axes mobiles :</p>
+\[ {}^0R_3 = R_x(\varphi)\,R_y(\theta)\,R_z(\psi) \]
+<p><strong>Singularité.</strong> Quand l'angle du milieu vaut \(\pm 90°\), le premier et le dernier axe de rotation sont alignés. Les deux rotations correspondantes produisent alors le même mouvement : on perd un degré de liberté dans la description. En ZYX, cela arrive pour \(\beta = \pm 90°\) ; dans l'exemple XYZ du cours, à \(\theta = 90°\), \(\vec{z}_2 = \vec{x}_0\).</p>
+
+<h4>Exemple du cours : le téléphone</h4>
+<p>Au départ, le repère du téléphone coïncide avec \(R_0 = (O_0, \vec{x}_0, \vec{y}_0, \vec{z}_0)\) : \(\vec{x}_0\) longitudinal, \(\vec{y}_0\) transversal, \(\vec{z}_0\) vers le plafond (vérification : \(\vec{x}_0 \times \vec{y}_0 = \vec{z}_0\)).</p>
+<p><strong>ZYX.</strong> Lacet : tourner de 90° vers la droite, \(\alpha = -90°\) (sens horaire vu de dessus) ; le téléphone reste à plat. Tangage : soulever puis incliner de 90° autour du nouvel axe \(\vec{y}_1\), \(\beta = +90°\) ; le téléphone est vertical. Calcul :</p>
+\[ R_z(-90°) = \begin{pmatrix} 0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \quad R_y(90°) = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 0 \end{pmatrix} \quad R^{(0,2)} = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & -1 \\ -1 & 0 & 0 \end{pmatrix} \]
+<p>(La diapositive nomme ces deux angles \(\psi\) et \(\theta\) ; dans les matrices de la convention ZYX ce sont \(\alpha\) et \(\beta\).) Première colonne : \(\vec{x}_2 = -\vec{z}_0\). Le roulis, autour de \(\vec{x}_2\), se fait donc autour de la verticale : c'est la singularité, le roulis produit le même effet qu'un lacet. Bouton « Téléphone ZYX » sur la figure, puis « Étape suivante » trois fois en faisant varier \(\gamma\).</p>
+<p><strong>XYZ.</strong> \(\varphi = +90°\) autour de \(\vec{x}_0\) : \(\vec{x}_1 = \vec{x}_0\), \(\vec{y}_1 = \vec{z}_0\), \(\vec{z}_1 = -\vec{y}_0\) (l'écran regarde vers \(-\vec{y}_0\)). \(\theta = +90°\) autour de \(\vec{y}_1\) : \(\vec{x}_2 = \vec{y}_0\), \(\vec{y}_2 = \vec{z}_0\), \(\vec{z}_2 = \vec{x}_0\) (l'écran regarde vers \(\vec{x}_0\)). \(\psi = -90°\) autour de \(\vec{z}_2\) : \(\vec{x}_3 = -\vec{z}_0\), \(\vec{y}_3 = \vec{y}_0\), \(\vec{z}_3 = \vec{x}_0\). Bouton « Téléphone XYZ » sur la figure : vérifiez chaque égalité à chaque étape.</p>
+
+<h4>Formules clés</h4>
+\[ \text{ZYX : } R^{(0,s)} = R_z(\alpha)\,R_y(\beta)\,R_x(\gamma) \qquad \text{XYZ : } {}^0R_3 = R_x(\varphi)\,R_y(\theta)\,R_z(\psi) \]
+<p>Axes mobiles : chaque rotation autour d'un axe du repère obtenu juste avant ; matrices multipliées à droite. Singularité quand l'angle du milieu vaut \(\pm 90°\).</p>
+</article>
+
+<div class="fin-partie" data-section="angles-euler"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/matrice-rotation.js"></script>
+<script src="../../figures/so3.js"></script>
+<script src="../../figures/rotations-elementaires.js"></script>
+<script src="../../figures/angles-euler.js"></script>
+</body>
+</html>
