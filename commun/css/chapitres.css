@@ -1,0 +1,53 @@
+/* Structure par chapitres : plan d'un sous-module et écran d'un chapitre. iPad paysage, un écran, sans défilement. */
+body.plan-chapitres, body.ecran-chapitre { height: 100dvh; overflow: hidden; display: flex; flex-direction: column; }
+.btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; white-space: nowrap; }
+.btn-barre {
+  display: inline-flex; align-items: center; height: 48px; padding: 0 20px; white-space: nowrap;
+  border: 2.5px solid var(--encre); border-radius: 14px; background: #fff; color: var(--encre);
+  font: 600 16px Inter, sans-serif; text-decoration: none; box-shadow: 3px 3px 0 var(--encre); transition: transform .1s, box-shadow .1s;
+}
+.btn-barre:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--encre); }
+
+/* ---------- Plan ---------- */
+.plan-chapitres .entete { max-width: 1180px; width: 100%; margin: 0 auto; padding: 22px 40px 0; display: flex; justify-content: center; }
+.plan-chapitres .entete h1 { font-size: 32px; font-weight: 800; margin: 0; }
+.choix-sm { display: inline-flex; gap: 6px; padding: 5px; background: var(--pale); border-radius: 16px; }
+.choix-sm a, .choix-sm .vide { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border-radius: 12px; font: 600 17px Inter, sans-serif; color: var(--doux); text-decoration: none; }
+.choix-sm a[aria-current="page"] { background: var(--encre); color: #fff; box-shadow: 3px 3px 0 var(--jeu); }
+.choix-sm .vide { opacity: .5; }
+.plan { position: relative; flex: 1; min-height: 0; width: 100%; max-width: 1240px; margin: 0 auto; }
+.plan .fleches { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.noeud-chapitre {
+  position: absolute; transform: translate(-50%, -50%); width: clamp(200px, 21%, 260px); min-height: 118px; padding: 18px 20px;
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  border-radius: 22px; border: 2px solid var(--trait); background: #f3f4f7; color: #3d4250; text-decoration: none;
+  transition: transform .1s;
+}
+.noeud-chapitre b { font: 800 21px/1.18 "Bricolage Grotesque", Inter, sans-serif; letter-spacing: -0.01em; }
+.noeud-chapitre span { font-size: 15px; line-height: 1.4; color: var(--doux); }
+.noeud-chapitre:active { transform: translate(-50%, -50%) scale(.98); }
+.noeud-chapitre.encours { background: #fff; border: 3px solid var(--jeu); color: var(--encre); }
+.noeud-chapitre.fait { background: var(--jeu-pale); border-color: var(--jeu-pale); color: var(--encre); }
+.noeud-chapitre.encours span, .noeud-chapitre.fait span { color: #3d4250; }
+.pied-plan { display: flex; justify-content: center; padding: 8px 40px 30px; }
+.btn.reprendre { height: auto; min-height: 72px; padding: 12px 40px; flex-direction: column; gap: 2px; font-size: 20px; max-width: 640px; }
+.btn.reprendre small { font: 500 15px Inter, sans-serif; opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 560px; }
+.tout-fait { color: var(--doux); font-size: 18px; margin: 0; }
+
+/* ---------- Écran d'un chapitre ---------- */
+.ecran-chapitre .entete { max-width: 1180px; width: 100%; margin: 0 auto; padding: 16px 40px 14px; }
+.ecran-chapitre .surtitre { font: 700 13px "JetBrains Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--jeu-texte); }
+.ecran-chapitre .entete h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.015em; margin: 2px 0 2px; line-height: 1.15; }
+.ecran-chapitre .entete p { margin: 0; color: var(--doux); font-size: 17px; }
+.deux-cartes { flex: 1; min-height: 0; width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 40px 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+.carte-ch { min-height: 0; display: flex; flex-direction: column; border: 1.5px solid var(--trait); border-radius: 28px; padding: 14px 20px; background: #fff; }
+.carte-ch.vise { border-color: var(--jeu); }
+.carte-tete { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 4px; }
+.carte-tete h2 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+.carte-ch .liste { list-style: none; margin: 0; padding: 0; overflow-y: auto; min-height: 0; }
+.carte-ch .liste a { display: flex; align-items: center; gap: 14px; min-height: 48px; padding: 4px 12px; border-radius: 14px; color: var(--encre); text-decoration: none; font-size: 17px; line-height: 1.3; }
+#cours .liste a { min-height: 64px; font-size: 19px; font-weight: 500; }
+.carte-ch .liste a:active { background: var(--fond-doux, #f6f7fa); }
+.carte-ch .liste a.fait { background: var(--jeu-pale); }
+.carte-ch .liste i { flex: none; min-width: 44px; font: 700 15px "JetBrains Mono", monospace; font-style: normal; color: var(--doux); text-align: center; }
+.carte-ch .liste a.fin i { color: var(--jeu-texte); }

@@ -2,11 +2,15 @@
  * Moteur des niveaux : étapes, retours, étoiles, sauvegarde, écran de fin.
  * Un niveau appelle NIVEAU({ id, init(fig), etapes: [{ nom, jouer(j) }] }).
  * Fin du niveau : le bouton principal mène à l'étape suivante de la carte (PLATEFORME.apres).
+ * Ouvert depuis S'entraîner (structure par chapitres, jouer.html?plan=<dossier>#<niveau>) : « Chapitre » au lieu de « Carte »,
+ * le bouton principal mène à l'exercice suivant du chapitre (puis la révision, le défi final, le retour au chapitre)
+ * et « Revoir dans le cours » ouvre la section qui réunit la page de cours visée.
  */
 (function () {
   "use strict";
   // Le module courant (<html data-module>) donne la liste des niveaux ; la progression passe par PLATEFORME.
   var P = window.PLATEFORME, MID = P.courant, MOD = P.module(MID);
+  var PLAN = new URLSearchParams(location.search).has("plan") && !!MOD.sections;
   var COCHE = '<svg class="coche" viewBox="0 0 30 30"><circle cx="15" cy="15" r="15"/><path d="M8.5 15.5l4.3 4.2 8.7-9"/></svg>';
   var ETOILE = '<svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z" stroke-width="1.4" stroke-linejoin="round"/></svg>';
 
@@ -18,15 +22,18 @@
   window.NIVEAU = function (def) {
     var liste = MOD.niveaux, rang = liste.findIndex(function (n) { return n.id === def.id; }), info = liste[rang] || { titre: def.id, chapitre: 0 };
     document.title = info.titre + " · " + MOD.titre;
-    P.noterDernier(MID, info.titre);
+    var plan = PLAN && P.avecChapitres(MID, P.smDe(MID, info.chapitre));
+    if (plan) P.noterPlan(MID, P.smDe(MID, info.chapitre), "S'entraîner : " + info.titre, location.href.replace(P.racine, ""));
+    else P.noterDernier(MID, info.titre);
     var nom = document.getElementById("nom-niveau"), ici = P.trouver(MID, "exos", def.id);
     nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : info.revision ? "RÉVISION · " : "EXERCICES · ") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
     var lienCarte = document.querySelector(".barre .carte-lien");
     if (lienCarte) lienCarte.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
+    if (lienCarte && plan) { lienCarte.href = P.urlChapitre(MID, info.chapitre); lienCarte.textContent = "Chapitre " + info.chapitre; }
     // lien vers la page de cours de la même notion, à côté du lien Carte
     if (info.cours) {
-      var lc = document.createElement("a");
-      lc.className = "carte-lien"; lc.href = "cours/" + info.id + ".html"; lc.textContent = "Cours";
+      var lc = document.createElement("a"), sCours = plan && P.sectionDe(MID, info.id);
+      lc.className = "carte-lien"; lc.href = sCours ? P.urlSection(MID, sCours.id, "n-" + info.id) : "cours/" + info.id + ".html"; lc.textContent = "Cours";
       nom.parentNode.insertBefore(lc, nom);
     }
 
@@ -303,8 +310,13 @@
       var nb = !restantes.length ? JEU.etoiles(erreurs) : trouvees ? 1 : 0;
       if (nb) P.marquer(MID, def.id, nb);
       // l'étape suivante sur la carte : le cours de la notion suivante, ou la révision, ou le boss
-      var suivant = P.apres(MID, "exos", def.id);
+      var suivant = plan ? null : P.apres(MID, "exos", def.id);
       if (suivant) P.noterDernier(MID, P.genre(suivant) + " : " + suivant.titre, suivant.url);
+      // S'entraîner : l'exercice suivant du chapitre, sinon le retour au chapitre
+      var ch = plan && P.chapitre(MID, info.chapitre), dansCh = ch ? ch.niveaux.map(function (x) { return x.id; }) : [];
+      var prochain = ch ? ch.niveaux[dansCh.indexOf(def.id) + 1] || null : null;
+      if (ch) P.noterPlan(MID, ch.sm, prochain ? "S'entraîner : " + prochain.titre : "Chapitre " + ch.id + " : " + ch.titre,
+        prochain ? P.urlExercice(MID, prochain.id).replace(P.racine, "") : P.urlChapitre(MID, ch.id).replace(P.racine, ""));
       var r = document.getElementById("resultat");
       var et = ""; for (var s = 0; s < 3; s++) et += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";
       var texte = restantes.length
@@ -324,8 +336,13 @@
         var lib = suivant.type === "cours" ? "Cours suivant" : suivant.boss ? "Le boss du chapitre" : suivant.revision ? "Révision du chapitre" : "Exercices suivants";
         b1 = E.h("a", "btn btn-suivant", lib + "<small>" + suivant.titre + "</small>", act); b1.href = P.urlEtape(suivant);
       }
+      if (ch) {
+        b1 = E.h("a", "btn btn-suivant", (prochain ? (prochain.boss ? "Le défi final" : prochain.revision ? "Révision du chapitre" : "Exercice suivant") + "<small>" + prochain.titre + "</small>"
+          : "Retour au chapitre<small>" + ch.titre + "</small>"), act);
+        b1.href = prochain ? P.urlExercice(MID, prochain.id) : P.urlChapitre(MID, ch.id);
+      }
       var b2 = E.h("a", "btn clair", "Rejouer", act); b2.href = "jouer.html#" + def.id; b2.addEventListener("click", function (e) { e.preventDefault(); location.reload(); });
-      var b3 = E.h("a", "btn clair", "Carte", act); b3.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
+      var b3 = E.h("a", "btn clair", ch ? "Chapitre" : "Carte", act); b3.href = ch ? P.urlChapitre(MID, ch.id) : P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
       [b2, b3].forEach(function (b) { b.style.cssText = "display:inline-flex;align-items:center;text-decoration:none"; });
       r.classList.add("on");
     }
@@ -341,7 +358,7 @@
       var page = (MOD.cours || []).filter(function (x) { return x.id === c[0]; })[0];
       var titre = (page ? page.titre : c[0]) + (c[2] ? " · " + c[2] : "");
       var a = E.h("a", "revoir", "<span>Revoir dans le cours</span><b>" + titre + "</b>", el);
-      a.href = "cours/" + c[0] + ".html" + (c[1] ? "#" + c[1] : "");
+      a.href = urlCours(c[0], c[1], false);
       if (apresEl && apresEl.nextSibling) el.insertBefore(a, apresEl.nextSibling);
       a.addEventListener("click", function (e) { e.preventDefault(); ouvrirCours(c[0], c[1], page ? page.titre : ""); });
     }
@@ -354,9 +371,16 @@
         f.addEventListener("click", function (e) { if (e.target === f) f.classList.remove("on"); });
       }
       f.querySelector(".fc-tete span").textContent = titre;
-      var fr = f.querySelector("iframe"), url = "cours/" + page + ".html?dans=1" + (ancre ? "#" + ancre : "");
+      var fr = f.querySelector("iframe"), url = urlCours(page, ancre, true);
       if (fr.getAttribute("src") !== url) fr.setAttribute("src", url);
       f.classList.add("on");
+    }
+
+    // Adresse d'un passage du cours : la page de la notion, ou (S'entraîner) la section qui la réunit, ancre préfixée par la notion
+    function urlCours(page, ancre, dans) {
+      var sc = plan && P.sectionDe(MID, page);
+      if (sc) return P.dossierChapitres(MID).replace("modules/" + MID + "/", "") + "cours/" + sc.id + ".html" + (dans ? "?dans=1" : "") + "#" + (ancre ? page + "-" + ancre : "n-" + page);
+      return "cours/" + page + ".html" + (dans ? "?dans=1" : "") + (ancre ? "#" + ancre : "");
     }
 
     window.essaiJeu = { aller: aller, n: n, erreurs: function () { return erreurs; } };

@@ -11,6 +11,9 @@
  * l'étape « cours » (page cours/<id>.html) puis l'étape « exos » (niveau du même id) ;
  * en fin de chapitre, la révision puis le boss. Rien n'est verrouillé : l'ordre est conseillé.
  * Une étape cours est faite quand la page a été lue jusqu'en bas ; une étape exos quand le niveau est fini.
+ *
+ * Structure par chapitres (module.js avec sections, pages dans modules/<id>/<dossierChapitres>/) : voir plus bas,
+ * « Chapitres ». Même stockage : sections lues dans e.sections, dernière page par sous-module dans e.plan.
  */
 (function () {
   "use strict";
@@ -22,7 +25,7 @@
 
   function lireTout() { try { return JSON.parse(localStorage.getItem(CLE) || "{}") || {}; } catch (e) { return {}; } }
   function ecrireTout(p) { try { localStorage.setItem(CLE, JSON.stringify(p)); } catch (e) { /* stockage indisponible */ } }
-  function etat(mid) { var p = lireTout(), e = p[mid] || {}; e.niveaux = e.niveaux || {}; e.lus = e.lus || {}; return e; }
+  function etat(mid) { var p = lireTout(), e = p[mid] || {}; e.niveaux = e.niveaux || {}; e.lus = e.lus || {}; e.sections = e.sections || {}; e.plan = e.plan || {}; return e; }
   function poser(mid, e) { var p = lireTout(); p[mid] = e; ecrireTout(p); }
 
   // Reprise des étoiles de l'ancien site (avant la plateforme), une seule fois.
@@ -81,7 +84,7 @@
     // Pages de cours lues jusqu'en bas.
     lu: function (mid, id) { return !!etat(mid).lus[id]; },
     marquerLu: function (mid, id) { var e = etat(mid); if (e.lus[id]) return; e.lus[id] = 1; poser(mid, e); },
-    effacer: function (mid) { var e = etat(mid); e.niveaux = {}; e.lus = {}; delete e.dernier; poser(mid, e); },
+    effacer: function (mid) { var e = etat(mid); e.niveaux = {}; e.lus = {}; e.sections = {}; e.plan = {}; delete e.dernier; poser(mid, e); },
     // Dernière page ouverte dans un module (niveau ou page de cours), chemin relatif à la racine.
     noterDernier: function (mid, titre, chemin) {
       var e = etat(mid); e.dernier = { chemin: chemin || location.href.replace(racine, ""), titre: titre, quand: Date.now() }; poser(mid, e);
@@ -188,9 +191,86 @@
     el.className = "site-barre";
     el.innerHTML = '<div class="site-barre-int">' +
       '<a class="site-retour" href="' + racine + 'index.html" aria-label="Tableau de bord">' + window.REGISTRE.semestre + "</a>" +
-      '<a class="site-module" href="' + P.urlCarte(P.courant, o.sm, o.chapitre) + '"><i></i><span>' + m.titre + "</span></a>" +
+      '<a class="site-module" href="' + (o.carte || P.urlCarte(P.courant, o.sm, o.chapitre)) + '"><i></i><span>' + m.titre + "</span></a>" +
       '<div class="droite">' + (o.droite || "") + "</div></div>";
     return el;
+  };
+
+  /* ---------------- Chapitres : plan, Cours en sections, S'entraîner ---------------- */
+  // Un sous-module suit cette structure quand ses chapitres ont des sections (module.js, « sections »).
+  // Cours lu : toutes les sections du chapitre lues (une section l'est aussi quand toutes ses notions avaient été lues
+  // sur l'ancienne carte). Exercices faits : tous les niveaux du chapitre finis. Rien n'est verrouillé.
+
+  P.avecChapitres = function (mid, sm) {
+    var M = P.module(mid);
+    return !!(M && M.sections && M.sections.some(function (s) { return P.smDe(mid, s.chapitre) === sm; }));
+  };
+  // Dossier des pages de la structure par chapitres, depuis la racine du site.
+  P.dossierChapitres = function (mid) { var M = P.module(mid); return "modules/" + mid + "/" + (M.dossierChapitres ? M.dossierChapitres + "/" : ""); };
+  P.sectionLue = function (mid, s) {
+    var e = etat(mid);
+    return !!e.sections[s.id] || s.notions.every(function (n) { return e.lus[n]; });
+  };
+  // Section lue : les pages de cours qu'elle réunit le sont aussi (l'ancienne carte reste juste).
+  P.marquerSection = function (mid, sid) {
+    var M = P.module(mid), s = (M.sections || []).filter(function (x) { return x.id === sid; })[0], e = etat(mid);
+    if (!s) return;
+    e.sections[sid] = 1; s.notions.forEach(function (n) { e.lus[n] = 1; }); poser(mid, e);
+  };
+  // Section qui contient une page de cours (notion).
+  P.sectionDe = function (mid, notion) {
+    return (P.module(mid).sections || []).filter(function (s) { return s.notions.indexOf(notion) >= 0; })[0] || null;
+  };
+  P.urlSection = function (mid, sid, ancre) { return racine + P.dossierChapitres(mid) + "cours/" + sid + ".html" + (ancre ? "#" + ancre : ""); };
+  P.urlChapitre = function (mid, ch) { return racine + P.dossierChapitres(mid) + "chapitre.html?ch=" + ch; };
+  P.urlPlan = function (mid, sm) { return racine + P.dossierChapitres(mid) + "index.html" + (sm ? "?sm=" + encodeURIComponent(sm) : ""); };
+  // Un niveau ouvert depuis S'entraîner : jouer.html?plan=<dossier>#<niveau>.
+  P.urlExercice = function (mid, nid) {
+    var M = P.module(mid);
+    return racine + "modules/" + mid + "/jouer.html?plan=" + encodeURIComponent(M.dossierChapitres || "") + "#" + nid;
+  };
+  // État d'un chapitre : sections (avec lue), niveaux (avec fait, etoiles), coursLu, exosFaits,
+  // etat : "fait" (cours lu et exercices faits), "encours" (quelque chose de commencé) ou "" (rien).
+  P.chapitre = function (mid, chid) {
+    var M = P.module(mid), e = etat(mid);
+    var ch = M.chapitres.filter(function (c) { return c.id === chid; })[0];
+    if (!ch) return null;
+    var sections = (M.sections || []).filter(function (s) { return s.chapitre === chid; }).map(function (s, k, l) {
+      return { id: s.id, titre: s.titre, notions: s.notions, rang: k + 1, total: l.length, lue: P.sectionLue(mid, s) };
+    });
+    var niveaux = M.niveaux.filter(function (n) { return n.chapitre === chid && n.pret; }).map(function (n) {
+      return { id: n.id, titre: n.titre, revision: !!n.revision, boss: !!n.boss, fait: !!e.niveaux[n.id], etoiles: e.niveaux[n.id] ? e.niveaux[n.id].etoiles || 0 : 0 };
+    });
+    var coursLu = sections.length > 0 && sections.every(function (s) { return s.lue; });
+    var exosFaits = niveaux.length > 0 && niveaux.every(function (n) { return n.fait; });
+    var commence = sections.some(function (s) { return s.lue || s.notions.some(function (n) { return e.lus[n]; }); }) ||
+      niveaux.some(function (n) { return n.fait; });
+    return { id: ch.id, titre: ch.titre, ligne: ch.ligne || ch.sous || "", avant: ch.avant || [], sm: P.smDe(mid, ch.id),
+      sections: sections, niveaux: niveaux, coursLu: coursLu, exosFaits: exosFaits,
+      etat: coursLu && exosFaits ? "fait" : commence ? "encours" : "" };
+  };
+  P.chapitresDe = function (mid, sm) {
+    return P.module(mid).chapitres.filter(function (c) { return P.smDe(mid, c.id) === sm; }).map(function (c) { return P.chapitre(mid, c.id); });
+  };
+  // Dernière page ouverte dans la structure par chapitres (section ou exercice), par sous-module.
+  P.noterPlan = function (mid, sm, titre, chemin) {
+    var e = etat(mid); e.plan[sm] = { chemin: chemin, titre: titre, quand: Date.now() }; poser(mid, e);
+    P.noterDernier(mid, titre, chemin);
+  };
+  // « Reprendre » : là où l'on s'est arrêté ; sinon la première section pas lue, puis le premier exercice pas fait.
+  P.reprendre = function (mid, sm) {
+    var e = etat(mid), d = e.plan[sm];
+    if (d && d.chemin) return { url: racine + d.chemin, titre: d.titre, deja: true };
+    var chs = P.chapitresDe(mid, sm);
+    for (var i = 0; i < chs.length; i++) {
+      var s = chs[i].sections.filter(function (x) { return !x.lue; })[0];
+      if (s) return { url: P.urlSection(mid, s.id), titre: "Cours : " + s.titre, deja: false };
+    }
+    for (var j = 0; j < chs.length; j++) {
+      var n = chs[j].niveaux.filter(function (x) { return !x.fait; })[0];
+      if (n) return { url: P.urlExercice(mid, n.id), titre: "S'entraîner : " + n.titre, deja: false };
+    }
+    return null;
   };
 
   // Couleur du module courant, appliquée avant l'affichage.

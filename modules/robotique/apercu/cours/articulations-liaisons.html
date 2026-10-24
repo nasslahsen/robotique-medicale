@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Articulations, DDL et liaisons</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours : articulations-ddl, liaisons. -->
+<main class="section-cours" data-section="articulations-liaisons">
+<p class="etiquette" data-etiquette></p>
+<h1>Articulations, DDL et liaisons</h1>
+
+<article class="notion" id="n-articulations-ddl">
+<h2>Articulations, DDL et configuration articulaire</h2>
+<p class="chapeau">Compter les mouvements indépendants d'un robot, et distinguer ce que commandent les articulations de ce que peut faire l'outil.</p>
+
+<h3>Intuition</h3>
+<p>Compter les degrés de liberté (DDL), c'est compter combien de « boutons » indépendants on peut tourner pour faire bouger le robot : chaque moteur d'articulation en est un. La liste des valeurs de ces boutons décrit la posture du robot. Mais ce qui intéresse l'utilisateur, c'est l'outil : où il est et comment il est tourné. Ajouter des articulations ne donne pas toujours plus de liberté à l'outil.</p>
+
+<div id="fig-chaine"></div>
+
+<h3>Formalisation</h3>
+<p><strong>Degré de liberté.</strong> Un degré de liberté représente un mouvement indépendant qu'un système mécanique peut réaliser. Articulation active → mouvement indépendant → 1 DDL. Une articulation rotoïde a une variable angulaire \(\theta_i\) (1 DDL angulaire), une prismatique une variable linéaire \(d_i\) (1 DDL linéaire). Chaque articulation active contribue généralement à un degré de liberté.</p>
+<p><strong>Pose complète dans l'espace.</strong> L'effecteur peut au maximum effectuer :</p>
+\[ 6 \text{ DDL} = 3 \text{ DDL de position } (x, y, z) + 3 \text{ DDL d'orientation } (R_x, R_y, R_z) \]
+<p>Dans le plan (comme sur la figure), c'est \(3 = 2\) de position \((x, y)\) \(+ 1\) d'orientation. Sur la figure, chaque glissière est suivie d'un coude fixe de 90°, comme les glissières orthogonales d'un robot cartésien.</p>
+<p><strong>Trois notions liées mais distinctes.</strong></p>
+<div class="tableau"><table>
+<tr><th>Notion</th><th>Définition</th><th>Ce qu'elle décrit</th></tr>
+<tr><td>Nombre d'axes du robot</td><td>nombre de mouvements articulaires commandés</td><td>ce que le contrôleur commande</td></tr>
+<tr><td>DDL articulaires</td><td>nombre de mouvements indépendants des articulations</td><td>ce que chaque articulation peut faire</td></tr>
+<tr><td>DDL de l'effecteur</td><td>nombre de mouvements indépendants réalisables par l'effecteur</td><td>ce que l'outil peut réaliser globalement</td></tr>
+</table></div>
+<p><strong>Configuration articulaire</strong> : position et orientation des segments les uns par rapport aux autres, décrite par l'ensemble des variables articulaires,</p>
+\[ q = [\,q_1,\ q_2,\ \dots,\ q_n\,]^T \qquad q_i = \theta_i \text{ (rotoïde) ou } d_i \text{ (prismatique)} \]
+<p>\(q_i\) définit la position d'un segment par rapport au segment précédent : la configuration articulaire est la posture relative des segments.</p>
+<p><strong>Configuration opérationnelle</strong> : position et orientation de l'effecteur par rapport au corps de base, indépendamment de la configuration des articulations,</p>
+\[ X = [\,x,\ y,\ z,\ \alpha,\ \beta,\ \gamma\,]^T \qquad p = [\,x,\ y,\ z\,]^T \qquad R = R(\alpha, \beta, \gamma) \]
+<p>Le passage de \(q\) à \(X\) est le modèle géométrique direct, \(p = f(q)\), traité en fin de parcours avec le bras 2R.</p>
+
+<h3>Exemple</h3>
+<p>Exemples du cours :</p>
+<div class="tableau"><table>
+<tr><th>Robot</th><th>Axes</th><th>DDL articulaires</th><th>DDL de l'effecteur</th></tr>
+<tr><td>Cartésien</td><td>3</td><td>3 translations</td><td>3 DDL de position</td></tr>
+<tr><td>Articulé</td><td>6</td><td>6 rotations</td><td>jusqu'à 6 DDL (position + orientation)</td></tr>
+<tr><td>Redondant</td><td>7</td><td>7 mouvements indépendants</td><td>au maximum 6 DDL, plus 1 DDL de redondance</td></tr>
+</table></div>
+<p>Exemple clé : 7 axes articulaires peuvent produire une pose d'effecteur limitée à 6 DDL, avec une redondance. Sur la figure, le bouton « Bras redondant » construit l'équivalent plan : 4 pivots pour 3 DDL de l'effecteur, soit 1 DDL de redondance ; on peut alors bouger le coude sans bouger la pince.</p>
+
+<h3>Formules clés</h3>
+\[ q = [q_1, \dots, q_n]^T \qquad X = [x, y, z, \alpha, \beta, \gamma]^T \qquad 6 \text{ DDL} = 3 + 3 \qquad \text{DDL effecteur} \leq 6 \]
+</article>
+
+<article class="notion" id="n-liaisons">
+<h2>DDL d'un solide et liaisons normalisées</h2>
+<p class="chapeau">Un solide libre peut bouger de six façons indépendantes. Une liaison en bloque certaines : ce qui reste, ce sont les mouvements possibles entre les deux pièces.</p>
+
+<h3>Intuition</h3>
+<p>Tenez un objet en l'air : vous pouvez le déplacer selon trois directions et le tourner autour de trois axes. Posez-le maintenant sur une charnière : il ne peut plus que tourner autour de l'axe de la charnière. La charnière a « supprimé » cinq mouvements. Les liaisons normalisées sont un catalogue de ces façons de relier deux solides, chacune caractérisée par les mouvements qu'elle laisse.</p>
+<p>On suppose les solides <strong>indéformables</strong> : la distance entre deux points quelconques d'un solide reste constante au cours du temps, quel que soit son mouvement. En réalité les bras fléchissent un peu sous la charge, mais ces déformations sont négligées pour la modélisation géométrique de base. Le mouvement d'un solide se réduit alors à une rotation et une translation : \(\mathbf{p}_2 = \mathbf{R}\,\mathbf{p}_1 + \mathbf{t}\).</p>
+
+<div id="fig-liaisons"></div>
+
+<h3>Formalisation</h3>
+<p><strong>Degrés de liberté d'un solide</strong> : nombre de paramètres indépendants nécessaires pour définir complètement la situation (position + orientation) d'un solide par rapport à un repère de référence.</p>
+\[ \text{dans l'espace : } 3 \text{ translations } (T_x, T_y, T_z) + 3 \text{ rotations } (R_x, R_y, R_z) = 6 \text{ DDL} \]
+\[ \text{dans un plan : } 2 \text{ translations } (T_x, T_y) + 1 \text{ rotation } (R_z) = 3 \text{ DDL} \]
+<p>\(R_x\) : roulis, \(R_y\) : tangage, \(R_z\) : lacet.</p>
+<p><strong>Liaison</strong> : connexion physique entre deux segments voisins ; elle définit leurs mouvements relatifs autorisés et bloqués. Une liaison impose des contraintes physiques (contact, guidage) qui suppriment certains DDL relatifs :</p>
+\[ \text{DDL relatifs restants} = 6 - \text{nombre de contraintes indépendantes} \]
+<p>Tableau des liaisons normalisées (l'axe de la liaison est \(x\) ; pour la liaison plane et la ponctuelle, la normale au contact est \(z\)) :</p>
+<div class="tableau"><table>
+<tr><th>Liaison</th><th>Mouvements permis</th><th>Degrés de mobilité</th><th>Degrés de liaison</th></tr>
+<tr><td>Encastrement</td><td>aucun</td><td>0</td><td>6</td></tr>
+<tr><td>Glissière</td><td>\(T_x\)</td><td>1</td><td>5</td></tr>
+<tr><td>Pivot</td><td>\(R_x\)</td><td>1</td><td>5</td></tr>
+<tr><td>Pivot glissant</td><td>\(T_x, R_x\)</td><td>2</td><td>4</td></tr>
+<tr><td>Hélicoïdale</td><td>\(T_x\) et \(R_x\) couplées</td><td>1</td><td>5</td></tr>
+<tr><td>Plane</td><td>\(T_x, T_y, R_z\)</td><td>3</td><td>3</td></tr>
+<tr><td>Rotule</td><td>\(R_x, R_y, R_z\)</td><td>3</td><td>3</td></tr>
+<tr><td>Linéaire annulaire</td><td>\(T_x, R_x, R_y, R_z\)</td><td>4</td><td>2</td></tr>
+<tr><td>Ponctuelle</td><td>\(T_x, T_y, R_x, R_y, R_z\)</td><td>5</td><td>1</td></tr>
+</table></div>
+<p>Liaison hélicoïdale : translation et rotation couplées, une seule mobilité indépendante.</p>
+<p><strong>Pivot (R) et glissière (P).</strong> La très grande majorité des manipulateurs (environ 95 %) repose exclusivement sur ces deux liaisons à un degré de liberté : la liaison pivot, une rotation autour d'un axe fixe (\(q = \theta\), par exemple l'articulation d'un bras robotisé, ou le poignet articulé d'un robot chirurgical), et la liaison glissière, une translation le long d'un axe fixe (\(q = d\), par exemple l'axe linéaire d'un robot cartésien, ou le plateau d'IRM qui translate le patient). Pourquoi : une commande simple (1 DDL, 1 actionneur, un seul paramètre à piloter) et une bonne rigidité et précision. Les autres liaisons (rotule, contact ponctuel) servent aux contacts, aux appuis, aux mécanismes complexes, et peuvent être passives, comme les rotules d'un robot parallèle.</p>
+
+<h3>Exemple</h3>
+<p>Exemple du cours : une liaison pivot d'axe \(z\) entre un solide \(A\) fixe et un solide \(B\) impose 5 contraintes. Autorisé : \(R_z\). Bloqués : \(T_x, T_y, T_z, R_x, R_y\). DDL relatif restant : \(6 - 5 = 1\). Sur la figure, choisissez « Pivot » : un seul curseur reste actif.</p>
+
+<h3>Formules clés</h3>
+\[ 6 \text{ DDL (espace)} \qquad 3 \text{ DDL (plan)} \qquad \text{DDL restants} = 6 - \text{contraintes} \qquad \text{mobilité} + \text{liaison} = 6 \]
+</article>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/articulations-ddl.js"></script>
+<script src="../../figures/liaisons.js"></script>
+</body>
+</html>

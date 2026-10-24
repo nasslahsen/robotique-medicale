@@ -118,6 +118,36 @@ for (const id of modules) {
       }
     }
   }
+  // Structure par chapitres : plan, chapitres, sections (chaque page de cours d'un chapitre dans une seule section,
+  // pages des sections à jour avec les pages de cours qu'elles réunissent : node outils/regrouper.js <id>)
+  if (P.sections) {
+    const dc = d + "/" + (P.dossierChapitres ? P.dossierChapitres + "/" : "");
+    const { pageSection } = require("../outils/regrouper.js");
+    const vues = {};
+    for (const ch of P.chapitres) for (const a of ch.avant || []) if (!P.chapitres.some(c => c.id === a)) err(`${d} : chapitre ${ch.id}, prérequis inconnu ${a}`);
+    for (const ch of P.chapitres) {
+      const ss = P.sections.filter(s => s.chapitre === ch.id);
+      if (!ss.length) continue;
+      if (ss.length < 3 || ss.length > 5) err(`${d} : chapitre ${ch.id}, ${ss.length} sections (3 à 5 attendues)`);
+      for (const c of (P.cours || []).filter(c => c.chapitre === ch.id)) {
+        const n = ss.filter(s => s.notions.includes(c.id)).length;
+        if (n !== 1) err(`${d} : page de cours ${c.id} dans ${n} sections (une attendue)`);
+      }
+    }
+    for (const s of P.sections) {
+      const f = `${dc}cours/${s.id}.html`;
+      if (vues[s.id]) err(`${d} : section ${s.id} en double`); vues[s.id] = 1;
+      for (const n of s.notions) if (!(P.cours || []).some(c => c.id === n && c.chapitre === s.chapitre)) err(`${d} : section ${s.id}, page de cours inconnue ${n}`);
+      if (!existe(f)) { err(`page de section manquante ${f}`); continue; }
+      if (lire(f) !== pageSection(id, path.join(racine, d), P, s)) err(`${f} pas à jour : node outils/regrouper.js ${id}`);
+    }
+    for (const f of [dc + "index.html", dc + "chapitre.html"].concat(P.sections.map(s => `${dc}cours/${s.id}.html`))) {
+      if (!existe(f)) { err(`${f} manquant`); continue; }
+      const html = lire(f); nbPages++;
+      verifierLiens(f, html); verifierMaths(f, html, false); verifierEcriture(f, html);
+      if (!html.includes(`data-module="${id}"`)) err(`${f} : <html data-module="${id}"> manquant`);
+    }
+  }
   for (const f of liste(d + "/figures", /\.js$/)) { verifierEcriture(f, lire(f)); verifierMaths(f, lire(f), true); }
 }
 
