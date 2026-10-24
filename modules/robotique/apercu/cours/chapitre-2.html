@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Repères et vecteurs dans l'espace</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 2. -->
+<main class="cours-chapitre" data-chapitre="2">
+<p class="etiquette" data-etiquette></p>
+<h1>Repères et vecteurs dans l'espace</h1>
+
+<section class="partie" id="s-repere">
+<p class="rang-partie">1 / 3</p>
+<h2>Repère et coordonnées cartésiennes</h2>
+
+<article class="notion" id="n-repere">
+<h3>Repère et coordonnées cartésiennes</h3>
+<p class="chapeau">Pour qu'un logiciel sache où se trouve un instrument ou un organe, il doit traduire la position en nombres. Le repère est l'outil qui rend cette traduction possible.</p>
+
+<h4>Intuition</h4>
+<p>Dire « la cible est à 3 cm » n'a de sens que si l'on sait d'où l'on mesure et dans quelle direction. Un repère fixe les deux : un point de départ (l'origine) et trois directions de référence (les axes). Un point de l'espace est alors décrit par trois nombres : de combien il faut avancer selon chaque axe pour l'atteindre depuis l'origine.</p>
+<p>En salle d'opération, il y a plusieurs repères à la fois : le repère monde \(\{M\}\) (la salle), le repère robot \(\{R\}\) (lié à la base du bras), le repère outil \(\{T\}\) (origine à la pointe active de l'instrument) et le repère patient \(\{P\}\) (lié à l'anatomie, aux marqueurs ou à l'imagerie). Relier ces repères permet de localiser et d'orienter l'outil par rapport au patient : c'est le fil conducteur de toute cette partie.</p>
+
+<div id="fig-repere"></div>
+
+<h4>Formalisation</h4>
+<p>Un repère \(R = \{O, \vec{x}, \vec{y}, \vec{z}\}\) est constitué d'une origine \(O\) et de trois vecteurs unitaires orthogonaux, formant une base orthonormée directe, orientée selon la règle de la main droite :</p>
+\[ \vec{z} = \vec{x} \times \vec{y} \]
+<p>L'ordre \(X \to Y\) fixe le sens de \(Z\). Si l'on inverse \(\vec{z}\), le repère devient indirect (main gauche) : cochez « Repère indirect » sur la figure pour le voir.</p>
+<p>Dans ce repère, un point \(P\) est décrit par trois coordonnées \((x, y, z)\). Chacune est la projection orthogonale du vecteur position \(\overrightarrow{OP}\) sur l'axe correspondant :</p>
+\[ x = \overrightarrow{OP} \cdot \vec{x} \qquad y = \overrightarrow{OP} \cdot \vec{y} \qquad z = \overrightarrow{OP} \cdot \vec{z} \]
+\[ \overrightarrow{OP} = x\,\vec{x} + y\,\vec{y} + z\,\vec{z} \qquad \left[\overrightarrow{OP}\right]_R = \begin{bmatrix} x \\ y \\ z \end{bmatrix} \]
+<p>Distance entre \(P_1(x_1, y_1, z_1)\) et \(P_2(x_2, y_2, z_2)\), exprimés dans le même repère :</p>
+\[ d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} \]
+<p><strong>Application : le robot cartésien (PPP).</strong> Trois glissières orthogonales, une translation par articulation, axes alignés sur le repère et décalages nuls : \(x = q_1\), \(y = q_2\), \(z = q_3\). Les trois curseurs de la figure sont exactement les trois variables articulaires de ce robot, et son espace de travail est un parallélépipède rectangle.</p>
+<p>Avantages des coordonnées cartésiennes : intuitives, distances faciles à calculer. Limites : elles ne décrivent pas l'orientation à elles seules, et pour un robot à pivots les angles articulaires sont plus naturels.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté (les diapositives ne donnent pas de valeurs numériques ici).</p>
+<p>La pointe d'une aiguille est en \(P_1(10;\ 20;\ 5)\) mm et la cible en \(P_2(13;\ 24;\ 5)\) mm, dans le même repère patient.</p>
+\[ d(P_1, P_2) = \sqrt{(13 - 10)^2 + (24 - 20)^2 + (5 - 5)^2} = \sqrt{9 + 16 + 0} = 5 \text{ mm} \]
+<p>Pour un robot cartésien qui porte l'aiguille, aller de \(P_1\) à \(P_2\) revient à faire varier \(q_1\) de \(+3\) mm et \(q_2\) de \(+4\) mm, sans toucher à \(q_3\).</p>
+
+<h4>Rappel : vecteurs</h4>
+<p>Un vecteur est une flèche : une direction, un sens et une longueur (norme). Si \(A = (x_A, y_A, z_A)\) et \(B = (x_B, y_B, z_B)\), alors \(\overrightarrow{AB} = (x_B - x_A,\ y_B - y_A,\ z_B - z_A)^T\). Par convention en robotique, on écrit les vecteurs en colonne.</p>
+\[ \vec{v} = \begin{bmatrix} v_x \\ v_y \\ v_z \end{bmatrix} \qquad \|\vec{v}\| = \sqrt{v_x^2 + v_y^2 + v_z^2} \qquad \hat{u} = \frac{\vec{v}}{\|\vec{v}\|} \]
+<p>Le vecteur unitaire \(\hat{u}\) a une longueur 1 : il ne garde que la direction et le sens. C'est avec des vecteurs unitaires que l'on définit les axes d'un repère. Exemple : \(\vec{v} = (2;\ -1;\ 2)^T\) a pour norme \(\sqrt{4 + 1 + 4} = 3\), donc \(\hat{u} = \left(\tfrac{2}{3};\ -\tfrac{1}{3};\ \tfrac{2}{3}\right)^T\).</p>
+
+<h4>Formules clés</h4>
+\[ R = \{O, \vec{x}, \vec{y}, \vec{z}\}, \quad \vec{z} = \vec{x} \times \vec{y} \]
+\[ \overrightarrow{OP} = x\,\vec{x} + y\,\vec{y} + z\,\vec{z}, \quad x = \overrightarrow{OP} \cdot \vec{x} \]
+\[ d(P_1, P_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} \]
+</article>
+
+<div class="fin-partie" data-section="repere"></div>
+</section>
+
+<section class="partie" id="s-produits">
+<p class="rang-partie">2 / 3</p>
+<h2>Produit scalaire et produit vectoriel</h2>
+
+<article class="notion" id="n-produit-scalaire">
+<h3>Produit scalaire</h3>
+<p class="chapeau">Le produit scalaire mesure à quel point deux vecteurs vont dans la même direction. C'est lui qui donne les coordonnées d'un vecteur dans un repère, et ce sont ces nombres qui rempliront plus tard les matrices de rotation.</p>
+
+<h4>Intuition</h4>
+<p>Éclairez un vecteur \(\vec{b}\) perpendiculairement à la direction de \(\vec{a}\) : son ombre sur cette direction est sa projection. Le produit scalaire vaut cette ombre multipliée par la longueur de \(\vec{a}\). Il est grand quand les vecteurs sont alignés, nul quand ils sont perpendiculaires, négatif quand ils sont opposés.</p>
+<p>En robotique, on s'en sert pour calculer l'angle d'un instrument par rapport à un os, pour projeter une force sur une direction, et pour vérifier que deux axes d'un repère sont bien orthogonaux.</p>
+
+<div id="fig-ps"></div>
+
+<h4>Formalisation</h4>
+<p>Le produit scalaire de \(\vec{a}\) et \(\vec{b}\) est un nombre réel, qui s'écrit de deux façons :</p>
+\[ \vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z \qquad \text{(formule algébrique)} \]
+\[ \vec{a} \cdot \vec{b} = \|\vec{a}\|\,\|\vec{b}\|\cos\theta \qquad \text{(formule géométrique, } \theta \text{ angle entre les vecteurs)} \]
+<p>Propriétés : il est commutatif (\(\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}\)), distributif (\(\vec{a} \cdot (\vec{b} + \vec{c}) = \vec{a} \cdot \vec{b} + \vec{a} \cdot \vec{c}\)), et si \(\vec{a} \cdot \vec{b} = 0\) les vecteurs sont perpendiculaires (ou l'un d'eux est nul).</p>
+<p>Cas important : si \(\vec{u}\) est unitaire, \(\vec{a} \cdot \vec{u}\) est directement la projection de \(\vec{a}\) sur la direction de \(\vec{u}\). Si les deux vecteurs sont unitaires, \(\vec{u} \cdot \vec{v} = \cos\theta\).</p>
+
+<h4>L'exercice des deux repères</h4>
+<p>C'est l'exercice central du module de rappel. Le repère \(R_2 = (O_2, \vec{x}_2, \vec{y}_2, \vec{z}_2)\) est tourné d'un angle \(\alpha\) par rapport à \(R_1 = (O_1, \vec{x}_1, \vec{y}_1, \vec{z}_1)\) autour de l'axe commun \(\vec{z}_1 = \vec{z}_2\), dirigé vers l'observateur : \(\alpha = (\vec{x}_1, \vec{x}_2) = (\vec{y}_1, \vec{y}_2)\). Tous les vecteurs sont unitaires, donc chaque produit scalaire vaut le cosinus de l'angle entre les deux axes. Il suffit de lire cet angle sur la figure.</p>
+
+<div id="fig-deux-reperes"></div>
+
+<p>Corrigé du cours :</p>
+<div class="tableau"><table>
+<tr><th>Cas</th><th>Produits</th><th>Valeur</th></tr>
+<tr><td>axes perpendiculaires</td><td>\(\vec{x}_1 \cdot \vec{y}_1\), \(\vec{z}_2 \cdot \vec{y}_1\), \(\vec{z}_2 \cdot \vec{x}_1\), \(\vec{x}_2 \cdot \vec{z}_1\)</td><td>\(0\)</td></tr>
+<tr><td>axes séparés par \(\alpha\)</td><td>\(\vec{x}_1 \cdot \vec{x}_2\), \(\vec{y}_1 \cdot \vec{y}_2\), \(\vec{y}_2 \cdot \vec{y}_1\), \(\vec{x}_2 \cdot \vec{x}_1\)</td><td>\(\cos\alpha\)</td></tr>
+<tr><td>axes croisés</td><td>\(\vec{y}_1 \cdot \vec{x}_2 = \cos(\frac{\pi}{2} - \alpha)\)</td><td>\(\sin\alpha\)</td></tr>
+<tr><td>axes croisés</td><td>\(\vec{x}_1 \cdot \vec{y}_2 = \cos(\frac{\pi}{2} + \alpha)\), \(\vec{y}_2 \cdot \vec{x}_1\)</td><td>\(-\sin\alpha\)</td></tr>
+</table></div>
+<p>Les deux produits croisés ont des signes opposés : c'est l'origine du « \(-\sin\alpha\) » que l'on retrouvera dans toutes les matrices de rotation.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un instrument est dirigé selon \(\vec{a} = (1;\ 0;\ 1)^T\) et l'axe d'un os selon \(\vec{b} = (0;\ 0;\ 1)^T\).</p>
+\[ \vec{a} \cdot \vec{b} = 1 \times 0 + 0 \times 0 + 1 \times 1 = 1 \qquad \|\vec{a}\| = \sqrt{2} \qquad \|\vec{b}\| = 1 \]
+\[ \cos\theta = \frac{1}{\sqrt{2} \times 1} \approx 0{,}707 \quad\Rightarrow\quad \theta = 45° \]
+<p>Avec les deux repères et \(\alpha = 30°\) : \(\vec{x}_1 \cdot \vec{x}_2 = \cos 30° \approx 0{,}866\), \(\vec{y}_1 \cdot \vec{x}_2 = \sin 30° = 0{,}5\), \(\vec{x}_1 \cdot \vec{y}_2 = -\sin 30° = -0{,}5\).</p>
+
+<h4>Rappel : cosinus, sinus et angles associés</h4>
+<p>Sur le cercle de rayon 1, le point d'angle \(\alpha\) (mesuré depuis l'axe horizontal, positif dans le sens trigonométrique) a pour coordonnées \((\cos\alpha, \sin\alpha)\). Dans un triangle rectangle, \(\cos\) = côté adjacent / hypoténuse et \(\sin\) = côté opposé / hypoténuse.</p>
+
+<div id="fig-cercle"></div>
+
+\[ \cos\!\left(\tfrac{\pi}{2} - \alpha\right) = \sin\alpha \qquad \cos\!\left(\tfrac{\pi}{2} + \alpha\right) = -\sin\alpha \qquad \cos(-\alpha) = \cos\alpha \qquad \sin(-\alpha) = -\sin\alpha \]
+<p>Valeurs à connaître : \(\cos 30° = \tfrac{\sqrt{3}}{2} \approx 0{,}866\), \(\sin 30° = 0{,}5\), \(\cos 45° = \sin 45° = \tfrac{\sqrt{2}}{2} \approx 0{,}707\), \(\cos 60° = 0{,}5\), \(\sin 60° \approx 0{,}866\).</p>
+
+<h4>Formules clés</h4>
+\[ \vec{a} \cdot \vec{b} = a_x b_x + a_y b_y + a_z b_z = \|\vec{a}\|\,\|\vec{b}\|\cos\theta \]
+\[ \vec{x}_1 \cdot \vec{x}_2 = \cos\alpha \qquad \vec{y}_1 \cdot \vec{x}_2 = \sin\alpha \qquad \vec{x}_1 \cdot \vec{y}_2 = -\sin\alpha \]
+</article>
+
+<article class="notion" id="n-produit-vectoriel">
+<h3>Produit vectoriel</h3>
+<p class="chapeau">Le produit vectoriel de deux vecteurs fabrique un troisième vecteur, perpendiculaire aux deux premiers. C'est ainsi que l'on construit l'axe \(\vec{z}\) d'un repère à partir de \(\vec{x}\) et \(\vec{y}\).</p>
+
+<h4>Intuition</h4>
+<p>Prenez deux vecteurs \(\vec{u}\) et \(\vec{v}\) qui partent du même point. Ils définissent un plan et un parallélogramme. Le produit vectoriel \(\vec{w} = \vec{u} \wedge \vec{v}\) est la flèche qui sort de ce plan, perpendiculairement, avec une longueur égale à l'aire du parallélogramme. Plus les vecteurs sont « en travers » l'un de l'autre, plus l'aire est grande ; s'ils sont alignés, l'aire et le produit sont nuls.</p>
+<p>Le sens de \(\vec{w}\) est donné par la main droite : on enroule les doigts de \(\vec{u}\) vers \(\vec{v}\), le pouce indique \(\vec{w}\). Si l'on inverse l'ordre, \(\vec{w}\) change de sens.</p>
+
+<div id="fig-pv"></div>
+
+<h4>Formalisation</h4>
+<p>Dans le module de rappel, le produit vectoriel est noté \(\wedge\) ; le chapitre 2 écrit la même opération avec \(\times\) (par exemple \(\vec{z} = \vec{x} \times \vec{y}\)).</p>
+<ol>
+<li><strong>Direction</strong> : \(\vec{w} \perp \vec{u}\) et \(\vec{w} \perp \vec{v}\).</li>
+<li><strong>Norme</strong> : \(\|\vec{w}\| = \|\vec{u}\|\,\|\vec{v}\|\sin\theta\), l'aire du parallélogramme construit sur \(\vec{u}\) et \(\vec{v}\).</li>
+<li><strong>Sens</strong> : règle de la main droite.</li>
+</ol>
+\[ \vec{u} \wedge \vec{v} = -(\vec{v} \wedge \vec{u}) \qquad \vec{u} \wedge (\vec{v} + \vec{t}) = \vec{u} \wedge \vec{v} + \vec{u} \wedge \vec{t} \qquad \vec{u} \wedge \vec{v} = \vec{0} \text{ si } \vec{u} \parallel \vec{v} \]
+<p>En coordonnées, les deux vecteurs étant exprimés dans la même base orthonormée directe :</p>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} u_y v_z - u_z v_y \\ u_z v_x - u_x v_z \\ u_x v_y - u_y v_x \end{pmatrix} \]
+<p>Si les vecteurs sont donnés dans deux bases différentes, \(\vec{V}_1 = a_1 \vec{x}_1 + b_1 \vec{y}_1 + c_1 \vec{z}_1\) et \(\vec{V}_2 = a_2 \vec{x}_2 + b_2 \vec{y}_2 + c_2 \vec{z}_2\), on développe par distributivité en neuf termes \(a_1 a_2 (\vec{x}_1 \wedge \vec{x}_2) + a_1 b_2 (\vec{x}_1 \wedge \vec{y}_2) + \dots\), et chaque produit d'axes se lit dans le tableau ci-dessous.</p>
+
+<h4>L'exercice des deux repères</h4>
+<p>Même situation que pour le produit scalaire : \(R_2\) tourné de \(\alpha\) autour de \(\vec{z}_1 = \vec{z}_2\). Méthode : le résultat est perpendiculaire au plan des deux vecteurs, sa norme vaut le sinus de l'angle orienté du premier vers le second, son sens suit la main droite.</p>
+
+<div id="fig-pv-reperes"></div>
+
+<p>Corrigé du cours :</p>
+<div class="tableau"><table>
+<tr><th>Produit</th><th>Résultat</th><th>Produit</th><th>Résultat</th></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{y}_1\)</td><td>\(\vec{z}_1\)</td><td>\(\vec{y}_1 \wedge \vec{x}_2\)</td><td>\(-\cos\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{x}_2\)</td><td>\(\sin\alpha\ \vec{z}_1\)</td><td>\(\vec{y}_2 \wedge \vec{x}_1\)</td><td>\(-\cos\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{y}_1 \wedge \vec{y}_2\)</td><td>\(\sin\alpha\ \vec{z}_1\)</td><td>\(\vec{y}_2 \wedge \vec{y}_1\)</td><td>\(-\sin\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{z}_2 \wedge \vec{y}_1\)</td><td>\(-\vec{x}_1\)</td><td>\(\vec{x}_2 \wedge \vec{z}_1\)</td><td>\(-\vec{y}_2\)</td></tr>
+<tr><td>\(\vec{z}_2 \wedge \vec{x}_1\)</td><td>\(\vec{y}_1\)</td><td>\(\vec{x}_2 \wedge \vec{x}_1\)</td><td>\(-\sin\alpha\ \vec{z}_1\)</td></tr>
+<tr><td>\(\vec{x}_1 \wedge \vec{y}_2\)</td><td>\(\cos\alpha\ \vec{z}_1\)</td><td></td><td></td></tr>
+</table></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\vec{u} = (1;\ 2;\ 0)^T\) et \(\vec{v} = (0;\ 1;\ 3)^T\) :</p>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} 2 \times 3 - 0 \times 1 \\ 0 \times 0 - 1 \times 3 \\ 1 \times 1 - 2 \times 0 \end{pmatrix} = \begin{pmatrix} 6 \\ -3 \\ 1 \end{pmatrix} \]
+<p>Vérification : \(\vec{w} \cdot \vec{u} = 6 - 6 + 0 = 0\) et \(\vec{w} \cdot \vec{v} = 0 - 3 + 3 = 0\) : \(\vec{w}\) est bien perpendiculaire aux deux.</p>
+
+<h4>Rappel : la règle de la main droite</h4>
+<p>Main droite ouverte, doigts dans la direction du premier vecteur ; on les replie vers le second ; le pouce donne le sens du résultat. Avec \(\vec{x}\) puis \(\vec{y}\), le pouce indique \(\vec{z}\). Dans l'ordre cyclique \(x \to y \to z \to x\), le produit de deux axes consécutifs donne le troisième avec un signe +, et avec un signe − dans l'ordre inverse :</p>
+\[ \vec{x} \wedge \vec{y} = \vec{z} \qquad \vec{y} \wedge \vec{z} = \vec{x} \qquad \vec{z} \wedge \vec{x} = \vec{y} \qquad \vec{y} \wedge \vec{x} = -\vec{z} \]
+<p>La même règle fixe le sens positif d'une rotation : pouce le long de l'axe, les doigts enroulés indiquent le sens dans lequel l'angle augmente.</p>
+
+<h4>Formules clés</h4>
+\[ \vec{u} \wedge \vec{v} = \begin{pmatrix} u_y v_z - u_z v_y \\ u_z v_x - u_x v_z \\ u_x v_y - u_y v_x \end{pmatrix} \qquad \|\vec{u} \wedge \vec{v}\| = \|\vec{u}\|\,\|\vec{v}\|\sin\theta \qquad \vec{u} \wedge \vec{v} = -\vec{v} \wedge \vec{u} \]
+</article>
+
+<div class="fin-partie" data-section="produits"></div>
+</section>
+
+<section class="partie" id="s-cylindriques-chasles">
+<p class="rang-partie">3 / 3</p>
+<h2>Coordonnées cylindriques et position d'un solide</h2>
+
+<article class="notion" id="n-coordonnees-cylindriques">
+<h3>Coordonnées polaires et cylindriques</h3>
+<p class="chapeau">Un même point peut se décrire par « avance de x, puis de y », ou par « tourne d'un angle, puis avance d'une distance ». Le second langage est celui des robots à pivots.</p>
+
+<h4>Intuition</h4>
+<p>Une sonde d'échographie pivotante décrit naturellement une cible par une distance et une direction : « la cible est à 5 cm, dans la direction de 45° ». Ce sont des coordonnées polaires. Ajoutez une hauteur et vous obtenez les coordonnées cylindriques : « le pivot + la hauteur ». Un arceau d'imagerie autour d'un patient fonctionne ainsi : \(\theta\) pour tourner autour du patient, \(r\) pour avancer ou reculer le bras, \(z\) pour monter ou descendre le lit.</p>
+
+<div id="fig-cyl"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Coordonnées polaires (plan).</strong> Un point \(P\) est défini par \((r, \theta)\) : \(r = OP \geq 0\) est la distance à l'origine, \(\theta\) l'angle mesuré depuis l'axe \(X\), positif dans le sens trigonométrique.</p>
+<p><strong>Coordonnées cylindriques (espace).</strong> Un point \(P\) est défini par \((r, \theta, z)\) : \(r\) est la distance horizontale à l'axe central \(Z\), \(\theta\) l'angle autour de cet axe (azimut dans le plan \((X, Y)\)), \(z\) la hauteur comme en cartésien. Si \(Q\) est la projection de \(P\) dans le plan \((X, Y)\), alors \(r = OQ\).</p>
+<div class="tableau"><table>
+<tr><th>Départ</th><th>Arrivée</th><th>Formules</th></tr>
+<tr><td>cylindrique \((r, \theta, z)\)</td><td>cartésien</td><td>\(x = r\cos\theta,\quad y = r\sin\theta,\quad z = z\)</td></tr>
+<tr><td>cartésien \((x, y, z)\)</td><td>cylindrique</td><td>\(r = \sqrt{x^2 + y^2},\quad \theta = \operatorname{atan2}(y, x),\quad z = z\)</td></tr>
+</table></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>\(P = (-1;\ 1;\ 2)\).</p>
+\[ r = \sqrt{(-1)^2 + 1^2} = \sqrt{2} \approx 1{,}414 \qquad \theta = \operatorname{atan2}(1, -1) = 135° \qquad z = 2 \]
+<p>Attention : \(\arctan(y/x) = \arctan(-1) = -45°\) donnerait la direction opposée. Retour : \(x = \sqrt{2}\cos 135° = -1\) et \(y = \sqrt{2}\sin 135° = 1\).</p>
+<p>L'analogie du cours : « la cible est à 5 cm dans la direction de 45° » correspond à \(x = 5\cos 45° \approx 3{,}54\) cm et \(y = 5\sin 45° \approx 3{,}54\) cm, si l'angle est mesuré depuis l'axe \(X\).</p>
+
+<h4>Rappel : la fonction atan2</h4>
+<p>Pour retrouver un angle à partir de \(x\) et \(y\), \(\arctan(y/x)\) ne suffit pas : les points \((1, 1)\) et \((-1, -1)\) donnent le même quotient \(y/x = 1\), alors qu'ils sont dans des directions opposées. La fonction \(\operatorname{atan2}(y, x)\) regarde les signes de \(x\) et de \(y\) séparément et renvoie l'angle dans le bon quadrant, entre \(-180°\) et \(180°\). Sur la figure, faites passer \(Q\) à gauche de l'axe vertical : les deux calculs ne donnent plus le même angle. Attention à l'ordre des arguments : \(y\) d'abord.</p>
+
+<h4>Formules clés</h4>
+\[ x = r\cos\theta \qquad y = r\sin\theta \qquad z = z \]
+\[ r = \sqrt{x^2 + y^2} \qquad \theta = \operatorname{atan2}(y, x) \]
+</article>
+
+<article class="notion" id="n-position-chasles">
+<h3>Position d'un solide et relation de Chasles</h3>
+<p class="chapeau">Pour décrire un objet rigide (un os, un instrument), on lui attache un repère. Sa position est celle de l'origine de ce repère ; un point de l'objet se retrouve en enchaînant deux vecteurs.</p>
+
+<h4>Intuition</h4>
+<p>Un solide indéformable garde la même forme : un point gravé sur un instrument reste toujours au même endroit <em>par rapport à l'instrument</em>. On accroche donc au solide \(S\) un repère mobile \(R_s\), d'origine \(O_s\). Pour aller de l'origine fixe \(O_0\) à un point \(M\) du solide, on peut y aller directement, ou passer par \(O_s\) puis aller de \(O_s\) à \(M\). Les deux trajets arrivent au même point.</p>
+<p>Ce détour est utile parce que le second morceau, \(\overrightarrow{O_s M}\), est connu une fois pour toutes dans le repère du solide. Mais dès que le solide tourne, ses composantes dans \(R_0\) changent : c'est exactement le problème que résoudra la matrice de rotation.</p>
+
+<div id="fig-chasles"></div>
+
+<h4>Formalisation</h4>
+<p><strong>Position.</strong> La position d'un corps rigide est définie par le vecteur reliant l'origine \(O_0\) du repère fixe \(R_0\) à l'origine \(O_1\) du repère mobile \(R_1\) attaché au corps :</p>
+\[ \vec{p} = \overrightarrow{O_0 O_1} = p_x\,\vec{x}_0 + p_y\,\vec{y}_0 + p_z\,\vec{z}_0 \qquad [\vec{p}]_{R_0} = \begin{bmatrix} p_x \\ p_y \\ p_z \end{bmatrix} \qquad p_x = \vec{p} \cdot \vec{x}_0,\ \dots \]
+<p>Par exemple, la pointe \(S\) d'un scalpel robotisé, exprimée dans le repère lié au patient, s'écrit \({}^P\mathbf{p}_S = \overrightarrow{O_P S}\). Pour un robot cartésien PPP dont les glissières sont alignées sur \(R_0\) : \([\vec{p}]_{R_0} = (q_1;\ q_2;\ q_3)^T\).</p>
+<p><strong>Relation fondamentale de position (Chasles).</strong> À tout solide \(S\), on attache un repère \(R_s\) pour décrire sa pose par rapport à \(R_0\). Pour un point \(M\) du solide :</p>
+\[ \overrightarrow{O_0 M} = \overrightarrow{O_0 O_s} + \overrightarrow{O_s M} \qquad (1.1) \]
+<p><strong>De la position à l'orientation.</strong> La position seule ne suffit pas : une aiguille peut changer d'orientation tout en gardant la même position de pointe, et l'orientation détermine le trajet dans les tissus. Règle fondamentale du cours : la position d'un point est décrite par un vecteur \(\vec{P}\) ; l'orientation d'un corps est décrite par un repère attaché \(\{B\}\). Sur la figure, tournez le solide sans bouger \(O_s\) : la position \(\vec{p}\) ne change pas, mais \(M\) se déplace.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Le solide a son origine en \(O_s = (2;\ 1)\) dans \(R_0\), et le point \(M\) est à \(1{,}5\) unité sur l'axe \(\vec{x}_s\) : \(\overrightarrow{O_s M} = 1{,}5\,\vec{x}_s\).</p>
+<ul>
+<li>Si \(R_s\) a les mêmes directions que \(R_0\) : \(\vec{x}_s = \vec{x}_0\), donc \(\overrightarrow{O_0 M} = (2 + 1{,}5;\ 1) = (3{,}5;\ 1)\).</li>
+<li>Si le solide a tourné de 90° : \(\vec{x}_s = \vec{y}_0\), donc \(\overrightarrow{O_s M} = (0;\ 1{,}5)\) dans \(R_0\) et \(\overrightarrow{O_0 M} = (2;\ 2{,}5)\).</li>
+</ul>
+<p>Dans les deux cas, \(\overrightarrow{O_s M}\) vaut \((1{,}5;\ 0)\) dans \(R_s\) : c'est sa traduction dans \(R_0\) qui change.</p>
+
+<h4>Formules clés</h4>
+\[ \vec{p} = \overrightarrow{O_0 O_1}, \qquad [\vec{p}]_{R_0} = (p_x;\ p_y;\ p_z)^T \]
+\[ \overrightarrow{O_0 M} = \overrightarrow{O_0 O_s} + \overrightarrow{O_s M} \qquad (1.1) \]
+</article>
+
+<div class="fin-partie" data-section="cylindriques-chasles"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/repere.js"></script>
+<script src="../../figures/produit-scalaire.js"></script>
+<script src="../../figures/produit-vectoriel.js"></script>
+<script src="../../figures/coordonnees-cylindriques.js"></script>
+<script src="../../figures/position-chasles.js"></script>
+</body>
+</html>

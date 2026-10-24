@@ -221,7 +221,12 @@
   P.sectionDe = function (mid, notion) {
     return (P.module(mid).sections || []).filter(function (s) { return s.notions.indexOf(notion) >= 0; })[0] || null;
   };
-  P.urlSection = function (mid, sid, ancre) { return racine + P.dossierChapitres(mid) + "cours/" + sid + ".html" + (ancre ? "#" + ancre : ""); };
+  // Le cours d'un chapitre est une seule page (cours/chapitre-<n>.html) : une section y est une ancre (#s-<section>).
+  P.pageCours = function (mid, sid) {
+    var s = (P.module(mid).sections || []).filter(function (x) { return x.id === sid; })[0];
+    return P.dossierChapitres(mid) + "cours/chapitre-" + (s ? s.chapitre : 0) + ".html";
+  };
+  P.urlSection = function (mid, sid, ancre) { return racine + P.pageCours(mid, sid) + "#" + (ancre || "s-" + sid); };
   P.urlChapitre = function (mid, ch) { return racine + P.dossierChapitres(mid) + "chapitre.html?ch=" + ch; };
   P.urlPlan = function (mid, sm) { return racine + P.dossierChapitres(mid) + "index.html" + (sm ? "?sm=" + encodeURIComponent(sm) : ""); };
   // Un niveau ouvert depuis S'entraîner : jouer.html?plan=<dossier>#<niveau>.

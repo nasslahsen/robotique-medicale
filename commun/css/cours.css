@@ -180,29 +180,27 @@ html.integre main { padding-top: 22px; }
 .liste-cours .lu { flex: none; font: 700 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .05em; color: var(--ok); }
 .note-cours { margin-top: 40px; color: var(--doux); font-size: 15px; }
 
-/* ---------- Structure par chapitres : une section du cours (plusieurs notions) ---------- */
-.section-cours .etiquette { display: flex; align-items: baseline; gap: 16px; max-width: none; }
-.section-cours .etiquette .rang { margin-left: auto; color: var(--doux); }
-.section-cours h2 { font-size: 34px; margin-top: 72px; padding-top: 22px; border-top-width: 3px; }
-.section-cours h2::before { content: none; }
-.section-cours .notion:first-of-type h2 { margin-top: 36px; }
-.section-cours h3 { font-size: 26px; font-weight: 800; margin: 44px 0 12px; }
-.section-cours h4 { font-size: 21px; font-weight: 700; margin: 30px 0 8px; }
+/* ---------- Structure par chapitres : le cours d'un chapitre sur une page qui défile ---------- */
+.cours-chapitre h2 { font-size: 40px; line-height: 1.12; margin: 18px 0 8px; padding-top: 0; border-top: 0; }
+.cours-chapitre h2::before { content: none; }
+.partie { margin-top: 112px; padding-top: 26px; border-top: 3px solid var(--encre); scroll-margin-top: calc(var(--barre) + 8px); }
+.cours-chapitre h1 + .partie { margin-top: 40px; }
+.rang-partie { margin: 0; font: 700 14px "JetBrains Mono", monospace; letter-spacing: .06em; color: var(--jeu-texte); }
+.cours-chapitre h3 { font-size: 30px; font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; margin: 64px 0 12px; padding-top: 18px; border-top: 1.5px solid var(--trait); }
+.cours-chapitre h2 + .notion h3 { margin-top: 30px; padding-top: 0; border-top: 0; }
+.cours-chapitre h4 { font-family: "Bricolage Grotesque", Inter, sans-serif; font-size: 24px; font-weight: 800; margin: 40px 0 10px; }
+.cours-chapitre h5 { font-family: "Bricolage Grotesque", Inter, sans-serif; font-size: 20px; font-weight: 700; margin: 28px 0 8px; }
 .notion > p, .notion > ul, .notion > ol { max-width: 860px; }
-main h4 { scroll-margin-top: calc(var(--barre) + 16px); }
-main article.notion { scroll-margin-top: calc(var(--barre) + 16px); }
+main h4, main h5, main article.notion { scroll-margin-top: calc(var(--barre) + 16px); }
 .btn-barre.clair { background: #fff; color: var(--encre); box-shadow: 3px 3px 0 var(--encre); }
-.suite-section { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 20px; margin-top: 72px; padding-top: 24px; border-top: 2px solid var(--encre); }
-.suite-section a {
-  display: block; min-width: 0; min-height: 64px; padding: 14px 22px;
-  border: 2px solid var(--trait); border-radius: 18px; background: #fff;
-  text-decoration: none; color: var(--encre); font: 700 19px/1.3 "Bricolage Grotesque", Inter, sans-serif; transition: transform .1s, box-shadow .1s;
+.rang-barre { font: 700 16px "JetBrains Mono", monospace; color: var(--doux); }
+.fin-cours { margin-top: 96px; padding-top: 28px; border-top: 2px solid var(--encre); display: flex; flex-direction: column; align-items: flex-end; gap: 22px; }
+.fin-cours a.aller {
+  display: block; min-height: 64px; padding: 14px 26px; text-align: right; text-decoration: none;
+  border: 2px solid var(--encre); border-radius: 18px; background: var(--encre); color: #fff; box-shadow: 4px 4px 0 var(--jeu);
+  font: 700 21px/1.3 "Bricolage Grotesque", Inter, sans-serif; transition: transform .1s, box-shadow .1s;
 }
-.suite-section a small { display: block; margin-bottom: 4px; font: 700 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--jeu-texte); }
-.suite-section a.aller { grid-column: 3; justify-self: end; max-width: 460px; text-align: right; background: var(--encre); color: #fff; border-color: var(--encre); box-shadow: 4px 4px 0 var(--jeu); font-size: 21px; }
-.suite-section a.aller small { color: #fff; opacity: .75; }
-.suite-section a.aller:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--jeu); }
-.suite-section a.retour { justify-self: start; max-width: 420px; }
-.suite-section .rang { font: 700 16px "JetBrains Mono", monospace; color: var(--doux); }
-.option-entrainer { margin: 28px 0 0; text-align: right; color: var(--doux); max-width: none; }
+.fin-cours a.aller small { display: block; margin-bottom: 4px; font: 700 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; opacity: .75; }
+.fin-cours a.aller:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--jeu); }
+.option-entrainer { margin: 0; color: var(--doux); }
 .option-entrainer a { font-weight: 600; color: var(--jeu-texte); }

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Bus de communication</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 3. -->
+<main class="cours-chapitre" data-chapitre="3">
+<p class="etiquette" data-etiquette></p>
+<h1>Bus de communication</h1>
+
+<section class="partie" id="s-bus">
+<p class="rang-partie">1 / 4</p>
+<h2>Pourquoi des bus</h2>
+
+<article class="notion" id="n-bus">
+<h3>Problème de communication MCU, capteurs et actionneurs</h3>
+<p class="chapeau">Dans un tensiomètre, le microcontrôleur doit lire un capteur de pression, piloter une pompe, écrire sur un écran et parler au PC. Avec quels fils, et selon quelles règles ?</p>
+
+<h4>Le chapitre en bref</h4>
+<p>Ce chapitre répond à une question : comment les circuits d'une carte s'échangent des données. On part du problème (cette page) : beaucoup de composants, peu de place, donc des bus partagés et série. Puis on étudie trois bus du cours, du plus simple au plus partagé. L'<b>UART</b> envoie des trames sans horloge commune, entre deux appareils. Le <b>SPI</b> ajoute une horloge et échange les octets par registres à décalage, avec une ligne de sélection par esclave. L'<b>I2C</b> se contente de deux fils pour tous, grâce à des adresses. Le chapitre 5 retrouvera ces bus sur l'ESP32.</p>
+
+<h4>Intuition</h4>
+<p>Relier chaque composant à chacun des autres par ses propres fils, c'est vite ingérable : sept composants demandent déjà 21 liaisons. On préfère un <strong>bus</strong> : un ensemble de lignes partagé, sur lequel chacun se branche une seule fois. En échange, il faut des règles : qui parle, à qui, quand.</p>
+<p>Dans un système embarqué, la place est comptée. Au lieu d'envoyer les 8 bits d'un octet sur 8 fils en parallèle, les bus du cours les envoient l'un après l'autre sur un seul fil : ce sont des bus série.</p>
+
+<div id="fig-reseau"></div>
+
+<h4>Formalisation</h4>
+<p>Le schéma du cours montre le problème de communication d'un système embarqué : deux microcontrôleurs (MCU1, MCU2), une mémoire (RAM, EEPROM…), un ADC, des capteurs (<i>sensors</i>), des actionneurs (<i>actuators</i>) et un afficheur (<i>display</i> : LCD, OLED…). Ils sont reliés par trois niveaux de bus : BUS 1 entre les microcontrôleurs et la mémoire, BUS 2 qui distribue vers les périphériques, BUS 3 qui descend vers chaque périphérique.</p>
+<p>Le plan du cours (Section II) : I. problème de communication MCU, capteurs et actionneurs ; II. communication série UART/USART ; III. le bus SPI ; IV. le bus I2C ; V. bus CAN. Le bus CAN est annoncé au plan mais aucune diapositive ne le détaille. On le croise ailleurs dans le cours : l'ESP32 intègre un <i>CAN bus 2.0</i> (section III) et le contrôleur embarqué de la section I a un réseau IVN (CAN, LIN).</p>
+
+<div id="fig-fils"></div>
+
+<div class="tableau"><table>
+<tr><th>Bus</th><th>Synchronisation</th><th>Fils de données et d'horloge</th><th>Organisation</th><th>Qui parle à qui</th></tr>
+<tr><td>UART</td><td>asynchrone : pas d'horloge transmise</td><td>TX et RX (half ou full duplex)</td><td>liaison entre deux appareils</td><td>start bit, données, stop bit</td></tr>
+<tr><td>SPI</td><td>synchrone : horloge SCK du maître</td><td>MOSI, MISO, SCK, plus une ligne \(\overline{SS}\) par esclave</td><td>maître / esclaves</td><td>le maître met à 0 la ligne \(\overline{SS}\) de l'esclave choisi</td></tr>
+<tr><td>I2C</td><td>synchrone : horloge SCL</td><td>SDA et SCL, 2 fils</td><td>maître, multi-maître, esclaves</td><td>adresse de 7 bits envoyée après START</td></tr>
+</table></div>
+<p class="complement">Tableau de synthèse ajouté ; chaque ligne est détaillée dans les pages suivantes du chapitre.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Les sept composants du schéma, reliés deux à deux, demandent \(N(N-1)/2 = 7 \times 6 / 2 = 21\) liaisons. Avec un bus, chacun ne se branche qu'une fois : 7 branchements. Côté fils, un octet en parallèle occupe 8 lignes de données ; le SPI le fait passer avec 3 fils (MOSI, MISO, SCK), l'I2C avec 2 (SDA, SCL).</p>
+
+<h4>Formules clés</h4>
+\[ N_{liaisons} = \frac{N(N-1)}{2} \qquad \text{UART : TX, RX} \qquad \text{SPI : MOSI, MISO, SCK, } \overline{SS} \qquad \text{I2C : SDA, SCL} \]
+</article>
+
+<div class="fin-partie" data-section="bus"></div>
+</section>
+
+<section class="partie" id="s-uart">
+<p class="rang-partie">2 / 4</p>
+<h2>UART</h2>
+
+<article class="notion" id="n-uart">
+<h3>UART : transmission asynchrone</h3>
+<p class="chapeau">Un holter ECG doit vider sa mémoire vers un PC par un câble. Pas de fil d'horloge entre les deux : comment le PC sait-il où commence chaque octet, et à quel rythme lire les bits ?</p>
+
+<h4>Intuition</h4>
+<p>Les deux appareils se mettent d'accord à l'avance sur un débit, par exemple 9600 bits par seconde. Chacun a sa propre horloge réglée sur ce débit. Au repos, la ligne reste à 1. Pour annoncer un octet, l'émetteur la fait tomber à 0 pendant la durée d'un bit : c'est le start bit. Le récepteur, réveillé par ce front, lit ensuite les 8 bits au rythme convenu, puis attend le stop bit, à 1, qui rend la ligne au repos.</p>
+<p>Chaque octet voyage donc dans un petit paquet de 10 bits : la trame. Comme l'horloge n'est pas transmise, on parle de transmission asynchrone.</p>
+
+<div id="fig-trame"></div>
+
+<h4>Formalisation</h4>
+<p><strong>UART</strong> (<i>Universal Asynchronous Receiver Transmitter</i>) : fonction, <strong>transmission asynchrone de données</strong> ; mode half duplex ou full duplex ; couche physique RS232 ou RS485. Le plan du cours parle de communication série UART/USART (le S de l'USART ajoute un mode synchrone) ; l'exemple détaillé est l'UART du PIC18F4520.</p>
+<p>Le chronogramme d'émission du cours (PIC18F4520) envoie, sur la broche TX : le <strong>start bit</strong>, puis bit 0, bit 1, …, bit 7 (ou bit 8 en mode 9 bits), puis le <strong>stop bit</strong>. Le bit de poids faible part en premier. Chaque bit dure une période de l'horloge du générateur de baud (<i>BRG output, shift clock</i>).</p>
+<div class="tableau"><table>
+<tr><th>Mode</th><th>Ce que cela veut dire</th></tr>
+<tr><td>Half duplex</td><td>les deux appareils peuvent émettre, mais un seul sens à la fois</td></tr>
+<tr><td>Full duplex</td><td>les deux sens en même temps : TX de l'un vers RX de l'autre, dans chaque sens</td></tr>
+</table></div>
+
+<div id="fig-duplex"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un oxymètre envoie le pouls 75 = 01001011. Sur TX : start 0, puis 1, 1, 0, 1, 0, 0, 1, 0 (bit 0 d'abord), puis stop 1. À 9600 bps, la trame de 10 bits dure \(10 / 9600 \approx 1{,}04\) ms, et on envoie au plus \(9600 / 10 = 960\) octets par seconde. À 115200 bps, la même trame dure \(10 / 115200 \approx 86{,}8\ \mu\text{s}\).</p>
+
+<h4>Formules clés</h4>
+\[ \text{trame} = \text{start (0)} + 8 \text{ bits (bit 0 d'abord)} + \text{stop (1)} \qquad t_{trame} = \frac{10}{\text{débit}} \qquad N_{octets/s} = \frac{\text{débit}}{10} \]
+</article>
+
+<article class="notion" id="n-uart-materiel">
+<h3>UART du PIC18F4520 et UART du PSoC 5</h3>
+<p class="chapeau">Écrire un octet dans un registre suffit pour qu'il parte sur le câble. Que fait le matériel entre les deux, et comment le programme sait-il qu'il peut envoyer le suivant ou qu'une trame est arrivée abîmée ?</p>
+
+<h4>Intuition</h4>
+<p>L'émetteur a deux étages. Le programme dépose l'octet dans une boîte aux lettres (TXREG). Le matériel le transfère aussitôt dans un registre à décalage (TSR) qui le pousse bit par bit sur la broche. Dès que la boîte aux lettres est vide, un drapeau le signale : on peut y glisser l'octet suivant pendant que le précédent part encore.</p>
+<p>Le récepteur fait l'inverse : il guette le start bit sur RX, échantillonne les bits, les range dans un registre à décalage (RSR), puis dépose l'octet dans une petite file d'attente (RCREG) où le programme vient le lire. S'il trouve un stop bit à 0, ou si la file déborde, il lève un bit d'erreur.</p>
+
+<div id="fig-emission"></div>
+
+<h4>Formalisation</h4>
+<h5>Bloc d'émission (PIC18F4520)</h5>
+<div class="tableau"><table>
+<tr><th>Élément</th><th>Rôle</th></tr>
+<tr><td>TXREG Register</td><td>reçoit l'octet du bus de données (8 bits en parallèle)</td></tr>
+<tr><td>TSR Register</td><td>registre à décalage d'émission : sort les bits un par un vers la broche (MSb (8) … LSb 0)</td></tr>
+<tr><td>Pin Buffer and Control, TX pin</td><td>pilote la broche TX</td></tr>
+<tr><td>SPBRGH, SPBRG (Baud Rate Generator), BRG16</td><td>générateur de baud : donne l'horloge de décalage (<i>Baud Rate CLK</i>) ; BRG16 choisit le mode 16 bits</td></tr>
+<tr><td>TXEN</td><td>autorise l'émission (porte ET avec l'horloge de baud)</td></tr>
+<tr><td>SPEN</td><td>active le port série (<i>serial port enable</i>)</td></tr>
+<tr><td>TX9, TX9D</td><td>mode 9 bits et valeur du 9e bit</td></tr>
+<tr><td>TXIF, TXIE</td><td>drapeau « TXREG vide » et autorisation de l'interruption : Interrupt = TXIF ET TXIE</td></tr>
+<tr><td>TRMT</td><td>drapeau « TSR vide » : la trame est complètement partie</td></tr>
+</table></div>
+<p>Chronogramme d'émission : l'écriture dans TXREG (<i>Write to TXREG</i>) charge le mot 1 ; il passe dans le registre à décalage (<i>Word 1 → Transmit Shift Reg</i>). TXIF (<i>Transmit Buffer Reg. Empty Flag</i>) retombe pendant 1 \(T_{CY}\) puis remonte ; TRMT (<i>Transmit Shift Reg. Empty Flag</i>) passe à 0 et ne remonte qu'après le stop bit. Sur TX : start bit, bit 0, bit 1, …, bit 7/8, stop bit, au rythme de la sortie du BRG (<i>shift clock</i>).</p>
+
+<h5>Bloc de réception (PIC18F4520)</h5>
+<div class="tableau"><table>
+<tr><th>Élément</th><th>Rôle</th></tr>
+<tr><td>RX, Pin Buffer and Control, SPEN</td><td>entrée de la broche RX, active si SPEN = 1</td></tr>
+<tr><td>Data Recovery</td><td>retrouve les bits sur RX, cadencé par le générateur de baud (×64 Baud Rate CLK, puis ÷ 64, ÷ 16 ou ÷ 4)</td></tr>
+<tr><td>RSR Register</td><td>registre à décalage de réception : Stop, (8), 7 … 1, 0, Start</td></tr>
+<tr><td>RX9, RX9D</td><td>mode 9 bits et 9e bit reçu</td></tr>
+<tr><td>RCREG Register (FIFO)</td><td>file d'attente où le programme lit l'octet reçu par le bus de données</td></tr>
+<tr><td>RCIF, RCIE</td><td>drapeau « octet reçu » et autorisation de l'interruption</td></tr>
+<tr><td>CREN</td><td>autorise la réception continue</td></tr>
+<tr><td>FERR</td><td>erreur de trame (<i>framing error</i>) : stop bit lu à 0</td></tr>
+<tr><td>OERR</td><td>erreur de débordement (<i>overrun error</i>) : un octet arrive alors que la FIFO est pleine</td></tr>
+</table></div>
+
+<div id="fig-reception"></div>
+
+<h5>UART embarqué du PSoC 5</h5>
+<ul>
+<li>mode adresse 9 bits avec détection matérielle d'adresse ;</li>
+<li>débits de 110 à 921600 bps, ou quelconque jusqu'à 4 Mbps ;</li>
+<li>tampons RX et TX de 4 à 65535 ;</li>
+<li>détection des erreurs de trame (<i>framing</i>), de parité et de débordement (<i>overrun</i>) ;</li>
+<li>matériel optimisé full duplex, half duplex, TX seul, RX seul ;</li>
+<li>vote 2 sur 3 par bit (<i>two out of three voting per bit</i>) ;</li>
+<li>génération et détection du signal <i>break</i> ;</li>
+<li>suréchantillonnage 8x ou 16x.</li>
+</ul>
+<p>Le composant UART du PSoC 5 a les broches rx, tx, tx_interrupt, rx_interrupt, tx_en et reset.</p>
+
+<div id="fig-vote"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un holter envoie trois octets à la suite. Il écrit le premier dans TXREG : il passe dans le TSR, TXIF remonte presque aussitôt, et le programme écrit le deuxième octet pendant que le premier sort encore. TRMT ne remontera qu'après le stop bit du dernier octet. Côté PC, si le câble est parasité et qu'un stop bit est lu à 0, FERR passe à 1 ; si le programme oublie de lire RCREG et que la FIFO déborde, c'est OERR.</p>
+
+<h4>Formules clés</h4>
+\[ \text{Data Bus} \rightarrow \text{TXREG} \rightarrow \text{TSR} \rightarrow \text{TX} \qquad \text{RX} \rightarrow \text{RSR} \rightarrow \text{RCREG} \rightarrow \text{Data Bus} \qquad \text{Interrupt} = \text{TXIF} \cdot \text{TXIE} \]
+<p>TXIF : TXREG vide. TRMT : TSR vide. FERR : stop bit faux. OERR : débordement. PSoC 5 : vote 2 sur 3, suréchantillonnage 8x ou 16x.</p>
+</article>
+
+<div class="fin-partie" data-section="uart"></div>
+</section>
+
+<section class="partie" id="s-spi">
+<p class="rang-partie">3 / 4</p>
+<h2>Le bus SPI</h2>
+
+<article class="notion" id="n-spi">
+<h3>Le bus SPI</h3>
+<p class="chapeau">Un microcontrôleur doit écrire des échantillons d'ECG dans une mémoire et, au même moment, lire ce que la mémoire lui renvoie, à plus d'un mégabit par seconde. L'UART, sans horloge, n'est pas fait pour ça.</p>
+
+<h4>Intuition</h4>
+<p>Imagine deux tapis roulants de 8 cases mis bout à bout en boucle : celui du maître et celui de l'esclave. À chaque coup d'horloge, tout avance d'une case. La case qui sort du tapis du maître entre sur celui de l'esclave, et la case qui sort de l'esclave entre chez le maître. Au bout de 8 coups, les deux tapis ont échangé leur chargement : on a écrit et lu un octet en même temps.</p>
+<p>L'horloge est donnée par le maître sur un fil à part. Plus besoin de start ni de stop bit : chaque coup d'horloge dit « un bit ».</p>
+
+<div id="fig-anneau"></div>
+
+<h4>Formalisation</h4>
+<p>L'<strong>interface série synchrone SPI</strong> (<i>Serial Peripheral Interface</i>), présentée sur le ST7Lite20 :</p>
+<ul>
+<li>interface basée sur un registre à décalage qui transforme un mot binaire parallèle en série et l'inverse ;</li>
+<li>permet de transmettre 8 bits de données avec uniquement 3 fils : émission, réception, horloge (MOSI, MISO, SCK) ;</li>
+<li>protocole de communication maître/esclaves ;</li>
+<li>écriture et lecture simultanées ;</li>
+<li>fréquence de transmission élevée (plus de 1 Mbit/s) ;</li>
+<li>utilisation : communication entre plusieurs microcontrôleurs, connexion à toute une gamme de composants possédant cette interface : mémoire, commande de moteurs pas-à-pas, capteur de température…</li>
+</ul>
+<div class="tableau"><table>
+<tr><th>Fil</th><th>Nom</th><th>Sens</th></tr>
+<tr><td>MOSI</td><td><i>Master Out, Slave In</i></td><td>sortie du maître vers l'entrée de l'esclave</td></tr>
+<tr><td>MISO</td><td><i>Master In, Slave Out</i></td><td>sortie de l'esclave vers l'entrée du maître</td></tr>
+<tr><td>SCK</td><td><i>Serial Clock</i></td><td>horloge, donnée par le maître</td></tr>
+</table></div>
+<p>L'animation du cours part de maître = 10101010 et esclave = 11000011. Le maître décale vers la gauche : son MSB sort vers l'esclave et le bit reçu entre à droite. L'esclave est dessiné MSB à droite : le bit reçu entre à gauche, le bit qui sort est celui de droite. États : à T = 1, maître 01010101 et esclave 11100001 ; à T = 2, maître 10101011 et esclave 01110000 ; à T = 8, maître 11000011 et esclave 01010101. À T = 8, l'échange est complet : le maître a l'octet de l'esclave ; l'esclave a celui du maître, 10101010, écrit 01010101 parce qu'il est dessiné à l'envers.</p>
+
+<h5>SPI du PIC18F4520</h5>
+<p>Chaque processeur a un registre à décalage <strong>SSPSR</strong> (<i>shift register</i>, MSb à gauche, LSb à droite) et un tampon <strong>SSPBUF</strong> (<i>serial input buffer</i>) où le programme lit l'octet reçu. SDO du maître va sur SDI de l'esclave, SDO de l'esclave sur SDI du maître, et SCK du maître (<i>serial clock</i>) sur SCK de l'esclave. Le mode se choisit avec les bits SSPM3:SSPM0 : <span class="mono">00xx</span> pour le maître (<i>SPI Master</i>), <span class="mono">010x</span> pour l'esclave (<i>SPI Slave</i>), où x vaut 0 ou 1.</p>
+
+<div id="fig-pic"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec SCK à 2 MHz, une période dure \(1 / (2 \cdot 10^6) = 0{,}5\ \mu\text{s}\). Un octet demande 8 coups d'horloge : \(8 \times 0{,}5 = 4\ \mu\text{s}\), et pendant ce temps un octet revient de l'esclave. Avec maître = 11110000 et esclave = 00110011 (dessiné MSB à droite, donc l'octet 11001100), après 8 coups le maître contient 11001100 et l'esclave affiche 00001111, c'est-à-dire l'octet 11110000.</p>
+
+<h4>Formules clés</h4>
+\[ \text{3 fils : MOSI, MISO, SCK} \qquad \text{1 bit par coup d'horloge} \qquad t_{octet} = \frac{8}{f_{SCK}} \]
+<p>Après 8 coups d'horloge, les registres du maître et de l'esclave ont échangé leur contenu. PIC18F4520 : SSPSR, SSPBUF, SDO, SDI, SCK ; maître 00xx, esclave 010x.</p>
+</article>
+
+<article class="notion" id="n-spi-esclaves">
+<h3>SPI : architecture multi esclaves</h3>
+<p class="chapeau">Un enregistreur médical a une mémoire, un afficheur, un capteur de température et un petit moteur, tous en SPI. Ils partagent les mêmes fils d'horloge et de données : comment le maître choisit-il à qui il parle ?</p>
+
+<h4>Intuition</h4>
+<p>Dans une salle de classe, tout le monde entend la même voix, mais seul l'élève qu'on appelle par son nom répond. Le SPI fait pareil avec un fil de plus par esclave : la ligne de sélection \(\overline{SS}\). Le maître la met à 0 pour un seul esclave ; celui-ci écoute MOSI et parle sur MISO, les autres restent muets.</p>
+<p>Si deux esclaves étaient sélectionnés à la fois, ils parleraient ensemble sur le même fil MISO et le maître recevrait un mélange.</p>
+
+<div id="fig-multi"></div>
+
+<h4>Formalisation</h4>
+<p>Architecture multi esclaves du ST7Lite20 (schéma du cours) :</p>
+<ul>
+<li>SCK, MOSI et MISO sont partagés : chaque esclave (<i>Slave Device</i>) est branché sur les mêmes trois fils que le maître (<i>Master Device</i>) ;</li>
+<li>chaque esclave a sa propre entrée \(\overline{SS}\) (<i>slave select</i>), reliée à une broche de port (<i>Ports</i>) du maître ;</li>
+<li>la barre indique une entrée active à l'état bas : l'esclave dont \(\overline{SS} = 0\) est sélectionné ;</li>
+<li>l'entrée \(\overline{SS}\) du maître est reliée à 5 V : elle reste à 1, le maître n'est jamais sélectionné comme esclave.</li>
+</ul>
+<p>Le maître sélectionne un seul esclave à la fois. Le nombre de fils (sans la masse) vaut \(3 + N_{esclaves}\).</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec quatre esclaves (mémoire, afficheur, capteur de température, moteur pas-à-pas), il faut \(3 + 4 = 7\) fils. Pour lire le capteur (esclave 3) : \(\overline{SS_1} = 1\), \(\overline{SS_2} = 1\), \(\overline{SS_3} = 0\), \(\overline{SS_4} = 1\). Pour écrire ensuite en mémoire, on remet d'abord \(\overline{SS_3}\) à 1, puis on met \(\overline{SS_1}\) à 0. Avec 10 esclaves, il faudrait 13 fils.</p>
+
+<h4>Formules clés</h4>
+\[ N_{fils} = 3 + N_{esclaves} \qquad \overline{SS} = 0 : \text{esclave sélectionné} \qquad \overline{SS} = 1 : \text{esclave ignoré} \]
+</article>
+
+<div class="fin-partie" data-section="spi"></div>
+</section>
+
+<section class="partie" id="s-i2c">
+<p class="rang-partie">4 / 4</p>
+<h2>Le bus I2C</h2>
+
+<article class="notion" id="n-i2c">
+<h3>Le bus I2C</h3>
+<p class="chapeau">Sur la carte d'un moniteur de patient, un microcontrôleur doit parler à un capteur de température, une EEPROM, un convertisseur et un contrôleur de LED. Peut-on tout relier avec seulement deux fils ?</p>
+
+<h4>Intuition</h4>
+<p>Deux fils partagés par tout le monde : un pour les données (SDA), un pour l'horloge (SCL). Pour que plusieurs circuits puissent s'y brancher sans court-circuit, aucun ne force jamais la ligne à 1. Des résistances la tirent doucement vers l'alimentation ; chaque circuit peut seulement la relier à la masse.</p>
+<p>Conséquence : il suffit qu'un seul circuit tire la ligne pour qu'elle soit à 0, et elle n'est à 1 que si tous relâchent. Le 0 gagne toujours : c'est le niveau dominant.</p>
+
+<div id="fig-ligne"></div>
+
+<h4>Formalisation</h4>
+<ul>
+<li><strong>I2C</strong> : <i>Inter-Integrated Communication</i>.</li>
+<li>Fonction : interconnecter des circuits dans une carte électronique.</li>
+<li>Architecture : I2C maître, multi-maître, esclave ; 2 fils.</li>
+<li>Le niveau logique dominant est le 0, le niveau récessif est le 1.</li>
+</ul>
+<p>Le schéma du cours : SDA (<i>serial data line</i>) et SCL (<i>serial clock line</i>) sont reliées à \(+V_{DD}\) par des résistances de tirage \(R_P\) (<i>pull-up resistors</i>). Dans chaque circuit (<i>device</i>), une sortie à transistor (SCLKN OUT, DATAN OUT) peut relier la ligne à la masse, et une entrée (SCLK IN, DATA IN) lit son niveau. La ligne vaut 1 seulement si toutes les sorties relâchent.</p>
+
+<div id="fig-topologie"></div>
+
+<p>Le cours donne aussi ce tableau :</p>
+<div class="tableau"><table>
+<tr><th>Bus</th><th>Clock</th></tr>
+<tr><td>50 kbps</td><td>800 kHz</td></tr>
+<tr><td>100 kbps</td><td>1,6 MHz</td></tr>
+<tr><td>400 kbps</td><td>6,4 MHz</td></tr>
+<tr><td>1000 kbps</td><td>16 MHz</td></tr>
+</table></div>
+<p>Dans chaque ligne du tableau, la valeur de Clock vaut 16 fois celle de Bus.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Trois circuits sur SDA : le MCU relâche, le capteur de température tire à 0, l'EEPROM relâche. SDA = 0. Pour revenir à 1, il faut que le capteur relâche aussi : alors plus rien ne relie la ligne à la masse et les résistances \(R_P\) la ramènent à \(+V_{DD}\). Aucun circuit ne pousse jamais la ligne à 1, donc deux circuits qui écrivent en même temps ne se court-circuitent pas : le 0 l'emporte.</p>
+
+<h4>Formules clés</h4>
+\[ \text{SDA} = \text{sortie}_1 \cdot \text{sortie}_2 \cdots \text{sortie}_n \qquad (\text{relâché} = 1,\ \text{tiré} = 0) \]
+<p>2 fils : SDA et SCL. 0 dominant, 1 récessif. Résistances de tirage \(R_P\) vers \(+V_{DD}\).</p>
+</article>
+
+<article class="notion" id="n-i2c-trame">
+<h3>Chronogramme I2C</h3>
+<p class="chapeau">Sur les deux fils de l'I2C, tous les circuits entendent tout. Comment une EEPROM sait-elle qu'un message commence, qu'il lui est destiné, et quand il se termine ?</p>
+
+<h4>Intuition</h4>
+<p>Un message I2C ressemble à un appel au téléphone dans une salle pleine. On attire l'attention (START), on dit le nom de la personne (l'adresse) et si l'on veut parler ou écouter (le bit R/W). La personne répond « oui » (ACK). Ensuite on échange des octets, chacun suivi d'un « reçu » (ACK). À la fin, on raccroche (STOP), et la ligne est libre pour les autres.</p>
+<p>Le maître donne le rythme sur SCL : une impulsion par bit. Chaque octet prend 8 impulsions, plus une 9e pour l'accusé de réception.</p>
+
+<div id="fig-chrono"></div>
+
+<h4>Formalisation</h4>
+<p>Chronogramme du cours, de gauche à droite :</p>
+<div class="tableau"><table>
+<tr><th>Champ</th><th>Impulsions SCL</th><th>Rôle</th></tr>
+<tr><td>S (<i>START condition</i>)</td><td></td><td>début du message : SDA passe de 1 à 0 pendant que SCL est à 1</td></tr>
+<tr><td><i>7-Bit ADDRESS</i></td><td>1 à 7</td><td>adresse de l'esclave</td></tr>
+<tr><td>\(R/\overline{W}\)</td><td>8</td><td>sens : 1 lecture, 0 écriture (la barre est sur le W)</td></tr>
+<tr><td>ACK</td><td>9</td><td>l'esclave accuse réception</td></tr>
+<tr><td><i>8-Bit DATA</i></td><td>1 à 8</td><td>un octet de données</td></tr>
+<tr><td>ACK</td><td>9</td><td>accusé de réception de l'octet</td></tr>
+<tr><td><i>8-Bit DATA</i></td><td>1 à 8</td><td>octet suivant</td></tr>
+<tr><td>ACK/NACK</td><td>9</td><td>accusé, ou non-accusé pour finir</td></tr>
+<tr><td>P (<i>STOP condition</i>)</td><td></td><td>fin du message : SDA passe de 0 à 1 pendant que SCL est à 1</td></tr>
+</table></div>
+<p class="complement">Compléments utiles, non écrits sur la diapositive : pendant les données, SDA ne change que lorsque SCL est à 0 ; un ACK est un 0 placé sur SDA par le récepteur (le 0 est dominant), un NACK laisse SDA à 1 ; les bits partent du poids fort au poids faible.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un MCU écrit deux octets dans une EEPROM : S, adresse sur 7 bits, \(R/\overline{W} = 0\), ACK, octet 1, ACK, octet 2, ACK/NACK, P. Sur SCL : \(3 \times 9 = 27\) impulsions entre START et STOP. Avec 7 bits, il existe \(2^7 = 128\) combinaisons d'adresse. Pour lire un thermomètre d'adresse 1010111, le premier octet envoyé est 1010111 suivi de \(R/\overline{W} = 1\) : 10101111.</p>
+
+<h4>Formules clés</h4>
+\[ N_{SCL} = 9 \times N_{octets} \qquad N_{adresses} = 2^7 = 128 \qquad R/\overline{W} = 1 : \text{lecture},\ 0 : \text{écriture} \]
+<p>S, adresse 7 bits, R/W, ACK, données 8 bits, ACK, …, ACK/NACK, P.</p>
+</article>
+
+<div class="fin-partie" data-section="i2c"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../dessins.js"></script>
+<script src="../../figures/bus.js"></script>
+<script src="../../figures/uart.js"></script>
+<script src="../../figures/uart-materiel.js"></script>
+<script src="../../figures/spi.js"></script>
+<script src="../../figures/spi-esclaves.js"></script>
+<script src="../../figures/i2c.js"></script>
+<script src="../../figures/i2c-trame.js"></script>
+</body>
+</html>

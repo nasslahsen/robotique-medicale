@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Programmer les périphériques de l'ESP32</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 5. -->
+<main class="cours-chapitre" data-chapitre="5">
+<p class="etiquette" data-etiquette></p>
+<h1>Programmer les périphériques de l'ESP32</h1>
+
+<section class="partie" id="s-gpio-pad">
+<p class="rang-partie">1 / 5</p>
+<h2>GPIO et structure d'un pad</h2>
+
+<article class="notion" id="n-gpio">
+<h3>GPIO Pins, IO MUX et GPIO Matrix</h3>
+<p class="chapeau">Un moniteur de chevet doit lire un bouton, mesurer une tension, faire biper un buzzer et parler à un écran. Tout passe par les broches de la puce. Combien y en a-t-il, et comment un même fil peut-il servir à tant de choses ?</p>
+
+<h4>Le chapitre en bref</h4>
+<p>Le chapitre 4 a présenté la puce ESP32. Ce chapitre apprend à s'en servir, périphérique par périphérique, dans l'ordre où un signal les rencontre. D'abord les <b>broches</b> : ce qu'elles savent faire et comment les signaux internes y sont aiguillés (cette page), puis ce qu'il y a derrière chaque broche, le pad. Ensuite les <b>interruptions</b>, qui préviennent le processeur qu'une broche a changé, et le registre qui les règle. Puis la <b>conversion</b> entre le monde analogique et les nombres : l'ADC mesure une tension, le DAC en produit une. Puis le <b>temps</b> : les timers comptent, les chiens de garde surveillent, le PWM fabrique une tension moyenne en découpant le temps. Enfin la <b>communication</b> : les bus I2C et SPI du chapitre 3, sur les broches de l'ESP32.</p>
+
+<h4>Intuition</h4>
+<p>Une broche, c'est une porte entre la puce et le monde. Elle peut écouter (entrée) ou parler (sortie), à l'état 0 ou 1 : c'est une GPIO, une entrée/sortie d'usage général. Mais elle peut aussi être prêtée à un périphérique : l'UART y envoie ses bits, le PWM ses impulsions, l'ADC y lit une tension.</p>
+<p>Comme il y a bien plus de signaux internes que de broches, des aiguillages choisissent qui sort où. C'est ce qui rend l'ESP32 si souple : on peut presque toujours mettre un signal sur la broche qui arrange le câblage.</p>
+
+<div id="fig-brochage"></div>
+
+<h4>Formalisation</h4>
+<h5>Les broches GPIO</h5>
+<ul>
+<li>La puce ESP32 a <strong>34 broches GPIO physiques</strong>.</li>
+<li>Chaque broche peut être utilisée comme entrée/sortie d'usage général (<i>general-purpose I/O</i>), ou être reliée à un signal interne d'un périphérique.</li>
+<li>L'<b>IO MUX</b>, le <b>RTC IO MUX</b> et la <b>GPIO matrix</b> routent les signaux des périphériques vers les broches. Ensemble, ils donnent des entrées/sorties très configurables.</li>
+</ul>
+<h5>Les broches d'entrée seulement</h5>
+<p><strong>Les GPIO 34 à 39 sont des GPI, des broches d'entrée seulement</strong> (<i>input only pins</i>) : GPIO 34, GPIO 35, GPIO 36 et GPIO 39. Elles n'ont pas de résistance de tirage interne (ni pull-up, ni pull-down) et ne peuvent pas servir de sorties. Sur la carte DEV KIT V1, ce sont les quatre broches marquées <i>Input only</i>, en haut à gauche.</p>
+<h5>Le routage des signaux</h5>
+<div id="fig-routage"></div>
+<div class="tableau"><table>
+<tr><th>Bloc</th><th>Rôle sur le schéma du cours</th></tr>
+<tr><td>GPIO matrix</td><td>relie librement 162 signaux d'entrée et 176 signaux de sortie des périphériques (SPI, UART, I2C, I2S, PWM, LEDC et d'autres) aux 34 GPIO, avec leurs signaux de commande (IE, OE…)</td></tr>
+<tr><td>IO_MUX</td><td>choisit, pour chaque pad numérique, ce qui le pilote ; les signaux rapides (JTAG, SDIO, UART, SPI, Ethernet) y arrivent en Direct I/O, sans passer par la matrice ; il envoie aux pads les signaux de commande FUN_SEL, IE, OE, WPU, PDU</td></tr>
+<tr><td>RTC IO_MUX</td><td>relie les RTC GPIO aux pads RTC, à travers un multiplexeur partagé avec l'IO_MUX</td></tr>
+</table></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Une pompe à perfusion portable a un bouton « bolus », une LED d'alarme et une sonde analogique, avec le Wi-Fi actif.</p>
+<ul>
+<li>La LED est une sortie : toute broche sauf 34, 35, 36, 39. Par exemple GPIO 2.</li>
+<li>Le bouton est une entrée : GPIO 35 convient, mais il faut alors une résistance de pull-up externe, puisque cette broche n'a pas de tirage interne. Sur GPIO 4, le pull-up interne suffirait.</li>
+<li>La sonde va sur une broche de l'ADC1 (le chapitre sur l'ADC explique pourquoi pas l'ADC2 avec le Wi-Fi) : GPIO 34 est idéale, elle n'a besoin que d'être une entrée.</li>
+</ul>
+
+<h4>Formules clés</h4>
+<p>34 GPIO physiques. GPIO 34, 35, 36, 39 : entrées seulement, sans pull-up ni pull-down. Routage : GPIO matrix (162 entrées, 176 sorties de périphériques), IO MUX (signaux rapides en Direct I/O, commandes FUN_SEL, IE, OE, WPU, PDU), RTC IO MUX (pads RTC).</p>
+</article>
+
+<article class="notion" id="n-pad">
+<h3>Structure interne d'un pad</h3>
+<p class="chapeau">Une même broche doit pouvoir lire un bouton, puis plus tard allumer une LED. Derrière chaque broche, un petit circuit, le pad, décide si elle écoute, si elle parle, et ce qu'elle vaut quand personne ne la pilote.</p>
+
+<h4>Intuition</h4>
+<p>Imagine un fil qui sort de la puce. Pour le lire, on ouvre un passage vers l'intérieur. Pour l'écrire, on branche un amplificateur qui le force à 0 ou à 1. Et quand rien n'est branché dessus, le fil « flotte » : il capte du bruit et se lit au hasard. Pour l'éviter, on le relie doucement à 3,3 V ou à la masse par une résistance : assez fort pour fixer le niveau au repos, assez faible pour qu'un bouton l'emporte.</p>
+
+<div id="fig-pad"></div>
+
+<h4>Formalisation</h4>
+<p>Le schéma du cours montre la structure interne d'un pad :</p>
+<div class="tableau"><table>
+<tr><th>Signal ou élément</th><th>Définition du cours</th><th>Sur le schéma</th></tr>
+<tr><td><strong>IE</strong></td><td><i>input enable</i> : autorise l'entrée</td><td>entrée d'une porte ET dont l'autre entrée est la broche ; la sortie part vers un périphérique (<i>routing to a peripheral</i>)</td></tr>
+<tr><td><strong>OE</strong></td><td><i>output enable</i> : autorise la sortie</td><td>active le tampon Buf qui amène le signal d'un périphérique (<i>routing from a peripheral</i>) sur la broche</td></tr>
+<tr><td><strong>WPU</strong></td><td><i>internal weak pull-up resistor</i> : résistance de tirage faible interne vers le haut</td><td>résistance et interrupteur entre VDD3P3 et la broche</td></tr>
+<tr><td><strong>WPD</strong></td><td><i>internal weak pull-down resistor</i> : résistance de tirage faible interne vers le bas</td><td>résistance et interrupteur entre la broche et GND</td></tr>
+<tr><td><strong>Bonding pad</strong></td><td>point terminal de la logique de la puce, utilisé pour faire la connexion physique entre la puce (<i>chip die</i>) et la broche GPIO du boîtier</td><td>à droite, au bout du nœud commun</td></tr>
+</table></div>
+<p>Ce que vaut la broche, selon les réglages, quand rien d'extérieur ne l'impose :</p>
+<div class="tableau"><table>
+<tr><th>OE</th><th>WPU</th><th>WPD</th><th>Niveau de la broche</th></tr>
+<tr><td>1</td><td>indifférent</td><td>indifférent</td><td>imposé par le périphérique, à travers Buf</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td>1, tirée vers VDD3P3</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>0, tirée vers GND</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>flottante : se lit au hasard</td></tr>
+</table></div>
+<p>Ce que lit le périphérique : la sortie de la porte ET, donc le niveau de la broche si IE = 1, et toujours 0 si IE = 0. Rappel : les GPIO 34 à 39 n'ont ni WPU ni WPD.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Bouton d'appel malade entre GPIO 4 et la masse. Réglage : IE = 1, OE = 0, WPU = 1, WPD = 0. Bouton relâché, la résistance faible tire la broche à 1 : le programme lit 1. Bouton appuyé, le contact relie directement la broche à la masse, plus fort que la résistance : le programme lit 0. Sur GPIO 35, le même montage demande une résistance de pull-up externe.</p>
+
+<h4>Formules clés</h4>
+<p>IE : lecture (porte ET). OE : écriture (tampon Buf). WPU : tirage faible vers VDD3P3. WPD : tirage faible vers GND. Bonding pad : liaison puce et broche du boîtier. Lu = niveau de la broche ET IE.</p>
+</article>
+
+<div class="fin-partie" data-section="gpio-pad"></div>
+</section>
+
+<section class="partie" id="s-interruptions">
+<p class="rang-partie">2 / 5</p>
+<h2>Interruptions et registre GPIO</h2>
+
+<article class="notion" id="n-interruptions">
+<h3>Interrupt Matrix et types d'interruption</h3>
+<p class="chapeau">Un capteur de chute ne prévient qu'une fois, au moment où il se déclenche. Le programme ne peut pas passer son temps à regarder la broche : il faut que la broche, elle, vienne interrompre le processeur. Encore faut-il dire à quel moment, et à quel processeur, puisque l'ESP32 en a deux.</p>
+
+<h4>Intuition</h4>
+<p>Une interruption, c'est une sonnette : le programme fait son travail, et quand la sonnette retentit, il s'arrête pour traiter l'événement, puis reprend. Pour une broche, il reste à dire ce qui fait sonner : le moment où elle monte, celui où elle descend, n'importe quel changement, ou le simple fait qu'elle soit à 0 ou à 1.</p>
+<p>Un changement est un instant : on parle de <b>front</b>. Un état qui dure est un <b>niveau</b>. Un déclenchement sur front sonne une fois par changement ; un déclenchement sur niveau sonne tant que l'état dure.</p>
+
+<div id="fig-types"></div>
+
+<h4>Formalisation</h4>
+<h5>Le type d'interruption d'une broche</h5>
+<p>Le champ <strong>GPIO_PINn_INT_TYPE</strong> (<i>Interrupt type selection</i>, lecture et écriture) choisit le déclenchement de la broche n :</p>
+<div class="tableau"><table>
+<tr><th>Valeur</th><th>Déclenchement</th><th>Famille</th></tr>
+<tr><td>0</td><td>interruption GPIO désactivée (<i>disable</i>)</td><td></td></tr>
+<tr><td>1</td><td>front montant (<i>rising edge trigger</i>)</td><td>front</td></tr>
+<tr><td>2</td><td>front descendant (<i>falling edge trigger</i>)</td><td>front</td></tr>
+<tr><td>3</td><td>tout front (<i>any edge trigger</i>)</td><td>front</td></tr>
+<tr><td>4</td><td>niveau bas (<i>low level trigger</i>)</td><td>niveau</td></tr>
+<tr><td>5</td><td>niveau haut (<i>high level trigger</i>)</td><td>niveau</td></tr>
+</table></div>
+<h5>La matrice d'interruptions</h5>
+<p>L'<strong>Interrupt Matrix</strong> de l'ESP32 attribue, de façon indépendante, les sources d'interruption des périphériques aux interruptions périphériques des deux CPU. Les deux CPU (PRO et APP) ont chacun <strong>32 interruptions, dont 26 sont des interruptions de périphériques</strong>.</p>
+
+<div id="fig-matrice"></div>
+
+<p>Sur le schéma du cours, la matrice reçoit les sources d'interruption des périphériques (<i>Peripheral Interrupt Source</i>) et, pour chaque CPU, un registre de configuration (<i>Peripheral Interrupt Configuration Register</i>) et un masque des interruptions non masquables (<i>NMI Interrupt Mask</i>). Elle produit l'interruption de périphérique de chaque CPU (<i>PRO_CPU Peripheral Interrupt</i>, <i>APP_CPU Peripheral Interrupt</i>) et, pour chacun, un registre d'état des sources (<i>Peripheral Interrupt Source Status Register</i>). La page suivante détaille le registre qui règle une broche, GPIO_PINn_REG.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<div class="tableau"><table>
+<tr><th>Situation</th><th>INT_TYPE</th><th>Pourquoi</th></tr>
+<tr><td>bouton vers la masse avec pull-up : agir à l'appui</td><td>2</td><td>l'appui fait passer la broche de 1 à 0</td></tr>
+<tr><td>capteur de gouttes : une impulsion 0, 1, 0 par goutte</td><td>1 (ou 2)</td><td>un seul front par goutte ; avec 3, chaque goutte compterait deux fois</td></tr>
+<tr><td>codeur qui change à chaque cran, dans un sens ou l'autre</td><td>3</td><td>chaque changement compte</td></tr>
+<tr><td>alarme qui reste à 1 tant que le défaut dure</td><td>5</td><td>l'interruption reste demandée tant que le défaut n'est pas traité</td></tr>
+</table></div>
+
+<h4>Formules clés</h4>
+<p>INT_TYPE : 0 désactivée, 1 front montant, 2 front descendant, 3 tout front, 4 niveau bas, 5 niveau haut. PRO_CPU et APP_CPU : 32 interruptions chacun, dont 26 de périphériques. Interrupt Matrix : chaque source vers les interruptions de périphériques des deux CPU, indépendamment.</p>
+</article>
+
+<article class="notion" id="n-registre-gpio">
+<h3>Registre GPIO_PINn_REG</h3>
+<p class="chapeau">Choisir un front descendant, envoyer l'interruption au bon processeur, passer une sortie en drain ouvert : tout cela se règle en écrivant quelques bits dans un seul mot de 32 bits, propre à chaque broche.</p>
+
+<h4>Intuition</h4>
+<p>Un registre est une rangée de 32 interrupteurs. Le constructeur a découpé cette rangée en champs : quelques bits côte à côte qui forment un petit nombre. Pour régler la broche, on écrit le bon nombre dans le bon champ, sans toucher aux autres. Et comme chaque broche a son propre registre, il faut aussi savoir où le trouver : les registres sont rangés les uns après les autres, à pas régulier.</p>
+
+<div id="fig-registre"></div>
+
+<h4>Formalisation</h4>
+<p><strong>GPIO_PINn_REG</strong> : registre de configuration de la broche n, pour n = 0 à 19, 21 à 23, 25 à 27 et 32 à 39. Il se trouve au décalage <strong>0x88 + 0x4·n</strong> dans le bloc des registres GPIO (un registre de 4 octets par broche, d'où le pas de 0x4).</p>
+<div class="tableau"><table>
+<tr><th>Bits</th><th>Champ</th><th>Rôle</th><th>Au reset</th></tr>
+<tr><td>31 à 18</td><td>réservés</td><td></td><td>0</td></tr>
+<tr><td>17 à 13</td><td>GPIO_PINn_INT_ENA</td><td>bits d'autorisation d'interruption pour la broche n (lecture et écriture) : bit0 APP CPU interrupt enable ; bit1 APP CPU non-maskable interrupt enable ; bit2 PRO CPU interrupt enable ; bit3 PRO CPU non-maskable interrupt enable</td><td>x</td></tr>
+<tr><td>12 à 11</td><td>réservés</td><td></td><td>0</td></tr>
+<tr><td>10</td><td>GPIO_PINn_WAKEUP_ENABLE</td><td>autorise la broche à réveiller la puce</td><td>x</td></tr>
+<tr><td>9 à 7</td><td>GPIO_PINn_INT_TYPE</td><td>type d'interruption : 0 à 5 (page précédente)</td><td>x</td></tr>
+<tr><td>6 à 3</td><td>réservés</td><td></td><td>0</td></tr>
+<tr><td>2</td><td>GPIO_PINn_PAD_DRIVER</td><td>0 : sortie normale ; 1 : sortie en drain ouvert (lecture et écriture)</td><td>x</td></tr>
+<tr><td>1 à 0</td><td>réservés</td><td></td><td>0</td></tr>
+</table></div>
+<p>Un « x » dans la ligne de reset de la diapositive signale un bit dont la valeur au démarrage n'est pas fixée : il faut l'écrire avant de compter dessus. Un champ qui commence au bit \(k\) et contient la valeur \(v\) pèse \(v \times 2^k\) dans le mot :</p>
+\[ \text{valeur} = \text{INT\_ENA} \times 2^{13} + \text{WAKEUP} \times 2^{10} + \text{INT\_TYPE} \times 2^{7} + \text{PAD\_DRIVER} \times 2^{2} \]
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Broche 4, interruption sur front descendant, envoyée au seul PRO CPU en interruption masquable, sortie normale, pas de réveil.</p>
+<ul>
+<li>Décalage : \(0x88 + 0x4 \times 4 = 0x88 + 0x10 = 0x98\).</li>
+<li>INT_ENA : seul le bit2 à 1, soit 00100 en binaire, donc 4.</li>
+<li>INT_TYPE = 2 (front descendant), soit 010.</li>
+</ul>
+\[ 4 \times 2^{13} + 2 \times 2^{7} = 32768 + 256 = 33024 = 0x00008100 \]
+
+<h4>Formules clés</h4>
+\[ \text{décalage}(\text{GPIO\_PIN}n\text{\_REG}) = 0x88 + 0x4 \cdot n \qquad \text{INT\_ENA : bits } 17\text{–}13 \quad \text{INT\_TYPE : bits } 9\text{–}7 \quad \text{PAD\_DRIVER : bit } 2 \]
+</article>
+
+<div class="fin-partie" data-section="interruptions"></div>
+</section>
+
+<section class="partie" id="s-adc-dac">
+<p class="rang-partie">3 / 5</p>
+<h2>ADC et DAC</h2>
+
+<article class="notion" id="n-adc">
+<h3>ADC (Analog to Digital Converter)</h3>
+<p class="chapeau">Un capteur de température, une électrode d'ECG, un capteur de pression donnent une tension qui varie en continu. Le programme, lui, ne manipule que des nombres. L'ADC fait le passage : il mesure la tension et rend un entier.</p>
+
+<h4>Intuition</h4>
+<p>Pense à une règle graduée posée le long de la plage 0 à 3,3 V. L'ADC regarde où tombe la tension et donne le numéro de la graduation. Avec 12 bits, la règle a 4096 graduations, de 0 à 4095 : chaque marche fait environ 0,8 mV. Avec moins de bits, les marches sont plus grosses, mais la mesure va plus vite.</p>
+<p>Pour trouver la graduation, un ADC SAR procède comme au jeu « plus grand, plus petit » : il compare d'abord la tension au milieu de la plage, garde la bonne moitié, recommence. Douze questions suffisent pour 12 bits.</p>
+
+<div id="fig-adc"></div>
+
+<h4>Formalisation</h4>
+<h5>Les ADC de l'ESP32</h5>
+<ul>
+<li>L'ESP32 intègre <strong>deux ADC SAR 12 bits</strong>. Ils sont gérés par cinq contrôleurs SAR ADC et peuvent mesurer des signaux sur 1 à <strong>18 pads analogiques</strong>.</li>
+<li>Deux ADC SAR, avec échantillonnage et conversion simultanés.</li>
+<li>Jusqu'à 18 pads d'entrée analogique.</li>
+<li>Résolution configurable : 12, 11, 10 ou 9 bits.</li>
+<li>Support du DMA (disponible sur un contrôleur).</li>
+<li>Plusieurs modes de balayage des canaux (disponibles sur deux contrôleurs).</li>
+<li>Fonctionnement pendant le Deep-sleep (disponible sur un contrôleur).</li>
+<li><strong>Note : les broches de l'ADC2 ne peuvent pas être utilisées quand le Wi-Fi est utilisé.</strong></li>
+</ul>
+<h5>La formule de conversion</h5>
+<p>Pour une résolution de 12 bits, plage [0 4095] :</p>
+\[ ADC\_OUT = 4095 \times \frac{ADC\_IN}{3{,}3\ \text{V}} \]
+<p>Plus généralement, avec \(n\) bits les codes vont de 0 à \(2^n - 1\) : 4095 pour 12 bits, 2047 pour 11, 1023 pour 10, 511 pour 9.</p>
+
+<h5>Les canaux</h5>
+<div id="fig-canaux"></div>
+<div class="tableau"><table>
+<tr><th>ADC1</th><th>ADC2</th></tr>
+<tr><td>ADC1_CH0 (GPIO 36), ADC1_CH1 (GPIO 37), ADC1_CH2 (GPIO 38), ADC1_CH3 (GPIO 39), ADC1_CH4 (GPIO 32), ADC1_CH5 (GPIO 33), ADC1_CH6 (GPIO 34), ADC1_CH7 (GPIO 35)</td><td>ADC2_CH0 (GPIO 4), ADC2_CH1 (GPIO 0), ADC2_CH2 (GPIO 2), ADC2_CH3 (GPIO 15), ADC2_CH4 (GPIO 13), ADC2_CH5 (GPIO 12), ADC2_CH6 (GPIO 14), ADC2_CH7 (GPIO 27), ADC2_CH8 (GPIO 25), ADC2_CH9 (GPIO 26)</td></tr>
+</table></div>
+<p>8 + 10 = 18 canaux : ce sont les 18 pads analogiques. GPIO 37 et 38 existent sur la puce mais ne sortent pas sur la carte DEV KIT V1.</p>
+
+<h5>Le principe SAR</h5>
+<p class="complement">Complément, pour comprendre le nom : SAR signifie <i>Successive Approximation Register</i>, registre à approximations successives.</p>
+<div id="fig-sar"></div>
+<p>Le convertisseur cherche les bits du MSB au LSB. À chaque étape, il compare la tension au milieu de l'intervalle encore possible : au-dessus, le bit vaut 1 et on garde la moitié haute ; en dessous, le bit vaut 0 et on garde la moitié basse. Après \(n\) comparaisons, les \(n\) bits sont connus.</p>
+
+<h5>Organisation interne</h5>
+<div id="fig-domaines"></div>
+<p>Les schémas du cours (<i>SAR ADC Depiction</i> et <i>SAR ADC Outline of Function</i>) répartissent l'ADC en trois domaines. Domaine analogique : les entrées, un amplificateur faible bruit (<i>Low Noise Amplifier</i>) devant SAR ADC1, et les deux convertisseurs SAR ADC1 et SAR ADC2. Domaine RTC : les contrôleurs RTC ADC1 et RTC ADC2. Domaine numérique : les contrôleurs DIG ADC1 et DIG ADC2, le DMA, et le contrôleur Power / Peak Detect (PWDET). Des multiplexeurs choisissent qui commande chaque convertisseur : SENS_SAR1_DIG_FORCE pour SAR ADC1 (0 : RTC ADC1 CTRL, 1 : DIG ADC1 CTRL), SENS_SAR2_DIG_FORCE pour SAR ADC2 (sur le schéma, 1 : RTC ADC2 CTRL, 0 : vers le domaine numérique), et APB_SARADC_SAR2_MUX (1 : DIG ADC2 CTRL, 0 : PWDET CTRL). Les entrées de SAR ADC1 sont pad_in[7:0] et le capteur à effet Hall (<i>hall sensor</i>) ; celles de SAR ADC2 sont pad_in[9:0], pa_pkdet1, pa_pkdet2 et vdd33.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un capteur de température donne 1,1 V sur GPIO 34 (ADC1_CH6), ADC en 12 bits :</p>
+\[ ADC\_OUT = 4095 \times \frac{1{,}1}{3{,}3} = 1365 \]
+<p>À l'inverse, si le programme lit 2730 : \(ADC\_IN = 2730 \times 3{,}3 / 4095 = 2{,}2\) V. Si l'appareil envoie ses mesures en Wi-Fi, le capteur doit rester sur l'ADC1 : sur GPIO 4 (ADC2_CH0), la mesure ne serait plus possible.</p>
+
+<h4>Formules clés</h4>
+\[ ADC\_OUT = 4095 \times \frac{ADC\_IN}{3{,}3\ \text{V}} \quad (12 \text{ bits}) \qquad \text{code max} = 2^n - 1 \qquad \text{ADC2 inutilisable avec le Wi-Fi} \]
+</article>
+
+<article class="notion" id="n-dac">
+<h3>DAC (Digital to Analog Converter)</h3>
+<p class="chapeau">Un stimulateur doit recevoir une consigne de 1 V, un banc de test doit simuler un signal physiologique. Cette fois, c'est le programme qui a un nombre et le monde qui attend une tension : c'est le rôle du DAC, l'inverse de l'ADC.</p>
+
+<h4>Intuition</h4>
+<p>Le DAC est un escalier de 256 marches entre 0 V et la tension de référence. Le programme choisit une marche avec un nombre de 0 à 255, et la broche prend la tension de cette marche. Doubler le nombre double la tension ; changer la référence change la hauteur de tout l'escalier.</p>
+
+<div id="fig-dac"></div>
+
+<h4>Formalisation</h4>
+<ul>
+<li>L'ESP32 a <strong>2 canaux DAC 8 bits</strong> qui convertissent un signal numérique en tension analogique.</li>
+<li>Les canaux DAC : <strong>DAC1 (GPIO25)</strong> et <strong>DAC2 (GPIO26)</strong>.</li>
+<li>Fonctionnalités : conversion indépendante ou simultanée des canaux ; tension de référence prise sur la broche VDD3P3_RTC ; générateur de forme d'onde cosinus (<i>Cosine waveform</i>, CW) ; accès DMA.</li>
+</ul>
+<p>Pour chaque canal, la tension de sortie se calcule ainsi :</p>
+\[ DACn\_OUT = \frac{VDD3P3\_RTC \times PDACn\_DAC}{255} \]
+<p>Une marche de l'escalier vaut \(VDD3P3\_RTC / 255\), soit environ 12,9 mV pour 3,3 V.</p>
+
+<h5>Le schéma d'un canal</h5>
+<div id="fig-dac-schema"></div>
+<p>Sur le schéma du cours, le mot de 8 bits pdacn_dac[7:0] qui arrive au bloc DACn vient d'un premier multiplexeur commandé par SENS_DAC_DIG_FORCE : à 1, il vient du DMA ; à 0, il vient d'un second multiplexeur commandé par SENS_DACn_CW_EN, qui choisit entre le générateur CW (1) et le registre RTCIO_PAD_PDACn_DAC[7:0] (0). La mise en marche du DAC (pdacn_xpd_dac) vient soit de RTCIO_PAD_PDACn_XPD_DAC, soit de la machine d'états du SAR ADC (SAR ADC FSM), selon RTCIO_PAD_PDACn_DAC_XPD_FORCE. Le DAC reçoit aussi son horloge pdac_clk et sort dacn_out.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Avec VDD3P3_RTC = 3,3 V et PDACn_DAC = 200 :</p>
+\[ DACn\_OUT = \frac{3{,}3 \times 200}{255} \approx 2{,}588\ \text{V} \]
+<p>Pour viser 1 V : \(PDACn\_DAC = 255 \times 1 / 3{,}3 \approx 77{,}3\), on écrit 77, ce qui donne \(3{,}3 \times 77 / 255 \approx 0{,}996\) V. Si la référence tombe à 3,0 V, le même nombre 200 ne donne plus que \(3{,}0 \times 200 / 255 \approx 2{,}35\) V.</p>
+
+<h4>Formules clés</h4>
+\[ DACn\_OUT = \frac{VDD3P3\_RTC \times PDACn\_DAC}{255} \qquad 0 \le PDACn\_DAC \le 255 \qquad \text{DAC1 : GPIO25, DAC2 : GPIO26} \]
+</article>
+
+<div class="fin-partie" data-section="adc-dac"></div>
+</section>
+
+<section class="partie" id="s-timers">
+<p class="rang-partie">4 / 5</p>
+<h2>Timers et watchdog</h2>
+
+<article class="notion" id="n-timer">
+<h3>Timers</h3>
+<p class="chapeau">Lire un ECG 500 fois par seconde, pas une de plus, pas une de moins. Attendre 30 s avant de relancer une pompe. Le programme ne peut pas compter le temps en comptant ses propres instructions : il s'appuie sur des timers, des compteurs qui avancent au rythme d'une horloge.</p>
+
+<h4>Intuition</h4>
+<p>Un timer est un compteur branché sur une horloge. L'horloge de la puce bat très vite, des dizaines de millions de fois par seconde : on la ralentit d'abord avec un diviseur, le prescaler. Le compteur avance alors d'un pas à chaque « tic ». Quand il atteint une valeur fixée, l'alarme, il prévient le programme par une interruption, et peut repartir de zéro tout seul : on obtient un événement parfaitement régulier.</p>
+
+<div id="fig-timer"></div>
+
+<h4>Formalisation</h4>
+<ul>
+<li>L'ESP32 intègre <strong>quatre timers d'usage général</strong>.</li>
+<li>Ce sont tous des timers génériques de <strong>64 bits</strong>, construits sur des prescalers de 16 bits et des compteurs montants/descendants de 64 bits capables de rechargement automatique.</li>
+</ul>
+<p>Les timers offrent :</p>
+<ul>
+<li>un prescaler d'horloge de 16 bits, de 2 à 65536 ;</li>
+<li>un compteur de base de temps de 64 bits ;</li>
+<li>un compteur configurable en incrémentation ou en décrémentation (<i>up/down</i>) ;</li>
+<li>l'arrêt et la reprise du compteur (<i>halt and resume</i>) ;</li>
+<li>le rechargement automatique à l'alarme (<i>auto-reload at alarm</i>) ;</li>
+<li>le rechargement instantané commandé par le logiciel ;</li>
+<li>la génération d'interruptions sur niveau et sur front.</li>
+</ul>
+<p class="complement">Complément pour les calculs : le cours ne donne pas la fréquence de l'horloge des timers. Les exemples prennent 80 MHz, l'horloge APB par défaut de l'ESP32.</p>
+\[ T_{tic} = \frac{\text{prescaler}}{f_{horloge}} \qquad T_{alarme} = \text{alarme} \times T_{tic} \]
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Échantillonner un ECG à 500 Hz demande une interruption toutes les \(1/500 = 2\) ms. Avec \(f = 80\) MHz et un prescaler de 80 :</p>
+\[ T_{tic} = \frac{80}{80 \times 10^6} = 1\ \mu\text{s} \qquad \text{alarme} = \frac{2\ \text{ms}}{1\ \mu\text{s}} = 2000 \]
+<p>Avec le rechargement automatique, le compteur repart de 0 à chaque alarme : une interruption toutes les 2 ms, sans que le programme intervienne. Le prescaler le plus petit, 2, donne la cadence la plus rapide : \(80 / 2 = 40\) MHz, un tic toutes les 25 ns.</p>
+
+<h4>Formules clés</h4>
+\[ T_{tic} = \frac{\text{prescaler}}{f_{horloge}} \quad (2 \le \text{prescaler} \le 65536) \qquad T_{alarme} = \text{alarme} \times T_{tic} \qquad f_{interruption} = \frac{1}{T_{alarme}} \]
+</article>
+
+<article class="notion" id="n-watchdog">
+<h3>Watchdog Timers (WDT)</h3>
+<p class="chapeau">Un pousse-seringue dont le programme reste coincé dans une boucle continue peut-être de pousser, ou n'alarme plus. Personne n'est là pour appuyer sur « reset ». Il faut un gardien dans la puce, qui s'aperçoit que le programme ne répond plus et relance tout.</p>
+
+<h4>Intuition</h4>
+<p>Le chien de garde est un compte à rebours que le programme doit relancer régulièrement, comme un veilleur qui doit signaler sa présence toutes les heures. Tant que le programme tourne normalement, il le « nourrit » à chaque tour de boucle et le compteur n'arrive jamais au bout. Si le programme se bloque, plus personne ne nourrit le chien : le compteur atteint sa limite et le chien agit, par exemple en redémarrant la puce.</p>
+<p>Il ne répare pas le bug : il permet de s'en remettre.</p>
+
+<div id="fig-wdt"></div>
+
+<h4>Formalisation</h4>
+<p>L'ESP32 a <strong>trois chiens de garde</strong> (<i>watchdog timers</i>, WDT) :</p>
+<ul>
+<li>un dans chacun des deux modules timer, appelé <strong>Main System Watchdog Timer</strong> (MWDT) ;</li>
+<li>un dans le module RTC, appelé <strong>RTC Watchdog Timer</strong> (RWDT).</li>
+</ul>
+<p>Ces chiens de garde servent à <strong>récupérer d'une faute imprévue</strong> (<i>unforeseen fault</i>) qui fait abandonner au programme d'application sa séquence normale.</p>
+<p>Cela rejoint les spécifications de la puce : deux groupes de timers, chacun avec 2 timers de 64 bits et 1 chien de garde principal, plus un timer RTC et le chien de garde RTC.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>La boucle principale d'un moniteur nourrit le chien toutes les 0,5 s, et la limite du chien est de 1 s. À t = 2 s, le calcul se bloque : la dernière remise à zéro date de 2 s, donc le chien arrive au bout à 3 s et redémarre la puce. La remise à zéro doit se trouver dans la boucle qu'on surveille : placée dans une interruption de timer, elle continuerait d'arriver pendant que la boucle est bloquée, et le chien ne verrait rien.</p>
+
+<h4>Formules clés</h4>
+<p>3 WDT : 2 MWDT (un par module timer) + 1 RWDT (module RTC). Rôle : récupérer d'une faute imprévue. Principe : nourri avant la limite, rien ne se passe ; plus nourri, le chien agit au bout de son délai.</p>
+</article>
+
+<div class="fin-partie" data-section="timers"></div>
+</section>
+
+<section class="partie" id="s-pwm-bus">
+<p class="rang-partie">5 / 5</p>
+<h2>PWM, I2C et SPI de l'ESP32</h2>
+
+<article class="notion" id="n-pwm">
+<h3>PWM (Pulse Width Modulation)</h3>
+<p class="chapeau">La LED d'un oxymètre doit briller juste assez, le moteur d'une pompe doit tourner à mi-vitesse. Or une broche numérique ne sait sortir que 0 V ou 3,3 V. L'astuce : l'allumer et l'éteindre très vite, et jouer sur la proportion du temps passé allumée.</p>
+
+<h4>Intuition</h4>
+<p>Si tu allumes une lampe la moitié du temps, en alternant assez vite pour que l'œil ne voie pas le clignotement, elle paraît briller à moitié. Le PWM fait pareil : un signal carré de fréquence fixe, dont on règle la largeur de l'impulsion haute. La fraction de la période passée à 1 est le rapport cyclique. Une LED, un moteur ou un filtre « voient » surtout la valeur moyenne.</p>
+
+<div id="fig-pwm"></div>
+
+<h4>Formalisation</h4>
+<ul>
+<li>Le contrôleur LED PWM de l'ESP32 a <strong>16 canaux indépendants</strong>, qui peuvent être configurés pour produire des signaux PWM de propriétés différentes.</li>
+<li>Toutes les broches qui peuvent servir de sorties peuvent servir de broches PWM. <strong>Les GPIO 34 à 39 ne peuvent pas générer de PWM.</strong></li>
+<li>Pour régler un signal PWM, il faut définir dans le code : la <strong>fréquence</strong> du signal, le <strong>rapport cyclique</strong> (<i>duty cycle</i>), le <strong>canal PWM</strong> et la <strong>GPIO</strong> sur laquelle sortir le signal.</li>
+</ul>
+<p class="complement">Complément, pour relier ces paramètres à la tension obtenue : avec une période \(T\) et une durée à l'état haut \(t_{haut}\),</p>
+\[ f = \frac{1}{T} \qquad \alpha = \frac{t_{haut}}{T} \qquad V_{moy} = \alpha \times 3{,}3\ \text{V} \]
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>LED d'oxymètre sur GPIO 2, canal 0, fréquence 2000 Hz : la période vaut \(T = 1/2000 = 0{,}5\) ms. Pour une tension moyenne de 0,99 V, \(\alpha = 0{,}99 / 3{,}3 = 30\ \%\) : la broche reste à 1 pendant \(0{,}3 \times 0{,}5 = 0{,}15\) ms à chaque période. Avec \(\alpha = 75\ \%\), \(V_{moy} = 0{,}75 \times 3{,}3 = 2{,}475\) V. La même LED branchée sur GPIO 35 resterait éteinte : cette broche est une entrée seulement.</p>
+
+<h4>Formules clés</h4>
+\[ \text{16 canaux LED PWM} \qquad \text{paramètres : } f,\ \alpha,\ \text{canal},\ \text{GPIO} \qquad V_{moy} = \alpha \times 3{,}3\ \text{V} \qquad \text{pas de PWM sur GPIO 34 à 39} \]
+</article>
+
+<article class="notion" id="n-bus-esp32">
+<h3>Interfaces I2C et SPI de l'ESP32</h3>
+<p class="chapeau">Le chapitre 3 a expliqué comment fonctionnent les bus I2C et SPI. Reste la question pratique quand on câble un capteur de température I2C ou une carte mémoire SPI sur l'ESP32 : sur quelles broches, et comment le dire au programme ?</p>
+
+<h4>Intuition</h4>
+<p>Grâce à la GPIO matrix, les signaux I2C et SPI peuvent sortir sur presque n'importe quelle broche. Mais pour ne pas avoir à tout choisir à chaque projet, des broches par défaut existent : si tu câbles là, il n'y a rien à préciser. Si ces broches sont déjà prises, tu en choisis d'autres et tu les indiques dans le code.</p>
+
+<div id="fig-bus"></div>
+
+<h4>Formalisation</h4>
+<h5>Interface I2C</h5>
+<ul>
+<li>L'ESP32 a <strong>deux canaux I2C</strong>, et n'importe quelle broche peut être réglée en SDA ou en SCL.</li>
+<li>Avec l'IDE Arduino, les broches I2C par défaut sont <strong>GPIO 21 (SDA)</strong> et <strong>GPIO 22 (SCL)</strong>.</li>
+<li>Pour utiliser d'autres broches avec la bibliothèque Wire, il suffit d'appeler <code>Wire.begin(SDA, SCL);</code></li>
+</ul>
+<h5>Interface SPI</h5>
+<ul>
+<li>Deux bus SPI (<i>Serial Peripheral Interface</i>) accessibles à l'utilisateur : <strong>HSPI (SPI2)</strong>, <i>High-Speed SPI</i>, et <strong>VSPI (SPI3)</strong>, <i>Variable and Configurable SPI</i>.</li>
+<li>SPI2 et SPI3 ont des bus de signaux indépendants, qui portent les mêmes noms.</li>
+<li>Chaque bus a trois lignes CS pour piloter jusqu'à <strong>trois</strong> esclaves SPI.</li>
+</ul>
+<div class="tableau"><table>
+<tr><th>SPI</th><th>MOSI (Master Out, Slave In)</th><th>MISO (Master In, Slave Out)</th><th>CLK (Serial Clock)</th><th>CS (Chip Select)</th></tr>
+<tr><td>VSPI</td><td>GPIO 23</td><td>GPIO 19</td><td>GPIO 18</td><td>GPIO 5</td></tr>
+<tr><td>HSPI</td><td>GPIO 13</td><td>GPIO 12</td><td>GPIO 14</td><td>GPIO 15</td></tr>
+</table></div>
+<p>Sur la diapositive, l'en-tête de la colonne MISO reprend par erreur « Master Out, Slave In » : MISO veut dire <i>Master In, Slave Out</i>, la ligne sur laquelle l'esclave répond au maître.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un thermomètre connecté a un capteur de température I2C et une carte SD en SPI.</p>
+<ul>
+<li>Capteur I2C sur les broches par défaut : SDA sur GPIO 21, SCL sur GPIO 22, <code>Wire.begin();</code> sans argument suffit. Si un écran occupe déjà ces broches sur un autre montage, on peut écrire <code>Wire.begin(16, 17);</code> pour SDA sur GPIO 16 et SCL sur GPIO 17.</li>
+<li>Carte SD sur VSPI : MOSI GPIO 23, MISO GPIO 19, CLK GPIO 18, CS GPIO 5. Deux autres esclaves pourraient partager ce bus avec leurs propres lignes CS.</li>
+</ul>
+
+<h4>Formules clés</h4>
+<p>I2C : 2 canaux, toute broche en SDA ou SCL ; défaut Arduino GPIO 21 (SDA), GPIO 22 (SCL) ; <code>Wire.begin(SDA, SCL);</code>. SPI : HSPI = SPI2 (13, 12, 14, 15), VSPI = SPI3 (23, 19, 18, 5) pour MOSI, MISO, CLK, CS ; 3 esclaves par bus.</p>
+</article>
+
+<div class="fin-partie" data-section="pwm-bus"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../dessins.js"></script>
+<script src="../../figures/gpio.js"></script>
+<script src="../../figures/pad.js"></script>
+<script src="../../figures/interruptions.js"></script>
+<script src="../../figures/registre-gpio.js"></script>
+<script src="../../figures/adc.js"></script>
+<script src="../../figures/dac.js"></script>
+<script src="../../figures/timer.js"></script>
+<script src="../../figures/watchdog.js"></script>
+<script src="../../figures/pwm.js"></script>
+<script src="../../figures/bus-esp32.js"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le système embarqué</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 1. -->
+<main class="cours-chapitre" data-chapitre="1">
+<p class="etiquette" data-etiquette></p>
+<h1>Le système embarqué</h1>
+
+<section class="partie" id="s-definition-conception">
+<p class="rang-partie">1 / 3</p>
+<h2>Définitions et exigences de conception</h2>
+
+<article class="notion" id="n-definition">
+<h3>Système embarqué : définitions</h3>
+<p class="chapeau">Une semelle qui mesure les appuis du pied, un tensiomètre, un pousse-seringue : aucun ne ressemble à un ordinateur, et pourtant chacun contient un processeur et un programme. Qu'ont-ils en commun, et qu'est-ce qui les distingue d'un PC ?</p>
+
+<h4>Le chapitre en bref</h4>
+<p>Ce chapitre pose le vocabulaire de tout le module. D'abord ce qu'est un système embarqué (cette page), puis ce qu'il faut décider pour en concevoir un (matériel, modélisation, logiciel, exigences), puis comment son logiciel s'empile sur le matériel en couches. Deux dispositifs médicaux du cours, la semelle connectée et le tensiomètre, montrent ensuite tout cela sur des cas réels. Les chapitres suivants ouvrent les boîtes : architecture du processeur, bus de communication, puis une puce concrète, l'ESP32.</p>
+
+<h4>Intuition</h4>
+<p>Un ordinateur de bureau est généraliste : on lui installe ce qu'on veut, il fait du traitement de texte le matin et de la vidéo le soir. Un système embarqué fait une seule chose, toute sa vie : la semelle mesure des appuis plantaires et les transmet, rien d'autre. Il fonctionne seul, sans qu'on s'en occupe, et il vit avec peu : un petit accumulateur, la place d'une chaussure.</p>
+<p>Il n'est ni seulement une carte électronique, ni seulement un programme : la carte sans son programme ne fait rien, et le programme sans la carte n'agit sur rien. Le mot désigne les deux ensemble.</p>
+
+<div id="fig-criteres"></div>
+
+<h4>Formalisation</h4>
+<h5>La définition du cours</h5>
+<p><strong>Système embarqué (<i>Embedded System</i>)</strong> : un système électronique et informatique autonome qui est dédié à une tâche bien précise.</p>
+<ul>
+<li>Ressources limitées : consommation électrique, espace des circuits.</li>
+<li>Le terme de « système embarqué » désigne aussi bien le matériel que le logiciel utilisé.</li>
+</ul>
+<p>Le cours la double d'une définition en anglais, en trois critères : <i>an embedded system includes a microprocessor, involves the immediate control of hardware, is limited to performing a specific function.</i></p>
+<div class="tableau"><table>
+<tr><th>Critère</th><th>Ce que cela veut dire</th></tr>
+<tr><td><i>includes a microprocessor</i></td><td>il y a un processeur qui exécute un programme</td></tr>
+<tr><td><i>involves the immediate control of hardware</i></td><td>le programme lit et commande directement le matériel (capteurs, actionneurs, ports)</td></tr>
+<tr><td><i>is limited to performing a specific function</i></td><td>il est dédié à une tâche bien précise</td></tr>
+</table></div>
+
+<h5>Deux termes voisins</h5>
+<p><strong><i>Embedded controller</i></strong> : <i>a programmable microprocessor that has a dedicated function to control specific components of the computer architecture independent of the main processor.</i> C'est un microprocesseur programmable, dédié à la commande de certains composants d'un ordinateur, qui travaille sans le processeur principal.</p>
+<p><strong><i>Embedded computer system</i></strong> : <i>a computer system that is part of a larger system and performs some of the requirements of that system.</i> C'est un calculateur intégré à un système plus grand, dont il remplit une partie des exigences.</p>
+
+<div id="fig-termes"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté pour s'entraîner, avec les deux dispositifs du cours et deux appareils courants.</p>
+<div class="tableau"><table>
+<tr><th>Appareil</th><th>Microprocesseur</th><th>Commande directe du matériel</th><th>Fonction précise</th><th>Système embarqué ?</th></tr>
+<tr><td>Semelle connectée</td><td>oui (µC)</td><td>oui (capteurs de force, radio)</td><td>oui (appuis plantaires)</td><td>oui</td></tr>
+<tr><td>Tensiomètre (<i>Blood Pressure Monitor</i>)</td><td>oui (MCU)</td><td>oui (capteur de pression, pompe, valve)</td><td>oui (pression artérielle)</td><td>oui</td></tr>
+<tr><td>Pousse-seringue</td><td>oui</td><td>oui (moteur du piston)</td><td>oui (débit réglé)</td><td>oui</td></tr>
+<tr><td>Ordinateur de bureau</td><td>oui</td><td>non, à travers un système d'exploitation généraliste</td><td>non, il est généraliste</td><td>non</td></tr>
+</table></div>
+<p>Dans un ordinateur portable, le petit microprocesseur qui gère le clavier, la batterie et le ventilateur sans passer par le processeur principal est un <i>embedded controller</i>. Dans un échographe, la carte qui forme l'image fait partie d'un système plus grand (sonde, écran, clavier, chariot) dont elle remplit une partie des exigences : c'est un <i>embedded computer system</i>.</p>
+
+<h4>Formules clés</h4>
+<p>Système embarqué = système électronique + informatique, autonome, dédié à une tâche bien précise. Ressources limitées : énergie, espace. Matériel + logiciel. Trois critères : <i>microprocessor</i>, <i>immediate control of hardware</i>, <i>specific function</i>.</p>
+</article>
+
+<article class="notion" id="n-conception">
+<h3>Exigences de conception (Requirements Design)</h3>
+<p class="chapeau">Tu dois concevoir la semelle connectée. Avant d'écrire une ligne de code, il faut choisir la puce, décrire le comportement attendu, décider du langage et fixer ce que le système doit garantir. Le cours range ces décisions en quatre familles.</p>
+
+<h4>Intuition</h4>
+<p>Concevoir un système embarqué, c'est répondre à quatre questions. Sur quoi tourne-t-il ? C'est le matériel. Comment se comporte-t-il ? On le dessine avant de le coder : c'est la modélisation. Comment le programme-t-on, et que fait le programme ? C'est le logiciel. Qu'est-ce qui doit être garanti, et à quel prix ? Ce sont les exigences.</p>
+<p>Les exigences pilotent tout le reste : un délai très court impose une puce rapide et des interruptions, une exigence de sécurité impose de vérifier chaque comportement, un coût bas impose une puce modeste.</p>
+
+<div id="fig-familles"></div>
+
+<h4>Formalisation</h4>
+<div class="tableau"><table>
+<tr><th>Famille</th><th>Contenu du cours</th></tr>
+<tr><td><i>Hardware</i> (matériel)</td><td><i>Microcontrollers, Embedded Controllers, DSP, …</i></td></tr>
+<tr><td><i>Modelling</i> (modélisation)</td><td><i>flowcharts, state machines/diagrams, RT UML, SysML, …</i></td></tr>
+<tr><td><i>Software</i> (logiciel)</td><td>langages : <i>assembler, C/C++, python, …</i></td></tr>
+<tr><td><i>Requirements</i> (exigences)</td><td><i>Responsiveness (time), Reliability, Safety, Verification, Cost, …</i></td></tr>
+</table></div>
+<p>Le logiciel embarqué remplit quatre <strong>fonctions</strong> :</p>
+<ul>
+<li><i>read data from input ports</i> : lire les données sur les ports d'entrée ;</li>
+<li><i>send data to output ports</i> : envoyer des données sur les ports de sortie ;</li>
+<li><i>internal data transfer and mathematical operations</i> : déplacer les données en interne et calculer ;</li>
+<li><i>timer interrupt facilities for timing the controller algorithm</i> : utiliser les interruptions d'un timer pour cadencer l'algorithme de commande.</li>
+</ul>
+<p>Les exigences, une à une : <i>Responsiveness (time)</i>, répondre dans un délai donné ; <i>Reliability</i>, fonctionner sans panne dans la durée ; <i>Safety</i>, ne pas mettre en danger le patient ou l'utilisateur ; <i>Verification</i>, pouvoir prouver que le système fait ce qu'il doit ; <i>Cost</i>, tenir un coût.</p>
+
+<div id="fig-boucle"></div>
+
+<p>Une <strong>machine à états</strong> (<i>state machine</i>) est l'un des outils de modélisation cités : elle décrit les situations possibles du système et les événements qui font passer de l'une à l'autre. Un <strong>organigramme</strong> (<i>flowchart</i>) décrit la suite des opérations d'un programme, comme la boucle ci-dessus.</p>
+
+<div id="fig-etats"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté : les quatre familles appliquées à la semelle connectée.</p>
+<div class="tableau"><table>
+<tr><th>Famille</th><th>Décision pour la semelle</th></tr>
+<tr><td><i>Hardware</i></td><td>un microcontrôleur sobre (µC), avec ADC pour les 16 capteurs et une radio</td></tr>
+<tr><td><i>Modelling</i></td><td>un organigramme de la boucle de mesure, une machine à états (repos, mesure, envoi)</td></tr>
+<tr><td><i>Software</i></td><td>du C, avec les quatre fonctions : lire les capteurs, calculer, envoyer, cadencer par timer</td></tr>
+<tr><td><i>Requirements</i></td><td>mesure toutes les 10 ms (<i>Responsiveness</i>), plusieurs jours sur accumulateur (<i>Cost</i> et ressources), jamais d'alerte manquée (<i>Safety</i>, <i>Verification</i>)</td></tr>
+</table></div>
+
+<h4>Formules clés</h4>
+<p>Conception = <i>Hardware</i> + <i>Modelling</i> + <i>Software</i> + <i>Requirements</i>. Quatre fonctions du logiciel : lire les entrées, écrire les sorties, transférer et calculer, cadencer par interruption de timer. Exigences : temps de réponse, fiabilité, sécurité, vérification, coût.</p>
+</article>
+
+<div class="fin-partie" data-section="definition-conception"></div>
+</section>
+
+<section class="partie" id="s-organisation">
+<p class="rang-partie">2 / 3</p>
+<h2>Organisation d'un système embarqué</h2>
+
+<article class="notion" id="n-organisation">
+<h3>Organisation d'un système embarqué</h3>
+<p class="chapeau">Le programme de la semelle ne parle pas directement aux transistors de la puce. Entre le code qui décide et le matériel qui agit, il y a plusieurs couches de logiciel, chacune avec son rôle. Si le fabricant change de microcontrôleur, une seule d'entre elles doit changer.</p>
+
+<h4>Intuition</h4>
+<p>Pense à une pile. En bas, le matériel : il reçoit les entrées (capteurs) et produit les sorties (actionneurs). Tout en haut, l'application : ce que fait l'appareil, par exemple « mesurer les appuis et les envoyer ». Entre les deux, des couches de plus en plus proches du matériel : chacune rend un service à celle du dessus et cache les détails de celle du dessous.</p>
+<p>Deux moments font travailler la pile différemment. À la mise sous tension, on monte : la routine de démarrage prépare la puce, puis la couche d'abstraction, le système d'exploitation, les pilotes, et enfin l'application démarre. En fonctionnement, une demande de l'application descend les couches jusqu'au matériel.</p>
+
+<div id="fig-pile"></div>
+
+<h4>Formalisation</h4>
+<p>L'<strong>architecture générale</strong> du cours, du haut vers le bas :</p>
+<div class="tableau"><table>
+<tr><th>Couche</th><th>Rôle</th></tr>
+<tr><td><i>Embedded Application Code</i></td><td>le code de l'application : la tâche précise de l'appareil</td></tr>
+<tr><td><i>Device Drivers (API)</i></td><td>les pilotes des périphériques, appelés par l'application à travers une interface de programmation (API)</td></tr>
+<tr><td><i>A Real-Time Operating System (RTOS), Embedded OS</i></td><td>le système d'exploitation temps réel ou embarqué : il ordonne les tâches pour respecter leurs délais</td></tr>
+<tr><td><i>Hardware abstraction layer(s)</i> (HAL)</td><td>la couche d'abstraction du matériel : elle cache les détails de la puce derrière des fonctions communes</td></tr>
+<tr><td><i>System initialization routines (Boot)</i></td><td>les routines d'initialisation exécutées à la mise sous tension</td></tr>
+<tr><td><i>Hardware</i></td><td>le matériel, qui reçoit les entrées (<i>Inputs</i>) et produit les sorties (<i>Outputs</i>)</td></tr>
+</table></div>
+<p>À gauche de la pile, la diapositive place deux étiquettes : <i>Software Platform</i>, à hauteur des pilotes et du système d'exploitation, et <i>Hardware Platform</i>, à hauteur de la couche d'abstraction et du Boot, juste au-dessus du matériel.</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté : la pile de la semelle connectée.</p>
+<div class="tableau"><table>
+<tr><th>Couche</th><th>Dans la semelle</th></tr>
+<tr><td>Application</td><td>toutes les 10 ms, lire les appuis, calculer une moyenne par zone, envoyer une alerte si une zone est trop chargée</td></tr>
+<tr><td>Pilotes (API)</td><td><code>lire_capteur(k)</code>, <code>radio_envoyer(trame)</code>, <code>temperature()</code></td></tr>
+<tr><td>RTOS</td><td>une tâche « mesure » toutes les 10 ms, une tâche « radio » quand une trame est prête</td></tr>
+<tr><td>HAL</td><td>lit le registre de l'ADC de ce µC précis ; à réécrire si l'on change de µC</td></tr>
+<tr><td>Boot</td><td>règle les horloges et la mémoire à la mise sous tension</td></tr>
+</table></div>
+<p>Si le fabricant change de microcontrôleur, on réécrit la HAL (et le Boot) pour la nouvelle puce ; l'application ne bouge pas.</p>
+
+<h4>Formules clés</h4>
+<p>Du haut vers le bas : <i>Application Code</i>, <i>Device Drivers (API)</i>, <i>RTOS / Embedded OS</i>, <i>Hardware abstraction layer(s)</i>, <i>Boot</i>, <i>Hardware</i> (<i>Inputs</i> vers <i>Outputs</i>). Démarrage : on monte depuis le Boot. Requête : on descend depuis l'application.</p>
+</article>
+
+<div class="fin-partie" data-section="organisation"></div>
+</section>
+
+<section class="partie" id="s-exemples">
+<p class="rang-partie">3 / 3</p>
+<h2>Deux dispositifs médicaux</h2>
+
+<article class="notion" id="n-semelle">
+<h3>Exemple 1 : semelle instrumentée et connectée</h3>
+<p class="chapeau">Chez un patient diabétique, une petite plaie sous le pied peut évoluer jusqu'à la gangrène, souvent sans douleur. Une semelle bourrée de capteurs peut-elle repérer le danger avant la plaie ? C'est le premier exemple de système embarqué du cours.</p>
+
+<h4>Intuition</h4>
+<p>Le diabète abîme les nerfs du pied : le patient ne sent plus qu'une zone est trop chargée, ni qu'une plaie commence. La plaie s'aggrave alors par stades, de l'ulcère en surface jusqu'à l'os, puis à la gangrène. Mieux vaut agir au stade 0.</p>
+<p>La semelle mesure en continu ce que le patient ne sent plus : la force d'appui en 16 points, la température et l'humidité, et la bio-impédance des tissus. Un microcontrôleur rassemble ces mesures et les envoie par radio. C'est un système embarqué typique : dédié à une seule tâche, autonome sur accumulateur, avec très peu de place.</p>
+
+<div id="fig-stades"></div>
+
+<h4>Formalisation</h4>
+<h5>Le pied diabétique</h5>
+<p>La figure 1 du cours montre l'évolution d'un ulcère pour un pied diabétique, en six stades : <i>stage 0, no defect</i> ; <i>stage 1, superficial ulcer</i> ; <i>stage 2, deep ulcer</i> ; <i>stage 3, osteitis</i> (atteinte de l'os) ; <i>stage 4, partial gangrene of the foot</i> ; <i>stage 5, gangrene of the whole foot</i>. La photo 1 du cours montre un ulcère.</p>
+<p><strong>Les principales pathologies</strong> : les ulcères, les infections, les déformations et les blessures.</p>
+
+<h5>Les 16 capteurs résistifs de force</h5>
+<p>La semelle porte <strong>16 capteurs résistifs de force</strong>, en forme de deux disques accolés : diamètre \(D = 11\) mm, entraxe \(L = 15\) mm, longueur totale \(LT = 26\) mm. Leur résistance diminue quand on appuie : au repos, elle dépasse 1 MΩ.</p>
+<div class="tableau"><table>
+<tr><th>Caractéristique</th><th>Valeur</th><th>Caractéristique</th><th>Valeur</th></tr>
+<tr><td><i>Thickness</i></td><td>0,4 mm</td><td><i>Response time</i></td><td>&lt; 10 µs</td></tr>
+<tr><td><i>Shape</i></td><td><i>Sheet</i> (feuille)</td><td><i>Operating temperature</i></td><td>−40 °C à +85 °C</td></tr>
+<tr><td><i>Actuation force</i></td><td>500 g</td><td><i>Life time</i></td><td>&gt; 1 million</td></tr>
+<tr><td><i>Sensitivity range</i></td><td>500 g à 10 kg</td><td><i>Repeatability</i></td><td>± 10 % à 2 kg (<i>single</i>)</td></tr>
+<tr><td><i>Resolution</i></td><td><i>continuous</i></td><td><i>Dust/Waterproof</i></td><td>IP67</td></tr>
+<tr><td><i>Non-actuated resistance</i></td><td>&gt; 1 MΩ</td><td></td><td></td></tr>
+</table></div>
+
+<div id="fig-charge"></div>
+
+<h5>Le schéma bloc</h5>
+<p>La semelle instrumentée est reliée à trois blocs de mesure : <strong>Mesure BioZ</strong> (circuit MAX30009, bio-impédance), <strong>Gestion Capteurs Appui Plantaire</strong> et <strong>Capteur T°C &amp; Humidité</strong>. Les trois échangent avec le <strong>µC</strong>, qui échange avec le bloc <strong>TX Radio</strong> relié à une antenne. Un bloc <strong>Gestion Alim.</strong> tire l'énergie d'un accumulateur (<i>Accu</i>).</p>
+
+<div id="fig-schema"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté : vérifier la plage des capteurs pour un patient de 80 kg en appui sur un pied.</p>
+<p>Si le poids se répartissait également sur les 16 capteurs : \(80 / 16 = 5\) kg par capteur, dans la plage de 500 g à 10 kg. Mais à l'attaque du pas, le talon porte presque tout : sur 2 capteurs, \(80 / 2 = 40\) kg chacun, quatre fois la limite. Le capteur sature : il lit 10 kg au plus. La fiche se lit pour le cas réel, pas pour le cas moyen.</p>
+<p>Les cotes du capteur sont cohérentes : deux disques de diamètre 11 mm dont les centres sont à 15 mm donnent une longueur totale \(15 + 11 = 26\) mm.</p>
+
+<h4>Formules clés</h4>
+\[ \text{charge par capteur} = \frac{\text{poids porté}}{\text{nombre de capteurs chargés}} \qquad 500 \text{ g} \le \text{charge} \le 10 \text{ kg} \qquad LT = L + D \]
+<p>Schéma : trois blocs de mesure, µC, TX Radio, gestion de l'alimentation sur accumulateur.</p>
+</article>
+
+<article class="notion" id="n-tensiometre">
+<h3>Exemple 2 : Blood Pressure Monitor</h3>
+<p class="chapeau">Un tensiomètre électronique gonfle un brassard, le dégonfle en mesurant, affiche le résultat, émet un bip et peut envoyer la mesure par USB. Presque tout cela tient dans une seule puce. Comment s'organise-t-elle ?</p>
+
+<h4>Intuition</h4>
+<p>Suis le parcours d'une mesure. Le capteur de pression donne une tension minuscule : on l'amplifie, on ajuste son gain, on la convertit en nombres, on filtre ces nombres, et le MCU les lit. Dans l'autre sens, le MCU commande : la pompe pour gonfler, la valve pour dégonfler, l'écran pour afficher, le haut-parleur pour le bip.</p>
+<p>Le cours montre ce tensiomètre construit autour d'un <i>Programmable System on Chip</i> : un circuit qui contient le processeur et la plupart de ses périphériques. Hors de la puce restent les organes physiques : capteur, pompe, valve, écran, haut-parleur, batterie.</p>
+
+<div id="fig-bpm"></div>
+
+<h4>Formalisation</h4>
+<div class="tableau"><table>
+<tr><th>Chemin</th><th>Blocs du schéma</th></tr>
+<tr><td>Mesure</td><td><i>Pressure Sensor</i> → AMP → PGA → ADC → <i>Signal Filtering</i> → MCU</td></tr>
+<tr><td>Gonflage</td><td>MCU → <i>PWM Motor Control</i> → <i>Motor Driving Transistors</i> → <i>Rolling Pump</i> → <i>Air Chamber</i></td></tr>
+<tr><td>Dégonflage</td><td>MCU → <i>PWM Valve Control</i> → <i>Relay Valve</i> (sur la chambre à air)</td></tr>
+<tr><td>Son</td><td>MCU → DAC → <i>Band Pass Filter</i> → <i>Mono Speaker</i></td></tr>
+<tr><td>Interface</td><td><i>Mechanical or Touch Sensing</i> → <i>CapSense</i> → MCU ; MCU → <i>LCD Driver</i> → <i>LCD Display</i></td></tr>
+<tr><td>Communication</td><td>MCU → <i>Made For iPod</i>, MCU → USB</td></tr>
+<tr><td>Énergie</td><td><i>Battery</i> → <i>Power Management</i></td></tr>
+</table></div>
+<p>La pression du brassard arrive au capteur par un tuyau relié à la chambre à air. AMP est un amplificateur, PGA un amplificateur à gain programmable (<i>Programmable Gain Amplifier</i>) : le MCU règle son gain pour que le signal occupe bien la plage de l'ADC. L'ADC convertit une tension en nombre ; le DAC fait l'inverse. Le PWM (modulation de largeur d'impulsion) commande la puissance moyenne envoyée au moteur ou à la valve, à travers des transistors qui fournissent le courant que la puce ne peut pas donner.</p>
+<p>La <strong>légende</strong> du schéma classe les blocs en familles : <i>CPU, ADC/DAC, Amplifier/Comparator, Filters, User Interface, Communication, Digital Functions, Memory, System</i>.</p>
+
+<div id="fig-cycle"></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté : un cycle de mesure, bloc par bloc (le déroulé suit le principe général d'un tensiomètre à brassard).</p>
+<ol>
+<li>L'utilisateur appuie sur la touche : <i>CapSense</i> prévient le MCU.</li>
+<li>Gonflage : le MCU règle le rapport cyclique du <i>PWM Motor Control</i> ; la pompe remplit la chambre à air.</li>
+<li>Dégonflage et mesure : le <i>PWM Valve Control</i> ouvre la valve peu à peu ; pendant ce temps, la chaîne AMP, PGA, ADC, filtrage fournit la pression au MCU, qui en déduit la tension artérielle.</li>
+<li>Affichage : le MCU écrit le résultat par le <i>LCD Driver</i>.</li>
+<li>Bip : le MCU envoie des nombres au DAC, filtrés par le passe-bande, vers le haut-parleur.</li>
+<li>Transmission éventuelle par USB.</li>
+</ol>
+
+<h4>Formules clés</h4>
+<p>Mesure : capteur → AMP → PGA → ADC → filtrage → MCU. Commande : MCU → PWM → transistors → pompe ou valve. Son : MCU → DAC → passe-bande → haut-parleur. ADC : analogique vers numérique ; DAC : numérique vers analogique.</p>
+</article>
+
+<div class="fin-partie" data-section="exemples"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../dessins.js"></script>
+<script src="../../figures/definition.js"></script>
+<script src="../../figures/conception.js"></script>
+<script src="../../figures/organisation.js"></script>
+<script src="../../figures/semelle.js"></script>
+<script src="../../figures/tensiometre.js"></script>
+</body>
+</html>

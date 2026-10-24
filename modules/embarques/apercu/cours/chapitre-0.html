@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr" data-module="embarques">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Les bases du numérique</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours du chapitre 0. -->
+<main class="cours-chapitre" data-chapitre="0">
+<p class="etiquette" data-etiquette></p>
+<h1>Les bases du numérique</h1>
+
+<section class="partie" id="s-binaire">
+<p class="rang-partie">1 / 3</p>
+<h2>Bits et binaire</h2>
+
+<article class="notion" id="n-binaire">
+<h3>Bits et binaire</h3>
+<p class="chapeau">Un thermomètre connecté envoie la température au microcontrôleur sous forme de bits. Pour lire ce qu'il envoie, ou ce qu'un convertisseur 12 bits peut mesurer, il faut savoir compter en binaire.</p>
+
+<h4>Intuition</h4>
+<p>Un fil ne transporte que deux états : tension haute ou tension basse, 1 ou 0. Pour écrire un nombre plus grand, on aligne plusieurs fils, plusieurs bits. Comme en décimal où chaque chiffre vaut dix fois celui de sa droite, en binaire chaque bit vaut deux fois celui de sa droite : 1, 2, 4, 8, 16…</p>
+
+<div id="fig-octet"></div>
+
+<h4>Formalisation</h4>
+<p>Un <strong>bit</strong> vaut 0 ou 1. Huit bits forment un <strong>octet</strong>. Le bit de rang \(k\) (compté depuis la droite, en partant de 0) pèse \(2^k\) : la valeur d'un mot binaire est la somme des poids des bits à 1.</p>
+\[ 00010011_2 = 2^4 + 2^1 + 2^0 = 16 + 2 + 1 = 19 \]
+<p>Le <strong>MSB</strong> (<em>most significant bit</em>) est le bit de poids fort, à gauche ; dans un octet, il pèse \(2^7 = 128\). Le <strong>LSB</strong> (<em>least significant bit</em>) est le bit de poids faible, à droite, qui pèse 1. Le cours écrit aussi MSb et LSb sur les registres.</p>
+<p>Avec \(n\) bits, on écrit \(2^n\) valeurs, de 0 à \(2^n - 1\). Chaque bit en plus double le nombre de valeurs.</p>
+<div class="tableau"><table>
+<tr><th>Taille</th><th>Nombre de valeurs</th><th>Plus grande valeur</th><th>Où on la retrouve</th></tr>
+<tr><td>8 bits</td><td>256</td><td>255</td><td>DAC 8 bits de l'ESP32</td></tr>
+<tr><td>10 bits</td><td>1 024</td><td>1 023</td><td>convertisseur 10 bits (ATmega par exemple)</td></tr>
+<tr><td>12 bits</td><td>4 096</td><td>4 095</td><td>ADC 12 bits de l'ESP32</td></tr>
+</table></div>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<p>Un capteur doit envoyer 42 sur un octet : \(42 = 32 + 8 + 2\), on allume les bits de rang 5, 3 et 1, soit 00101010. Dans l'autre sens, un capteur renvoie 10010110 : les bits à 1 sont ceux de rang 7, 4, 2 et 1, donc \(128 + 16 + 4 + 2 = 150\).</p>
+
+<h4>Formules clés</h4>
+\[ \text{valeur} = \sum_k b_k\, 2^k \qquad v_{max} = 2^n - 1 \]
+<p>Octet : 8 bits, MSB à gauche (\(2^7 = 128\)), LSB à droite (1). 8 bits : 255 ; 10 bits : 1 023 ; 12 bits : 4 095.</p>
+</article>
+
+<div class="fin-partie" data-section="binaire"></div>
+</section>
+
+<section class="partie" id="s-hexadecimal">
+<p class="rang-partie">2 / 3</p>
+<h2>Hexadécimal et registres</h2>
+
+<article class="notion" id="n-hexadecimal">
+<h3>Hexadécimal et registres</h3>
+<p class="chapeau">Les fiches techniques de l'ESP32 écrivent les registres et les adresses en hexadécimal : 0x88, 0x3FF44000. Un chiffre hexadécimal, c'est exactement quatre bits, ce qui rend l'écriture courte et facile à relire.</p>
+
+<h4>Intuition</h4>
+<p>Un registre de 32 bits écrit en binaire, c'est une ligne de 32 zéros et uns : illisible. En regroupant les bits par paquets de quatre, chaque paquet prend une valeur de 0 à 15, qu'on écrit avec un seul symbole. On passe de 32 caractères à 8, sans aucun calcul compliqué : on traduit paquet par paquet.</p>
+
+<div id="fig-hexa"></div>
+
+<h4>Formalisation</h4>
+<p>L'<strong>hexadécimal</strong> compte en base 16 : les chiffres 0 à 9, puis A (10), B (11), C (12), D (13), E (14), F (15). Un chiffre hexadécimal remplace exactement 4 bits. Le préfixe <code>0x</code> signale un nombre hexadécimal.</p>
+\[ \texttt{0xB2} = 11 \times 16 + 2 = 178 \qquad \texttt{B} = 1011_2,\ \texttt{2} = 0010_2 \]
+<p>Un <strong>registre</strong> est un mot de bits où chaque champ a un rôle. On lit un champ comme un nombre à part, en partant de son propre bit de poids faible. Mettre un bit à 1 ajoute son poids : mettre le bit 2 à 1 ajoute \(2^2 = 4\).</p>
+<p>Les registres 32 bits occupent 4 octets chacun : d'une broche à la suivante, l'adresse avance de 0x4. Le registre de la broche \(n\) est à l'offset \(\texttt{0x88} + \texttt{0x4} \times n\) (registre GPIO_PINn_REG, chapitre 5).</p>
+<p>Tailles mémoire : 1 KiB (kibioctet) vaut \(2^{10} = 1\,024\) octets. Les fiches écrivent souvent KB dans le même sens : « 520 KiB SRAM », « 448 KB ROM », « 16 KB SRAM in RTC ».</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<ul>
+<li>0x5E : 5 = 0101 et E = 1110, donc 01011110 ; en décimal \(5 \times 16 + 14 = 94\).</li>
+<li>Offset de la broche 5 : \(\texttt{0x88} + \texttt{0x4} \times 5 = \texttt{0x88} + \texttt{0x14} = \texttt{0x9C}\).</li>
+<li>Un registre vaut 0x101 ; on met le bit 3 à 1 sans toucher au reste : \(\texttt{0x101} + 2^3 = \texttt{0x109}\).</li>
+<li>8 KB de mémoire : \(8 \times 1\,024 = 8\,192\) octets.</li>
+</ul>
+
+<h4>Formules clés</h4>
+\[ \texttt{0x}h_1h_0 = 16\,h_1 + h_0 \qquad \text{1 chiffre hexadécimal} = 4 \text{ bits} \qquad \text{offset}(n) = \texttt{0x88} + \texttt{0x4} \times n \]
+<p>1 KiB = \(2^{10}\) = 1 024 octets. Mettre le bit \(k\) à 1 : ajouter \(2^k\).</p>
+</article>
+
+<div class="fin-partie" data-section="hexadecimal"></div>
+</section>
+
+<section class="partie" id="s-signaux">
+<p class="rang-partie">3 / 3</p>
+<h2>Signaux logiques et horloge</h2>
+
+<article class="notion" id="n-signaux">
+<h3>Signaux logiques et horloge</h3>
+<p class="chapeau">Le patient appuie sur le bouton d'appel : le microcontrôleur doit le voir une fois, et une seule. Pour cela, il faut distinguer le front, l'instant où le signal change, du niveau, l'état qui dure. Et tout le circuit avance au rythme d'une horloge.</p>
+
+<h4>Intuition</h4>
+<p>Un signal logique, c'est une tension qui ne prend que deux valeurs. Quand le bouton est enfoncé, la tension monte ; quand on le relâche, elle redescend. Compter les appuis, c'est compter les montées, pas le temps passé en haut. L'horloge, elle, est un signal qui monte et descend tout seul, régulièrement, et donne la cadence à tout le reste.</p>
+
+<div id="fig-signaux"></div>
+
+<h4>Formalisation</h4>
+<p>Un signal logique a deux niveaux : <strong>haut</strong> (1, ici 3,3 V) et <strong>bas</strong> (0, 0 V). Un <strong>front montant</strong> est le passage de 0 à 1, un <strong>front descendant</strong> le passage de 1 à 0. Un front est un instant (la transition) ; un niveau dure tant que le signal reste à 0 ou à 1. Au chapitre 5, l'ESP32 propose les deux : déclenchement d'une interruption sur front montant, descendant ou les deux, et sur niveau bas ou haut.</p>
+<p>Une <strong>horloge</strong> est un signal carré régulier qui rythme le circuit. Sa <strong>période</strong> \(T\) est la durée d'un motif, sa <strong>fréquence</strong> \(f\) le nombre de motifs par seconde (en Hz, kHz, MHz) :</p>
+\[ f = \frac{1}{T} \]
+<p>Le <strong>débit</strong> d'une liaison se compte en bits par seconde (bps). Chaque bit occupe la ligne pendant \(t_{bit} = 1/\text{débit}\).</p>
+<p>Une liaison <strong>synchrone</strong> partage une horloge entre émetteur et récepteur (SPI, I2C). Une liaison <strong>asynchrone</strong> n'en a pas : les deux côtés conviennent du débit à l'avance (UART).</p>
+
+<h4>Exemple</h4>
+<p class="complement">Exemple ajouté.</p>
+<ul>
+<li>Une horloge à 4 MHz : \(T = \dfrac{1}{4 \times 10^{6}} = 250\) ns. À 16 MHz, la période est quatre fois plus courte : 62,5 ns.</li>
+<li>Une liaison à 115 200 bits par seconde : un bit dure \(1/115\,200 \approx 8{,}7\ \mu\)s.</li>
+<li>Une interruption « au niveau bas » se déclenche pendant tout l'intervalle où le signal reste à 0, pas seulement à l'instant où il descend.</li>
+</ul>
+
+<h4>Formules clés</h4>
+\[ f = \frac{1}{T} \qquad t_{bit} = \frac{1}{\text{débit}} \]
+<p>Front montant : 0 vers 1. Front descendant : 1 vers 0. Synchrone : horloge partagée (SPI, I2C). Asynchrone : débit convenu (UART).</p>
+</article>
+
+<div class="fin-partie" data-section="signaux"></div>
+</section>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../dessins.js"></script>
+<script src="../../figures/binaire.js"></script>
+<script src="../../figures/hexadecimal.js"></script>
+<script src="../../figures/signaux.js"></script>
+</body>
+</html>

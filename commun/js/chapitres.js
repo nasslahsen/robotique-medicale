@@ -2,7 +2,7 @@
  * Structure par chapitres : le plan d'un sous-module (index.html?sm=…) et l'écran d'un chapitre (chapitre.html?ch=…).
  * Plan : tous les chapitres sur un écran, reliés par des flèches (chapitres[].avant dans module.js) ; l'état se lit au style :
  * fond pâle = fait, contour coloré = commencé, gris = pas commencé. Un seul bouton « Reprendre ». Rien n'est verrouillé.
- * Chapitre : deux cartes séparées, Cours (les sections, Précédent / Suivant) et S'entraîner (exercices, révision, défi final).
+ * Chapitre : deux cartes séparées, Cours (une page qui défile, en 3 à 5 sections) et S'entraîner (exercices, révision, défi final).
  */
 (function () {
   "use strict";
@@ -73,6 +73,7 @@
       a.setAttribute("aria-label", "Chapitre " + c.id + " : " + c.titre + (c.etat === "fait" ? " (fait)" : c.etat === "encours" ? " (commencé)" : ""));
       a.style.left = (100 * (c.p + 0.5) / nbCol) + "%";
       a.style.top = (100 * c.y) + "%";
+      a.style.width = "min(260px, calc(" + (100 / nbCol).toFixed(3) + "% - 36px))";
       c.el = a;
     });
     function fleches() {
@@ -121,7 +122,7 @@
     var lib2 = !aFaire ? "Recommencer" : c.niveaux.some(function (x) { return x.fait; }) ? "Continuer" : "Commencer";
     var ent = document.getElementById("entrainer"), num = 0;
     ent.innerHTML = '<div class="carte-tete"><h2>S\'entraîner</h2><a class="btn clair" href="' + P.urlExercice(MID, (aFaire || c.niveaux[0]).id) + '">' + lib2 + "</a></div>" +
-      '<ol class="liste">' + c.niveaux.map(function (x) {
+      '<ol class="liste' + (c.niveaux.length > 10 ? ' deux-col" style="grid-template-rows: repeat(' + Math.ceil(c.niveaux.length / 2) + ', auto)' : "") + '">' + c.niveaux.map(function (x) {
         var marque = x.boss ? "Défi" : x.revision ? "Rév." : ++num;
         return '<li><a class="' + (x.fait ? "fait" : "") + (x.boss || x.revision ? " fin" : "") + '" href="' + P.urlExercice(MID, x.id) + '"><i>' + marque + "</i><span>" +
           esc(x.boss ? "Défi final : " + x.titre : x.titre) + "</span></a></li>";

@@ -1,87 +1,103 @@
 /*
- * Une section du cours d'un chapitre (modules/<id>/<dossierChapitres>/cours/<section>.html, générée par outils/regrouper.js).
- * Barre du site (retour au chapitre), « Chapitre N · titre · 2 / 4 » en tête, Précédent / Suivant en bas.
- * Après la dernière section : « Terminer le cours » (retour au chapitre) et, en option, « S'entraîner sur ce chapitre ».
- * La section est lue quand on arrive en bas. Ancres : <notion>-<titre> (même calcul que les anciennes pages, notion par notion),
+ * Le cours d'un chapitre sur une seule page qui défile (modules/<id>/<dossierChapitres>/cours/chapitre-<n>.html,
+ * générée par outils/regrouper.js). Pas de bouton entre les sections : on lit d'un trait.
+ * La barre montre la section où l'on est (« 2 / 4 ») ; une section est lue quand on passe sa fin ;
+ * « Reprendre » rouvre la page à la section où l'on s'est arrêté. En bas : « Terminer le cours » et, en option, S'entraîner.
+ * Ancres : s-<section>, n-<notion>, et <notion>-<titre> (même calcul que les anciennes pages, notion par notion),
  * pour que « Revoir dans le cours » vise le même passage. Ouverte dans le jeu (?dans=1) : ni barre ni bas de page.
  */
 (function () {
   "use strict";
   var P = window.PLATEFORME, MID = P.courant, MOD = P.module(MID);
-  var main = document.querySelector("main"), sid = main.getAttribute("data-section");
+  var main = document.querySelector("main"), chid = +main.getAttribute("data-chapitre");
   var integre = /[?&]dans=1/.test(location.search) || window.self !== window.top;
-  var s0 = MOD.sections.filter(function (s) { return s.id === sid; })[0];
-  var ch = P.chapitre(MID, s0.chapitre), sec = ch.sections.filter(function (s) { return s.id === sid; })[0];
-  var prec = ch.sections[sec.rang - 2], suiv = ch.sections[sec.rang];
+  var ch = P.chapitre(MID, chid);
+  var parties = [].slice.call(main.querySelectorAll("section.partie"));
   function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
   if (integre) document.documentElement.classList.add("integre");
-  document.title = sec.titre + " · " + MOD.titre;
+  document.title = ch.titre + " · " + MOD.titre;
 
+  var rang = null;
   if (!integre) {
     var barre = document.createElement("header");
-    P.barre(barre, { carte: P.urlPlan(MID, ch.sm), droite: '<a class="btn-barre clair" href="' + P.urlChapitre(MID, ch.id) + '">Chapitre ' + ch.id + "</a>" });
+    P.barre(barre, { carte: P.urlPlan(MID, ch.sm),
+      droite: '<span class="rang-barre" aria-live="polite"></span><a class="btn-barre clair" href="' + P.urlChapitre(MID, ch.id) + '">Chapitre ' + ch.id + "</a>" });
     document.body.insertBefore(barre, document.body.firstChild);
-    P.noterPlan(MID, ch.sm, "Cours : " + sec.titre, P.dossierChapitres(MID) + "cours/" + sid + ".html");
+    rang = barre.querySelector(".rang-barre");
   }
   var etiquette = document.querySelector("[data-etiquette]");
-  if (etiquette) etiquette.innerHTML = "Chapitre " + ch.id + " · " + esc(ch.titre) + '<span class="rang">' + sec.rang + " / " + sec.total + "</span>";
+  if (etiquette) etiquette.textContent = "Chapitre " + ch.id + " · Cours";
 
-  // Ancres : celles des anciennes pages, préfixées par la notion (h3 = ancien h2, h4 = ancien h3)
+  // Ancres : celles des anciennes pages, préfixées par la notion (h4 = ancien h2, h5 = ancien h3)
   [].forEach.call(main.querySelectorAll("article.notion"), function (art) {
     var nid = art.id.replace(/^n-/, ""), vus = {};
-    [].forEach.call(art.querySelectorAll("h3, h4"), function (t) {
+    [].forEach.call(art.querySelectorAll("h4, h5"), function (t) {
       var a = P.ancre(t.textContent);
       vus[a] = (vus[a] || 0) + 1;
       t.id = nid + "-" + (vus[a] > 1 ? a + "-" + vus[a] : a);
     });
     // Formules clés : regroupées dans une carte, comme sur les anciennes pages
-    [].forEach.call(art.querySelectorAll("h3"), function (t) {
+    [].forEach.call(art.querySelectorAll("h4"), function (t) {
       if (t.textContent.trim() !== "Formules clés") return;
       var carte = document.createElement("div"), n = t.nextSibling;
       carte.className = "cles-carte";
-      while (n && !/^(H2|H3|NAV|SCRIPT)$/.test(n.nodeName)) { var suivant = n.nextSibling; carte.appendChild(n); n = suivant; }
+      while (n && !/^(H3|H4|NAV|SCRIPT)$/.test(n.nodeName)) { var suivant = n.nextSibling; carte.appendChild(n); n = suivant; }
       t.parentNode.insertBefore(carte, t.nextSibling);
     });
   });
 
-  // Bas de page : Précédent, 2 / 4, Suivant ; après la dernière section, la fin du cours et l'option S'entraîner
   if (!integre) {
-    var bas = document.createElement("nav");
-    bas.className = "suite-section";
-    bas.setAttribute("aria-label", "Sections du chapitre");
-    var g = prec ? '<a class="retour" href="' + P.urlSection(MID, prec.id) + '"><small>Précédent</small>' + esc(prec.titre) + "</a>"
-      : '<a class="retour" href="' + P.urlChapitre(MID, ch.id) + '"><small>Chapitre ' + ch.id + "</small>Retour au chapitre</a>";
-    var d = suiv ? '<a class="aller" href="' + P.urlSection(MID, suiv.id) + '"><small>Suivant</small>' + esc(suiv.titre) + "</a>"
-      : '<a class="aller" href="' + P.urlChapitre(MID, ch.id) + '"><small>Fin du cours</small>Terminer le cours</a>';
-    bas.innerHTML = g + '<span class="rang">' + sec.rang + " / " + sec.total + "</span>" + d;
-    main.appendChild(bas);
-    if (!suiv) {
-      var opt = document.createElement("p");
-      opt.className = "option-entrainer";
-      opt.innerHTML = 'Envie de vérifier ce que tu as compris ? <a href="' + P.urlChapitre(MID, ch.id) + '#entrainer">S\'entraîner sur ce chapitre</a>';
-      main.appendChild(opt);
+    // Section en cours de lecture : celle dont le titre est passé sous la barre en dernier
+    var courante = null, attente = null;
+    function suivre() {
+      var haut = 140, c = parties[0];
+      parties.forEach(function (p) { if (p.getBoundingClientRect().top < haut) c = p; });
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) c = parties[parties.length - 1];
+      if (c === courante) return;
+      courante = c;
+      var k = parties.indexOf(c), s = ch.sections[k];
+      rang.textContent = (k + 1) + " / " + parties.length;
+      clearTimeout(attente);
+      attente = setTimeout(function () {
+        P.noterPlan(MID, ch.sm, "Cours : " + s.titre, P.urlSection(MID, s.id).replace(P.racine, ""));
+      }, 800);
     }
+    addEventListener("scroll", suivre, { passive: true });
+    addEventListener("load", suivre);
+    suivre();
+
+    // Section lue : quand sa fin apparaît à l'écran
     if ("IntersectionObserver" in window) {
       var obs = new IntersectionObserver(function (es) {
-        if (es.some(function (e) { return e.isIntersecting; })) { P.marquerSection(MID, sid); obs.disconnect(); }
-      }, { threshold: 0.5 });
-      obs.observe(bas);
-    } else P.marquerSection(MID, sid);
+        es.forEach(function (e) { if (e.isIntersecting) { P.marquerSection(MID, e.target.getAttribute("data-section")); obs.unobserve(e.target); } });
+      });
+      [].forEach.call(main.querySelectorAll(".fin-partie"), function (f) { obs.observe(f); });
+    }
+
+    // Bas de page : fin du cours, et l'option S'entraîner
+    var bas = document.createElement("nav");
+    bas.className = "fin-cours";
+    bas.setAttribute("aria-label", "Fin du cours");
+    bas.innerHTML = '<a class="aller" href="' + P.urlChapitre(MID, ch.id) + '"><small>Fin du cours</small>Terminer le cours</a>' +
+      '<p class="option-entrainer">Envie de vérifier ce que tu as compris ? <a href="' + P.urlChapitre(MID, ch.id) + '#entrainer">S\'entraîner sur ce chapitre</a></p>';
+    main.appendChild(bas);
   }
 
-  // Passage demandé (#ancre ou #ancre~k pour le k-ième bloc) : défilement et surlignage, comme sur les anciennes pages.
+  // Passage demandé (#ancre ou #ancre~k pour le k-ième bloc) : défilement ; surlignage sauf pour une section entière.
   function viser() {
     var h = decodeURIComponent((location.hash || "").slice(1));
     if (!h) return;
     var parts = h.split("~"), t = document.getElementById(parts[0]);
     if (!t) return;
-    if (t.tagName === "ARTICLE") t = t.querySelector("h2");
-    var seuil = t.tagName === "H4" ? /^(H2|H3|H4|NAV)$/ : t.tagName === "H3" ? /^(H2|H3|NAV)$/ : /^(NAV)$/;
+    document.querySelectorAll(".repere").forEach(function (x) { x.classList.remove("repere"); });
+    if (t.tagName === "SECTION") { t.scrollIntoView({ block: "start" }); return; }
+    if (t.tagName === "ARTICLE") t = t.querySelector("h3");
+    // les blocs d'un titre : jusqu'au titre suivant de même niveau ou plus haut, dans la notion (comme sur les anciennes pages)
+    var seuil = t.tagName === "H5" ? /^(H3|H4|H5)$/ : t.tagName === "H4" ? /^(H3|H4)$/ : /^H3$/;
     var cibles = [t], n = t.nextElementSibling, bloc = parts[1] !== undefined ? +parts[1] : -1, blocs = [];
     while (n && !seuil.test(n.tagName)) { blocs.push(n); n = n.nextElementSibling; }
     var k = bloc >= 0 && blocs[bloc];
     cibles = k ? [blocs[bloc]] : cibles.concat(blocs);
-    document.querySelectorAll(".repere").forEach(function (x) { x.classList.remove("repere"); });
     cibles.forEach(function (x) { x.classList.add("repere"); });
     if (k) cibles[0].scrollIntoView({ block: "center" }); else t.scrollIntoView({ block: "start" });
   }
