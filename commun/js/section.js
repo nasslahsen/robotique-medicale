@@ -1,8 +1,10 @@
 /*
- * Le cours d'un chapitre sur une seule page qui défile (modules/<id>/<dossierChapitres>/cours/chapitre-<n>.html,
+ * Un chapitre sur une seule grande page qui défile (modules/<id>/<dossierChapitres>/cours/chapitre-<n>.html,
  * générée par outils/regrouper.js). Pas de bouton entre les sections : on lit d'un trait.
+ * Après chaque notion, ses exercices en option (« Jouer ») : ils s'ouvrent par-dessus la page, qui reste à sa place ;
+ * sinon on continue de défiler. En fin de chapitre : la révision et le défi final, en option, puis « Chapitre suivant ».
  * La barre montre la section où l'on est (« 2 / 4 ») ; une section est lue quand on passe sa fin ;
- * « Reprendre » rouvre la page à la section où l'on s'est arrêté. En bas : « Terminer le cours » et, en option, S'entraîner.
+ * « Reprendre » rouvre la page à la section où l'on s'est arrêté.
  * Ancres : s-<section>, n-<notion>, et <notion>-<titre> (même calcul que les anciennes pages, notion par notion),
  * pour que « Revoir dans le cours » vise le même passage. Ouverte dans le jeu (?dans=1) : ni barre ni bas de page.
  */
@@ -20,13 +22,12 @@
   var rang = null;
   if (!integre) {
     var barre = document.createElement("header");
-    P.barre(barre, { carte: P.urlPlan(MID, ch.sm),
-      droite: '<span class="rang-barre" aria-live="polite"></span><a class="btn-barre clair" href="' + P.urlChapitre(MID, ch.id) + '">Chapitre ' + ch.id + "</a>" });
+    P.barre(barre, { carte: P.urlPlan(MID, ch.sm), droite: '<span class="rang-barre" aria-live="polite"></span>' });
     document.body.insertBefore(barre, document.body.firstChild);
     rang = barre.querySelector(".rang-barre");
   }
   var etiquette = document.querySelector("[data-etiquette]");
-  if (etiquette) etiquette.textContent = "Chapitre " + ch.id + " · Cours";
+  if (etiquette) etiquette.textContent = "Chapitre " + ch.id;
 
   // Ancres : celles des anciennes pages, préfixées par la notion (h4 = ancien h2, h5 = ancien h3)
   [].forEach.call(main.querySelectorAll("article.notion"), function (art) {
@@ -59,7 +60,7 @@
       rang.textContent = (k + 1) + " / " + parties.length;
       clearTimeout(attente);
       attente = setTimeout(function () {
-        P.noterPlan(MID, ch.sm, "Cours : " + s.titre, P.urlSection(MID, s.id).replace(P.racine, ""));
+        P.noterPlan(MID, ch.sm, ch.titre + " · " + s.titre, P.urlSection(MID, s.id).replace(P.racine, ""));
       }, 800);
     }
     addEventListener("scroll", suivre, { passive: true });
@@ -74,13 +75,67 @@
       [].forEach.call(main.querySelectorAll(".fin-partie"), function (f) { obs.observe(f); });
     }
 
-    // Bas de page : fin du cours, et l'option S'entraîner
+    // Exercices facultatifs : après chaque notion qui a un niveau ; la révision et le défi final en fin de chapitre
+    var parId = {};
+    ch.niveaux.forEach(function (n) { parId[n.id] = n; });
+    function bloc(n, ou, avant) {
+      var b = document.createElement("div");
+      b.className = "jouer" + (n.boss ? " defi" : "");
+      b.dataset.niveau = n.id;
+      b.innerHTML = '<span><small>' + (n.boss ? "Défi final" : n.revision ? "Révision du chapitre" : "Exercices") + "</small>" + esc(n.titre) + "</span>" +
+        '<button type="button" class="btn-jouer"></button>';
+      b.querySelector("button").addEventListener("click", function () { ouvrir(n.id); });
+      ou.insertBefore(b, avant || null);
+      return b;
+    }
+    [].forEach.call(main.querySelectorAll("article.notion"), function (art) {
+      var n = parId[art.id.replace(/^n-/, "")];
+      if (n) bloc(n, art.parentNode, art.nextSibling);
+    });
+    var fin = document.createElement("section");
+    fin.className = "fin-chapitre";
+    fin.innerHTML = "<h2>Fin du chapitre</h2><p>Pour tout mélanger, si tu en as envie : la révision, puis le défi final.</p>";
+    ch.niveaux.filter(function (n) { return n.revision || n.boss; }).forEach(function (n) { bloc(n, fin); });
+    var sms = P.chapitresDe(MID, ch.sm), suiv = sms[sms.map(function (c) { return c.id; }).indexOf(ch.id) + 1];
     var bas = document.createElement("nav");
     bas.className = "fin-cours";
-    bas.setAttribute("aria-label", "Fin du cours");
-    bas.innerHTML = '<a class="aller" href="' + P.urlChapitre(MID, ch.id) + '"><small>Fin du cours</small>Terminer le cours</a>' +
-      '<p class="option-entrainer">Envie de vérifier ce que tu as compris ? <a href="' + P.urlChapitre(MID, ch.id) + '#entrainer">S\'entraîner sur ce chapitre</a></p>';
-    main.appendChild(bas);
+    bas.setAttribute("aria-label", "Suite");
+    bas.innerHTML = suiv && suiv.sections.length
+      ? '<a class="aller" href="' + P.urlChapitre(MID, suiv.id) + '"><small>Chapitre suivant</small>' + esc(suiv.titre) + "</a>"
+      : '<a class="aller" href="' + P.urlPlan(MID, ch.sm) + '"><small>Dernier chapitre</small>Retour à la carte</a>';
+    fin.appendChild(bas);
+    main.appendChild(fin);
+    function majBlocs() {
+      var c = P.chapitre(MID, ch.id), fait = {};
+      c.niveaux.forEach(function (n) { fait[n.id] = n.fait; });
+      [].forEach.call(document.querySelectorAll(".jouer"), function (b) {
+        b.classList.toggle("fait", !!fait[b.dataset.niveau]);
+        b.querySelector("button").textContent = fait[b.dataset.niveau] ? "Rejouer" : "Jouer";
+      });
+    }
+    majBlocs();
+
+    // L'exercice s'ouvre par-dessus la page ; « Revenir au cours » le ferme et la page n'a pas bougé
+    var fenetre = null;
+    function ouvrir(nid) {
+      if (!fenetre) {
+        fenetre = document.createElement("div");
+        fenetre.className = "fenetre-jeu";
+        fenetre.innerHTML = '<iframe title="Exercices"></iframe>';
+        document.body.appendChild(fenetre);
+      }
+      fenetre.querySelector("iframe").src = P.urlExercice(MID, nid);
+      fenetre.classList.add("on");
+      document.documentElement.classList.add("jeu-ouvert");
+    }
+    function fermer() {
+      if (!fenetre) return;
+      fenetre.classList.remove("on");
+      document.documentElement.classList.remove("jeu-ouvert");
+      fenetre.querySelector("iframe").src = "about:blank";
+      majBlocs();
+    }
+    addEventListener("message", function (e) { if (e.data && e.data.s5 === "fermer-exercice") fermer(); });
   }
 
   // Passage demandé (#ancre ou #ancre~k pour le k-ième bloc) : défilement ; surlignage sauf pour une section entière.

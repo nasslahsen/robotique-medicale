@@ -144,7 +144,7 @@ for (const id of modules) {
       if (lire(f) !== pageChapitre(id, path.join(racine, d), P, ch)) err(`${f} pas à jour : node outils/regrouper.js ${id}`);
     }
     for (const f of liste(dc + "cours", /\.html$/)) if (!pagesCh.some(x => x.f === f)) err(`${f} : page en trop (cours/chapitre-<n>.html seulement)`);
-    for (const f of [dc + "index.html", dc + "chapitre.html"].concat(pagesCh.map(x => x.f))) {
+    for (const f of [dc + "index.html"].concat(pagesCh.map(x => x.f))) {
       if (!existe(f)) { err(`${f} manquant`); continue; }
       const html = lire(f); nbPages++;
       verifierLiens(f, html); verifierMaths(f, html, false); verifierEcriture(f, html);

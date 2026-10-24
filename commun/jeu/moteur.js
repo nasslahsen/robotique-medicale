@@ -2,9 +2,9 @@
  * Moteur des niveaux : étapes, retours, étoiles, sauvegarde, écran de fin.
  * Un niveau appelle NIVEAU({ id, init(fig), etapes: [{ nom, jouer(j) }] }).
  * Fin du niveau : le bouton principal mène à l'étape suivante de la carte (PLATEFORME.apres).
- * Ouvert depuis S'entraîner (structure par chapitres, jouer.html?plan=<dossier>#<niveau>) : « Chapitre » au lieu de « Carte »,
- * le bouton principal mène à l'exercice suivant du chapitre (puis la révision, le défi final, le retour au chapitre)
- * et « Revoir dans le cours » ouvre le cours du chapitre au passage visé.
+ * Ouvert par-dessus la page d'un chapitre (structure par chapitres, jouer.html?plan=<dossier>#<niveau>, dans un cadre) :
+ * « Revenir au cours » ferme l'exercice (message au cours, qui reste à la même place) ; « Revoir dans le cours »
+ * ouvre le cours du chapitre au passage visé.
  */
 (function () {
   "use strict";
@@ -23,17 +23,18 @@
     var liste = MOD.niveaux, rang = liste.findIndex(function (n) { return n.id === def.id; }), info = liste[rang] || { titre: def.id, chapitre: 0 };
     document.title = info.titre + " · " + MOD.titre;
     var plan = PLAN && P.avecChapitres(MID, P.smDe(MID, info.chapitre));
-    if (plan) P.noterPlan(MID, P.smDe(MID, info.chapitre), "S'entraîner : " + info.titre, location.href.replace(P.racine, ""));
-    else P.noterDernier(MID, info.titre);
+    if (!plan) P.noterDernier(MID, info.titre);
+    // dans le cadre de la page du chapitre : fermer l'exercice
+    function revenir(e) { if (e) e.preventDefault(); if (window.parent !== window) window.parent.postMessage({ s5: "fermer-exercice" }, "*"); }
     var nom = document.getElementById("nom-niveau"), ici = P.trouver(MID, "exos", def.id);
     nom.innerHTML = "<small>" + (info.boss ? "BOSS · " : info.revision ? "RÉVISION · " : "EXERCICES · ") + "CHAPITRE " + info.chapitre + "</small><h1>" + info.titre + "</h1>";
     var lienCarte = document.querySelector(".barre .carte-lien");
     if (lienCarte) lienCarte.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
-    if (lienCarte && plan) { lienCarte.href = P.urlChapitre(MID, info.chapitre); lienCarte.textContent = "Chapitre " + info.chapitre; }
-    // lien vers la page de cours de la même notion, à côté du lien Carte
-    if (info.cours) {
-      var lc = document.createElement("a"), sCours = plan && P.sectionDe(MID, info.id);
-      lc.className = "carte-lien"; lc.href = sCours ? P.urlSection(MID, sCours.id, "n-" + info.id) : "cours/" + info.id + ".html"; lc.textContent = "Cours";
+    if (lienCarte && plan) { lienCarte.href = P.urlChapitre(MID, info.chapitre); lienCarte.textContent = "Revenir au cours"; lienCarte.addEventListener("click", revenir); }
+    // lien vers la page de cours de la même notion, à côté du lien Carte (inutile dans le cadre : le cours est derrière)
+    if (info.cours && !plan) {
+      var lc = document.createElement("a");
+      lc.className = "carte-lien"; lc.href = "cours/" + info.id + ".html"; lc.textContent = "Cours";
       nom.parentNode.insertBefore(lc, nom);
     }
 
@@ -312,11 +313,6 @@
       // l'étape suivante sur la carte : le cours de la notion suivante, ou la révision, ou le boss
       var suivant = plan ? null : P.apres(MID, "exos", def.id);
       if (suivant) P.noterDernier(MID, P.genre(suivant) + " : " + suivant.titre, suivant.url);
-      // S'entraîner : l'exercice suivant du chapitre, sinon le retour au chapitre
-      var ch = plan && P.chapitre(MID, info.chapitre), dansCh = ch ? ch.niveaux.map(function (x) { return x.id; }) : [];
-      var prochain = ch ? ch.niveaux[dansCh.indexOf(def.id) + 1] || null : null;
-      if (ch) P.noterPlan(MID, ch.sm, prochain ? "S'entraîner : " + prochain.titre : "Chapitre " + ch.id + " : " + ch.titre,
-        prochain ? P.urlExercice(MID, prochain.id).replace(P.racine, "") : P.urlChapitre(MID, ch.id).replace(P.racine, ""));
       var r = document.getElementById("resultat");
       var et = ""; for (var s = 0; s < 3; s++) et += '<span class="' + (s < nb ? "pleine" : "vide") + '">' + ETOILE + "</span>";
       var texte = restantes.length
@@ -336,14 +332,11 @@
         var lib = suivant.type === "cours" ? "Cours suivant" : suivant.boss ? "Le boss du chapitre" : suivant.revision ? "Révision du chapitre" : "Exercices suivants";
         b1 = E.h("a", "btn btn-suivant", lib + "<small>" + suivant.titre + "</small>", act); b1.href = P.urlEtape(suivant);
       }
-      if (ch) {
-        b1 = E.h("a", "btn btn-suivant", (prochain ? (prochain.boss ? "Le défi final" : prochain.revision ? "Révision du chapitre" : "Exercice suivant") + "<small>" + prochain.titre + "</small>"
-          : "Retour au chapitre<small>" + ch.titre + "</small>"), act);
-        b1.href = prochain ? P.urlExercice(MID, prochain.id) : P.urlChapitre(MID, ch.id);
-      }
+      // dans le cadre : on revient au cours, à l'endroit où on l'avait laissé
+      if (plan) { b1 = E.h("a", "btn btn-suivant", "Revenir au cours", act); b1.href = P.urlChapitre(MID, info.chapitre); b1.addEventListener("click", revenir); }
       var b2 = E.h("a", "btn clair", "Rejouer", act); b2.href = "jouer.html#" + def.id; b2.addEventListener("click", function (e) { e.preventDefault(); location.reload(); });
-      var b3 = E.h("a", "btn clair", ch ? "Chapitre" : "Carte", act); b3.href = ch ? P.urlChapitre(MID, ch.id) : P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
-      [b2, b3].forEach(function (b) { b.style.cssText = "display:inline-flex;align-items:center;text-decoration:none"; });
+      var b3 = plan ? null : E.h("a", "btn clair", "Carte", act); if (b3) b3.href = P.urlCarte(MID, ici ? ici.etape.sm : undefined, info.chapitre);
+      [b2, b3].forEach(function (b) { if (b) b.style.cssText = "display:inline-flex;align-items:center;text-decoration:none"; });
       r.classList.add("on");
     }
 

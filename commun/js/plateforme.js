@@ -198,8 +198,9 @@
 
   /* ---------------- Chapitres : plan, Cours en sections, S'entraîner ---------------- */
   // Un sous-module suit cette structure quand ses chapitres ont des sections (module.js, « sections »).
-  // Cours lu : toutes les sections du chapitre lues (une section l'est aussi quand toutes ses notions avaient été lues
-  // sur l'ancienne carte). Exercices faits : tous les niveaux du chapitre finis. Rien n'est verrouillé.
+  // La carte n'a qu'un nœud par chapitre ; le chapitre est une grande page qui défile, les exercices y sont facultatifs.
+  // Chapitre fait : toutes ses sections lues (une section l'est aussi quand toutes ses notions avaient été lues
+  // sur l'ancienne carte). Les exercices faits sont gardés à part (exosFaits). Rien n'est verrouillé.
 
   P.avecChapitres = function (mid, sm) {
     var M = P.module(mid);
@@ -227,7 +228,7 @@
     return P.dossierChapitres(mid) + "cours/chapitre-" + (s ? s.chapitre : 0) + ".html";
   };
   P.urlSection = function (mid, sid, ancre) { return racine + P.pageCours(mid, sid) + "#" + (ancre || "s-" + sid); };
-  P.urlChapitre = function (mid, ch) { return racine + P.dossierChapitres(mid) + "chapitre.html?ch=" + ch; };
+  P.urlChapitre = function (mid, ch) { return racine + P.dossierChapitres(mid) + "cours/chapitre-" + ch + ".html"; };
   P.urlPlan = function (mid, sm) { return racine + P.dossierChapitres(mid) + "index.html" + (sm ? "?sm=" + encodeURIComponent(sm) : ""); };
   // Un niveau ouvert depuis S'entraîner : jouer.html?plan=<dossier>#<niveau>.
   P.urlExercice = function (mid, nid) {
@@ -252,7 +253,7 @@
       niveaux.some(function (n) { return n.fait; });
     return { id: ch.id, titre: ch.titre, ligne: ch.ligne || ch.sous || "", avant: ch.avant || [], sm: P.smDe(mid, ch.id),
       sections: sections, niveaux: niveaux, coursLu: coursLu, exosFaits: exosFaits,
-      etat: coursLu && exosFaits ? "fait" : commence ? "encours" : "" };
+      etat: coursLu ? "fait" : commence ? "encours" : "" };
   };
   P.chapitresDe = function (mid, sm) {
     return P.module(mid).chapitres.filter(function (c) { return P.smDe(mid, c.id) === sm; }).map(function (c) { return P.chapitre(mid, c.id); });
@@ -262,18 +263,14 @@
     var e = etat(mid); e.plan[sm] = { chemin: chemin, titre: titre, quand: Date.now() }; poser(mid, e);
     P.noterDernier(mid, titre, chemin);
   };
-  // « Reprendre » : là où l'on s'est arrêté ; sinon la première section pas lue, puis le premier exercice pas fait.
+  // « Reprendre » : là où l'on s'est arrêté dans un chapitre ; sinon la première section pas lue. chapitre : le chapitre visé.
   P.reprendre = function (mid, sm) {
-    var e = etat(mid), d = e.plan[sm];
-    if (d && d.chemin) return { url: racine + d.chemin, titre: d.titre, deja: true };
+    var e = etat(mid), d = e.plan[sm], x;
+    if (d && d.chemin && (x = d.chemin.match(/chapitre-(\d+)\.html/))) return { url: racine + d.chemin, titre: d.titre, deja: true, chapitre: +x[1] };
     var chs = P.chapitresDe(mid, sm);
     for (var i = 0; i < chs.length; i++) {
-      var s = chs[i].sections.filter(function (x) { return !x.lue; })[0];
-      if (s) return { url: P.urlSection(mid, s.id), titre: "Cours : " + s.titre, deja: false };
-    }
-    for (var j = 0; j < chs.length; j++) {
-      var n = chs[j].niveaux.filter(function (x) { return !x.fait; })[0];
-      if (n) return { url: P.urlExercice(mid, n.id), titre: "S'entraîner : " + n.titre, deja: false };
+      var s = chs[i].sections.filter(function (y) { return !y.lue; })[0];
+      if (s) return { url: P.urlSection(mid, s.id), titre: chs[i].titre + " · " + s.titre, deja: false, chapitre: chs[i].id };
     }
     return null;
   };
