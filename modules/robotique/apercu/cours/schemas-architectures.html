@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Schémas, topologies et architectures</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours : schemas-topologies, architectures. -->
+<main class="section-cours" data-section="schemas-architectures">
+<p class="etiquette" data-etiquette></p>
+<h1>Schémas, topologies et architectures</h1>
+
+<article class="notion" id="n-schemas-topologies">
+<h2>Schémas cinématiques et topologies</h2>
+<p class="chapeau">Dessiner un robot avec des traits et des symboles de liaisons, puis le classer selon la forme de son graphe : chaîne série, parallèle, arborescente ou hybride.</p>
+
+<h3>Intuition</h3>
+<p>Un robot réel a des carters, des moteurs, des câbles, des vis. Pour étudier son mouvement, on efface tout cela et on ne garde que des traits (les segments) et des symboles (les liaisons) : c'est le schéma cinématique, comme le plan de l'architecte face au bâtiment réel. On peut ensuite simplifier encore : des cercles pour les solides, des traits pour les liaisons. La forme de ce graphe (une file, une boucle, des branches) classe le robot.</p>
+
+<div id="fig-plan-spatial"></div>
+
+<h3>Formalisation</h3>
+<p><strong>Schéma cinématique</strong> : représentation graphique épurée et normalisée de la chaîne cinématique. C'est un outil d'analyse qui ne conserve que l'information utile au mouvement : les axes des liaisons et les lignes qui les relient (dont les longueurs sont utiles aux calculs). Pour passer de la chaîne au schéma, on supprime les enveloppes, les moteurs, les vis, les épaisseurs. Le schéma prépare les calculs : on y place les repères, puis on applique les méthodes de modélisation, par exemple la méthode de Denavit–Hartenberg.</p>
+<p><strong>Schéma plan (2D)</strong> : tous les mouvements du mécanisme se déroulent dans des plans parallèles à un même plan de référence, généralement le plan \(X - Y\) ; tous les axes de rotation sont parallèles entre eux, suivant l'axe \(Z\) : \(\vec{z}_0 \parallel \vec{z}_1 \parallel \vec{Z}\). On l'utilise pour simplifier l'apprentissage et l'analyse géométrique des robots simples (exemple du cours : le robot Quanser 2R).</p>
+<p><strong>Schéma spatial (3D)</strong> : les mouvements ne peuvent pas être décrits dans un unique plan ; les axes des liaisons ont des orientations différentes, par exemple suivant \(Z\), puis \(Y\), puis \(X\). C'est la représentation nécessaire pour la quasi-totalité des robots manipulateurs industriels (exemple du cours : le Kinova Jaco, 6 pivots en série). Exemple du bras spatial à deux pivots : pivot 1 entre le bâti 0 et le solide 1, d'axe vertical \(\vec{z}_0\) ; pivot 2 entre les solides 1 et 2, d'axe horizontal \(\vec{z}_1\), avec \(\vec{z}_0 \perp \vec{z}_1\).</p>
+
+<h3>Topologie des architectures</h3>
+
+<div id="fig-graphes"></div>
+
+<div class="tableau"><table>
+<tr><th>Topologie</th><th>Définition du cours</th><th>Exemples</th></tr>
+<tr><td>Chaîne ouverte simple (série)</td><td>chaque solide est relié à au plus deux autres ; aucune boucle ni embranchement ; l'extrémité terminale est libre</td><td>bras 6R, ROSA ONE Brain (neurochirurgie, 6 pivots en série)</td></tr>
+<tr><td>Chaîne fermée (parallèle)</td><td>au moins une boucle cinématique (un chemin fermé de solides et de liaisons) ; l'organe terminal est relié à la base par plusieurs chaînes ouvertes en parallèle</td><td>robot Delta, plateforme de Stewart, SurgiScope (3 chaînes, 3 DDL en translation)</td></tr>
+<tr><td>Arborescente</td><td>des embranchements : un solide peut être relié à plus de deux autres ; chaque extrémité est reliée à la racine par un chemin unique, sans boucle</td><td>humanoïde (tronc = solide racine), base mobile à deux bras</td></tr>
+<tr><td>Hybride</td><td>association de sous-chaînes série et parallèles ; peut comporter des boucles fermées</td><td>plateforme parallèle portant un bras série</td></tr>
+</table></div>
+
+<h3>Exemple</h3>
+<p>Les trois constructions de schéma du cours. Méthode : repérer chaque mouvement indépendant du robot réel, lui associer une liaison (R ou P) et son axe, puis relier les liaisons de la base vers l'effecteur.</p>
+<ul>
+<li>Robot cartésien <strong>PPP</strong> : trois liaisons prismatiques, trois translations indépendantes (3 DDL).</li>
+<li>Robot SCARA <strong>RRRP</strong> : trois rotations et une translation verticale (4 DDL), \(\overrightarrow{OM} = f(X_1, X_2, X_3, q)\).</li>
+<li>Robot articulé <strong>RRRRR</strong> : cinq articulations rotoïdes, cinq rotations indépendantes (5 DDL), \(\overrightarrow{OM} = f(\theta_1, \dots, \theta_5)\).</li>
+</ul>
+
+<h3>Formules clés</h3>
+<p>Schéma plan : \(\vec{z}_0 \parallel \vec{z}_1 \parallel \vec{Z}\). Série : chaque solide relié à au plus deux autres, pas de boucle. Parallèle : au moins une boucle. Arborescente : embranchements, pas de boucle. Hybride : série + parallèle.</p>
+<p class="complement">Complément : dans un graphe connexe de \(N\) solides et \(L\) liaisons, le nombre de boucles indépendantes vaut \(L - N + 1\). Il est nul pour une chaîne série ou arborescente.</p>
+</article>
+
+<article class="notion" id="n-architectures">
+<h2>Architectures et espace de travail</h2>
+<p class="chapeau">La façon dont les articulations sont enchaînées fixe la forme de la zone que l'outil peut atteindre.</p>
+
+<h3>Intuition</h3>
+<p>Un robot cartésien ne fait que des translations : son outil se promène dans une boîte. Un robot qui tourne autour d'une colonne et dont le bras avance et monte balaie un cylindre. Un bras articulé, comme le nôtre, atteint une zone plus complexe. Pour voir cette zone, il suffit d'essayer beaucoup de combinaisons de valeurs articulaires et de marquer chaque position atteinte par l'outil.</p>
+
+<div id="fig-archi"></div>
+
+<h3>Formalisation</h3>
+<p><strong>Architecture cinématique</strong> : structure de la chaîne cinématique du robot (disposition des liaisons et des axes) ; elle détermine le volume de travail, la dextérité et les performances.</p>
+<div class="tableau"><table>
+<tr><th>Robot sériel (chaîne ouverte)</th><th>Mouvements</th><th>Forme de l'espace de travail</th></tr>
+<tr><td>Cartésien (rectiligne), PPP</td><td>déplacements linéaires selon X, Y, Z</td><td>parallélépipède</td></tr>
+<tr><td>Cylindrique</td><td>rotation autour de Z + translations verticale et radiale</td><td>cylindre</td></tr>
+<tr><td>Sphérique (polaire)</td><td>rotations + translation radiale</td><td>sphère</td></tr>
+<tr><td>SCARA</td><td>2 rotations dans le plan horizontal + 1 translation verticale</td><td>anneau extrudé</td></tr>
+<tr><td>Articulé (anthropomorphe)</td><td>articulations en série, comme un bras humain</td><td>forme complexe</td></tr>
+</table></div>
+<p>Robots parallèles (chaîne fermée) : Delta (3 bras), plateforme de Stewart (6 DDL, 6 actionneurs), parallèles planaires.</p>
+<p><strong>Espace de travail</strong> : ensemble des positions que peut atteindre l'effecteur, pour au moins une configuration de ses articulations, dans le respect des limites articulaires. Il dépend de l'architecture cinématique, de la longueur des segments, des limites articulaires, de la présence d'obstacles et de l'orientation imposée à l'effecteur. Il se caractérise par les positions accessibles, la frontière de la zone atteignable et le volume accessible. Les formes du tableau sont idéalisées : les limites articulaires et les obstacles réduisent la zone accessible (curseur « limites articulaires » de la figure).</p>
+<p><strong>Sériels ou parallèles.</strong> Sériels : grande flexibilité et grande enveloppe de travail, excellente dextérité, polyvalence, programmation plus simple, coût souvent inférieur, maintenance aisée. Parallèles : très grande précision et répétabilité, rigidité, vitesse et accélération élevées, bonne capacité de charge par rapport au poids propre, moins d'inertie mobile (actionneurs fixés à la base). Le choix dépend de l'application : précision, charge utile, vitesse, espace de travail, coût.</p>
+<p><strong>Charge utile</strong> : masse maximale que le robot peut transporter avec son effecteur, tout en conservant ses performances spécifiées. Il faut compter la masse totale transportée : effecteur + pièce + accessoires.</p>
+
+<h3>Exemple</h3>
+<p class="complement">Exemple ajouté.</p>
+<p>Une pince de 1,2 kg, une pièce de 2,5 kg et un adaptateur de 0,3 kg font une masse totale de 4,0 kg : un robot de charge utile 3 kg ne convient pas, même si la pièce seule pèse moins de 3 kg.</p>
+<p>Pour le SCARA de la figure (segments de 0,8 et 0,6), l'espace de travail vu de dessus est un anneau entre \(|0{,}8 - 0{,}6| = 0{,}2\) et \(0{,}8 + 0{,}6 = 1{,}4\) quand les pivots tournent librement ; la course verticale de la glissière lui donne son épaisseur.</p>
+
+<h3>Formules clés</h3>
+<p>Cartésien : parallélépipède. Cylindrique : cylindre. Polaire : sphère. Articulé : forme complexe. Masse à porter = effecteur + pièce + accessoires.</p>
+</article>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/schemas-topologies.js"></script>
+<script src="../../figures/architectures.js"></script>
+</body>
+</html>

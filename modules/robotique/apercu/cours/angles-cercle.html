@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Angles et cercle trigonométrique</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours : angles, cercle. -->
+<main class="section-cours" data-section="angles-cercle">
+<p class="etiquette" data-etiquette></p>
+<h1>Angles et cercle trigonométrique</h1>
+
+<article class="notion" id="n-angles">
+<h2>Degrés et radians</h2>
+<p class="chapeau">Une articulation de robot tourne : pour lui dire jusqu'où, il faut mesurer un angle. Le cours parle en degrés, les calculatrices et les programmes de robot souvent en radians. Il faut passer de l'un à l'autre sans hésiter.</p>
+
+<h3>Intuition</h3>
+<p>Imagine une aiguille fixée au centre d'un cadran. Un tour complet la ramène à son départ, un demi-tour la retourne, un quart de tour la met à la verticale. Mesurer un angle, c'est dire quelle part de tour l'aiguille a faite, et dans quel sens.</p>
+<p>Le radian mesure la même chose autrement : par la longueur de l'arc que l'aiguille découpe sur un cercle de rayon 1. Quand l'arc est aussi long que le rayon, l'angle vaut 1 radian.</p>
+
+<div id="fig-angles"></div>
+
+<h3>Formalisation</h3>
+<p>Un tour complet fait 360°, un demi-tour 180°, un quart de tour 90°. En maths comme en robotique, un angle positif tourne dans le sens inverse des aiguilles d'une montre : c'est le <strong>sens trigonométrique</strong>. Un angle négatif tourne dans l'autre sens : la position de −45° est la même que celle de 315°.</p>
+<p>Le <strong>radian</strong> mesure un angle par la longueur de l'arc qu'il découpe sur un cercle de rayon 1. Un demi-tour découpe la moitié du cercle, de longueur \(\pi\) :</p>
+\[ 180° = \pi \text{ rad} \qquad 1 \text{ rad} = \frac{180°}{\pi} \approx 57{,}3° \]
+<p>Pour passer des degrés aux radians, on multiplie par \(\pi/180\) ; dans l'autre sens, par \(180/\pi\) :</p>
+\[ \alpha_{\text{rad}} = \alpha_{\text{deg}} \times \frac{\pi}{180} \]
+<div class="tableau"><table>
+<tr><th>Degrés</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>180°</th></tr>
+<tr><td>Radians</td><td>\(\pi/6\)</td><td>\(\pi/4\)</td><td>\(\pi/3\)</td><td>\(\pi/2\)</td><td>\(\pi\)</td></tr>
+</table></div>
+
+<h3>Exemple</h3>
+<p class="complement">Exemple ajouté.</p>
+<p>\(\dfrac{\pi}{3}\) rad, c'est 180° divisé par 3 : 60°. Dans l'autre sens, 45° vaut \(45 \times \pi/180 = \pi/4\) rad. Et \(\dfrac{5\pi}{6} = 5 \times \dfrac{\pi}{6} = 5 \times 30° = 150°\) : découper en multiples de \(\pi/4\) ou de \(\pi/6\) suffit presque toujours.</p>
+<p>Le cours utilise des angles négatifs, par exemple \(\alpha = -90°\) pour l'orientation du téléphone.</p>
+
+<h3>Formules clés</h3>
+\[ 180° = \pi \text{ rad} \qquad \alpha_{\text{rad}} = \alpha_{\text{deg}} \times \frac{\pi}{180} \qquad 1 \text{ rad} \approx 57{,}3° \]
+<p>Angle positif : sens inverse des aiguilles d'une montre (sens trigonométrique).</p>
+</article>
+
+<article class="notion" id="n-cercle">
+<h2>Cosinus et sinus sur le cercle</h2>
+<p class="chapeau">Le bout d'un bras de robot qui tourne décrit un cercle. Pour savoir où il est, on projette sa position sur les deux axes : ce sont le cosinus et le sinus de l'angle.</p>
+
+<h3>Intuition</h3>
+<p>Éclaire le bras par le haut : son ombre sur l'axe horizontal mesure de combien il avance. Éclaire-le de côté : son ombre sur l'axe vertical mesure de combien il monte. Sur un cercle de rayon 1, ces deux ombres ont un nom : le cosinus et le sinus de l'angle.</p>
+
+<div id="fig-cercle"></div>
+
+<h3>Formalisation</h3>
+<p>Sur le cercle de rayon 1, le point \(M\) à l'angle \(\theta\) a pour abscisse \(\cos\theta\) et pour ordonnée \(\sin\theta\) :</p>
+\[ M = (\cos\theta \,;\ \sin\theta) \]
+<p>À 90°, \(M\) est tout en haut : l'ombre horizontale disparaît (\(\cos 90° = 0\)) et l'ombre verticale vaut le rayon entier (\(\sin 90° = 1\)). À 180°, \(M\) est à gauche : \(\cos 180° = -1\), \(\sin 180° = 0\). Le cosinus est négatif quand \(M\) est à gauche de l'axe vertical, le sinus est négatif quand \(M\) est sous l'axe horizontal.</p>
+<p>Le triangle de côtés \(\cos\theta\), \(\sin\theta\) et le rayon 1 est rectangle, d'hypoténuse 1. Le théorème de Pythagore donne :</p>
+\[ \cos^2\theta + \sin^2\theta = 1 \]
+<p>Pour un point à distance \(r\) et à l'angle \(\theta\), tout est multiplié par \(r\) :</p>
+\[ x = r\cos\theta \qquad y = r\sin\theta \]
+
+<h3>Exemple</h3>
+<p class="complement">Exemple ajouté.</p>
+<p>Un bras de longueur 3 fait un angle de 60°. Sur le cercle de rayon 1, le bout serait en \((\cos 60° \,;\ \sin 60°) = (0{,}5 \,;\ 0{,}866)\). Avec un bras de longueur 3, on multiplie : \((3 \times 0{,}5 \,;\ 3 \times 0{,}866) = (1{,}5 \,;\ 2{,}598)\). C'est la formule qui place le bout de chaque segment d'un bras robotisé, qu'on retrouvera dans le bras 2R.</p>
+<p>\(\sin\theta = 0{,}5\) pour \(\theta = 30°\) ou \(\theta = 150°\) : deux positions symétriques par rapport à l'axe vertical.</p>
+
+<h3>Formules clés</h3>
+\[ M = (\cos\theta \,;\ \sin\theta) \qquad \cos^2\theta + \sin^2\theta = 1 \qquad x = r\cos\theta,\ y = r\sin\theta \]
+</article>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/angles.js"></script>
+<script src="../../figures/cercle.js"></script>
+</body>
+</html>

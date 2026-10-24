@@ -4,14 +4,20 @@
  * niveaux : pages du jeu, dans l'ordre (cours : true quand cours/<id>.html existe ;
  *           revision, boss : niveaux de fin de chapitre ; pret : niveau jouable).
  * cours : pages de cours, dans l'ordre du menu « Tous les concepts ».
+ *
+ * Structure par chapitres (aperçu, sous-module « bio ») : plan des chapitres, puis pour chaque chapitre
+ * le Cours en sections et S'entraîner. Pages dans modules/robotique/<dossierChapitres>/.
+ * chapitres[].avant : chapitres sur lesquels il s'appuie (flèches du plan) ; chapitres[].ligne : la ligne sous le titre.
+ * sections : le cours d'un chapitre en 3 à 5 sections ; chaque section réunit des pages de cours (notions), dans l'ordre.
  */
 PLATEFORME.parcours("robotique", {
+  dossierChapitres: "apercu",
   chapitres: [
-    { id: 0, titre: "Les bases", sous: "Angles, trigonométrie, vecteurs : tout ce qu'il faut avant le robot", sousModule: "bio" },
-    { id: 1, titre: "Le robot et sa description", sous: "Anatomie, liaisons, architectures, performances", sousModule: "bio" },
-    { id: 2, titre: "Repères et vecteurs dans l'espace", sous: "Coordonnées, produits, position d'un solide", sousModule: "bio" },
-    { id: 3, titre: "Orientations", sous: "Matrices de rotation et angles d'Euler", sousModule: "bio" },
-    { id: 4, titre: "Transformations", sous: "Changement de repère, matrices homogènes, bras 2R", sousModule: "bio" },
+    { id: 0, titre: "Les bases", sous: "Angles, trigonométrie, vecteurs : tout ce qu'il faut avant le robot", sousModule: "bio", avant: [], ligne: "Angles, trigonométrie, vecteurs, matrices" },
+    { id: 1, titre: "Le robot et sa description", sous: "Anatomie, liaisons, architectures, performances", sousModule: "bio", avant: [0], ligne: "Anatomie, liaisons, architectures, performances" },
+    { id: 2, titre: "Repères et vecteurs dans l'espace", sous: "Coordonnées, produits, position d'un solide", sousModule: "bio", avant: [0], ligne: "Coordonnées, produits, position d'un solide" },
+    { id: 3, titre: "Orientations", sous: "Matrices de rotation et angles d'Euler", sousModule: "bio", avant: [2], ligne: "Matrices de rotation, angles d'Euler" },
+    { id: 4, titre: "Transformations", sous: "Changement de repère, matrices homogènes, bras 2R", sousModule: "bio", avant: [1, 3], ligne: "Changement de repère, matrices homogènes, bras 2R" },
     { id: 5, titre: "Architecture mécanique d'un axe", sous: "Chaîne fonctionnelle, vitesse, couple, puissance, rigidité et jeu", sousModule: "meca" },
     { id: 6, titre: "Assemblages et fixations", sous: "Serrer, positionner, transmettre : vis, clavettes, goupilles, anneaux, ressorts", sousModule: "meca" },
     { id: 7, titre: "Guidages rotatifs et linéaires", sous: "Raideur, roulements, durée de vie, montage fixe-libre, précharge", sousModule: "meca" },
@@ -96,6 +102,25 @@ PLATEFORME.parcours("robotique", {
     { id: "trains-engrenages", chapitre: 8, titre: "Trains et rendement en cascade", cours: true, pret: true },
     { id: "revision-transmissions", chapitre: 8, titre: "Révision : les transmissions", revision: true, pret: true },
     { id: "boss-transmissions", chapitre: 8, titre: "Le réducteur de l'articulation", boss: true, pret: true }
+  ],
+  sections: [
+    { id: "angles-cercle", chapitre: 0, titre: "Angles et cercle trigonométrique", notions: ["angles", "cercle"] },
+    { id: "triangle-signes", chapitre: 0, titre: "Triangle rectangle, signes et angles remarquables", notions: ["triangle", "signes"] },
+    { id: "vecteurs-norme", chapitre: 0, titre: "Vecteurs, norme et vecteur unitaire", notions: ["vecteurs", "norme"] },
+    { id: "calcul-matriciel", chapitre: 0, titre: "Calcul matriciel", notions: ["matrice-vecteur", "produit-matrices"] },
+    { id: "robot-anatomie", chapitre: 1, titre: "Le robot et son anatomie", notions: ["robot-systeme", "anatomie"] },
+    { id: "articulations-liaisons", chapitre: 1, titre: "Articulations, DDL et liaisons", notions: ["articulations-ddl", "liaisons"] },
+    { id: "schemas-architectures", chapitre: 1, titre: "Schémas, topologies et architectures", notions: ["schemas-topologies", "architectures"] },
+    { id: "performances-medical", chapitre: 1, titre: "Performances et spécificités du médical", notions: ["performances", "robotique-medicale"] },
+    { id: "repere", chapitre: 2, titre: "Repère et coordonnées cartésiennes", notions: ["repere"] },
+    { id: "produits", chapitre: 2, titre: "Produit scalaire et produit vectoriel", notions: ["produit-scalaire", "produit-vectoriel"] },
+    { id: "cylindriques-chasles", chapitre: 2, titre: "Coordonnées cylindriques et position d'un solide", notions: ["coordonnees-cylindriques", "position-chasles"] },
+    { id: "matrice-rotation", chapitre: 3, titre: "La matrice de rotation et ses propriétés", notions: ["matrice-rotation", "so3"] },
+    { id: "rotations-elementaires", chapitre: 3, titre: "Rotations élémentaires", notions: ["rotations-elementaires"] },
+    { id: "angles-euler", chapitre: 3, titre: "Angles d'Euler", notions: ["angles-euler"] },
+    { id: "changement-repere", chapitre: 4, titre: "Changement de repère", notions: ["changement-repere"] },
+    { id: "homogene-composition", chapitre: 4, titre: "Matrice homogène et composition", notions: ["matrice-homogene", "composition"] },
+    { id: "bras-2r", chapitre: 4, titre: "Le bras 2R", notions: ["bras-2r"] }
   ],
   cours: [
     { chapitre: 0, id: "angles", titre: "Degrés et radians" },

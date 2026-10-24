@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr" data-module="robotique">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Le bras 2R</title>
+<link rel="stylesheet" href="../../../../commun/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../../../../commun/css/cours.css">
+<link rel="stylesheet" href="../../../../commun/css/barre.css">
+<script src="../../../../registre.js"></script>
+<script src="../../../../commun/js/plateforme.js"></script>
+<script src="../../module.js"></script>
+</head>
+<body>
+<!-- Généré par outils/regrouper.js à partir des pages de cours : bras-2r. -->
+<main class="section-cours" data-section="bras-2r">
+<p class="etiquette" data-etiquette></p>
+<h1>Le bras 2R</h1>
+
+<article class="notion" id="n-bras-2r">
+<h2>Modèle géométrique direct du bras 2R</h2>
+<p class="chapeau">Tout ce qui précède, appliqué à l'exemple du cours : un bras plan à deux segments. On obtient la position de l'organe terminal en fonction des deux angles articulaires.</p>
+
+<h3>Intuition</h3>
+<p>Le bras a deux pivots d'axes parallèles (vers vous). On connaît les angles \(\theta_1\) et \(\theta_2\) que lisent les capteurs des moteurs, et les longueurs \(l_1\), \(l_2\) des segments. On veut savoir où est la pince \(M\). On place un repère sur chaque segment, on écrit la matrice homogène qui passe d'un repère au suivant, et on multiplie. C'est le <strong>modèle géométrique direct</strong> (MGD), annoncé dans les objectifs du module sous la forme \(p = f(q)\), avec ici \(q = (\theta_1, \theta_2)\).</p>
+
+<div id="fig-2r"></div>
+
+<h3>Formalisation</h3>
+<h4>Les repères du cours</h4>
+<ul>
+<li><strong>Repère fixe</strong> \(R_0(O_0, x_0, y_0, z_0)\) : repère de base fixe lié à la terre en \(O_0\) (\(O_0 = O_1\)).</li>
+<li><strong>Repère</strong> \(R_1(O_1, x_1, y_1, z_1)\) : centré en \(O_1\), son axe \(x_1\) est porté par le segment 1 de longueur \(l_1\) et orienté d'un angle \(\theta_1\) par rapport à \(x_0\) autour de l'axe commun \(z_0 = z_1\).</li>
+<li><strong>Repère</strong> \(R_2(O_2, x_2, y_2, z_2)\) : centré en \(O_2\), son axe \(x_2\) est porté par le segment 2 de longueur \(l_2\) et orienté d'un angle \(\theta_2\) par rapport à \(x_1\) autour de l'axe commun \(z_1 = z_2\).</li>
+<li>\(M\) est l'extrémité du segment 2 (l'organe terminal).</li>
+</ul>
+
+<h4>Calcul</h4>
+<p class="complement">Les diapositives s'arrêtent à la mise en place des repères et au principe de la matrice \(T_0^1\). La suite applique les pages précédentes.</p>
+<p><strong>Étape 1.</strong> \(R_1\) a la même origine que \(R_0\) et a tourné de \(\theta_1\) autour de \(z_0\) :</p>
+\[ T^{0,1} = \begin{pmatrix} \cos\theta_1 & -\sin\theta_1 & 0 & 0 \\ \sin\theta_1 & \cos\theta_1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \]
+<p><strong>Étape 2.</strong> \(R_2\) a tourné de \(\theta_2\) autour de \(z_1\), et son origine \(O_2\) est au bout du segment 1, à \(l_1\) sur l'axe \(x_1\) : \(O_1O_2^1 = (l_1;\ 0;\ 0)\).</p>
+\[ T^{1,2} = \begin{pmatrix} \cos\theta_2 & -\sin\theta_2 & 0 & l_1 \\ \sin\theta_2 & \cos\theta_2 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \]
+<p><strong>Étape 3.</strong> Composition, avec \(c_1 = \cos\theta_1\), \(s_1 = \sin\theta_1\), \(c_{12} = \cos(\theta_1 + \theta_2)\), \(s_{12} = \sin(\theta_1 + \theta_2)\). Le bloc de rotation donne \(c_1 c_2 - s_1 s_2 = c_{12}\) et \(s_1 c_2 + c_1 s_2 = s_{12}\) (formules d'addition, rappelées plus bas) :</p>
+\[ T^{0,2} = T^{0,1}\,T^{1,2} = \begin{pmatrix} c_{12} & -s_{12} & 0 & l_1 c_1 \\ s_{12} & c_{12} & 0 & l_1 s_1 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \]
+<p>Lecture : \(R_2\) est tourné de \(\theta_1 + \theta_2\) par rapport à \(R_0\), et son origine \(O_2\) est en \((l_1 c_1;\ l_1 s_1;\ 0)\).</p>
+<p><strong>Étape 4.</strong> \(M\) est sur l'axe \(x_2\), à la distance \(l_2\) de \(O_2\) : \(O_2M^2 = (l_2;\ 0;\ 0)\).</p>
+\[ \begin{pmatrix} O_0M^0 \\ 1 \end{pmatrix} = T^{0,2}\begin{pmatrix} l_2 \\ 0 \\ 0 \\ 1 \end{pmatrix} \quad\Rightarrow\quad x_M = l_1\cos\theta_1 + l_2\cos(\theta_1 + \theta_2) \qquad y_M = l_1\sin\theta_1 + l_2\sin(\theta_1 + \theta_2) \]
+<p>On retrouve la même chose avec la relation de Chasles : \(\overrightarrow{O_0M} = \overrightarrow{O_0O_2} + \overrightarrow{O_2M}\), le premier vecteur de longueur \(l_1\) dans la direction \(\theta_1\), le second de longueur \(l_2\) dans la direction \(\theta_1 + \theta_2\). L'orientation de l'organe terminal est \(\theta_1 + \theta_2\).</p>
+<p><strong>Espace de travail.</strong> Si les deux pivots tournent librement, \(M\) atteint tous les points à une distance de \(O_0\) comprise entre \(|l_1 - l_2|\) (bras replié, \(\theta_2 = 180°\)) et \(l_1 + l_2\) (bras tendu, \(\theta_2 = 0\)) : un anneau. Case « Espace de travail » sur la figure.</p>
+
+<h3>Exemple</h3>
+<p class="complement">Exemple ajouté.</p>
+<p>\(l_1 = 0{,}4\) m, \(l_2 = 0{,}3\) m, \(\theta_1 = 30°\), \(\theta_2 = 45°\), donc \(\theta_1 + \theta_2 = 75°\).</p>
+\[ x_M = 0{,}4\cos 30° + 0{,}3\cos 75° = 0{,}4 \times 0{,}866 + 0{,}3 \times 0{,}259 = 0{,}346 + 0{,}078 = 0{,}424 \text{ m} \]
+\[ y_M = 0{,}4\sin 30° + 0{,}3\sin 75° = 0{,}4 \times 0{,}5 + 0{,}3 \times 0{,}966 = 0{,}200 + 0{,}290 = 0{,}490 \text{ m} \]
+\[ T^{0,2} = \begin{pmatrix} 0{,}259 & -0{,}966 & 0 & 0{,}346 \\ 0{,}966 & 0{,}259 & 0 & 0{,}200 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \]
+<p>Vérification : \(O_0M = \sqrt{0{,}424^2 + 0{,}490^2} \approx 0{,}648\) m, bien entre \(|l_1 - l_2| = 0{,}1\) m et \(l_1 + l_2 = 0{,}7\) m. Bouton « Exemple de la page » sur la figure.</p>
+
+<h3>Rappel : formules d'addition</h3>
+\[ \cos(a + b) = \cos a\cos b - \sin a\sin b \qquad \sin(a + b) = \sin a\cos b + \cos a\sin b \]
+<p>Conséquence : \(R_z(\theta_1)\,R_z(\theta_2) = R_z(\theta_1 + \theta_2)\). Deux rotations successives autour d'axes parallèles s'additionnent, c'est pourquoi l'orientation finale du bras plan est simplement \(\theta_1 + \theta_2\). Exemple : \(\cos 75° = \cos 30°\cos 45° - \sin 30°\sin 45° = 0{,}612 - 0{,}354 = 0{,}259\).</p>
+
+<h3>Formules clés</h3>
+\[ T^{0,2} = T^{0,1}\,T^{1,2} \qquad x_M = l_1\cos\theta_1 + l_2\cos(\theta_1 + \theta_2) \qquad y_M = l_1\sin\theta_1 + l_2\sin(\theta_1 + \theta_2) \]
+\[ \text{orientation : } \theta_1 + \theta_2 \qquad |l_1 - l_2| \leq O_0M \leq l_1 + l_2 \]
+</article>
+
+</main>
+<script src="../../../../commun/vendor/katex/katex.min.js"></script>
+<script src="../../../../commun/vendor/katex/auto-render.min.js"></script>
+<script src="../../../../commun/js/lib.js"></script>
+<script src="../../../../commun/js/section.js"></script>
+<script src="../../figures/bras-2r.js"></script>
+</body>
+</html>
