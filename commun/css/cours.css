@@ -194,7 +194,7 @@ html.integre main { padding-top: 22px; }
 main h4, main h5, main article.notion { scroll-margin-top: calc(var(--barre) + 16px); }
 .btn-barre.clair { background: #fff; color: var(--encre); box-shadow: 3px 3px 0 var(--encre); }
 .rang-barre { font: 700 16px "JetBrains Mono", monospace; color: var(--doux); }
-.fin-cours { margin-top: 96px; padding-top: 28px; border-top: 2px solid var(--encre); display: flex; flex-direction: column; align-items: flex-end; gap: 22px; }
+.fin-cours { margin-top: 48px; display: flex; justify-content: flex-end; }
 .fin-cours a.aller {
   display: block; min-height: 64px; padding: 14px 26px; text-align: right; text-decoration: none;
   border: 2px solid var(--encre); border-radius: 18px; background: var(--encre); color: #fff; box-shadow: 4px 4px 0 var(--jeu);
@@ -202,5 +202,19 @@ main h4, main h5, main article.notion { scroll-margin-top: calc(var(--barre) + 1
 }
 .fin-cours a.aller small { display: block; margin-bottom: 4px; font: 700 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; opacity: .75; }
 .fin-cours a.aller:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--jeu); }
-.option-entrainer { margin: 0; color: var(--doux); }
-.option-entrainer a { font-weight: 600; color: var(--jeu-texte); }
+/* Exercices facultatifs dans la page : une ligne calme, un seul bouton */
+.jouer { display: flex; align-items: center; gap: 20px; max-width: 860px; margin: 36px 0 8px; padding: 14px 16px 14px 22px;
+  border: 1.5px solid var(--trait); border-radius: 18px; background: #fff; }
+.jouer > span { flex: 1; min-width: 0; font-weight: 600; font-size: 18px; line-height: 1.35; }
+.jouer small { display: block; font: 700 12px "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .06em; color: var(--jeu-texte); margin-bottom: 2px; }
+.jouer.fait { background: var(--fond-doux); }
+.jouer.fait small { color: var(--ok); }
+.btn-jouer { flex: none; min-width: 112px; height: 50px; padding: 0 22px; border: 2.5px solid var(--encre); border-radius: 14px; background: #fff; color: var(--encre);
+  font: 600 17px Inter, sans-serif; cursor: pointer; box-shadow: 3px 3px 0 var(--encre); transition: transform .1s, box-shadow .1s; }
+.btn-jouer:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--encre); }
+.fin-chapitre { margin-top: 112px; padding-top: 26px; border-top: 3px solid var(--encre); }
+.fin-chapitre p { color: var(--doux); }
+.fenetre-jeu { position: fixed; inset: 0; z-index: 100; background: #fff; display: none; }
+.fenetre-jeu.on { display: block; }
+.fenetre-jeu iframe { width: 100%; height: 100%; border: 0; display: block; }
+html.jeu-ouvert, html.jeu-ouvert body { overflow: hidden; }
